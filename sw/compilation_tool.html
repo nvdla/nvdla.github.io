@@ -1,0 +1,156 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Compilation tools &#8212; NVDLA Documentation</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <link rel="stylesheet" href="../_static/nvdla.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/styles.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Runtime environment" href="runtime_environment.html" />
+    <link rel="prev" title="Software Manual" href="contents.html" /> 
+  </head>
+  <body>
+<header class="navbar">
+  <nav class="container navbar navbar-light bg-faded">
+    <a class="navbar-brand" href="https://www.nvidia.com/">
+      <div class="logo"></div>
+    </a>
+  </nav>
+</header>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <div class="container">
+      <div class="row">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right first">
+          <a href="runtime_environment.html" title="Runtime environment"
+             accesskey="N">next</a></li>
+        <li class="right">
+          <a href="contents.html" title="Software Manual"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">NVDLA Open Source Project</a>&#187;</li>
+        <li class="nav-item nav-item-1"><a href="../contents.html">Documentation</a>&#187;</li>
+          <li class="nav-item nav-item-2"><a href="contents.html" accesskey="U">Software Manual</a>&#187;</li> 
+      </ul>
+      </div>
+      </div>
+    </div>
+  <div class="document">
+    <div class="container">
+      <div class="row">
+        <div class="col-xs-12 col-md-9">
+          
+  <div class="section" id="compilation-tools">
+<span id="id1"></span><h1>Compilation tools<a class="headerlink" href="#compilation-tools" title="Permalink to this headline">¶</a></h1>
+<p>The Compilation phase is responsible for converting (aka compiling) a deep neural network into a sequence of hardware layers that are optimized for a given NVDLA configuration. Having a compiled network optimized for specific hardware configuration improves performance by reducing model size, load and run times. Compilation is a 2-step process that consists of: Parsing and Compiling.</p>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="../_images/compilation_tool.png"><img alt="../_images/compilation_tool.png" src="../_images/compilation_tool.png" style="width: 484.4px; height: 355.6px;" /></a>
+</div>
+<div class="section" id="parser">
+<h2>Parser<a class="headerlink" href="#parser" title="Permalink to this headline">¶</a></h2>
+<p>Parser is a relatively simple tool to parse pre-trained models. In its most basic incarnation, it reads a pre-trained Caffe model and creates a suitable representation of the network as a set of layers and pass it down to the next step of Compilation. An advanced parser would allow translating pre-trained models on other frameworks like TensorFlow, Theano, etc into the same standard representation suitable for the compiler. Although the Compiler is the one who fully understands the underlying hardware configuration, the Parser is smart enough to pro-actively recognize those neural network operations that are not suitable for the NVDLA implmentation and report back to the application. Parser can also detect malformed networks with breaks/loops in the topology or corrupt trained data whose layout doesn’t fit well for the associated network operation.</p>
+</div>
+<div class="section" id="compiler">
+<h2>Compiler<a class="headerlink" href="#compiler" title="Permalink to this headline">¶</a></h2>
+<p>Compiler takes the Parser’s output as its input, and converts (i.e. compiles) it into a set of hardware layers using the understanding of underlying hardware specification for NVDLA implementation. The Compiler can interpret the parsed network as a directed graph with nodes representing the network operations and the edges representing the intermediate tensors between the operations. The main job of the Compiler is to effectively map each network operation onto the targetted functional block of the NVDLA implementation, keeping in mind the specifications of the hardware. Knowing the hardware configuration allows the Compiler to generate appropriate operations for the features that are available. For example, this might include selecting between different convolution operation modes (such as Winograd convolution, or Basic convolution), or splitting certain operations into multiple smaller units depending on the available hardware buffer sizes, etc. Optimizations or features in compiler can be controlled through input parameters to compiler.</p>
+<p>In order to effectively execute the hardware layer, the Compiler is responsible to determine memory requirements for that layer. The choice of memory management can be flexible to the software implementation choice. This phase is also responsible for quantizing higher precision trained models (like 32-bit floating point) into lower precisions, such as 8-bit or 16-bit integer, or 16-bit floating point, and for determining memory allocations for the quantized weights during inferencing jobs. The output of the compiler is stored in a standardized file format called the <a class="reference internal" href="../glossary.html#term-nvdla-loadable"><span class="xref std std-term">NVDLA Loadable</span></a>.</p>
+<p>The same Compiler tool can be used to generate a list of hardware layers for multiple different NVDLA configurations. These steps are performed offline and might also be performed on the device that contains the NVDLA implementation.</p>
+</div>
+</div>
+
+
+        </div>
+        <div class="col-xs-12 col-md-3">
+          
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../contents.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Compilation tools</a><ul>
+<li><a class="reference internal" href="#parser">Parser</a></li>
+<li><a class="reference internal" href="#compiler">Compiler</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="contents.html"
+                        title="previous chapter">Software Manual</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="runtime_environment.html"
+                        title="next chapter">Runtime environment</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/sw/compilation_tool.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+  </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <div class="container">
+      <div class="row">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right first">
+          <a href="runtime_environment.html" title="Runtime environment"
+             >next</a></li>
+        <li class="right">
+          <a href="contents.html" title="Software Manual"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">NVDLA Open Source Project</a>&#187;</li>
+        <li class="nav-item nav-item-1"><a href="../contents.html">Documentation</a>&#187;</li>
+          <li class="nav-item nav-item-2"><a href="contents.html" >Software Manual</a>&#187;</li> 
+      </ul>
+      </div>
+      </div>
+    </div>
+<div class="footer" role="contentinfo">
+<div class="container">
+<div class="row">
+&#169; <a
+href="../copyright.html">Copyright</a> 2017, NVIDIA Corporation.
+<a href="http://www.nvidia.com/object/legal_info.html">Legal Information.</a>
+<a href="http://www.nvidia.com/object/privacy_policy.html">Privacy Policy.</a>
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.3.
+</div>
+</div>
+</div>
+  </body>
+</html>

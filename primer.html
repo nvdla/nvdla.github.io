@@ -1,0 +1,925 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>NVDLA Primer &#8212; NVDLA Documentation</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <link rel="stylesheet" href="_static/nvdla.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/styles.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Open Source Roadmap" href="roadmap.html" />
+    <link rel="prev" title="NVDLA Index of Documentation" href="contents.html" /> 
+  </head>
+  <body>
+<header class="navbar">
+  <nav class="container navbar navbar-light bg-faded">
+    <a class="navbar-brand" href="https://www.nvidia.com/">
+      <div class="logo"></div>
+    </a>
+  </nav>
+</header>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <div class="container">
+      <div class="row">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right first">
+          <a href="roadmap.html" title="Open Source Roadmap"
+             accesskey="N">next</a></li>
+        <li class="right">
+          <a href="contents.html" title="NVDLA Index of Documentation"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">NVDLA Open Source Project</a>&#187;</li>
+        <li class="nav-item nav-item-1"><a href="contents.html">Documentation</a>&#187;</li> 
+      </ul>
+      </div>
+      </div>
+    </div>
+  <div class="document">
+    <div class="container">
+      <div class="row">
+        <div class="col-xs-12 col-md-9">
+          
+  <div class="section" id="nvdla-primer">
+<h1>NVDLA Primer<a class="headerlink" href="#nvdla-primer" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="abstract">
+<h2>Abstract<a class="headerlink" href="#abstract" title="Permalink to this headline">¶</a></h2>
+<p>The majority of compute effort for Deep Learning inference is based on
+mathematical operations that can mostly be grouped into four parts:
+convolutions; activations; pooling; and normalization.  These operations
+share a few characteristics that make them particularly well suited for
+special-purpose hardware implementation: their memory access patterns are
+extremely predictable, and they are readily parallelized.  The NVIDIA® Deep
+Learning Accelerator (NVDLA) project promotes a standardized, open
+architecture to address the computational demands of inference.  The NVDLA
+architecture is both scalable and highly configurable; the modular design
+maintains flexibility and simplifies integration.  Standardizing Deep
+Learning acceleration promotes interoperability with the majority of modern
+Deep Learning networks and contributes to a unified growth of machine
+learning at scale.</p>
+<p>NVDLA hardware provides a simple, flexible, robust inference acceleration
+solution.  It supports a wide range of performance levels and readily scales
+for applications ranging from smaller, cost-sensitive Internet of Things (IoT)
+devices to larger performance oriented IoT devices.  NVDLA is
+provided as a set of IP-core models based on open industry standards: the
+Verilog model is a synthesis and simulation model in RTL form, and the TLM
+SystemC simulation model can be used for software development, system
+integration, and testing.  The NVDLA software ecosystem includes an
+on-device software stack (part of the open source release), a full training
+infrastructure to build new models that incorporate Deep Learning, and
+parsers that convert existing models to a form that is usable by the
+on-device software.</p>
+<p>The open source NVDLA project is managed as an open, directed community.
+NVIDIA welcomes contributions to NVDLA, and will maintain an open process
+for external users and developers who wish to submit changes back.
+Contributors are expected to agree to a Contributor License Agreement,
+ensuring that any IP rights from a contributor are granted to all NVDLA
+users; users who do not wish to contribute back to NVDLA are under no
+obligation to do so.  After the initial release, development will take place
+in the open.  NVDLA software, hardware, and documentation will be made
+available through GitHub.</p>
+<p>NVDLA hardware and software are available under the <a class="reference internal" href="license.html"><span class="doc">NVIDIA Open NVDLA
+License</span></a>, which is a permissive license that includes a FRAND-RF
+patent grant.  Additionally, for users who build “NVDLA-compatible”
+implementations which interact well with the greater NVDLA ecosystem, NVIDIA
+may grant the right to use the “NVDLA” name, or other NVIDIA trademarks.
+(This licensing description is meant to be informative, not normative; where
+this information conflicts with the NVDLA license, the NVDLA license
+supersedes.)</p>
+</div>
+<div class="section" id="accelerating-deep-learning-inference-using-nvdla">
+<h2>Accelerating Deep Learning Inference using NVDLA<a class="headerlink" href="#accelerating-deep-learning-inference-using-nvdla" title="Permalink to this headline">¶</a></h2>
+<p>NVDLA introduces a modular architecture designed to simplify configuration,
+integration and portability; it exposes the building blocks used to
+accelerate core Deep Learning inference operations.  NVDLA hardware is
+comprised of the following components:</p>
+<ul class="simple">
+<li>Convolution Core – optimized high-performance convolution engine.</li>
+<li>Single Data Processor – single-point lookup engine for activation functions.</li>
+<li>Planar Data Processor – planar averaging engine for pooling.</li>
+<li>Channel Data Processor – multi-channel averaging engine for advanced
+normalization functions.</li>
+<li>Dedicated Memory and Data Reshape Engines – memory-to-memory
+transformation acceleration for tensor reshape and copy operations.</li>
+</ul>
+<p>Each of these blocks are separate and independently configurable. A system
+that has no need for pooling, for instance, can remove the planar averaging
+engine entirely; or, a system that needs additional convolutional
+performance can scale up the performance of the convolution unit without
+modifying other units in the accelerator.  Scheduling operations for each
+unit are delegated to a co-processor or CPU; they operate on extremely
+fine-grained scheduling boundaries with each unit operating independently.
+This requirement for closely-managed scheduling can be made part of the
+NVDLA sub-system with the addition of a dedicated management coprocessor
+(“headed” implementation), or this functionality can be fused with the
+higher-level driver implementation on the main system processor (“headless”
+implementation).  This enables the same NVDLA hardware architecture to serve
+a variety of implementation sizes.</p>
+<p>NVDLA hardware utilizes standard practices to interface with the rest of the
+system: a control channel implements a register file and interrupt
+interface, and a pair of standard AXI bus interfaces are used to interface
+with memory.  The primary memory interface is intended to connect to the
+system’s wider memory system, including system DRAM; this memory interface
+should be shared with the system’s CPU and I/O peripherals.  The second
+memory interface is optional, and allows for a connection to
+higher-bandwidth memory that may be dedicated to NVDLA or to a computer
+vision subsystem in general.  This option for a heterogeneous memory
+interface enables additional flexibility for scaling between different types
+of host systems.</p>
+<p>The typical flow for inferencing begins with the NVDLA management processor
+(either a microcontroller in a “headed” implementation, or the main CPU in a
+“headless” implementation) sending down the configuration of one hardware
+layer, along with an “activate” command.  If data dependencies do not
+preclude this, multiple hardware layers can be sent down to different
+engines and activated at the same time (i.e., if there exists another layer
+whose inputs do not depend on the output from the previous layer).  Because
+every engine has a double-buffer for its configuration registers, it can
+also capture a second layer’s configuration to begin immediately processing
+when the active layer has completed.  Once a hardware engine finishes its
+active task, it will issue an interrupt to the management processor to
+report the completion, and the management processor will then begin the
+process again.  This kind of command-execute-interrupt flow repeats until
+inference on the entire network is complete.</p>
+<p>NVDLA implementations generally fall into two categories:</p>
+<ul class="simple">
+<li>Headless – unit-by-unit management of the NVDLA hardware happens on the main
+system processor.</li>
+<li>Headed – delegates the high-interrupt-frequency tasks to a companion
+microcontroller that is tightly coupled to the NVDLA sub-system.</li>
+</ul>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The initial open source release of NVDLA will provide only a software
+solution for “headless” mode, with “headed” mode drivers to come at a
+later time.</p>
+</div>
+<p>The Small system model in <a class="reference internal" href="#fig-system-comparison"><span class="std std-numref">Fig. 1</span></a>, below, shows an
+example of a headless NVDLA implementation while the Large System model
+shows a headed implementation.  The Small model represents an NVDLA
+implementation for a more cost-sensitive purpose built device.  The Large System
+model is characterized by the addition of a dedicated control coprocessor
+and high-bandwidth SRAM to support the NVDLA sub-system.  The Large System model is
+geared more toward high-performance IoT devices that may run many tasks at once.</p>
+<div class="figure align-center" id="id1">
+<span id="fig-system-comparison"></span><img alt="&quot;Small&quot; and &quot;Large&quot; NVDLA systems side by side, with SRAMIF disconnected on &quot;small&quot; system, and a microcontroller on &quot;large&quot; system." src="_images/nvdla-primer-system-comparison.svg" /><p class="caption"><span class="caption-number">Fig. 1 </span><span class="caption-text">Comparison of two possible NVDLA systems.</span></p>
+</div>
+<div class="section" id="small-nvdla-model">
+<h3>Small NVDLA Model<a class="headerlink" href="#small-nvdla-model" title="Permalink to this headline">¶</a></h3>
+<p>The small-NVDLA model opens up Deep Learning technologies in areas where it
+was previously not feasible. This model is a good fit for cost-sensitive connected
+Internet of Things (IoT) class devices, AI and automation oriented systems that have
+well-defined tasks for which cost, area, and power are the primary drivers.
+Savings (in terms of cost, area, and power) are achieved through NVDLA
+configurable resources. Neural network models can be pre-compiled and performance
+optimized, allowing larger models to be “cut down” and reduced in load complexity;
+this, in turn, enables a scaled down NVDLA implementation where models
+consume less storage and take less time for system software to load and
+process.</p>
+<p>These purpose-built systems typically execute only one task at a time, and
+as such, sacrificing system performance while NVDLA is operating is
+generally not a strong concern. The relatively inexpensive context switches
+associated with these systems – sometimes, as a result of processor
+architectural choices, and sometimes, as a result of using a system like
+FreeRTOS for task management – result in the main processor not being overly
+burdened by servicing a large number of NVDLA interrupts. This removes the
+need for an additional microcontroller, and the main processor performs both
+the coarse-grained scheduling and memory allocation, as well as the
+fine-grained NVDLA management.</p>
+<p>Typically, systems following the small-NVDLA model will not include the
+optional second memory interface. When overall system performance is less of
+a priority, the impact of not having a high-speed memory path is unlikely to
+be critical. In such systems, the system memory (usually DRAM) is likely to
+consume less power than an SRAM, making it more power-efficient to use the
+system memory as a computation cache.</p>
+</div>
+<div class="section" id="large-nvdla-model">
+<h3>Large NVDLA Model<a class="headerlink" href="#large-nvdla-model" title="Permalink to this headline">¶</a></h3>
+<p>The large-NVDLA model serves as a better choice when the primary emphasis is
+on high performance and versatility. Performance oriented IoT systems may
+perform inference on many different network topologies; as a result, it is
+important that these systems maintain a high degree of flexibility.
+Additionally, these systems may be performing many tasks at once, rather
+than serializing inference operations, so inference operations must not
+consume too much processing power on the host. To address these needs, the
+NVDLA hardware included a second (optional) memory interface for a dedicated
+high-bandwidth SRAM, and enables the ability to interface with a dedicated
+control coprocessor (microcontroller) to limit the interrupt load on the
+main processor.</p>
+<p>When included in the implementation, a high-bandwidth SRAM is connected to a
+fast-memory bus interface port on NVDLA. This SRAM is used as a cache by NVDLA;
+optionally, it may be shared by other high-performance
+computer-vision-related components on the system to further reduce traffic
+to the main system memory (Sys DRAM).</p>
+<p>Requirements for the NVDLA coprocessor are fairly typical; as such, there
+are many general purpose processors that would be appropriate (e.g.,
+RISC-V-based PicoRV32 processors, ARM Cortex-M or Cortex-R processors, or
+even in-house microcontroller designs).  When using a dedicated coprocessor,
+the host processor still handles some tasks associated with managing NVDLA.
+For instance, although the coprocessor becomes responsible for scheduling
+and fine-grained programming of the NVDLA hardware, the host will remain
+responsible for coarse-grained scheduling on the NVDLA hardware, for IOMMU
+mapping of NVDLA memory access (as necessary), for memory allocation of
+input data and fixed weight arrays on NVDLA, and for synchronization between
+other system components and tasks that run on NVDLA.</p>
+</div>
+</div>
+<div class="section" id="hardware-architecture">
+<h2>Hardware Architecture<a class="headerlink" href="#hardware-architecture" title="Permalink to this headline">¶</a></h2>
+<p>The NVDLA architecture can be programmed in two modes of operation:
+independent mode, and fused mode.</p>
+<ul class="simple">
+<li><strong>Independent.</strong> When operating independently, each functional block is
+configured for when and what it executes, with each block working on its
+assigned task (akin to independent layers in a Deep Learning framework).
+Independent operation begins and ends with the assigned block performing
+memory-to-memory operations, in and out of main system memory or dedicated
+SRAM memory.</li>
+<li><strong>Fused.</strong> Fused operation is similar to independent operation, however, some
+blocks can be assembled as a pipeline.  This improves performance by
+bypassing the round trip through memory, instead having blocks communicate
+with each other through small FIFOs (i.e., the convolution core can pass
+data to the Single Data Point Processor, which can pass data to the Planar
+Data Processor, and in turn to the Cross-channel Data Processor).</li>
+</ul>
+<div class="figure align-center" id="id2">
+<span id="fig-core-diagram"></span><img alt="&quot;Headless NVDLA core&quot; architectural drawing.  A configuration interface block is connected to the outside world through the CSB/interrupt interface.  The memory interface block is connected outside with a DBB interface and a second, optional, DBB interface.  The memory interface connects to a convolution buffer, which connects to a convolution core; the memory interface also connects to the activation engine, the pooling engine, local response normalization engine, reshape engine, and bridge DMA engine.   The convolution core, activation engine, pooling engine, and local response normalization engine also form a pipeline." src="_images/nvdla-primer-core-diagram.svg" /><p class="caption"><span class="caption-number">Fig. 2 </span><span class="caption-text">Internal architecture of NVDLA core.</span></p>
+</div>
+<div class="section" id="connections">
+<h3>Connections<a class="headerlink" href="#connections" title="Permalink to this headline">¶</a></h3>
+<p>NVDLA implements three major connections to the rest of the system:</p>
+<ul class="simple">
+<li><strong>Configuration Space Bus (CSB) interface.</strong> This interface is a
+synchronous, low-bandwidth, low-power, 32-bit control bus designed to be
+used by a CPU to access the NVDLA configuration registers.  NVDLA
+functions as a slave on the CSB interface.  CSB implements a very simple
+interface protocol so it can be easily converted to AMBA, OCP or any other
+system bus with a simple shim layer.</li>
+<li><strong>Interrupt interface.</strong>  NVDLA hardware includes a 1-bit level-driven
+interrupt.  The interrupt line is asserted when a task has been
+completed or when an error occurs.</li>
+<li><strong>Data Backbone (DBB) interface.</strong>  The DBB interface connects NVDLA and
+the main system memory subsystems.  It is a synchronous, high-speed, and
+highly configurable data bus.  It can be specified to have different
+address sizes, different data sizes, and to issue different sizes of
+requests depending upon the requirements of the system.  The data backbone
+interface is a simple interface protocol that is similar to AXI (and can
+be readily used in AXI-compliant systems).</li>
+</ul>
+<p>The DBB interface has an optional second connection which can be used when
+there is a second memory path available.  This connection is identical in
+design to the primary DBB interface and is intended for use with an on-chip
+SRAM that can provide higher throughput and lower access latency.  The
+second DBB interface is not necessary for NVDLA to function, systems that do
+not require this memory interface can save area by removing it.</p>
+</div>
+<div class="section" id="components">
+<h3>Components<a class="headerlink" href="#components" title="Permalink to this headline">¶</a></h3>
+<p>Each component in the NVDLA architecture exists to support specific
+operations integral to inference on deep neural networks.  The following
+descriptions provide a brief functional overview of each block, including
+the TensorFlow operations that map onto them.  While TensorFlow operations
+were provided as examples, NVDLA hardware supports other Deep Learning
+frameworks.</p>
+<div class="section" id="convolution">
+<h4>Convolution<a class="headerlink" href="#convolution" title="Permalink to this headline">¶</a></h4>
+<p>Convolution operations work on two sets of data: one set of offline-trained
+“weights” (which remain constant between each run of inference), and one set
+of input “feature” data (which varies with the network’s input).  The
+convolutional engine exposes parameters to map many different sizes of
+convolutions onto the hardware with high efficiency.  The NVDLA convolution
+engine includes optimizations to improve performance over a naive
+convolution implementation.  Support for sparse weight compression saves
+memory bandwidth.  Built-in Winograd convolution support improves compute
+efficiency for certain sizes of filters.  Batch convolution, can save
+additional memory bandwidth by reusing weights when running multiple
+inferences in parallel.</p>
+<p>To avoid repeated accesses to system memory, the NVDLA convolution engine
+has an internal RAM reserved for weight and input feature storage, referred
+to as the “convolution buffer”.  This design greatly improves memory
+efficiency over sending a request to the system memory controller for each
+independent time a weight or feature is needed.</p>
+<p>The convolution unit maps onto TensorFlow operations such as
+<code class="docutils literal"><span class="pre">tf.nn.conv2d</span></code>.</p>
+</div>
+<div class="section" id="single-data-point-processor">
+<h4>Single Data Point Processor<a class="headerlink" href="#single-data-point-processor" title="Permalink to this headline">¶</a></h4>
+<p>The Single Data Point Processor (SDP) allows for the application of both
+linear and non-linear functions onto individual data points.  This is
+commonly used immediately after convolution in CNN systems.  The SDP has a
+lookup table to implement non-linear functions, or for linear functions it
+supports simple bias and scaling.  This combination can support most common
+activation functions, as well as other element-wise operations, including
+ReLU, PReLU, precision scaling, batch normalization, bias addition, or other
+complex non-linear functions, such as a sigmoid or a hyperbolic tangent.</p>
+<p>The SDP maps onto TensorFlow operations including
+<code class="docutils literal"><span class="pre">tf.nn.batch_normalization</span></code>, <code class="docutils literal"><span class="pre">tf.nn.bias_add</span></code>, <code class="docutils literal"><span class="pre">tf.nn.elu</span></code>,
+<code class="docutils literal"><span class="pre">tf.nn.relu</span></code>, <code class="docutils literal"><span class="pre">tf.sigmoid</span></code>, <code class="docutils literal"><span class="pre">tf.tanh</span></code>, and more.</p>
+</div>
+<div class="section" id="planar-data-processor">
+<h4>Planar Data Processor<a class="headerlink" href="#planar-data-processor" title="Permalink to this headline">¶</a></h4>
+<p>The Planar Data Processor (PDP) supports specific spatial operations that
+are common in CNN applications.  It is configurable at runtime to support
+different pool group sizes, and supports three pooling functions:
+maximum-pooling, minimum-pooling, and average-pooling.</p>
+<p>The PDP maps onto the the <code class="docutils literal"><span class="pre">tf.nn.avg_pool</span></code>, <code class="docutils literal"><span class="pre">tf.nn.max_pool</span></code>, and
+<code class="docutils literal"><span class="pre">tf.nn.pool</span></code> operations.</p>
+</div>
+<div class="section" id="cross-channel-data-processor">
+<h4>Cross-channel Data Processor<a class="headerlink" href="#cross-channel-data-processor" title="Permalink to this headline">¶</a></h4>
+<p>The Cross-channel Data Processor (CDP) is a specialized unit built to apply
+the local response normalization (LRN) function – a special normalization
+function that operates on channel dimensions, as opposed to the spatial
+dimensions.</p>
+<p>The CDP maps onto the <code class="docutils literal"><span class="pre">tf.nn.local_response_normalization</span></code> function.</p>
+</div>
+<div class="section" id="data-reshape-engine">
+<h4>Data Reshape Engine<a class="headerlink" href="#data-reshape-engine" title="Permalink to this headline">¶</a></h4>
+<p>The data reshape engine performs data format transformations (e.g.,
+splitting or slicing, merging, contraction, reshape-transpose).  Data in
+memory often needs to be reconfigured or reshaped in the process of
+performing inferencing on a convolutional network.  For example, “slice”
+operations may be used to separate out different features or spatial regions
+of an image, and “reshape-transpose” operations (common in deconvolutional
+networks) create output data with larger dimensions than the input dataset.</p>
+<p>The data reshape engine maps onto TensorFlow operations such as
+<code class="docutils literal"><span class="pre">tf.nn.conv2d_transpose</span></code>, <code class="docutils literal"><span class="pre">tf.concat</span></code>, <code class="docutils literal"><span class="pre">tf.slice</span></code>, and
+<code class="docutils literal"><span class="pre">tf.transpose</span></code>.</p>
+</div>
+<div class="section" id="bridge-dma">
+<h4>Bridge DMA<a class="headerlink" href="#bridge-dma" title="Permalink to this headline">¶</a></h4>
+<p>The bridge DMA (BDMA) module provides a data copy engine to move data
+between the system DRAM and the dedicated high-performance memory interface,
+where present; this is an accelerated path to move data between these two
+otherwise non-connected memory systems.</p>
+</div>
+</div>
+<div class="section" id="configurability">
+<h3>Configurability<a class="headerlink" href="#configurability" title="Permalink to this headline">¶</a></h3>
+<p>NVDLA has a wide array of hardware parameters that can be configured to
+balance area, power, and performance.  The following is a short list of
+these options.</p>
+<ul class="simple">
+<li><strong>Data types.</strong>  NVDLA natively supports a wide array of data types across its
+various functional units; a subset of these can be chosen to save area.
+Data types that can be selected include binary; int4; int8; int16; int32;
+fp16; fp32; and fp64.</li>
+<li><strong>Input image memory formats.</strong>  NVDLA can support planar images, semi-planar
+images, or other packed memory formats.  These different modes can be
+enabled or disabled to save area.</li>
+<li><strong>Weight compression.</strong>  NVDLA has a mechanism to reduce memory bandwidth
+by sparsely storing convolution weights.  This feature can be disabled to
+save area.</li>
+<li><strong>Winograd convolution.</strong>  The Winograd algorithm is an optimization for
+certain dimensions of convolution.  NVDLA can be built with or without
+support for it.</li>
+<li><strong>Batched convolution.</strong>  Batching is a feature that saves memory
+bandwidth.  NVDLA can be built with or without support for it.</li>
+<li><strong>Convolution buffer size.</strong>  The convolution buffer is formed of a number
+of banks.  It is possible to adjust the quantity of banks (from 2 to 32)
+and the size of each bank (from 4 KiB to 8 KiB).  (By multiplying these
+together, it is possible to determine the total amount of convolution
+buffer memory that will be instantiated.)</li>
+<li><strong>MAC array size.</strong>  The multiply-accumulate engine is formed in two
+dimensions.  The width (the “C” dimension) can be adjusted from 8 to 64,
+and the depth (the “K” dimension) can be adjusted from 4 to 64.  (The
+total number of multiply-accumulates that are created can be determined by
+multiplying these two together.)</li>
+<li><strong>Second memory interface.</strong>  NVDLA can have support for a second memory
+interface for high-speed accesses, or it can be built with only one memory
+interface.</li>
+<li><strong>Non-linear activation functions.</strong>  To save area, the lookup table that
+supports nonlinear activation functions (like sigmoid or tanh) can be
+removed.</li>
+<li><strong>Activation engine size.</strong>  The number of activation outputs produced per
+cycle can be adjusted from 1 through 16.</li>
+<li><strong>Bridge DMA engine.</strong>  The bridge DMA engine can be removed to save area.</li>
+<li><strong>Data reshape engine.</strong>  The data reshape engine can be removed to save
+area.</li>
+<li><strong>Pooling engine presence.</strong>  The pooling engine can be removed to save
+area.</li>
+<li><strong>Pooling engine size.</strong>  The pooling engine can be adjusted to produce
+between 1 and 4 outputs per cycle.</li>
+<li><strong>Local response normalization engine presence.</strong>  The local response
+normalization engine can be removed to save area.</li>
+<li><strong>Local response normalization engine size.</strong>  The local response
+normalization engine can be adjusted to produce between 1 and 4 outputs
+per cycle.</li>
+<li><strong>Memory interface bit width.</strong>  The memory interface bit width can be
+adjusted according to the width of the external memory interface to
+appropriately size internal buffers.</li>
+<li><strong>Memory read latency tolerance.</strong>  Memory latency time is defined as the number
+of cycles from read request to read data return.  The tolerance for this
+can be adjusted, which impacts the internal latency buffer size of each
+read DMA engine.</li>
+</ul>
+</div>
+</div>
+<div class="section" id="software-design">
+<h2>Software Design<a class="headerlink" href="#software-design" title="Permalink to this headline">¶</a></h2>
+<p>NVDLA has a full software ecosystem supporting it.  Part of this ecosystem
+includes the on-device software stack, a part of the NVDLA open source
+release; additionally, NVIDIA will provide a full training infrastructure to
+build new models that incorporate Deep Learning, and to convert existing
+models to a form that is usable by NVDLA software.  In general, the software
+associated with NVDLA is grouped into two groups: the <em>compilation tools</em> (model
+conversion), and the <em>runtime environment</em> (run-time software to load and execute
+networks on NVDLA).  The general flow of this is as shown in the figure
+below; and each of these is described below.</p>
+<div class="figure align-center" id="id3">
+<span id="fig-sw-flow"></span><a class="reference internal image-reference" href="_images/nvdla-primer-sw-flow.svg"><img alt="DL training software produces a model, which the compilation tool takes and turns into a loadable, which is used by runtime environment. In runtime, UMD submits with ioctl()s to KMD, which is sent to NVDLA with register writes." src="_images/nvdla-primer-sw-flow.svg" /></a>
+<p class="caption"><span class="caption-number">Fig. 3 </span><span class="caption-text">Dataflow diagram inside of NVDLA system software.</span></p>
+</div>
+<div class="section" id="compilation-tools-model-creation-and-compilation">
+<h3>Compilation Tools: Model Creation and Compilation<a class="headerlink" href="#compilation-tools-model-creation-and-compilation" title="Permalink to this headline">¶</a></h3>
+<p>Compilation tools include compiler and parser. Compiler is responsible for creating a sequence of hardware
+layers that are optimized for a given NVDLA configuration; having an
+optimized network of hardware layers increases performance by reducing model
+size, load and run times. Compilation is a compartmentalized multi-step
+process that can be broken down into two basic components: parsing and
+compiling. The parser can be relatively simple; in its most basic
+incarnation, it can read a pre-trained Caffe model and create an
+“intermediate representation” of a network to pass to the next step of
+compilation. The compiler takes the parsed intermediate representation and
+the hardware configuration of an NVDLA implementation as its inputs, and
+generates a network of hardware layers. These steps are performed offline
+and might be performed on the device that contains the NVDLA
+implementation.</p>
+<p>Knowing about the specific hardware configuration of an NVDLA implementation
+is important, it enables the compiler to generate appropriate layers for the
+features that are available. For example, this might include selecting
+between different convolution operation modes (such as Winograd convolution,
+or basic convolution), or splitting convolution operations into multiple
+smaller mini-operations depending on the available convolution buffer size.
+This phase is also responsible for quantizing models to lower precision,
+such as 8-bit or 16-bit integer, or 16-bit floating point, and for
+allocating memory regions for weights.  The same compiler tool can be used
+to generate a list of operations for multiple different NVDLA
+configurations.</p>
+</div>
+<div class="section" id="runtime-environment-model-inference-on-device">
+<h3>Runtime Environment: Model Inference on Device<a class="headerlink" href="#runtime-environment-model-inference-on-device" title="Permalink to this headline">¶</a></h3>
+<p>The runtime environment involves running a model on compatible NVDLA hardware. It
+is effectively divided into two layers:</p>
+<ul class="simple">
+<li><strong>User Mode Driver.</strong> The main interface with user-mode programs.
+After parsing the neural network compiler compiles network layer by layer and converts it
+into a file format called <a class="reference internal" href="glossary.html#term-nvdla-loadable"><span class="xref std std-term">NVDLA Loadable</span></a>. User mode runtime driver loads this
+loadable and submits inference job to <a class="reference internal" href="sw/runtime_environment.html#kernel-mode-driver"><span class="std std-ref">Kernel Mode Driver</span></a></li>
+<li><strong>Kernel Mode Driver.</strong> Consists of drivers and firmware that do the work of
+scheduling layer operations on NVDLA and programming the NVDLA registers
+to configure each functional block.</li>
+</ul>
+<p>The runtime execution starts with a stored representation of the network; this
+stored format is called an “NVDLA loadable” image. In the view of a
+loadable, each functional block in the NVDLA implementation is represented
+by a “layer” in software; each layer includes information about its
+dependencies, the tensors that it uses in as inputs and outputs in memory,
+and the specific configuration of each block for an operation. Layers are
+linked together through a dependency graph, which KMD uses to
+schedule each operation. The format of an NVDLA loadable is standardized
+across compiler implementations and UMD implementations. All
+implementations that comply with the NVDLA standard should be able to at
+least understand any NVDLA loadable image, even if the implementation may
+not have some features that are required to run inference using that
+loadable image.</p>
+<p>UMD has a standard application programming interface (API) for processing
+loadable images, binding input and output tensors to memory locations, and
+running inference. This layer loads the network into memory in a defined
+set of data structures, and passes it to the KMD in an implementation-defined
+fashion. On Linux, for instance, this could be an <code class="docutils literal"><span class="pre">ioctl()</span></code>, passing data
+from the user-mode driver to the kernel-mode driver; on a single-process system
+in which the KMD runs in the same environment as the UMD, this could be a simple function call.</p>
+<p>KMD’s main entry point receives an inference job in memory, selects from multiple
+available jobs for scheduling (if on a multi-process system), and submits it to the
+core engine scheduler. This core engine scheduler is responsible for handling interrupts from NVDLA,
+scheduling layers on each individual functional block, and updating any
+dependencies for that layer based upon the completion of a task from a
+previous layer. The scheduler uses information from the dependency graph to
+determine when subsequent layers are ready to be scheduled; this allows the
+compiler to decide scheduling of layers in an optimized way, and avoids
+performance differences from different implementations of KMD.</p>
+<div class="figure align-center" id="id4">
+<span id="fig-portability-layer"></span><img alt="Inside of the user application software and OS kernel, there is a portability layer, which wraps the DLA core code from the NVDLA GitHub." src="_images/nvdla-primer-portability-layer.svg" /><p class="caption"><span class="caption-number">Fig. 4 </span><span class="caption-text">Portability layers in the NVDLA system.</span></p>
+</div>
+<p>Both the UMD stack and the KMD stack exist as
+defined APIs, and are expected to be wrapped with a system portability
+layer.  Maintaining core implementations within a portability layer is
+expected to require relatively few changes and expedite any effort where it
+may be necessary to run an NVDLA software-stack on multiple platforms; with
+the appropriate portability layers in place, the same core implementations
+should compile as readily on both Linux and FreeRTOS. Similarly, on “headed”
+implementations that have a microcontroller closely coupled to NVDLA, the
+existence of the portability layer makes it possible to run the same
+low-level software on the microcontroller as would run on the main CPU in a
+“headless” implementations that has no such companion processor.</p>
+</div>
+</div>
+<div class="section" id="nvdla-system-integration">
+<h2>NVDLA System Integration<a class="headerlink" href="#nvdla-system-integration" title="Permalink to this headline">¶</a></h2>
+<p>NVDLA can be configured for a wide range of performance levels; choosing
+these parameters depends on the requirements for Convolutional Neural
+Network(s) (CNN) that will be executed.  This section describes some of the
+factors that will influence the choice of these parameters, and some
+considerations of their impact on system area and performance. The time
+required to run each layer is the maximum amount of the time required for
+data input, output, and the time required to perform the multiply-accumulate
+(MAC) operations.  The time required to run the whole network is equal to
+the sum of times for all the layers.  Choosing the correct number of MAC
+units, the convolutional buffer size, and the on-chip SRAM size for the
+desired performance are the most critical steps in sizing.  NVDLA has many
+more configuration parameters for additional performance tuning that require
+careful consideration, these will have less impact on the total area; they
+should be configured to not become unnecessary bottlenecks.</p>
+<div class="section" id="tuning-questions">
+<h3>Tuning Questions<a class="headerlink" href="#tuning-questions" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="what-math-precision-is-required-for-the-workloads-expected-for-any-given-instantiation">
+<h4>What math precision is required for the workloads expected for any given instantiation?<a class="headerlink" href="#what-math-precision-is-required-for-the-workloads-expected-for-any-given-instantiation" title="Permalink to this headline">¶</a></h4>
+<p>The bulk of the NVDLA area in larger configurations is used by convolution
+buffers and by MAC units, and so it stands to reason that these parameters
+are the most important in an initial performance / area tradeoff analysis.
+Deep Learning training is usually done at 32-bit floating point precision,
+but the resulting networks can often be reduced to 8-bit integers without
+significant loss of inference quality; in some cases, however, it may still
+be desirable to use 16-bit integers or floating point numbers.</p>
+</div>
+<div class="section" id="what-are-the-number-of-mac-units-and-the-required-memory-bandwidth">
+<h4>What are the number of MAC units, and the required memory bandwidth?<a class="headerlink" href="#what-are-the-number-of-mac-units-and-the-required-memory-bandwidth" title="Permalink to this headline">¶</a></h4>
+<p>After precision, the next two critical parameters for performance and area
+are the number of MAC units, and the required memory bandwidth.  When
+configuring NVDLA, these should be carefully considered.  Processing happens
+layer-by-layer, and so performance estimation is best done layer-by-layer,
+as well.  For any given layer, it is usually the case that either MAC
+throughput or memory bandwidth will be the bottleneck.</p>
+<p>The number of MAC units required is relatively easy to determine.  For
+example, a convolutional layer has a known input and output resolution, and
+a known number of input and output features; the convolution kernel size is
+also known.  Multiplying these together gives the total number of MAC
+operations to process the layer.  The hardware can be defined to have a
+certain number of MAC units; dividing the number of operations required by
+the number of MAC units gives a lower bound for the number of clock cycles
+that a layer can be processed in.</p>
+<p>Calculating required memory bandwidth is less trivial.  In the ideal case,
+it should only be necessary to read the input image once, the output image
+once, and the weights once, and the minimum number of cycles will be the sum
+of those divided by the number of samples that can be read or written per
+clock.  However, if the convolutional buffer is too small to hold the
+support region for the input and the set of weights, multiple passes are
+required.  For example, if the convolutional buffer can only hold a fourth
+of the weight data, then the calculation must be split into four steps,
+multiplying the input bandwidth (i.e., 10MB of input memory traffic would
+multiply to 40MB).  Similarly, if the buffers cannot hold enough lines for a
+support region for the convolution, the convolution must also be broken up
+into horizontal strips.  This effect is important to consider when choosing
+the convolutional buffer size, and when sizing the memory interface.</p>
+</div>
+<div class="section" id="is-there-a-need-for-on-chip-sram">
+<h4>Is there a need for on-chip SRAM?<a class="headerlink" href="#is-there-a-need-for-on-chip-sram" title="Permalink to this headline">¶</a></h4>
+<p>If external memory bandwidth is at a premium for power or performance
+reasons, then adding on-chip SRAM can help.  Such SRAM can be thought of as
+a second-level cache; it can have higher bandwidth than the main memory, and
+that bandwidth is additive to the main memory bandwidth.  An on-chip SRAM is
+less expensive to implement than a larger convolutional buffer, which needs
+wide ports and has very stringent timing requirements, but does not have as
+greatly multiplicative of a factor in applications that are
+convolutional-buffer-limited.  (For instance, if a layer is bandwidth
+limited, adding a SRAM that is sufficient to hold the entire input image
+that runs at twice the speed of the system’s DRAM can double the
+performance.  However, if the layer is also limited by convolutional buffer
+size, the same amount of memory could produce a much greater multiplier to
+system throughput.)  The simplest way to consider this tradeoff is that
+adding convolutional buffer size will help to reduce the bandwidth
+requirement, while adding an on-chip SRAM can improve the total available
+bandwidth.</p>
+</div>
+</div>
+<div class="section" id="example-area-and-performance-with-nvdla">
+<h3>Example Area and Performance with NVDLA<a class="headerlink" href="#example-area-and-performance-with-nvdla" title="Permalink to this headline">¶</a></h3>
+<p>The following table provides estimates for NVDLA configurations optimized
+for the popular ResNet-50 neural network.  The area figures given are
+estimated synthesis area, and include all memories required; real area
+results will vary based on foundry and libraries.  In this example, no
+on-chip SRAM is used.  On-chip SRAM would be beneficial if available SDRAM
+bandwidth is low.  The open-source release of NVDLA has an estimator tool
+available to explore the space of NVDLA designs, and their impact on
+performance.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="11%" />
+<col width="20%" />
+<col width="26%" />
+<col width="20%" />
+<col width="23%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head"># MACs</th>
+<th class="head">Conv. buffer
+size (KB)</th>
+<th class="head">SDRAM
+bandwidth (GB/s)</th>
+<th class="head">Silicon area
+(mm^2, 28nm)</th>
+<th class="head">Int8 ResNet-50
+frames/second</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>2048</td>
+<td>512</td>
+<td>20</td>
+<td>5.5</td>
+<td>269</td>
+</tr>
+<tr class="row-odd"><td>1024</td>
+<td>256</td>
+<td>15</td>
+<td>3.0</td>
+<td>153</td>
+</tr>
+<tr class="row-even"><td>512</td>
+<td>256</td>
+<td>10</td>
+<td>2.3</td>
+<td>93</td>
+</tr>
+<tr class="row-odd"><td>256</td>
+<td>256</td>
+<td>5</td>
+<td>1.7</td>
+<td>46</td>
+</tr>
+<tr class="row-even"><td>128</td>
+<td>256</td>
+<td>2</td>
+<td>1.4</td>
+<td>20</td>
+</tr>
+<tr class="row-odd"><td>64</td>
+<td>128</td>
+<td>1</td>
+<td>.91</td>
+<td>7.3</td>
+</tr>
+<tr class="row-even"><td>32</td>
+<td>128</td>
+<td>0.5</td>
+<td>.85</td>
+<td>3.6</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="sample-platforms">
+<h3>Sample Platforms<a class="headerlink" href="#sample-platforms" title="Permalink to this headline">¶</a></h3>
+<p>Sample platforms are provided which allow users to observe, evaluate, and
+test NVDLA in a minimal SoC environment.  A minimum SoC system configuration
+consists of a CPU, an NVDLA instance, an interconnect, and memories.  These
+platforms can be used for software development, or as a starting point for
+integrating NVDLA into an industrial-strength SoC.</p>
+<div class="section" id="simulation">
+<h4>Simulation<a class="headerlink" href="#simulation" title="Permalink to this headline">¶</a></h4>
+<p>The NVDLA open source release includes a simulation platform based on
+GreenSocs QBox.  In this platform, a QEMU CPU model (x86 or ARMv8) is
+combined with the NVDLA SystemC model, providing a register-accurate system
+on which software can be quickly developed and debugged.  The Linux
+kernel-mode driver and a user-mode test utility are provided to run on this
+simulation platform.</p>
+</div>
+<div class="section" id="fpga">
+<h4>FPGA<a class="headerlink" href="#fpga" title="Permalink to this headline">¶</a></h4>
+<p>This sample platform maps the NVDLA Verilog model onto an FPGA, it provides
+a synthesizable example of instantiating NVDLA in a real design.  In this
+platform, the NVDLA SystemC model is not used, software register reads and
+writes execute directly on the real RTL environment.  This allows for
+limited cycle-counting performance evaluation, and also allows for even
+faster testing of software against larger, more complex networks.  The FPGA
+model is intended for validation only, no effort has been made to optimize
+cycle time, design size, or power for the FPGA platform, performance of the
+FPGA model is not directly comparable against other FPGA-based Deep Learning
+accelerators</p>
+<p>The FPGA system model uses the Amazon EC2 “F1” environment, which is a
+publicly available standardized FPGA system that can be leased by the hour.
+No up-front purchase of specialized hardware or software is necessary to use
+this model; the synthesis software is available for only the cost of compute
+time on the Amazon EC2 environment, and the hardware requires no commitment
+to gain access to.  Because the FPGA platform is Xilinx-based, migration to
+other Virtex-family devices should be relatively straightforward.</p>
+</div>
+</div>
+<div class="section" id="models">
+<h3>Models<a class="headerlink" href="#models" title="Permalink to this headline">¶</a></h3>
+<p>NVDLA IP-core models are based on open industry standards.  The simplistic
+design and use of basic constructs are expected to easily integrate in
+typical SoC design flows.</p>
+<div class="section" id="verilog-model">
+<h4>Verilog model<a class="headerlink" href="#verilog-model" title="Permalink to this headline">¶</a></h4>
+<p>The Verilog model provides a synthesis and simulation model in RTL form. It
+has four functional interfaces: a slave host interface, an interrupt line,
+and two master interfaces for internal and external memory access.  The host
+and memory interfaces are very simple, but require external bus adapters to
+connect to an existing SoC design; for convenience, sample adapters for AXI4
+and TileLink are included as part of the NVDLA open source release. The
+NVDLA open source release contains example synthesis scripts. To facilitate
+physical design on more complex systems or larger instantiations of NVDLA,
+the design is split into partitions that each can be handled independently
+in the SoC backend flow.  The interfaces between the partitions can be
+retimed as needed to meet routing requirements.</p>
+<p>The NVDLA core operates in a single clock domain; bus adapters allow for
+clock domain crossing from the internal NVDLA clock to the bus clocks.
+Similarly, NVDLA also operates in a single power domain; the design applies
+both fine- and coarse-grain power gating. If added to implementation, SRAMs
+are modelled by behavioral models and must be replaced by compiled RAMs in a
+full SoC design. The NVDLA design requires implementations of both
+single-ported and dual-ported (one read port plus one write port) SRAMs.</p>
+</div>
+<div class="section" id="simulation-model-and-verification-suite">
+<h4>Simulation model and verification suite<a class="headerlink" href="#simulation-model-and-verification-suite" title="Permalink to this headline">¶</a></h4>
+<p>NVDLA includes a TLM2 SystemC simulation model for software development,
+system integration, and testing. This model enables much faster simulation
+than would otherwise be available by running the RTL in conjunction with
+signal-stimulus models.  This SystemC model is intended to be used in
+full-SoC simulation environments, such as Synopsys VDK or the provided
+GreenSocs QBox platform.  The included model is parameterizable on the same
+axes as is the RTL model, for direct comparison and simulation.</p>
+<p>The simulation model can also be used with the NVDLA testbench and
+verification suite. The light-weight trace-player-based testbench is
+suitable for simple synthesis and build health verification (this will be
+available with the initial NVDLA release). A full verification environment
+with extensive unit-by-unit testing will become available in subsequent
+release. The verification suite can be used to provide design assurance
+before tape-out, including verifying changes for compiled RAMs,
+clock-gating, and scan-chain insertion. This environment will be suitable
+for making more substantial changes (e.g., verify new NVDLA configurations
+or modifications made to an existing NVDLA design).</p>
+</div>
+</div>
+<div class="section" id="software">
+<h3>Software<a class="headerlink" href="#software" title="Permalink to this headline">¶</a></h3>
+<p>The initial NVDLA open-source release includes software for a “headless”
+implementation, compatible with Linux.  Both a kernel-mode driver and a
+user-mode test utility are provided in source form, and can run on top of
+otherwise-unmodified Linux systems.</p>
+</div>
+</div>
+<div class="section" id="appendix-deep-learning-references">
+<h2>Appendix: Deep Learning references<a class="headerlink" href="#appendix-deep-learning-references" title="Permalink to this headline">¶</a></h2>
+<p>This document assumes some amount of familiarity with general concepts
+pertaining to Deep Learning and Convolutional Neural Networks. The following
+links have been provided as a means to begin or further an individual’s
+investigation into these topics, as needed.</p>
+<ul class="simple">
+<li><a class="reference external" href="http://info.nvidia.com/deep-learning-demystified.html">NVIDIA Webinar Series: Deep Learning Demystified</a></li>
+<li>A Beginner’s Guide to Understanding Convolutional Neural Networks<ul>
+<li><a class="reference external" href="https://adeshpande3.github.io/adeshpande3.github.io/A-Beginner's-Guide-To-Understanding-Convolutional-Neural-Networks/">Part 1</a></li>
+<li><a class="reference external" href="https://adeshpande3.github.io/adeshpande3.github.io/A-Beginner's-Guide-To-Understanding-Convolutional-Neural-Networks-Part-2/">Part 2</a></li>
+</ul>
+</li>
+<li><a class="reference external" href="https://devblogs.nvidia.com/parallelforall/inference-next-step-gpu-accelerated-deep-learning/">Inference: The Next Step in GPU-Accelerated Deep Learning</a></li>
+<li><a class="reference external" href="http://www.nvidia.com/content/tegra/embedded-systems/pdf/jetson_tx1_whitepaper.pdf">NVIDIA Whitepaper: GPU-Based Deep Learning Inference: A performance and Power Analysis</a></li>
+<li><a class="reference external" href="https://blogs.nvidia.com/blog/2016/08/22/difference-deep-learning-training-inference-ai/">Fundamentals of Deep Learning: What’s the Difference between Deep Learning Training and Inference?</a></li>
+<li><a class="reference external" href="http://www.cv-foundation.org/openaccess/content_cvpr_2015/papers/Szegedy_Going_Deeper_With_2015_CVPR_paper.pdf">Inception (GoogLeNet): Going Deeper with Convolutions</a></li>
+<li><a class="reference external" href="https://arxiv.org/pdf/1512.03385v1.pdf">Microsoft ResNet: Deep Residual Learning for Image Recognition</a></li>
+<li><a class="reference external" href="https://papers.nips.cc/paper/4824-imagenet-classification-with-deep-convolutional-neural-networks.pdf">AlexNet: ImageNet Classification with Deep Convolutional Neural Networks</a></li>
+<li><a class="reference external" href="https://arxiv.org/pdf/1409.1556v6.pdf">VGG Net: Very Deep Convolutional Networks for Large-Scale Image Recognition</a></li>
+</ul>
+</div>
+</div>
+
+
+        </div>
+        <div class="col-xs-12 col-md-3">
+          
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="contents.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">NVDLA Primer</a><ul>
+<li><a class="reference internal" href="#abstract">Abstract</a></li>
+<li><a class="reference internal" href="#accelerating-deep-learning-inference-using-nvdla">Accelerating Deep Learning Inference using NVDLA</a><ul>
+<li><a class="reference internal" href="#small-nvdla-model">Small NVDLA Model</a></li>
+<li><a class="reference internal" href="#large-nvdla-model">Large NVDLA Model</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#hardware-architecture">Hardware Architecture</a><ul>
+<li><a class="reference internal" href="#connections">Connections</a></li>
+<li><a class="reference internal" href="#components">Components</a><ul>
+<li><a class="reference internal" href="#convolution">Convolution</a></li>
+<li><a class="reference internal" href="#single-data-point-processor">Single Data Point Processor</a></li>
+<li><a class="reference internal" href="#planar-data-processor">Planar Data Processor</a></li>
+<li><a class="reference internal" href="#cross-channel-data-processor">Cross-channel Data Processor</a></li>
+<li><a class="reference internal" href="#data-reshape-engine">Data Reshape Engine</a></li>
+<li><a class="reference internal" href="#bridge-dma">Bridge DMA</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#configurability">Configurability</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#software-design">Software Design</a><ul>
+<li><a class="reference internal" href="#compilation-tools-model-creation-and-compilation">Compilation Tools: Model Creation and Compilation</a></li>
+<li><a class="reference internal" href="#runtime-environment-model-inference-on-device">Runtime Environment: Model Inference on Device</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#nvdla-system-integration">NVDLA System Integration</a><ul>
+<li><a class="reference internal" href="#tuning-questions">Tuning Questions</a><ul>
+<li><a class="reference internal" href="#what-math-precision-is-required-for-the-workloads-expected-for-any-given-instantiation">What math precision is required for the workloads expected for any given instantiation?</a></li>
+<li><a class="reference internal" href="#what-are-the-number-of-mac-units-and-the-required-memory-bandwidth">What are the number of MAC units, and the required memory bandwidth?</a></li>
+<li><a class="reference internal" href="#is-there-a-need-for-on-chip-sram">Is there a need for on-chip SRAM?</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#example-area-and-performance-with-nvdla">Example Area and Performance with NVDLA</a></li>
+<li><a class="reference internal" href="#sample-platforms">Sample Platforms</a><ul>
+<li><a class="reference internal" href="#simulation">Simulation</a></li>
+<li><a class="reference internal" href="#fpga">FPGA</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#models">Models</a><ul>
+<li><a class="reference internal" href="#verilog-model">Verilog model</a></li>
+<li><a class="reference internal" href="#simulation-model-and-verification-suite">Simulation model and verification suite</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#software">Software</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#appendix-deep-learning-references">Appendix: Deep Learning references</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="contents.html"
+                        title="previous chapter">NVDLA Index of Documentation</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="roadmap.html"
+                        title="next chapter">Open Source Roadmap</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/primer.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+  </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <div class="container">
+      <div class="row">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right first">
+          <a href="roadmap.html" title="Open Source Roadmap"
+             >next</a></li>
+        <li class="right">
+          <a href="contents.html" title="NVDLA Index of Documentation"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">NVDLA Open Source Project</a>&#187;</li>
+        <li class="nav-item nav-item-1"><a href="contents.html">Documentation</a>&#187;</li> 
+      </ul>
+      </div>
+      </div>
+    </div>
+<div class="footer" role="contentinfo">
+<div class="container">
+<div class="row">
+&#169; <a
+href="copyright.html">Copyright</a> 2017, NVIDIA Corporation.
+<a href="http://www.nvidia.com/object/legal_info.html">Legal Information.</a>
+<a href="http://www.nvidia.com/object/privacy_policy.html">Privacy Policy.</a>
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.3.
+</div>
+</div>
+</div>
+  </body>
+</html>

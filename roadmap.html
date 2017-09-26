@@ -1,0 +1,282 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Open Source Roadmap &#8212; NVDLA Documentation</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <link rel="stylesheet" href="_static/nvdla.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/styles.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Software Manual" href="sw/contents.html" />
+    <link rel="prev" title="NVDLA Primer" href="primer.html" /> 
+  </head>
+  <body>
+<header class="navbar">
+  <nav class="container navbar navbar-light bg-faded">
+    <a class="navbar-brand" href="https://www.nvidia.com/">
+      <div class="logo"></div>
+    </a>
+  </nav>
+</header>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <div class="container">
+      <div class="row">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right first">
+          <a href="sw/contents.html" title="Software Manual"
+             accesskey="N">next</a></li>
+        <li class="right">
+          <a href="primer.html" title="NVDLA Primer"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">NVDLA Open Source Project</a>&#187;</li>
+        <li class="nav-item nav-item-1"><a href="contents.html">Documentation</a>&#187;</li> 
+      </ul>
+      </div>
+      </div>
+    </div>
+  <div class="document">
+    <div class="container">
+      <div class="row">
+        <div class="col-xs-12 col-md-9">
+          
+  <div class="section" id="open-source-roadmap">
+<h1>Open Source Roadmap<a class="headerlink" href="#open-source-roadmap" title="Permalink to this headline">¶</a></h1>
+<p>The open sourcing of the NVDLA core will occur over the course of the next two calendar quarters.  The intent is to deliver a useable core early, with additional configurations and features following.</p>
+<p>The hardware design source consists of Verilog RTL.  Two specific configurations are called out in this roadmap: one verified large area/performance configuration for high performace IoT applications, and one verified small area/performance configuration for cost sensitive IoT applications. The design itself will additionally be released as a configurable IP so many configurations will be possible.</p>
+<p>The software packages will be released as source code.  However, the compiler will initially be only released in binary form, with a source release coming later.</p>
+<p>In the tables below, the term early access implies that the design source is included for the purposes of integrating into an SoC and validating that integration.  However, some bugs may remain.</p>
+<div class="section" id="q3">
+<h2>2017-Q3<a class="headerlink" href="#q3" title="Permalink to this headline">¶</a></h2>
+<p>The first deliverables allow users to test with their tool flows and libraries. Both front-end simulation and back-end design will be enabled. The initial RTL will be for a large NVDLA configuration with 2048 8-bit MACs, also configurable as 1024 16-bit fixed or floating point MACs.</p>
+<p>Detailed hardware and software documentation and an xls-based performance estimator help to determine whether NVDLA meets a user’s needs and what configuration is required.</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<table border="1" class="colwidths-given docutils">
+<colgroup>
+<col width="33%" />
+<col width="33%" />
+<col width="33%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Documentation</th>
+<th class="head">Hardware</th>
+<th class="head">Software</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Conceptual Overview</td>
+<td>Large Config Verilog RTL, early access</td>
+<td>Performance Estimator Tool</td>
+</tr>
+<tr class="row-odd"><td>Hardware Architecture</td>
+<td>Reference testbench and traces</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-even"><td>Software Interface</td>
+<td>Reference synthesis scripts</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-odd"><td>Integration Manual</td>
+<td>&#160;</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-even"><td>Roadmap</td>
+<td>&#160;</td>
+<td>&#160;</td>
+</tr>
+</tbody>
+</table>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="q4">
+<h2>2017-Q4<a class="headerlink" href="#q4" title="Permalink to this headline">¶</a></h2>
+<p>The second set of deliverables will add many of the tools that are needed for full system simulation. A C-model has the performance to run full networks and during this period we will also add drivers, a test application, and compilers to map any network to NVDLA.</p>
+<p>Whereas the large configuration of NVDLA was mostly focussed on performance and features, the second and small configuration will demonstrate low power and small area.</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<table border="1" class="colwidths-given docutils">
+<colgroup>
+<col width="27%" />
+<col width="36%" />
+<col width="36%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Documentation</th>
+<th class="head">Hardware</th>
+<th class="head">Software</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Software Porting Guide</td>
+<td>Large config Verilog RTL released</td>
+<td>Linux Kernel Mode Driver source</td>
+</tr>
+<tr class="row-odd"><td>&#160;</td>
+<td>Small config Verilog RTL, early access</td>
+<td>QEMU based C model suitable for software development</td>
+</tr>
+<tr class="row-even"><td>&#160;</td>
+<td>&#160;</td>
+<td>Linux User Mode Driver Runtime source</td>
+</tr>
+<tr class="row-odd"><td>&#160;</td>
+<td>&#160;</td>
+<td>Binary compiler</td>
+</tr>
+<tr class="row-even"><td>&#160;</td>
+<td>&#160;</td>
+<td>Application supporting Caffe and TensorFlow models; most CNN related layers</td>
+</tr>
+<tr class="row-odd"><td>&#160;</td>
+<td>&#160;</td>
+<td>Software sanity tests</td>
+</tr>
+</tbody>
+</table>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="h1">
+<h2>2018-H1<a class="headerlink" href="#h1" title="Permalink to this headline">¶</a></h2>
+<p>The third set of deliverables will see scalable solutions: the user can set parameters to create the exact configuration that best match his or her needs. A test bench, test suite, and FPGA support are added to allow for rigorous testing needed for high-confidence tape outs.</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<table border="1" class="colwidths-given docutils">
+<colgroup>
+<col width="27%" />
+<col width="36%" />
+<col width="36%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Documentation</th>
+<th class="head">Hardware</th>
+<th class="head">Software</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Software architecture document</td>
+<td>Small config Verilog RTL released</td>
+<td>FPGA support for accelerating software development</td>
+</tr>
+<tr class="row-odd"><td>&#160;</td>
+<td>RTL support for fine grained configuration control</td>
+<td>Customizable compiler</td>
+</tr>
+<tr class="row-even"><td>&#160;</td>
+<td>UVM testbench validation of custom configurations</td>
+<td>NVDLA compliance test suite</td>
+</tr>
+<tr class="row-odd"><td>&#160;</td>
+<td>&#160;</td>
+<td>TensorRT and all supported frameworks</td>
+</tr>
+</tbody>
+</table>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+</div>
+
+
+        </div>
+        <div class="col-xs-12 col-md-3">
+          
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="contents.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Open Source Roadmap</a><ul>
+<li><a class="reference internal" href="#q3">2017-Q3</a></li>
+<li><a class="reference internal" href="#q4">2017-Q4</a></li>
+<li><a class="reference internal" href="#h1">2018-H1</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="primer.html"
+                        title="previous chapter">NVDLA Primer</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="sw/contents.html"
+                        title="next chapter">Software Manual</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/roadmap.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+  </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <div class="container">
+      <div class="row">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right first">
+          <a href="sw/contents.html" title="Software Manual"
+             >next</a></li>
+        <li class="right">
+          <a href="primer.html" title="NVDLA Primer"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">NVDLA Open Source Project</a>&#187;</li>
+        <li class="nav-item nav-item-1"><a href="contents.html">Documentation</a>&#187;</li> 
+      </ul>
+      </div>
+      </div>
+    </div>
+<div class="footer" role="contentinfo">
+<div class="container">
+<div class="row">
+&#169; <a
+href="copyright.html">Copyright</a> 2017, NVIDIA Corporation.
+<a href="http://www.nvidia.com/object/legal_info.html">Legal Information.</a>
+<a href="http://www.nvidia.com/object/privacy_policy.html">Privacy Policy.</a>
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.3.
+</div>
+</div>
+</div>
+  </body>
+</html>

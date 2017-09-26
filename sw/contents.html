@@ -1,0 +1,149 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Software Manual &#8212; NVDLA Documentation</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <link rel="stylesheet" href="../_static/nvdla.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/styles.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Compilation tools" href="compilation_tool.html" />
+    <link rel="prev" title="Open Source Roadmap" href="../roadmap.html" /> 
+  </head>
+  <body>
+<header class="navbar">
+  <nav class="container navbar navbar-light bg-faded">
+    <a class="navbar-brand" href="https://www.nvidia.com/">
+      <div class="logo"></div>
+    </a>
+  </nav>
+</header>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <div class="container">
+      <div class="row">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right first">
+          <a href="compilation_tool.html" title="Compilation tools"
+             accesskey="N">next</a></li>
+        <li class="right">
+          <a href="../roadmap.html" title="Open Source Roadmap"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">NVDLA Open Source Project</a>&#187;</li>
+        <li class="nav-item nav-item-1"><a href="../contents.html">Documentation</a>&#187;</li> 
+      </ul>
+      </div>
+      </div>
+    </div>
+  <div class="document">
+    <div class="container">
+      <div class="row">
+        <div class="col-xs-12 col-md-9">
+          
+  <div class="section" id="software-manual">
+<h1>Software Manual<a class="headerlink" href="#software-manual" title="Permalink to this headline">¶</a></h1>
+<p>NVDLA has a full software ecosystem including support from compiling network to inference. Part of this ecosystem includes the on-device software stack, a part of the <a class="reference internal" href="../glossary.html#term-23"><span class="xref std std-term">NVDLA</span></a> open source release; additionally, NVIDIA will provide a full training infrastructure to build new models that incorporate Deep Learning, and to convert existing models to a form that is usable by <a class="reference internal" href="../glossary.html#term-23"><span class="xref std std-term">NVDLA</span></a> software.  In general, the software associated with <a class="reference internal" href="../glossary.html#term-23"><span class="xref std std-term">NVDLA</span></a> is grouped into two parts: the <a class="reference internal" href="compilation_tool.html#compilation-tools"><span class="std std-ref">Compilation tools</span></a> (model conversion), and the <a class="reference internal" href="runtime_environment.html#runtime-environment"><span class="std std-ref">Runtime environment</span></a> (run-time software to load and execute compiled neural network on <a class="reference internal" href="../glossary.html#term-23"><span class="xref std std-term">NVDLA</span></a>). The general flow of this is as shown in the figure below;</p>
+<div class="figure align-center" id="fig-software-package">
+<a class="reference internal image-reference" href="../_images/software_package.png"><img alt="Software Package" src="../_images/software_package.png" style="width: 484.4px; height: 355.6px;" /></a>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="compilation_tool.html">Compilation tools</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="compilation_tool.html#parser">Parser</a></li>
+<li class="toctree-l2"><a class="reference internal" href="compilation_tool.html#compiler">Compiler</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="runtime_environment.html">Runtime environment</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="runtime_environment.html#user-mode-driver">User Mode Driver</a></li>
+<li class="toctree-l2"><a class="reference internal" href="runtime_environment.html#kernel-mode-driver">Kernel Mode Driver</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+
+        </div>
+        <div class="col-xs-12 col-md-3">
+          
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../roadmap.html"
+                        title="previous chapter">Open Source Roadmap</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="compilation_tool.html"
+                        title="next chapter">Compilation tools</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/sw/contents.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+  </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <div class="container">
+      <div class="row">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right first">
+          <a href="compilation_tool.html" title="Compilation tools"
+             >next</a></li>
+        <li class="right">
+          <a href="../roadmap.html" title="Open Source Roadmap"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">NVDLA Open Source Project</a>&#187;</li>
+        <li class="nav-item nav-item-1"><a href="../contents.html">Documentation</a>&#187;</li> 
+      </ul>
+      </div>
+      </div>
+    </div>
+<div class="footer" role="contentinfo">
+<div class="container">
+<div class="row">
+&#169; <a
+href="../copyright.html">Copyright</a> 2017, NVIDIA Corporation.
+<a href="http://www.nvidia.com/object/legal_info.html">Legal Information.</a>
+<a href="http://www.nvidia.com/object/privacy_policy.html">Privacy Policy.</a>
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.3.
+</div>
+</div>
+</div>
+  </body>
+</html>

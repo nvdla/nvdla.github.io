@@ -1,0 +1,178 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Glossary And Acronyms &#8212; NVDLA Documentation</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <link rel="stylesheet" href="_static/nvdla.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/styles.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="NVIDIA Open NVDLA License and Agreement v1.0" href="license.html" /> 
+  </head>
+  <body>
+<header class="navbar">
+  <nav class="container navbar navbar-light bg-faded">
+    <a class="navbar-brand" href="https://www.nvidia.com/">
+      <div class="logo"></div>
+    </a>
+  </nav>
+</header>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <div class="container">
+      <div class="row">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right first">
+          <a href="license.html" title="NVIDIA Open NVDLA License and Agreement v1.0"
+             accesskey="P">previous</a></li>
+        <li class="nav-item nav-item-0"><a href="index.html">NVDLA Open Source Project</a>&#187;</li>
+        <li class="nav-item nav-item-1"><a href="contents.html">Documentation</a>&#187;</li> 
+      </ul>
+      </div>
+      </div>
+    </div>
+  <div class="document">
+    <div class="container">
+      <div class="row">
+        <div class="col-xs-12 col-md-9">
+          
+  <div class="section" id="glossary-and-acronyms">
+<h1>Glossary And Acronyms<a class="headerlink" href="#glossary-and-acronyms" title="Permalink to this headline">¶</a></h1>
+<dl class="glossary docutils">
+<dt id="term-nvdla">NVDLA</dt>
+<dd>NVIDIA Deep Learning Accelerator. Hardware logic implementing different function engines.</dd>
+<dt id="term-dla">DLA</dt>
+<dd>Deep Learning Accelerator</dd>
+<dt id="term-umd">UMD</dt>
+<dd>User Mode Driver, software running in user space. It provides interfaces to user application</dd>
+<dt id="term-kmd">KMD</dt>
+<dd>Kernel Mode Driver, software running in kernel space. It implement low level functions such as hardware
+programming and provides interfaces to UMD</dd>
+<dt id="term-nvdla-loadable">NVDLA Loadable</dt>
+<dd>Format used to store compiled neural network.</dd>
+<dt id="term-hw-layer">hw-layer</dt>
+<dd>One complete hardware block processing. It starts with a set of register configuration with an
+enable field. When it is done, it triggers ONE interrupt.</dd>
+<dt id="term-sdp">SDP</dt>
+<dd>Single data processor, a functional sub unit in NVDLA engine</dd>
+<dt id="term-pdp">PDP</dt>
+<dd>Planar data processor, a functional sub unit in NVDLA engine</dd>
+<dt id="term-cdp">CDP</dt>
+<dd>Channel data processor, a functional sub unit in NVDLA engine</dd>
+<dt id="term-rubik">Rubik</dt>
+<dd>Data operation processor. A functional sub unit in NVDLA engine to
+support data layout transformation</dd>
+<dt id="term-bdma">BDMA</dt>
+<dd>Bridge DMA. BDMA transform data from CVSRAM to MC and vice versa</dd>
+<dt id="term-cdma">CDMA</dt>
+<dd>Convolution DMA, responsible for load image/weight/feature data to convolution core</dd>
+<dt id="term-rdma">RDMA</dt>
+<dd>Read DMA, instanced in SDP/CDP/PDP/Rubik engines which responsible for load
+input data from external memory (either MC or CVSRAM)</dd>
+<dt id="term-wdma">WDMA</dt>
+<dd>Write DMA, instanced in SDP/CDP/PDP/Rubik engines and responsible for write
+output data to external memory (either MC or CVSRAM)</dd>
+<dt id="term-cbb">CBB</dt>
+<dd>Control backbone. System control data path that connected to NVDLA</dd>
+<dt id="term-dbb">DBB</dt>
+<dd>Data backbone. The memory system that to which NVDLA connects</dd>
+<dt id="term-amba">AMBA</dt>
+<dd>ARM Advanced Microcontroller Bus Architecture. A set of ARM defined bus standards.</dd>
+<dt id="term-axi">AXI</dt>
+<dd>Advanced eXtensible Interface. The third generation of AMBA interface defined in the AMBA 3 specification.</dd>
+<dt id="term-cnn">CNN</dt>
+<dd>Convolutional Neural Network. A class of artificial neural networks.</dd>
+<dt id="term-csb">CSB</dt>
+<dd>Configuration Space Bus.  (See <a class="reference internal" href="hwarch.html#external-interfaces"><span class="std std-ref">External Interfaces</span></a>.)</dd>
+<dt id="term-20">DBB</dt>
+<dd>Data Back Bone – the path that NVDLA uses to perform DMA to system memory, such as the DRAM interface.</dd>
+<dt id="term-dbbif">DBBIF</dt>
+<dd>The NVDLA interface to the DBB.  (See <a class="reference internal" href="hwarch.html#external-interfaces"><span class="std std-ref">External Interfaces</span></a>.)</dd>
+<dt id="term-irq">IRQ</dt>
+<dd>Interrupt request.  (See <a class="reference internal" href="hwarch.html#external-interfaces"><span class="std std-ref">External Interfaces</span></a>.)</dd>
+<dt id="term-23">NVDLA</dt>
+<dd>NVIDIA Deep Learning Accelerator.</dd>
+<dt id="term-sramif">SRAMIF</dt>
+<dd>The NVDLA interface to an optional high-performance SRAM subsystem.</dd>
+</dl>
+</div>
+
+
+        </div>
+        <div class="col-xs-12 col-md-3">
+          
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="license.html"
+                        title="previous chapter">NVIDIA Open NVDLA License and Agreement v1.0</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/glossary.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+  </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <div class="container">
+      <div class="row">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right first">
+          <a href="license.html" title="NVIDIA Open NVDLA License and Agreement v1.0"
+             >previous</a></li>
+        <li class="nav-item nav-item-0"><a href="index.html">NVDLA Open Source Project</a>&#187;</li>
+        <li class="nav-item nav-item-1"><a href="contents.html">Documentation</a>&#187;</li> 
+      </ul>
+      </div>
+      </div>
+    </div>
+<div class="footer" role="contentinfo">
+<div class="container">
+<div class="row">
+&#169; <a
+href="copyright.html">Copyright</a> 2017, NVIDIA Corporation.
+<a href="http://www.nvidia.com/object/legal_info.html">Legal Information.</a>
+<a href="http://www.nvidia.com/object/privacy_policy.html">Privacy Policy.</a>
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.3.
+</div>
+</div>
+</div>
+  </body>
+</html>
