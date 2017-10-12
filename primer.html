@@ -619,16 +619,21 @@ for the popular ResNet-50 neural network.  The area figures given are
 estimated synthesis area, and include all memories required; real area
 results will vary based on foundry and libraries.  In this example, no
 on-chip SRAM is used.  On-chip SRAM would be beneficial if available SDRAM
-bandwidth is low.  The open-source release of NVDLA has an estimator tool
-available to explore the space of NVDLA designs, and their impact on
-performance.</p>
+bandwidth is low.  The open-source release of NVDLA has an performance
+estimator tool available to explore the space of NVDLA designs, and
+the impact on performance.</p>
+<p>Power and performance in the following table are shown for a 1GHz frequency.
+Power and performance for a given configuration can be varied though
+adjustment of voltage and frquency.</p>
 <table border="1" class="docutils">
 <colgroup>
-<col width="11%" />
-<col width="20%" />
-<col width="26%" />
-<col width="20%" />
-<col width="23%" />
+<col width="8%" />
+<col width="14%" />
+<col width="18%" />
+<col width="14%" />
+<col width="15%" />
+<col width="15%" />
+<col width="16%" />
 </colgroup>
 <thead valign="bottom">
 <tr class="row-odd"><th class="head"># MACs</th>
@@ -636,10 +641,17 @@ performance.</p>
 size (KB)</th>
 <th class="head">SDRAM
 bandwidth (GB/s)</th>
-<th class="head">Silicon area
+<th class="head">Silicon Cell
+Area
 (mm^2, 28nm)</th>
+<th class="head">Silicon Cell
+Area
+(mm^2, 16nm)</th>
 <th class="head">Int8 ResNet-50
-frames/second</th>
+(frames/sec)</th>
+<th class="head">Power Estimate
+Peak/Average
+(mW, 16nm)</th>
 </tr>
 </thead>
 <tbody valign="top">
@@ -647,43 +659,57 @@ frames/second</th>
 <td>512</td>
 <td>20</td>
 <td>5.5</td>
+<td>3.3</td>
 <td>269</td>
+<td>766 / 291</td>
 </tr>
 <tr class="row-odd"><td>1024</td>
 <td>256</td>
 <td>15</td>
 <td>3.0</td>
+<td>1.8</td>
 <td>153</td>
+<td>375 / 143</td>
 </tr>
 <tr class="row-even"><td>512</td>
 <td>256</td>
 <td>10</td>
 <td>2.3</td>
+<td>1.4</td>
 <td>93</td>
+<td>210 / 80</td>
 </tr>
 <tr class="row-odd"><td>256</td>
 <td>256</td>
 <td>5</td>
 <td>1.7</td>
+<td>1.0</td>
 <td>46</td>
+<td>135 / 48</td>
 </tr>
 <tr class="row-even"><td>128</td>
 <td>256</td>
 <td>2</td>
 <td>1.4</td>
+<td>0.84</td>
 <td>20</td>
+<td>82  / 31</td>
 </tr>
 <tr class="row-odd"><td>64</td>
 <td>128</td>
 <td>1</td>
-<td>.91</td>
+<td>0.91</td>
+<td>0.55</td>
 <td>7.3</td>
+<td>55  / 21</td>
 </tr>
 <tr class="row-even"><td>32</td>
 <td>128</td>
 <td>0.5</td>
-<td>.85</td>
+<td>0.85</td>
+<td>0.51</td>
 <td>3.6</td>
+<td>45  / 17</td>
 </tr>
 </tbody>
 </table>
