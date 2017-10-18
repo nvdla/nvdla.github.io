@@ -1024,26 +1024,49 @@ simulation.  When used within an SoC simulation, it is expected that the SoC’s
 playing back the trace and responding to NVDLA interrupts.  The trace format is documented below.</p>
 <div class="section" id="tests">
 <h3>Tests<a class="headerlink" href="#tests" title="Permalink to this headline">¶</a></h3>
-<p>The NVDLA repository contains four basic sanity tests, and one convolution test.  Additional tests
-will be added soon.</p>
-<ul>
-<li><p class="first">Sanity0, Sanity1, and Sanity2</p>
-<p>Basic sanity tests</p>
-</li>
-<li><p class="first">conv_8x8_fc_int16</p>
-<p>Short convolution test.  Utilizes the MAC and Accumulator datapaths.</p>
-</li>
+<p>The NVDLA repository contains seven basic sanity tests, and two layer tests.  Additional tests will be added periodically.</p>
+</div>
+<div class="section" id="basic-sanity-tests">
+<h3>Basic sanity tests<a class="headerlink" href="#basic-sanity-tests" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>sanity0 - basic register write and compare read-back value</li>
+<li>sanity1 - memory copy test using bdma (dbb to dbb), test ends using register polling</li>
+<li>sanity2 - sanity1 waiting on interrupts instead of register polling</li>
+<li>sanity3 - convolution test, test ends using register polling and compares output mem region to determine passing</li>
+<li>sanity3_cvsram - convolution test, uses cvsram path instead of dbb, test ends using register polling and compares output mem region to determine passing</li>
+</ul>
+</div>
+<div class="section" id="short-single-function-tests-using-dbb">
+<h3>Short single function tests using dbb<a class="headerlink" href="#short-single-function-tests-using-dbb" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>conv_8x8_fc_int16</li>
+<li>pdp_max_pooling_int16</li>
+<li>sdp_relu_int16</li>
+</ul>
+</div>
+<div class="section" id="long-layer-tests">
+<h3>Long layer tests<a class="headerlink" href="#long-layer-tests" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>googlenet_conv2_3x3_int16 - uses cvsram, 30 min runtime</li>
+<li>cc_alexnet_conv5_relu5_int16_dtest_cvsram - uses cvsram, 156 min runtime</li>
+</ul>
+<p>The long layer tests are not in the regress target. Run using</p>
+<ul class="simple">
+<li>make run TESTDIR=../traces/traceplayer/googlenet_conv2_3x3_int16</li>
+<li>make run TESTDIR=../traces/traceplayer/cc_alexnet_conv5_relu5_int16_dtest_cvsram</li>
 </ul>
 </div>
 <div class="section" id="test-format">
 <span id="id5"></span><h3>Test Format<a class="headerlink" href="#test-format" title="Permalink to this headline">¶</a></h3>
 <p>Tests will be in trace form and will support seven commands:  cpu read/write, memory read/write,
 memory load/dump, and interrupt wait.</p>
-<div class="section" id="cpu-read-write-commands">
-<h4>CPU Read/Write Commands<a class="headerlink" href="#cpu-read-write-commands" title="Permalink to this headline">¶</a></h4>
-<p>The main test trace performs cpu register reads/writes to the NVDLA IP.  These commands
+<p>Tests read in input.txn in what we call “trace” format which is a file containing a list of
+register and memory accesses that will be used by the test before finishing the simulation. The script in synth_tb/sim_scripts/inp_txn_to_hexdump.pl reads input.txn and outputs input.txn.raw containing encodings for the csb master sequencer to read and execute from.</p>
+<div class="section" id="hardware-config-read-write-commands">
+<h4>Hardware Config Read/Write Commands<a class="headerlink" href="#hardware-config-read-write-commands" title="Permalink to this headline">¶</a></h4>
+<p>The main test trace performs register reads/writes to the NVDLA IP.  These commands
 will cause reads and write commands to the CSB programming bus.</p>
-<p>CPU read and write Commands are listed in the following table.</p>
+<p>Reg read and write Commands are listed in the following table.</p>
 <table border="1" class="colwidths-given docutils">
 <colgroup>
 <col width="40%" />
@@ -1055,14 +1078,27 @@ will cause reads and write commands to the CSB programming bus.</p>
 </tr>
 </thead>
 <tbody valign="top">
-<tr class="row-even"><td>write_reg &lt;addr:32&gt; &lt;data:32&gt;</td>
-<td>Execute a 32b data write to a 32b addr</td>
+<tr class="row-even"><td>write_reg &lt;misc:16&gt;&lt;addr:16&gt; &lt;data:32&gt;</td>
+<td><p class="first">Execute a 32b data write to a 16b addr.</p>
+<p>addr is calculated from
+(documented register address - NVDLA_GLB.S_NVDLA_HW_VERSION_0.offset) &gt;&gt; 2.
+Left shift by 2 because hardware expects the word address.</p>
+<p>Bit 1 of misc (bit 17 of 32b field) means CSB master will wait for wr_complete or error
+before sending next read or write.
+Bit 0 of misc (bit 16 of 32b field) is 1 for writes and 0 for reads.</p>
+<p>inp_txn_to_hexdump.pl will correct the rd/wr bit based on read_reg/write_reg cmd.
+Examples:</p>
+<div class="last highlight-default"><div class="highlight"><pre><span></span><span class="n">write_reg</span> <span class="mh">0x00030200</span> <span class="mh">0x1234c0de</span> <span class="o">//</span><span class="n">Wait</span> <span class="k">for</span> <span class="n">wr_complete</span> <span class="ow">or</span> <span class="n">error</span>
+<span class="n">write_reg</span> <span class="mh">0x00010200</span> <span class="mh">0x1234da7a</span> <span class="o">//</span><span class="n">Don</span><span class="s1">&#39;t wait for wr_complete or error</span>
+</pre></div>
+</div>
+</td>
 </tr>
-<tr class="row-odd"><td>read_reg &lt;addr:32&gt; &lt;bitmask:32&gt; &lt;expectedData:32&gt;</td>
-<td><p class="first">Execute a polling read to 32b addr and poll until 32b expectedData is met.
+<tr class="row-odd"><td>read_reg &lt;misc:16&gt;&lt;addr:16&gt; &lt;bitmask:32&gt; &lt;expectedData:32&gt;</td>
+<td><p class="first">Execute a polling read to 16b addr and poll until (returnData &amp; bitmask) == expectedData.
 Number of polls will be equal to  +read_reg_poll_retries (default 50).
 Examples:</p>
-<div class="last highlight-default"><div class="highlight"><pre><span></span><span class="n">read_reg</span> <span class="mh">0x27000200</span> <span class="mh">0xffffffff</span> <span class="mh">0x00000000</span>
+<div class="last highlight-default"><div class="highlight"><pre><span></span><span class="n">read_reg</span>  <span class="mh">0x00000200</span> <span class="mh">0xffffffff</span> <span class="mh">0x1234da7a</span> <span class="o">//</span><span class="mh">0x0020</span> <span class="n">read</span> <span class="n">back</span> <span class="n">should</span> <span class="n">be</span> <span class="mh">0x1234da7a</span>
 </pre></div>
 </div>
 </td>
@@ -1085,11 +1121,11 @@ Examples:</p>
 </tr>
 </thead>
 <tbody valign="top">
-<tr class="row-even"><td>write_mem &lt;addr:40&gt; &lt;bytemask:16&gt; &lt;wdata:128&gt;</td>
-<td>Execute a 128b data write with corresponding 16 byte mask to 40b addr.</td>
+<tr class="row-even"><td>write_mem &lt;addr:64&gt; &lt;bytemask:16&gt; &lt;wdata:128&gt;</td>
+<td>Execute a 128b data write with corresponding 16 byte mask to 64b addr.</td>
 </tr>
-<tr class="row-odd"><td>read_mem &lt;addr:40&gt; &lt;bitmask:128&gt; &lt;expectedData:128&gt;</td>
-<td><p class="first">Execute a polling read to 40b addr and poll until 128b expectedData is met.
+<tr class="row-odd"><td>read_mem &lt;addr:64&gt; &lt;bitmask:128&gt; &lt;expectedData:128&gt;</td>
+<td><p class="first">Execute a polling read to 64b addr and poll until 128b expectedData is met.
 Number of polls will be equal to  +read_mem_poll_retries (default 50).
 Example:</p>
 <div class="last highlight-default"><div class="highlight"><pre><span></span><span class="n">read_mem</span> <span class="mh">0x41000000</span> <span class="mh">0xffffffffffffffffffffffffffffffffffffffffffffffff</span>
@@ -1115,11 +1151,11 @@ Example:</p>
 </tr>
 </thead>
 <tbody valign="top">
-<tr class="row-even"><td>load_mem &lt;addr:40&gt; &lt;num_bytes:32&gt; &lt;string&gt;</td>
-<td>Use Verilog $readmemh() to load memory with 32b num_bytes at 40b addr from file, “string”.</td>
+<tr class="row-even"><td>load_mem &lt;addr:64&gt; &lt;num_bytes:32&gt; &lt;string&gt;</td>
+<td>Use Verilog $readmemh() to load memory with 32b num_bytes at 64b addr from file, “string”.</td>
 </tr>
-<tr class="row-odd"><td>dump_mem &lt;addr:40&gt; &lt;num_bytes:32&gt; &lt;string&gt;</td>
-<td>Use Verilog $writememh() to dump 32b num_bytes at 40b addr of memory to file, “string”.</td>
+<tr class="row-odd"><td>dump_mem &lt;addr:64&gt; &lt;num_bytes:32&gt; &lt;string&gt;</td>
+<td>Use Verilog $writememh() to dump 32b num_bytes at 64b addr of memory to file, “string”.</td>
 </tr>
 </tbody>
 </table>
@@ -1162,7 +1198,11 @@ The memory write, load, and dump commands occur in zero simulation time.  The po
 </div>
 <div class="section" id="dbbif-slave-agent">
 <h4>DBBIF Slave Agent<a class="headerlink" href="#dbbif-slave-agent" title="Permalink to this headline">¶</a></h4>
-<p>The DBBIF slave agent captures DBBIF memory transactions and issues reads and writes to memory.  The NVDLA and environment supports two slave agents, each 16B/clk.</p>
+<p>The DBBIF slave agent captures DBBIF memory transactions and issues reads and writes to memory.  The NVDLA and environment supports one slave agent per memory region, 16B/clk.</p>
+</div>
+<div class="section" id="cvsram-slave-agent">
+<h4>CVSRAM Slave Agent<a class="headerlink" href="#cvsram-slave-agent" title="Permalink to this headline">¶</a></h4>
+<p>The CVSRAM slave agent captures CVSRAM memory transactions and issues reads and writes to a section of memory logically separate from DBB.  The NVDLA and environment supports one slave agent per memory region, 16B/clk.</p>
 </div>
 <div class="section" id="memory-stub">
 <h4>Memory Stub<a class="headerlink" href="#memory-stub" title="Permalink to this headline">¶</a></h4>
@@ -1205,7 +1245,7 @@ variable to this string in the Makefile:</p>
 <dl class="docutils">
 <dt>Examples command lines::</dt>
 <dd><p class="first last">make run DUMP=1 TESTDIR=../traces/traceplayer/sanity0
-make run DUMP=0 TESTDIR=../traces/first_release/conv_8x8_fc_int16</p>
+make run DUMP=0 TESTDIR=../traces/traceplayer/conv_8x8_fc_int16</p>
 </dd>
 </dl>
 <p>All packaged tests will be found in the verif/traces/* directories.  Within each test directory there is
@@ -1630,8 +1670,11 @@ $finish called.
 </li>
 <li><a class="reference internal" href="#testbench-traces">Testbench &amp; Traces</a><ul>
 <li><a class="reference internal" href="#tests">Tests</a></li>
+<li><a class="reference internal" href="#basic-sanity-tests">Basic sanity tests</a></li>
+<li><a class="reference internal" href="#short-single-function-tests-using-dbb">Short single function tests using dbb</a></li>
+<li><a class="reference internal" href="#long-layer-tests">Long layer tests</a></li>
 <li><a class="reference internal" href="#test-format">Test Format</a><ul>
-<li><a class="reference internal" href="#cpu-read-write-commands">CPU Read/Write Commands</a></li>
+<li><a class="reference internal" href="#hardware-config-read-write-commands">Hardware Config Read/Write Commands</a></li>
 <li><a class="reference internal" href="#memory-read-write-commands">Memory Read/Write Commands</a></li>
 <li><a class="reference internal" href="#memory-load-dump-command">Memory Load/Dump Command</a></li>
 <li><a class="reference internal" href="#interrupt-wait-command">Interrupt Wait Command</a></li>
@@ -1640,6 +1683,7 @@ $finish called.
 <li><a class="reference internal" href="#reference-simulation-testbench">Reference Simulation Testbench</a><ul>
 <li><a class="reference internal" href="#csb-master-trace-player">CSB Master Trace Player</a></li>
 <li><a class="reference internal" href="#dbbif-slave-agent">DBBIF Slave Agent</a></li>
+<li><a class="reference internal" href="#cvsram-slave-agent">CVSRAM Slave Agent</a></li>
 <li><a class="reference internal" href="#memory-stub">Memory Stub</a></li>
 <li><a class="reference internal" href="#running-a-test-using-make">Running a Test (using make)</a></li>
 <li><a class="reference internal" href="#makefile-run-options">Makefile Run Options</a></li>
