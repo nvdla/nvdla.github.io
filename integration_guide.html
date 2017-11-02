@@ -75,6 +75,8 @@ synthesis scripts.</p>
 <h2>Quick-Start<a class="headerlink" href="#quick-start" title="Permalink to this headline">¶</a></h2>
 <p>After downloading, to understand more about the NVDLA design, you can try out the following:</p>
 <ol class="arabic simple">
+<li>Set up the Linux environment with required tools.  Review <a class="reference internal" href="#env-setup"><span class="std std-ref">Environment Setup</span></a></li>
+<li>Select a configuration and build the hardware tree.  Review <a class="reference internal" href="#tree-build"><span class="std std-ref">Tree Build</span></a></li>
 <li>Run a simulation using the included testbench.  A number of sanity
 tests are included in the repository.  See <a class="reference internal" href="#simulation-testbench"><span class="std std-ref">Reference Simulation Testbench</span></a></li>
 <li>Synthesize the design to review area and timing in your
@@ -133,8 +135,8 @@ flops, so only the deassertion edge of the dla_reset_rstn signal is synchronized
 assertion edge is passed through.
 The other reset signal, direct_reset_, is
 useful for ATPG testing since it bypasses the internal synchronization.</p>
-<table border="1" class="colwidths-given docutils" id="id6">
-<caption><span class="caption-number">Table 32 </span><span class="caption-text">Clock and Reset Signals</span><a class="headerlink" href="#id6" title="Permalink to this table">¶</a></caption>
+<table border="1" class="colwidths-given docutils" id="id7">
+<caption><span class="caption-number">Table 32 </span><span class="caption-text">Clock and Reset Signals</span><a class="headerlink" href="#id7" title="Permalink to this table">¶</a></caption>
 <colgroup>
 <col width="20%" />
 <col width="40%" />
@@ -203,8 +205,8 @@ is independent from any other packet.</p>
 consumption when NVDLA is inactive. Each layout partition has one ram power control bus, allowing
 power to be ramped up/down one or more partitions at a time.  If a user is using RAM cells
 without power controls, those signals can be tied to 0.</p>
-<table border="1" class="colwidths-given docutils" id="id7">
-<caption><span class="caption-number">Table 33 </span><span class="caption-text">Power Control Signals</span><a class="headerlink" href="#id7" title="Permalink to this table">¶</a></caption>
+<table border="1" class="colwidths-given docutils" id="id8">
+<caption><span class="caption-number">Table 33 </span><span class="caption-text">Power Control Signals</span><a class="headerlink" href="#id8" title="Permalink to this table">¶</a></caption>
 <colgroup>
 <col width="20%" />
 <col width="40%" />
@@ -237,8 +239,8 @@ It can be used for controlling retention control, or any other semi-static RAM c
 <div class="section" id="dft">
 <h4>DFT<a class="headerlink" href="#dft" title="Permalink to this headline">¶</a></h4>
 <p>In current release, NVDLA has implemented one signal named test_mode to enable DFT.</p>
-<table border="1" class="colwidths-given docutils" id="id8">
-<caption><span class="caption-number">Table 34 </span><span class="caption-text">DFT Signals</span><a class="headerlink" href="#id8" title="Permalink to this table">¶</a></caption>
+<table border="1" class="colwidths-given docutils" id="id9">
+<caption><span class="caption-number">Table 34 </span><span class="caption-text">DFT Signals</span><a class="headerlink" href="#id9" title="Permalink to this table">¶</a></caption>
 <colgroup>
 <col width="20%" />
 <col width="40%" />
@@ -261,8 +263,50 @@ the functional and DFT reset signals.</td>
 </div>
 </div>
 </div>
+<div class="section" id="environment-setup">
+<span id="env-setup"></span><h2>Environment Setup<a class="headerlink" href="#environment-setup" title="Permalink to this headline">¶</a></h2>
+<p>The Verilog code included in this release is parameterized such that multiple configurations
+can be generated from a single source.  A hardware tree build is needed to generate the final
+Verilog RTL code for a given configuration.  The tools required for this build are outlined
+below.  The versions listed are used for testing.</p>
+<ul class="simple">
+<li>Java - jdk1.7</li>
+<li>Perl - perl-5.8.8</li>
+<li>CPP - gcc-4.0</li>
+</ul>
+</div>
+<div class="section" id="tree-build">
+<span id="id1"></span><h2>Tree Build<a class="headerlink" href="#tree-build" title="Permalink to this headline">¶</a></h2>
+<p>The NVDLA repository supports the build of multiple configurations based on a feature
+specification file.  Each configuration of the NVDLA is defined by a spec file in
+he hw/spec/defs directory.  The filename is the name of the configuration with a “.spec”
+exension.  There are currently two spec files included: “nv_large” which has 2048 INT8 MAC’s,
+and “nv_small” which has 64 INT8 MAC’s plus some other reductions.</p>
+<p>The file hw/tree.make specifies a list of configurations to build, as well as paths to tools
+required for building the configured RTL.  To create an initial version of this file, run the
+following command:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="n">hw</span>
+<span class="n">make</span>
+</pre></div>
+</div>
+<p>This command will prompt for the configuration and tool locations.  It will create a tree.make
+file in the hw directory containing the appropriate configuration and tool setup.
+For subsequent changes the tree.make file can be edited directory with a text editor.  Once
+tree.make setup is complete, the RTL can be built:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="n">hw</span>
+<span class="o">./</span><span class="n">tools</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">tmake</span> <span class="o">-</span><span class="n">build</span> <span class="n">vmod</span>
+</pre></div>
+</div>
+<p>The tmake program can also be used to launch a set of short sanity simulations.  Once you’ve
+set up the simulation environment according to the testbench section of this
+document <a class="reference internal" href="#testbench"><span class="std std-ref">Testbench &amp; Traces</span></a>, the following command can be used to launch the short sanity
+regression:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">./</span><span class="n">tools</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">tmake</span> <span class="o">-</span><span class="n">build</span> <span class="n">verif_sim</span>
+</pre></div>
+</div>
+</div>
 <div class="section" id="performance-model">
-<span id="id1"></span><h2>Performance Model<a class="headerlink" href="#performance-model" title="Permalink to this headline">¶</a></h2>
+<span id="id2"></span><h2>Performance Model<a class="headerlink" href="#performance-model" title="Permalink to this headline">¶</a></h2>
 <p>Included in the repository is a spreadsheet based performance model.  This spreadsheet models the
 performance for three popular convolutional networks: AlexNet, GoogleNet, and ResNet50.  Additional
 networks could be added by following the structure of the three provided.  Performance calculated
@@ -333,7 +377,7 @@ with an instantiation of a standard cell synchronizer as appropriate.</p>
 </ul>
 </div>
 <div class="section" id="memories-sram">
-<span id="id2"></span><h3>Memories (SRAM)<a class="headerlink" href="#memories-sram" title="Permalink to this headline">¶</a></h3>
+<span id="id3"></span><h3>Memories (SRAM)<a class="headerlink" href="#memories-sram" title="Permalink to this headline">¶</a></h3>
 <p>The memories instantiated in the NVDLA design have a logical interface which is fairly common
 across RAM compilers.  The release contains a behavioral model for these RAMS which can be
 used for simulation.  For synthesis, these behavioral models will need to be replaced with
@@ -456,11 +500,11 @@ pins</td>
 <p>Read operation is synchronized to the rising edge of the read memory clock, CLK_R.  The SRAM core is read when RE = ‘1’.
 A latch holds the read data whenever RE = ‘0’. There is no write through capability.
 If the read address matches the write address, read out data may be corrupted.</p>
-<div class="figure align-center" id="id9">
+<div class="figure align-center" id="id10">
 <span id="fig-ram-dp-read-timing"></span><a class="reference internal image-reference" href="_images/ig_sram_dp_read_timing.png"><img alt="Dual Port RAM Read Timing" src="_images/ig_sram_dp_read_timing.png" style="width: 706.0px; height: 354.0px;" /></a>
 <p class="caption"><span class="caption-number">Fig. 12 </span><span class="caption-text">Dual Port RAM Read Timing</span></p>
 </div>
-<div class="figure align-center" id="id10">
+<div class="figure align-center" id="id11">
 <span id="fig-ram-dp-write-timing"></span><a class="reference internal image-reference" href="_images/ig_sram_dp_write_timing.png"><img alt="Dual Port RAM Write Timing" src="_images/ig_sram_dp_write_timing.png" style="width: 671.0px; height: 372.5px;" /></a>
 <p class="caption"><span class="caption-number">Fig. 13 </span><span class="caption-text">Dual Port RAM Write Timing</span></p>
 </div>
@@ -563,7 +607,7 @@ pins</td>
 </tr>
 </tbody>
 </table>
-<div class="figure align-center" id="id11">
+<div class="figure align-center" id="id12">
 <span id="fig-ram-pdp-timing"></span><a class="reference internal image-reference" href="_images/ig_sram_pdp_timing.png"><img alt="Pseudo Dual Port RAM Timing" src="_images/ig_sram_pdp_timing.png" style="width: 748.0px; height: 473.0px;" /></a>
 <p class="caption"><span class="caption-number">Fig. 14 </span><span class="caption-text">Pseudo Dual Port RAM Timing</span></p>
 </div>
@@ -580,9 +624,9 @@ read data will contain the previous contents of the RAM (read occurs before writ
 </div>
 </div>
 <div class="section" id="synthesis">
-<span id="id3"></span><h2>Synthesis<a class="headerlink" href="#synthesis" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="id4">
-<h3>Overview<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<span id="id4"></span><h2>Synthesis<a class="headerlink" href="#synthesis" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id5">
+<h3>Overview<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
 <p>This release contains reference synthesis setup for the NVDLA design with Design Compiler (Wireload Model/Topographical).</p>
 </div>
 <div class="section" id="directory-structure">
@@ -627,8 +671,8 @@ variables, meanings and defaults.</p>
 <div class="line"><br /></div>
 <div class="line"><br /></div>
 </div>
-<table border="1" class="colwidths-given docutils" id="id12">
-<caption><span class="caption-number">Table 35 </span><span class="caption-text">Design Related Options</span><a class="headerlink" href="#id12" title="Permalink to this table">¶</a></caption>
+<table border="1" class="colwidths-given docutils" id="id13">
+<caption><span class="caption-number">Table 35 </span><span class="caption-text">Design Related Options</span><a class="headerlink" href="#id13" title="Permalink to this table">¶</a></caption>
 <colgroup>
 <col width="25%" />
 <col width="75%" />
@@ -690,8 +734,8 @@ clock constraints etc. You may provide your own constraints, based on the proces
 <div class="line"><br /></div>
 <div class="line"><br /></div>
 </div>
-<table border="1" class="colwidths-given docutils" id="id13">
-<caption><span class="caption-number">Table 36 </span><span class="caption-text">Tool Related Options</span><a class="headerlink" href="#id13" title="Permalink to this table">¶</a></caption>
+<table border="1" class="colwidths-given docutils" id="id14">
+<caption><span class="caption-number">Table 36 </span><span class="caption-text">Tool Related Options</span><a class="headerlink" href="#id14" title="Permalink to this table">¶</a></caption>
 <colgroup>
 <col width="25%" />
 <col width="75%" />
@@ -713,8 +757,8 @@ Defaults to an empty string</td>
 <div class="line"><br /></div>
 <div class="line"><br /></div>
 </div>
-<table border="1" class="colwidths-given docutils" id="id14">
-<caption><span class="caption-number">Table 37 </span><span class="caption-text">Library Related Options</span><a class="headerlink" href="#id14" title="Permalink to this table">¶</a></caption>
+<table border="1" class="colwidths-given docutils" id="id15">
+<caption><span class="caption-number">Table 37 </span><span class="caption-text">Library Related Options</span><a class="headerlink" href="#id15" title="Permalink to this table">¶</a></caption>
 <colgroup>
 <col width="25%" />
 <col width="75%" />
@@ -804,8 +848,8 @@ Defaults to an empty string.</td>
 These need to be provided by the user for the process node/ memory compiler being used.</p>
 <p class="last">Please DO NOT include <code class="docutils literal"><span class="pre">${NVDLA_ROOT}/vmod/rams/model</span></code> in the RTL_SEARCH_PATH - They are simulation models, not synthesizable.</p>
 </div>
-<table border="1" class="colwidths-given docutils" id="id15">
-<caption><span class="caption-number">Table 38 </span><span class="caption-text">Miscellaneous Options</span><a class="headerlink" href="#id15" title="Permalink to this table">¶</a></caption>
+<table border="1" class="colwidths-given docutils" id="id16">
+<caption><span class="caption-number">Table 38 </span><span class="caption-text">Miscellaneous Options</span><a class="headerlink" href="#id16" title="Permalink to this table">¶</a></caption>
 <colgroup>
 <col width="25%" />
 <col width="75%" />
@@ -893,8 +937,8 @@ The supported arguments to the scripts are in table below.</p>
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
-<table border="1" class="colwidths-given docutils" id="id16">
-<caption><span class="caption-number">Table 39 </span><span class="caption-text">Miscellaneous Options</span><a class="headerlink" href="#id16" title="Permalink to this table">¶</a></caption>
+<table border="1" class="colwidths-given docutils" id="id17">
+<caption><span class="caption-number">Table 39 </span><span class="caption-text">Miscellaneous Options</span><a class="headerlink" href="#id17" title="Permalink to this table">¶</a></caption>
 <colgroup>
 <col width="25%" />
 <col width="75%" />
@@ -1015,7 +1059,7 @@ ${NVDLA_ROOT}/syn/dc/scripts/syn_launch.sh -mode de -config /path/to/config.sh
 </div>
 </div>
 <div class="section" id="testbench-traces">
-<h2>Testbench &amp; Traces<a class="headerlink" href="#testbench-traces" title="Permalink to this headline">¶</a></h2>
+<span id="testbench"></span><h2>Testbench &amp; Traces<a class="headerlink" href="#testbench-traces" title="Permalink to this headline">¶</a></h2>
 <p>This section describes the trace-player testbench and traces supplied with the release.  The
 testbench is intended to be used
 to validate basic RTL functionality, and to provide a reference for RTL integration efforts.
@@ -1057,7 +1101,7 @@ playing back the trace and responding to NVDLA interrupts.  The trace format is 
 </ul>
 </div>
 <div class="section" id="test-format">
-<span id="id5"></span><h3>Test Format<a class="headerlink" href="#test-format" title="Permalink to this headline">¶</a></h3>
+<span id="id6"></span><h3>Test Format<a class="headerlink" href="#test-format" title="Permalink to this headline">¶</a></h3>
 <p>Tests will be in trace form and will support seven commands:  cpu read/write, memory read/write,
 memory load/dump, and interrupt wait.</p>
 <p>Tests read in input.txn in what we call “trace” format which is a file containing a list of
@@ -1637,6 +1681,8 @@ $finish called.
 </li>
 </ul>
 </li>
+<li><a class="reference internal" href="#environment-setup">Environment Setup</a></li>
+<li><a class="reference internal" href="#tree-build">Tree Build</a></li>
 <li><a class="reference internal" href="#performance-model">Performance Model</a></li>
 <li><a class="reference internal" href="#designware-components">Designware Components</a></li>
 <li><a class="reference internal" href="#library-cells">Library Cells</a><ul>
@@ -1649,7 +1695,7 @@ $finish called.
 </ul>
 </li>
 <li><a class="reference internal" href="#synthesis">Synthesis</a><ul>
-<li><a class="reference internal" href="#id4">Overview</a></li>
+<li><a class="reference internal" href="#id5">Overview</a></li>
 <li><a class="reference internal" href="#directory-structure">Directory structure</a></li>
 <li><a class="reference internal" href="#requirements">Requirements</a></li>
 <li><a class="reference internal" href="#synthesis-configuration">Synthesis Configuration</a></li>
@@ -1752,7 +1798,7 @@ $finish called.
 href="copyright.html">Copyright</a> 2017, NVIDIA Corporation.
 <a href="http://www.nvidia.com/object/legal_info.html">Legal Information.</a>
 <a href="http://www.nvidia.com/object/privacy_policy.html">Privacy Policy.</a>
-Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.4.
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.5.
 </div>
 </div>
 </div>
