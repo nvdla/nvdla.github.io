@@ -1323,17 +1323,17 @@ registers are not accessible.</p>
 </tr>
 <tr class="row-odd"><td>PDP</td>
 <td><code class="docutils literal"><span class="pre">0x0000_D000</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x0001_DFFF</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x0000_DFFF</span></code></td>
 <td>4</td>
 </tr>
 <tr class="row-even"><td>CDP (RDMA)</td>
 <td><code class="docutils literal"><span class="pre">0x0000_E000</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x0001_EFFF</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x0000_EFFF</span></code></td>
 <td>4</td>
 </tr>
 <tr class="row-odd"><td>CDP</td>
 <td><code class="docutils literal"><span class="pre">0x0000_F000</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x0001_FFFF</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x0000_FFFF</span></code></td>
 <td>4</td>
 </tr>
 <tr class="row-even"><td>RUBIK</td>
@@ -1365,31 +1365,31 @@ registers are not accessible.</p>
 </thead>
 <tbody valign="top">
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">HW_VERSION</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x3000</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x0000</span></code></td>
 <td>HW version of NVDLA</td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">INTR_MASK</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x3004</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x0004</span></code></td>
 <td>Interrupt mask control</td>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">INTR_SET</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x3008</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x0008</span></code></td>
 <td>Interrupt set control</td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">INTR_STATUS</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x300c</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x000c</span></code></td>
 <td>Interrupt status</td>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">HW_CONFIG0</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x3010</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x0010</span></code></td>
 <td>HW capability register 0: supported data types</td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">HW_CONFIG1</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x3014</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x0014</span></code></td>
 <td>HW capability register 1: supported features</td>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">HW_CONFIG2</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x3018</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x0018</span></code></td>
 <td>HW capability register 2: design size configurations</td>
 </tr>
 </tbody>
@@ -2001,31 +2001,31 @@ registers are not accessible.</p>
 </thead>
 <tbody valign="top">
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">CFG_RD_WEIGHT_0</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x5000</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x2000</span></code></td>
 <td>Register0 to control the read weight of clients in MCIF</td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">CFG_RD_WEIGHT_1</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x5004</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x2004</span></code></td>
 <td>Register1 to control the read weight of clients in MCIF</td>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">CFG_RD_WEIGHT_2</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x5008</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x2008</span></code></td>
 <td>Register2 to control the read weight of clients in MCIF</td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">CFG_WR_WEIGHT_0</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x500c</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x200c</span></code></td>
 <td>Register0 to control the write weight of clients in MCIF</td>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">CFG_WR_WEIGHT_1</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x5010</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x2010</span></code></td>
 <td>Register1 to control the write weight of clients in MCIF</td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">CFG_OUTSTANDING_CNT</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x5014</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x2014</span></code></td>
 <td>Outstanding AXI transactions in unit of 64Byte</td>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">STATUS</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x5018</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x2018</span></code></td>
 <td>Idle status of MCIF</td>
 </tr>
 </tbody>
@@ -2048,31 +2048,31 @@ registers are not accessible.</p>
 </thead>
 <tbody valign="top">
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">CFG_RD_WEIGHT_0</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x5000</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x3000</span></code></td>
 <td>Register0 to control the read weight of clients in MCIF</td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">CFG_RD_WEIGHT_1</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x5004</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x3004</span></code></td>
 <td>Register1 to control the read weight of clients in MCIF</td>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">CFG_RD_WEIGHT_2</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x5008</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x3008</span></code></td>
 <td>Register2 to control the read weight of clients in MCIF</td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">CFG_WR_WEIGHT_0</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x500c</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x300c</span></code></td>
 <td>Register0 to control the write weight of clients in MCIF</td>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">CFG_WR_WEIGHT_1</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x5010</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x3010</span></code></td>
 <td>Register1 to control the write weight of clients in MCIF</td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">CFG_OUTSTANDING_CNT</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x5014</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x3014</span></code></td>
 <td>Outstanding AXI transactions in unit of 64Byte</td>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">STATUS</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x5018</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x3018</span></code></td>
 <td>Idle status of MCIF</td>
 </tr>
 </tbody>
@@ -2095,87 +2095,87 @@ registers are not accessible.</p>
 </thead>
 <tbody valign="top">
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">CFG_SRC_ADDR_LOW</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x7000</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x4000</span></code></td>
 <td>Lower 32bits of source address</td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">CFG_SRC_ADDR_HIGH</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x7004</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x4004</span></code></td>
 <td>Higher 32bits of source address when axi araddr is 64bits</td>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">CFG_DST_ADDR_LOW</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x7008</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x4008</span></code></td>
 <td>Lower 32bits of dest address</td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">CFG_DST_ADDR_HIGH</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x700c</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x400c</span></code></td>
 <td>Higher 32bits of dest address when axi awaddr is 64bits</td>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">CFG_LINE</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x7010</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x4010</span></code></td>
 <td>Size of one line</td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">CFG_CMD</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x7014</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x4014</span></code></td>
 <td>Ram type of source and destination</td>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">CFG_LINE_REPEAT</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x7018</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x4018</span></code></td>
 <td>Number of lines to be moved in one surface</td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">CFG_SRC_LINE</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x701c</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x401c</span></code></td>
 <td>Source line stride</td>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">CFG_DST_LINE</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x7020</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x4020</span></code></td>
 <td>Destination line stride</td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">CFG_SURF_REPEAT</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x7024</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x4024</span></code></td>
 <td>Number of surfaces to be moved in one operation</td>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">CFG_SRC_SURF</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x7028</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x4028</span></code></td>
 <td>Source surface stride</td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">CFG_DST_SURF</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x702c</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x402c</span></code></td>
 <td>Destination surface stride</td>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">CFG_OP</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x7030</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x4030</span></code></td>
 <td>This register is not used in NVDLA 1.0</td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">CFG_LAUNCH0</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x7034</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x4034</span></code></td>
 <td>Set it to 1 to kick off operations in group0</td>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">CFG_LAUNCH1</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x7038</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x4038</span></code></td>
 <td>Set it to 1 to kick off operations in group1</td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">CFG_STATUS</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x703c</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x403c</span></code></td>
 <td>Enable/Disable of counting stalls</td>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">STATUS</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x7040</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x4040</span></code></td>
 <td>Status register: idle status of bdma, group0 and group1</td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">STAUS_GRP0_READ_STALL</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x7044</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x4044</span></code></td>
 <td>Counting register of group0 read stall</td>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">STATUS_GRP0_WRITE_STALL</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x7048</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x4048</span></code></td>
 <td>Counting register of group0 write stall</td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">STAUS_GRP1_READ_STALL</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x704c</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x404c</span></code></td>
 <td>Counting register of group1 read stall</td>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">STATUS_GRP1_WRITE_STALL</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x7050</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x4050</span></code></td>
 <td>Counting register of group1 write stall</td>
 </tr>
 </tbody>
@@ -2198,241 +2198,241 @@ registers are not accessible.</p>
 </thead>
 <tbody valign="top">
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">S_STATUS</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x8000</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x5000</span></code></td>
 <td>Idle status of two register groups</td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">S_POINTER</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x8004</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x5004</span></code></td>
 <td>Pointer for CSB master and data path to access groups</td>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">S_ARBITER</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x8008</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x5008</span></code></td>
 <td><p class="first">WMB and Weight share same port to access external memory.</p>
 <p class="last">This register controls the weight factor in the arbiter.</p>
 </td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">S_CBUF_FLUSH_STATUS</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x800c</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x500c</span></code></td>
 <td>Indicates whether CBUF flush is finished after reset.</td>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">D_OP_ENABLE</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x8010</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x5010</span></code></td>
 <td>Set it to 1 to kick off operation for current register group</td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_MISC_CFG</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x8014</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x5014</span></code></td>
 <td>Configuration of operation: convolution mode, precision, weight reuse, data reuse.</td>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">D_DATAIN_FORMAT</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x8018</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x5018</span></code></td>
 <td>Input data format and pixel format</td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_DATAIN_SIZE_0</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x801c</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x501c</span></code></td>
 <td>Input cube’s width and height</td>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">D_DATAIN_SIZE_1</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x8020</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x5020</span></code></td>
 <td>Input cube’s channel</td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_DATAIN_SIZE_EXT_0</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x8024</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x5024</span></code></td>
 <td>Input cube’s width and height after extension</td>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">D_PIXEL_OFFSET</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x8028</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x5028</span></code></td>
 <td>For image-in mode, horizontal offset and vertical offset of the 1 <sup>st</sup> pixel.</td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_DAIN_RAM_TYPE</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x802c</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x502c</span></code></td>
 <td>Ram type of input RAM</td>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">D_DAIN_ADDR_HIGH_0</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x8030</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x5030</span></code></td>
 <td>Higher 32bits of input data address when axi araddr is 64bits</td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_DAIN_ADDR_LOW_0</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x8034</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x5034</span></code></td>
 <td>Lower 32bits of input data address</td>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">D_DAIN_ADDR_HIGH_1</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x8038</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x5038</span></code></td>
 <td>Higher 32bits of input data address of UV plane when axi araddr is 64bits</td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_DAIN_ADDR_LOW_1</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x803c</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x503c</span></code></td>
 <td>Lower 32bits of input data address of UV plane</td>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">D_LINE_STRIDE</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x8040</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x5040</span></code></td>
 <td>Line stride of input cube</td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_LINE_UV_STRIDE</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x8044</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x5044</span></code></td>
 <td>Line stride of input cube’s UV plane</td>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">D_SURF_STRIDE</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x8048</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x5048</span></code></td>
 <td>Surface stride of input cube</td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_DAIN_MAP</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x804c</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x504c</span></code></td>
 <td>Whether input cube is line packed or surface packed</td>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">RESERVED</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x8050</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x5050</span></code></td>
 <td>This address is reserved</td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">RESERVED</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x8054</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x5054</span></code></td>
 <td>This address is reserved</td>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">D_BATCH_NUMBER</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x8058</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x5058</span></code></td>
 <td>Number of batches</td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_BATCH_STRIDE</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x805c</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x505c</span></code></td>
 <td>The stride of input data cubes when batches &gt; 1</td>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">D_ENTRY_PER_SLICE</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x8060</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x5060</span></code></td>
 <td>Number of CBUF entries used for one input slice</td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_FETCH_GRAIN</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x8064</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x5064</span></code></td>
 <td>Number of slices to be fetched before sending update information to CSC</td>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">D_WEIGHT_FORMAT</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x8068</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x5068</span></code></td>
 <td>Whether weight is compressed or not</td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_WEIGHT_SIZE_0</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x806c</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x506c</span></code></td>
 <td>The size of one kernel in bytes</td>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">D_WEIGHT_SIZE_1</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x8070</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x5070</span></code></td>
 <td>Number of kernels</td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_WEIGHT_RAM_TYPE</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x8074</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x5074</span></code></td>
 <td>Ram type of weight</td>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">D_WEIGHT_ADDR_HIGH</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x8078</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x5078</span></code></td>
 <td>Higher 32bits of weight address when axi araddr is 64bits</td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_WEIGHT_ADDR_LOW</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x807c</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x507c</span></code></td>
 <td>Lower 32bits of weight address</td>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">D_WEIGHT_BYTES</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x8080</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x5080</span></code></td>
 <td>Total bytes of Weight</td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_WGS_ADDR_HIGH</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x8084</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x5084</span></code></td>
 <td>Higher 32bits of wgs address when axi araddr is 64bits</td>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">D_WGS_ADDR_LOW</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x8088</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x5088</span></code></td>
 <td>Lower 32bits of wgs address</td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_WMB_ADDR_HIGH</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x808c</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x508c</span></code></td>
 <td>Higher 32bits of wmb address when axi araddr is 64bits</td>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">D_WMB_ADDR_LOW</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x8090</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x5090</span></code></td>
 <td>Lower 32bits of wmb address</td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_WMB_BYTES</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x8094</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x5094</span></code></td>
 <td>Total bytes of WMB</td>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">D_MEAN_FORMAT</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x8098</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x5098</span></code></td>
 <td>Whether mean registers are used or not</td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_MEAN_GLOBAL_0</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x809c</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x509c</span></code></td>
 <td><p class="first">Global mean value for red in RGB or Y in YUV</p>
 <p class="last">Global mean value for green in RGB or U in YUV</p>
 </td>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">D_MEAN_GLOBAL_1</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x80a0</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x50a0</span></code></td>
 <td><p class="first">Global mean value for blue in RGB or V in YUV</p>
 <p class="last">Global mean value for alpha in ARGB/AYUV or X in XRGB</p>
 </td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_CVT_CFG</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x80a4</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x50a4</span></code></td>
 <td>Enable/disable input data converter in CDMA and number of bits to be truncated in the input data converter</td>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">D_CVT_OFFSET</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x80a8</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x50a8</span></code></td>
 <td>Offset of input data convertor</td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_CVT_SCALE</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x80ac</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x50ac</span></code></td>
 <td>Scale of input data convertor</td>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">D_CONV_STRIDE</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x80b0</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x50b0</span></code></td>
 <td>Convolution x stride and convolution y stride</td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_ZERO_PADDING</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x80b4</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x50b4</span></code></td>
 <td>Left/right/top/bottom padding size</td>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">D_ZERO_PADDING_VALUE</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x80b8</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x50b8</span></code></td>
 <td>Padding value</td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_BANK</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x80bc</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x50bc</span></code></td>
 <td>Number of data banks and weight banks in CBUF</td>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">D_NAN_FLUSH_TO_ZERO</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x80c0</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x50c0</span></code></td>
 <td>Enable/Disable flushing input NaN to zero</td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_NAN_INPUT_DATA_NUM</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x80c4</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x50c4</span></code></td>
 <td>Count NaN number in input data cube, update per layer</td>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">D_NAN_INPUT_WEIGHT_NUM</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x80c8</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x50c8</span></code></td>
 <td>Count NaN number in weight kernels, update per layer</td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_INF_INPUT_DATA_NUM</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x80cc</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x50cc</span></code></td>
 <td>Count infinity number in input data cube, update per layer</td>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">D_INF_INPUT_WEIGHT_NUM</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x80d0</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x50d0</span></code></td>
 <td>Count infinity number in weight kernels, update per layer</td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_PERF_ENABLE</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x80d4</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x50d4</span></code></td>
 <td>Enable/disable performance counter</td>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">D_PERF_DAT_READ_STALL</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x80d8</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x50d8</span></code></td>
 <td>Count blocking cycles of read request of input data, update per layer</td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_PERF_WT_READ_STALL</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x80dc</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x50dc</span></code></td>
 <td>Count blocking cycles of read request of weight data, update per layer</td>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">D_PERF_DAT_READ_LATENCY</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x80e0</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x50e0</span></code></td>
 <td>Count total latency cycles of read response of input data, update per layer</td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_PERF_WT_READ_LATENCY</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x80e4</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x50e4</span></code></td>
 <td>Count total latency cycles of read request of weight data, update per layer</td>
 </tr>
 </tbody>
@@ -2472,103 +2472,103 @@ their registers are not available either.  These registers are as noted below:</
 </thead>
 <tbody valign="top">
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">S_STATUS</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x9000</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x6000</span></code></td>
 <td>Idle status of two register groups</td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">S_POINTER</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x9004</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x6004</span></code></td>
 <td>Pointer for CSB master and data path to access groups</td>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">D_OP_ENABLE</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x9008</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x6008</span></code></td>
 <td>Set it to 1 to kick off operation for current register group</td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_MISC_CFG</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x900c</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x600c</span></code></td>
 <td>Configuration of operation: convolution mode, precision, weight reuse, data reuse.</td>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">D_DATAIN_FORMAT</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x9010</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x6010</span></code></td>
 <td>Input data format and pixel format</td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_DATAIN_SIZE_EXT_0</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x9014</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x6014</span></code></td>
 <td>Input cube’s width and height after extension</td>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">D_DATAIN_SIZE_EXT_1</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x9018</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x6018</span></code></td>
 <td>Input cube’s channel after extension</td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_BATCH_NUMBER</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x901c</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x601c</span></code></td>
 <td>Number of batches</td>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">D_POST_Y_EXTENSION</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x9020</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x6020</span></code></td>
 <td>Post extension parameter for image-in</td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_ENTRY_PER_SLICE</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x9024</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x6024</span></code></td>
 <td>Number of CBUF entries used for one input slice</td>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">D_WEIGHT_FORMAT</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x9028</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x6028</span></code></td>
 <td>Whether weight is compressed or not</td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_WEIGHT_SIZE_EXT_0</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x902c</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x602c</span></code></td>
 <td>Weight’s width and height after extension</td>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">D_WEIGHT_SIZE_EXT_1</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x9030</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x6030</span></code></td>
 <td>Weight’s channel after extension and number of weight kernels</td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_WEIGHT_BYTES</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x9034</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x6034</span></code></td>
 <td>Total bytes of Weight</td>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">D_WMB_BYTES</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x9038</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x6038</span></code></td>
 <td>Total bytes of WMB</td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_DATAOUT_SIZE_0</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x903c</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x603c</span></code></td>
 <td>Output cube’s width and height</td>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">D_DATAOUT_SIZE_1</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x9040</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x6040</span></code></td>
 <td>Output cube’s channel</td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_ATOMICS</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x9044</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x6044</span></code></td>
 <td>Equals to output_data_cube_width * output_data_cube_height - 1</td>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">D_RELEASE</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x9048</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x6048</span></code></td>
 <td>Slices of CBUF to be released at the end of current layer</td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_CONV_STRIDE_EXT</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x904c</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x604c</span></code></td>
 <td>Convolution x stride and convolution y stride after extension</td>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">D_DILATION_EXT</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x9050</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x6050</span></code></td>
 <td>Dilation parameter</td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_ZERO_PADDING</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x9054</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x6054</span></code></td>
 <td>Left/right/top/bottom padding size</td>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">D_ZERO_PADDING_VALUE</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x9058</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x6058</span></code></td>
 <td>Padding value</td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_BANK</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x905c</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x605c</span></code></td>
 <td>Number of data banks and weight banks in CBUF</td>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">D_PRA_CFG</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x9060</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x6060</span></code></td>
 <td>PRA truncate in Winograd mode, range: 0~2</td>
 </tr>
 </tbody>
@@ -2605,19 +2605,19 @@ their registers are not available either.  These registers are as noted below:</
 </thead>
 <tbody valign="top">
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">S_STATUS</span></code></td>
-<td><code class="docutils literal"><span class="pre">0xa000</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x7000</span></code></td>
 <td>Idle status of two register groups</td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">S_POINTER</span></code></td>
-<td><code class="docutils literal"><span class="pre">0xa004</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x7004</span></code></td>
 <td>Pointer for CSB master and data path to access groups</td>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">D_OP_ENABLE</span></code></td>
-<td><code class="docutils literal"><span class="pre">0xa008</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x7008</span></code></td>
 <td>Set it to 1 to kick off operation for current register group</td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_MISC_CFG</span></code></td>
-<td><code class="docutils literal"><span class="pre">0xa00c</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x700c</span></code></td>
 <td>Configuration of operation: convolution mode, precision, etc.</td>
 </tr>
 </tbody>
@@ -2627,6 +2627,102 @@ their registers are not available either.  These registers are as noted below:</
 <h4>CMAC_B<a class="headerlink" href="#cmac-b" title="Permalink to this headline">¶</a></h4>
 <table border="1" class="colwidths-auto docutils" id="tab-cmac-b-registers">
 <caption><span class="caption-number">Table 23 </span><span class="caption-text">CMAC_B registers.</span><a class="headerlink" href="#tab-cmac-b-registers" title="Permalink to this table">¶</a></caption>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Name</th>
+<th class="head">Address</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">S_STATUS</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x8000</span></code></td>
+<td>Idle status of two register groups</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">S_POINTER</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x8004</span></code></td>
+<td>Pointer for CSB master and data path to access groups</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_OP_ENABLE</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x8008</span></code></td>
+<td>Set it to 1 to kick off operation for current register group</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_MISC_CFG</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x800c</span></code></td>
+<td>Configuration of operation: convolution mode, precision, etc.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="cacc">
+<h4>CACC<a class="headerlink" href="#cacc" title="Permalink to this headline">¶</a></h4>
+<table border="1" class="colwidths-auto docutils" id="tab-cacc-registers">
+<caption><span class="caption-number">Table 24 </span><span class="caption-text">CACC registers.</span><a class="headerlink" href="#tab-cacc-registers" title="Permalink to this table">¶</a></caption>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Name</th>
+<th class="head">Address</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">S_STATUS</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x9000</span></code></td>
+<td>Idle status of two register groups</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">S_POINTER</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x9004</span></code></td>
+<td>Pointer for CSB master and data path to access groups</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_OP_ENABLE</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x9008</span></code></td>
+<td>Set it to 1 to kick off operation for current register group</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_MISC_CFG</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x900c</span></code></td>
+<td>Configuration of operation: convolution mode, precision, etc.</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_DATAOUT_SIZE_0</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x9010</span></code></td>
+<td>Input cube’s width and height after extension</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_DATAOUT_SIZE_1</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x9014</span></code></td>
+<td>Input cube’s channel after extension</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_DATAOUT_ADDR</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x9018</span></code></td>
+<td>Address of output cube</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_BATCH_NUMBER</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x901c</span></code></td>
+<td>Number of batches</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_LINE_STRIDE</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x9020</span></code></td>
+<td>Line stride of output cube</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_SURF_STRIDE</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x9024</span></code></td>
+<td>Line stride of surface cube</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_DATAOUT_MAP</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x9028</span></code></td>
+<td>Whether output cube is line packed or surface packed</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_CLIP_CFG</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x902c</span></code></td>
+<td>Number of bits to be truncated before sending to SDP</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_OUT_SATURATION</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x9030</span></code></td>
+<td>Output saturation count</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="sdp-rdma">
+<h4>SDP_RDMA<a class="headerlink" href="#sdp-rdma" title="Permalink to this headline">¶</a></h4>
+<table border="1" class="colwidths-auto docutils" id="tab-sdp-rdma-registers">
+<caption><span class="caption-number">Table 25 </span><span class="caption-text">SDP_RDMA registers.</span><a class="headerlink" href="#tab-sdp-rdma-registers" title="Permalink to this table">¶</a></caption>
 <thead valign="bottom">
 <tr class="row-odd"><th class="head">Name</th>
 <th class="head">Address</th>
@@ -2646,17 +2742,415 @@ their registers are not available either.  These registers are as noted below:</
 <td><code class="docutils literal"><span class="pre">0xa008</span></code></td>
 <td>Set it to 1 to kick off operation for current register group</td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_MISC_CFG</span></code></td>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_DATA_CUBE_WIDTH</span></code></td>
 <td><code class="docutils literal"><span class="pre">0xa00c</span></code></td>
-<td>Configuration of operation: convolution mode, precision, etc.</td>
+<td>Input cube’s width</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_DATA_CUBE_HEIGHT</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xa010</span></code></td>
+<td>Input cube’s height</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_DATA_CUBE_CHANNEL</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xa014</span></code></td>
+<td>Input cube’s channel</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_SRC_BASE_ADDR_LOW</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xa018</span></code></td>
+<td>Lower 32bits of input data address</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_SRC_BASE_ADDR_HIGH</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xa01c</span></code></td>
+<td>Higher 32bits of input data address when axi araddr is 64bits</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_SRC_LINE_STRIDE</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xa020</span></code></td>
+<td>Line stride of input cube</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_SRC_SURFACE_STRIDE</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xa024</span></code></td>
+<td>Surface stride of input cube</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_BRDMA_CFG</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xa028</span></code></td>
+<td>Configuration of BRDMA: enable/disable, data size, Ram type, etc.</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_BS_BASE_ADDR_LOW</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xa02c</span></code></td>
+<td>Lower 32bits address of the bias data cube</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_BS_BASE_ADDR_HIGH</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xa030</span></code></td>
+<td>Higher 32bits address of the bias data cube when axi araddr is 64bits</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_BS_LINE_STRIDE</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xa034</span></code></td>
+<td>Line stride of bias data cube</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_BS_SURFACE_STRIDE</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xa038</span></code></td>
+<td>Surface stride of bias data cube</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_BS_BATCH_STRIDE</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xa03c</span></code></td>
+<td>Stride of bias data cube in batch mode</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_NRDMA_CFG</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xa040</span></code></td>
+<td>Configuration of NRDMA: enable/disable, data size, Ram type, etc.</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_BN_BASE_ADDR_LOW</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xa044</span></code></td>
+<td>Lower 32bits address of the bias data cube</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_BN_BASE_ADDR_HIGH</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xa048</span></code></td>
+<td>Higher 32bits address of the bias data cube when axi araddr is 64bits</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_BN_LINE_STRIDE</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xa04c</span></code></td>
+<td>Line stride of bias data cube</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_BN_SURFACE_STRIDE</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xa050</span></code></td>
+<td>Surface stride of bias data cube</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_BN_BATCH_STRIDE</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xa054</span></code></td>
+<td>Stride of bias data cube in batch mode</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_ERDMA_CFG</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xa058</span></code></td>
+<td>Configuration of ERDMA: enable/disable, data size, Ram type, etc.</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_EW_BASE_ADDR_LOW</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xa05c</span></code></td>
+<td>Lower 32bits address of the bias data cube</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_EW_BASE_ADDR_HIGH</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xa060</span></code></td>
+<td>Higher 32bits address of the bias data cube when axi araddr is 64bits</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_EW_LINE_STRIDE</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xa064</span></code></td>
+<td>Line stride of bias data cube</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_EW_SURFACE_STRIDE</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xa068</span></code></td>
+<td>Surface stride of bias data cube</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_EW_BATCH_STRIDE</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xa06c</span></code></td>
+<td>Stride of bias data cube in batch mode</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_FEATURE_MODE_CFG</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xa070</span></code></td>
+<td>Operation configuration: flying mode, output destination, Direct or Winograd mode, flush NaN to zero, batch number.</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_SRC_DMA_CFG</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xa074</span></code></td>
+<td>RAM type of input data cube</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_STATUS_NAN_INPUT_NUM</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xa078</span></code></td>
+<td>Input NaN element number</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_STATUS_INF_INPUT_NUM</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xa07c</span></code></td>
+<td>Input Infinity element number</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_PERF_ENABLE</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xa080</span></code></td>
+<td>Enable/Disable performance counting</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_PERF_MRDMA_READ_STALL</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xa084</span></code></td>
+<td>Count stall cycles of M read DMA for one layer</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_PERF_BRDMA_READ_STALL</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xa088</span></code></td>
+<td>Count stall cycles of B read DMA for one layer</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_PERF_NRDMA_READ_STALL</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xa08c</span></code></td>
+<td>Count stall cycles of N read DMA for one layer</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_PERF_ERDMA_READ_STALL</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xa090</span></code></td>
+<td>Count stall cycles of E read DMA for one layer</td>
 </tr>
 </tbody>
 </table>
 </div>
-<div class="section" id="cacc">
-<h4>CACC<a class="headerlink" href="#cacc" title="Permalink to this headline">¶</a></h4>
-<table border="1" class="colwidths-auto docutils" id="tab-cacc-registers">
-<caption><span class="caption-number">Table 24 </span><span class="caption-text">CACC registers.</span><a class="headerlink" href="#tab-cacc-registers" title="Permalink to this table">¶</a></caption>
+<div class="section" id="sdp">
+<h4>SDP<a class="headerlink" href="#sdp" title="Permalink to this headline">¶</a></h4>
+<table border="1" class="colwidths-auto docutils" id="tab-sdp-registers">
+<caption><span class="caption-number">Table 26 </span><span class="caption-text">SDP registers.</span><a class="headerlink" href="#tab-sdp-registers" title="Permalink to this table">¶</a></caption>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Name</th>
+<th class="head">Address</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">S_STATUS</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xb000</span></code></td>
+<td>Idle status of two register groups</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">S_POINTER</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xb004</span></code></td>
+<td>Pointer for CSB master and data path to access groups</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">S_LUT_ACCESS_CFG</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xb008</span></code></td>
+<td>LUT access address and type</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">S_LUT_ACCESS_DATA</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xb00c</span></code></td>
+<td>Data register of read or write LUT</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">S_LUT_CFG</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xb010</span></code></td>
+<td>LUT’s type: exponent or linear. And the selection between LE and LO tables.</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">S_LUT_INFO</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xb014</span></code></td>
+<td>LE and LO LUT index offset and selection</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">S_LUT_LE_START</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xb018</span></code></td>
+<td>Start of LE LUT’s range</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">S_LUT_LE_END</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xb01c</span></code></td>
+<td>End of LE LUT’s range</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">S_LUT_LO_START</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xb020</span></code></td>
+<td>Start of LO LUT’s range</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">S_LUT_LO_END</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xb024</span></code></td>
+<td>End of LO LUT’s range</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">S_LUT_LE_SLOPE_SCALE</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xb028</span></code></td>
+<td>Slope scale parameter for LE LUT underflow and overflow, signed value</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">S_LUT_LE_SLOPE_SHIFT</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xb02c</span></code></td>
+<td>Slope shift parameter for LE_LUT underflow and overflow, signed value</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">S_LUT_LO_SLOPE_SCALE</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xb030</span></code></td>
+<td>Slope scale parameter for LO LUT underflow and overflow, signed value</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">S_LUT_LO_SLOPE_SHIFT</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xb034</span></code></td>
+<td>Slope shift parameter for LO_LUT underflow and overflow, signed value</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_OP_ENABLE</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xb038</span></code></td>
+<td>Set it to 1 to kick off operation for current register group</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_DATA_CUBE_WIDTH</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xb03c</span></code></td>
+<td>Input cube’s width</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_DATA_CUBE_HEIGHT</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xb040</span></code></td>
+<td>Input cube’s height</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_DATA_CUBE_CHANNEL</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xb044</span></code></td>
+<td>Input cube’s channel</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_DST_BASE_ADDR_LOW</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xb048</span></code></td>
+<td>Lower 32bits of output data address</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_DST_BASE_ADDR_HIGH</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xb04c</span></code></td>
+<td>Higher 32bits of output data address when axi awaddr is 64bits</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_DST_LINE_STRIDE</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xb050</span></code></td>
+<td>Line stride of output data cube</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_DST_SURFACE_STRIDE</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xb054</span></code></td>
+<td>Surface stride of output data cube</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_DP_BS_CFG</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xb058</span></code></td>
+<td>Configurations of BS module: bypass, algorithm, etc.</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_DP_BS_ALU_CFG</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xb05c</span></code></td>
+<td>Source type and shifter value of BS ALU</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_DP_BS_ALU_SRC_VALUE</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xb060</span></code></td>
+<td>Operand value of BS ALU</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_DP_BS_MUL_CFG</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xb064</span></code></td>
+<td>Source type and shifter value of BS MUL</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_DP_BS_MUL_SRC_VALUE</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xb068</span></code></td>
+<td>Operand value of BS MUL</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_DP_BN_CFG</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xb06c</span></code></td>
+<td>Configurations of BN module: bypass, algorithm, etc.</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_DP_BN_ALU_CFG</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xb070</span></code></td>
+<td>Source type and shifter value of BN ALU</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_DP_BN_ALU_SRC_VALUE</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xb074</span></code></td>
+<td>Operand value of BN ALU</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_DP_BN_MUL_CFG</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xb078</span></code></td>
+<td>Source type and shifter value of BN MUL</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_DP_BN_MUL_SRC_VALUE</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xb07c</span></code></td>
+<td>Operand value of BN MUL</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_DP_EW_CFG</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xb080</span></code></td>
+<td>Configurations of EW module: bypass, algorithm, etc.</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_DP_EW_ALU_CFG</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xb084</span></code></td>
+<td>Source type and bypass control of EW ALU</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_DP_EW_ALU_SRC_VALUE</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xb088</span></code></td>
+<td>Operand value of EW ALU</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_DP_EW_ALU_CVT_OFFSET_VALUE</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xb08c</span></code></td>
+<td>Converter offset of EW ALU</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_DP_EW_ALU_CVT_SCALE_VALUE</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xb090</span></code></td>
+<td>Converter scale of EW ALU</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_DP_EW_ALU_CVT_TRUNCATE_VALUE</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xb094</span></code></td>
+<td>Converter truncate of EW ALU</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_DP_EW_MUL_CFG</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xb098</span></code></td>
+<td>Source type and bypass control of EW MUL</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_DP_EW_MUL_SRC_VALUE</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xb09c</span></code></td>
+<td>Operand value of EW MUL</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_DP_EW_MUL_CVT_OFFSET_VALUE</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xb0a0</span></code></td>
+<td>Converter offset of EW MUL</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_DP_EW_MUL_CVT_SCALE_VALUE</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xb0a4</span></code></td>
+<td>Converter scale of EW MUL</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_DP_EW_MUL_CVT_TRUNCATE_VALUE</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xb0a8</span></code></td>
+<td>Converter truncate of EW MUL</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_DP_EW_TRUNCATE_VALUE</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xb0ac</span></code></td>
+<td>Truncate of EW</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_FEATURE_MODE_CFG</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xb0b0</span></code></td>
+<td>Operation configuration: flying mode, output destination, Direct or Winograd mode, flush NaN to zero, batch number.</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_DST_DMA_CFG</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xb0b4</span></code></td>
+<td>Destination RAM type</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_DST_BATCH_STRIDE</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xb0b8</span></code></td>
+<td>Stride of output cubes in batch mode</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_DATA_FORMAT</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xb0bc</span></code></td>
+<td>Data precision</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_CVT_OFFSET</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xb0c0</span></code></td>
+<td>Output converter offset</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_CVT_SCALE</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xb0c4</span></code></td>
+<td>Output converter scale</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_CVT_SHIFT</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xb0c8</span></code></td>
+<td>Output converter shifter value</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_STATUS</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xb0cc</span></code></td>
+<td>Output of equal mode</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_STATUS_NAN_INPUT_NUM</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xb0d0</span></code></td>
+<td>Input NaN element number</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_STATUS_INF_INPUT_NUM</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xb0d4</span></code></td>
+<td>Input Infinity element number</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_STATUS_NAN_OUTPUT_NUM</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xb0d8</span></code></td>
+<td>Output NaN element number</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_PERF_ENABLE</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xb0dc</span></code></td>
+<td>Enable/Disable performance counting</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_PERF_WDMA_WRITE_STALL</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xb0e0</span></code></td>
+<td>Count stall cycles of write DMA for one layer</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_PERF_LUT_UFLOW</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xb0e4</span></code></td>
+<td>Element number of both table underflow</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_PERF_LUT_OFLOW</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xb0e8</span></code></td>
+<td>Element number of both table overflow</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_PERF_OUT_SATURATION</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xb0ec</span></code></td>
+<td>Element number of both table saturation</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_PERF_LUT_HYBRID</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xb0f0</span></code></td>
+<td>Element number of both hit, or both miss situation that element underflow one table and at the same time overflow the other.</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_PERF_LUT_LE_HIT</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xb0f4</span></code></td>
+<td>Element number of only LE table hit</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_PERF_LUT_LO_HIT</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xb0f8</span></code></td>
+<td>Element number of only LO table hit</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="pdp-rdma">
+<h4>PDP_RDMA<a class="headerlink" href="#pdp-rdma" title="Permalink to this headline">¶</a></h4>
+<table border="1" class="colwidths-auto docutils" id="tab-pdp-rdma-registers">
+<caption><span class="caption-number">Table 27 </span><span class="caption-text">PDP_RDMA registers.</span><a class="headerlink" href="#tab-pdp-rdma-registers" title="Permalink to this table">¶</a></caption>
 <thead valign="bottom">
 <tr class="row-odd"><th class="head">Name</th>
 <th class="head">Address</th>
@@ -2676,53 +3170,77 @@ their registers are not available either.  These registers are as noted below:</
 <td><code class="docutils literal"><span class="pre">0xc008</span></code></td>
 <td>Set it to 1 to kick off operation for current register group</td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_MISC_CFG</span></code></td>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_DATA_CUBE_IN_WIDTH</span></code></td>
 <td><code class="docutils literal"><span class="pre">0xc00c</span></code></td>
-<td>Configuration of operation: convolution mode, precision, etc.</td>
+<td>Input data cube’s width</td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_DATAOUT_SIZE_0</span></code></td>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_DATA_CUBE_IN_HEIGHT</span></code></td>
 <td><code class="docutils literal"><span class="pre">0xc010</span></code></td>
-<td>Input cube’s width and height after extension</td>
+<td>Input data cube’s height</td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_DATAOUT_SIZE_1</span></code></td>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_DATA_CUBE_IN_CHANNEL</span></code></td>
 <td><code class="docutils literal"><span class="pre">0xc014</span></code></td>
-<td>Input cube’s channel after extension</td>
+<td>Input data cube’s channel</td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_DATAOUT_ADDR</span></code></td>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_FLYING_MODE</span></code></td>
 <td><code class="docutils literal"><span class="pre">0xc018</span></code></td>
-<td>Address of output cube</td>
+<td>Indicate source is SDP or external memory</td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_BATCH_NUMBER</span></code></td>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_SRC_BASE_ADDR_LOW</span></code></td>
 <td><code class="docutils literal"><span class="pre">0xc01c</span></code></td>
-<td>Number of batches</td>
+<td>Lower 32bits of input data address</td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_LINE_STRIDE</span></code></td>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_SRC_BASE_ADDR_HIGH</span></code></td>
 <td><code class="docutils literal"><span class="pre">0xc020</span></code></td>
-<td>Line stride of output cube</td>
+<td>Higher 32bits of input data address when axi araddr is 64bits</td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_SURF_STRIDE</span></code></td>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_SRC_LINE_STRIDE</span></code></td>
 <td><code class="docutils literal"><span class="pre">0xc024</span></code></td>
-<td>Line stride of surface cube</td>
+<td>Line stride of input cube</td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_DATAOUT_MAP</span></code></td>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_SRC_SURFACE_STRIDE</span></code></td>
 <td><code class="docutils literal"><span class="pre">0xc028</span></code></td>
-<td>Whether output cube is line packed or surface packed</td>
+<td>Surface stride of input cube</td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_CLIP_CFG</span></code></td>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_SRC_RAM_CFG</span></code></td>
 <td><code class="docutils literal"><span class="pre">0xc02c</span></code></td>
-<td>Number of bits to be truncated before sending to SDP</td>
+<td>RAM type of input data cube</td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_OUT_SATURATION</span></code></td>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_DATA_FORMAT</span></code></td>
 <td><code class="docutils literal"><span class="pre">0xc030</span></code></td>
-<td>Output saturation count</td>
+<td>Input data cube</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_OPERATION_MODE_CFG</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xc034</span></code></td>
+<td>Split number</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_POOLING_KERNEL_CFG</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xc038</span></code></td>
+<td>Kernel width and kernel stride</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_POOLING_PADDING_CFG</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xc03c</span></code></td>
+<td>Padding width</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_PARTIAL_WIDTH_IN</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xc040</span></code></td>
+<td>Partial width for first, last and middle partitions</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_PERF_ENABLE</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xc044</span></code></td>
+<td>Enable/Disable performance counting</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_PERF_READ_STALL</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xc048</span></code></td>
+<td>Element number that for both LUT underflow.</td>
 </tr>
 </tbody>
 </table>
 </div>
-<div class="section" id="sdp-rdma">
-<h4>SDP_RDMA<a class="headerlink" href="#sdp-rdma" title="Permalink to this headline">¶</a></h4>
-<table border="1" class="colwidths-auto docutils" id="tab-sdp-rdma-registers">
-<caption><span class="caption-number">Table 25 </span><span class="caption-text">SDP_RDMA registers.</span><a class="headerlink" href="#tab-sdp-rdma-registers" title="Permalink to this table">¶</a></caption>
+<div class="section" id="pdp">
+<h4>PDP<a class="headerlink" href="#pdp" title="Permalink to this headline">¶</a></h4>
+<table border="1" class="colwidths-auto docutils" id="tab-pdp-registers">
+<caption><span class="caption-number">Table 28 </span><span class="caption-text">PDP registers.</span><a class="headerlink" href="#tab-pdp-registers" title="Permalink to this table">¶</a></caption>
 <thead valign="bottom">
 <tr class="row-odd"><th class="head">Name</th>
 <th class="head">Address</th>
@@ -2742,149 +3260,157 @@ their registers are not available either.  These registers are as noted below:</
 <td><code class="docutils literal"><span class="pre">0xd008</span></code></td>
 <td>Set it to 1 to kick off operation for current register group</td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_DATA_CUBE_WIDTH</span></code></td>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_DATA_CUBE_IN_WIDTH</span></code></td>
 <td><code class="docutils literal"><span class="pre">0xd00c</span></code></td>
-<td>Input cube’s width</td>
+<td>Input data cube’s width</td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_DATA_CUBE_HEIGHT</span></code></td>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_DATA_CUBE_IN_HEIGHT</span></code></td>
 <td><code class="docutils literal"><span class="pre">0xd010</span></code></td>
-<td>Input cube’s height</td>
+<td>Input data cube’s height</td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_DATA_CUBE_CHANNEL</span></code></td>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_DATA_CUBE_IN_CHANNEL</span></code></td>
 <td><code class="docutils literal"><span class="pre">0xd014</span></code></td>
-<td>Input cube’s channel</td>
+<td>Input data cube’s channel</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_DATA_CUBE_OUT_WIDTH</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xd018</span></code></td>
+<td>Output data cube’s width</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_DATA_CUBE_OUT_HEIGHT</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xd01c</span></code></td>
+<td>Output data cube’s height</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_DATA_CUBE_OUT_CHANNEL</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xd020</span></code></td>
+<td>Output data cube’s channel</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_OPERATION_MODE_CFG</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xd024</span></code></td>
+<td>Split number</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_NAN_FLUSH_TO_ZERO</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xd028</span></code></td>
+<td>Option to flush input NaN to zero</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_PARTIAL_WIDTH_IN</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xd02c</span></code></td>
+<td>Partial width for first, last and middle partitions of input cube</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_PARTIAL_WIDTH_OUT</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xd030</span></code></td>
+<td>Partial width for first, last and middle partitions of output cube</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_POOLING_KERNEL_CFG</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xd034</span></code></td>
+<td>Kernel width and kernel stride</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_RECIP_KERNEL_WIDTH</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xd038</span></code></td>
+<td>Reciprocal of pooling kernel width, set to actual value * (2^16) when INT8/INT16 format enabled. and set to actual value for fp16 precision mode with fp17 data format.</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_RECIP_KERNEL_HEIGHT</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xd03c</span></code></td>
+<td>Reciprocal of pooling kernel height, set to actual value * (2^16) when INT8/INT16 format enabled. and set to actual value for fp16 precision mode with fp17 data format.</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_POOLING_PADDING_CFG</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xd040</span></code></td>
+<td>Left/right/top/bottom padding size</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_POOLING_PADDING_VALUE_1_CFG</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xd044</span></code></td>
+<td>Padding_value*1</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_POOLING_PADDING_VALUE_2_CFG</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xd048</span></code></td>
+<td>Padding_value*2</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_POOLING_PADDING_VALUE_3_CFG</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xd04c</span></code></td>
+<td>Padding_value*3</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_POOLING_PADDING_VALUE_4_CFG</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xd050</span></code></td>
+<td>Padding_value*4</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_POOLING_PADDING_VALUE_5_CFG</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xd054</span></code></td>
+<td>Padding_value*5</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_POOLING_PADDING_VALUE_6_CFG</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xd058</span></code></td>
+<td>Padding_value*6</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_POOLING_PADDING_VALUE_7_CFG</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xd05c</span></code></td>
+<td>Padding_value*7</td>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">D_SRC_BASE_ADDR_LOW</span></code></td>
-<td><code class="docutils literal"><span class="pre">0xd018</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xd060</span></code></td>
 <td>Lower 32bits of input data address</td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_SRC_BASE_ADDR_HIGH</span></code></td>
-<td><code class="docutils literal"><span class="pre">0xd01c</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xd064</span></code></td>
 <td>Higher 32bits of input data address when axi araddr is 64bits</td>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">D_SRC_LINE_STRIDE</span></code></td>
-<td><code class="docutils literal"><span class="pre">0xd020</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xd068</span></code></td>
 <td>Line stride of input cube</td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_SRC_SURFACE_STRIDE</span></code></td>
-<td><code class="docutils literal"><span class="pre">0xd024</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xd06c</span></code></td>
 <td>Surface stride of input cube</td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_BRDMA_CFG</span></code></td>
-<td><code class="docutils literal"><span class="pre">0xd028</span></code></td>
-<td>Configuration of BRDMA: enable/disable, data size, Ram type, etc.</td>
-</tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_BS_BASE_ADDR_LOW</span></code></td>
-<td><code class="docutils literal"><span class="pre">0xd02c</span></code></td>
-<td>Lower 32bits address of the bias data cube</td>
-</tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_BS_BASE_ADDR_HIGH</span></code></td>
-<td><code class="docutils literal"><span class="pre">0xd030</span></code></td>
-<td>Higher 32bits address of the bias data cube when axi araddr is 64bits</td>
-</tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_BS_LINE_STRIDE</span></code></td>
-<td><code class="docutils literal"><span class="pre">0xd034</span></code></td>
-<td>Line stride of bias data cube</td>
-</tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_BS_SURFACE_STRIDE</span></code></td>
-<td><code class="docutils literal"><span class="pre">0xd038</span></code></td>
-<td>Surface stride of bias data cube</td>
-</tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_BS_BATCH_STRIDE</span></code></td>
-<td><code class="docutils literal"><span class="pre">0xd03c</span></code></td>
-<td>Stride of bias data cube in batch mode</td>
-</tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_NRDMA_CFG</span></code></td>
-<td><code class="docutils literal"><span class="pre">0xd040</span></code></td>
-<td>Configuration of NRDMA: enable/disable, data size, Ram type, etc.</td>
-</tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_BN_BASE_ADDR_LOW</span></code></td>
-<td><code class="docutils literal"><span class="pre">0xd044</span></code></td>
-<td>Lower 32bits address of the bias data cube</td>
-</tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_BN_BASE_ADDR_HIGH</span></code></td>
-<td><code class="docutils literal"><span class="pre">0xd048</span></code></td>
-<td>Higher 32bits address of the bias data cube when axi araddr is 64bits</td>
-</tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_BN_LINE_STRIDE</span></code></td>
-<td><code class="docutils literal"><span class="pre">0xd04c</span></code></td>
-<td>Line stride of bias data cube</td>
-</tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_BN_SURFACE_STRIDE</span></code></td>
-<td><code class="docutils literal"><span class="pre">0xd050</span></code></td>
-<td>Surface stride of bias data cube</td>
-</tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_BN_BATCH_STRIDE</span></code></td>
-<td><code class="docutils literal"><span class="pre">0xd054</span></code></td>
-<td>Stride of bias data cube in batch mode</td>
-</tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_ERDMA_CFG</span></code></td>
-<td><code class="docutils literal"><span class="pre">0xd058</span></code></td>
-<td>Configuration of ERDMA: enable/disable, data size, Ram type, etc.</td>
-</tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_EW_BASE_ADDR_LOW</span></code></td>
-<td><code class="docutils literal"><span class="pre">0xd05c</span></code></td>
-<td>Lower 32bits address of the bias data cube</td>
-</tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_EW_BASE_ADDR_HIGH</span></code></td>
-<td><code class="docutils literal"><span class="pre">0xd060</span></code></td>
-<td>Higher 32bits address of the bias data cube when axi araddr is 64bits</td>
-</tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_EW_LINE_STRIDE</span></code></td>
-<td><code class="docutils literal"><span class="pre">0xd064</span></code></td>
-<td>Line stride of bias data cube</td>
-</tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_EW_SURFACE_STRIDE</span></code></td>
-<td><code class="docutils literal"><span class="pre">0xd068</span></code></td>
-<td>Surface stride of bias data cube</td>
-</tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_EW_BATCH_STRIDE</span></code></td>
-<td><code class="docutils literal"><span class="pre">0xd06c</span></code></td>
-<td>Stride of bias data cube in batch mode</td>
-</tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_FEATURE_MODE_CFG</span></code></td>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_DST_BASE_ADDR_LOW</span></code></td>
 <td><code class="docutils literal"><span class="pre">0xd070</span></code></td>
-<td>Operation configuration: flying mode, output destination, Direct or Winograd mode, flush NaN to zero, batch number.</td>
+<td>Lower 32bits of output data address</td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_SRC_DMA_CFG</span></code></td>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_DST_BASE_ADDR_HIGH</span></code></td>
 <td><code class="docutils literal"><span class="pre">0xd074</span></code></td>
-<td>RAM type of input data cube</td>
+<td>Higher 32bits of output data address when axi awaddr is 64bits</td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_STATUS_NAN_INPUT_NUM</span></code></td>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_DST_LINE_STRIDE</span></code></td>
 <td><code class="docutils literal"><span class="pre">0xd078</span></code></td>
+<td>Line stride of output cube</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_DST_SURFACE_STRIDE</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xd07c</span></code></td>
+<td>Surface stride of output cube</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_DST_RAM_CFG</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xd080</span></code></td>
+<td>RAM type of destination cube</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_DATA_FORMAT</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xd084</span></code></td>
+<td>Precision of input data</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_INF_INPUT_NUM</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xd088</span></code></td>
+<td>Input infinity element number</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_NAN_INPUT_NUM</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xd08c</span></code></td>
 <td>Input NaN element number</td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_STATUS_INF_INPUT_NUM</span></code></td>
-<td><code class="docutils literal"><span class="pre">0xd07c</span></code></td>
-<td>Input Infinity element number</td>
-</tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_PERF_ENABLE</span></code></td>
-<td><code class="docutils literal"><span class="pre">0xd080</span></code></td>
-<td>Enable/Disable performance counting</td>
-</tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_PERF_MRDMA_READ_STALL</span></code></td>
-<td><code class="docutils literal"><span class="pre">0xd084</span></code></td>
-<td>Count stall cycles of M read DMA for one layer</td>
-</tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_PERF_BRDMA_READ_STALL</span></code></td>
-<td><code class="docutils literal"><span class="pre">0xd088</span></code></td>
-<td>Count stall cycles of B read DMA for one layer</td>
-</tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_PERF_NRDMA_READ_STALL</span></code></td>
-<td><code class="docutils literal"><span class="pre">0xd08c</span></code></td>
-<td>Count stall cycles of N read DMA for one layer</td>
-</tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_PERF_ERDMA_READ_STALL</span></code></td>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_NAN_OUTPUT_NUM</span></code></td>
 <td><code class="docutils literal"><span class="pre">0xd090</span></code></td>
-<td>Count stall cycles of E read DMA for one layer</td>
+<td>Output NaN element number</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_PERF_ENABLE</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xd094</span></code></td>
+<td>Enable/disable performance counting</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_PERF_WRITE_STALL</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xd098</span></code></td>
+<td>Counting stalls of write requests</td>
 </tr>
 </tbody>
 </table>
 </div>
-<div class="section" id="sdp">
-<h4>SDP<a class="headerlink" href="#sdp" title="Permalink to this headline">¶</a></h4>
-<table border="1" class="colwidths-auto docutils" id="tab-sdp-registers">
-<caption><span class="caption-number">Table 26 </span><span class="caption-text">SDP registers.</span><a class="headerlink" href="#tab-sdp-registers" title="Permalink to this table">¶</a></caption>
+<div class="section" id="cdp-rdma">
+<h4>CDP_RDMA<a class="headerlink" href="#cdp-rdma" title="Permalink to this headline">¶</a></h4>
+<table border="1" class="colwidths-auto docutils" id="tab-cdp-rdma-registers">
+<caption><span class="caption-number">Table 29 </span><span class="caption-text">CDP_RDMA registers.</span><a class="headerlink" href="#tab-cdp-rdma-registers" title="Permalink to this table">¶</a></caption>
 <thead valign="bottom">
 <tr class="row-odd"><th class="head">Name</th>
 <th class="head">Address</th>
@@ -2900,257 +3426,69 @@ their registers are not available either.  These registers are as noted below:</
 <td><code class="docutils literal"><span class="pre">0xe004</span></code></td>
 <td>Pointer for CSB master and data path to access groups</td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">S_LUT_ACCESS_CFG</span></code></td>
-<td><code class="docutils literal"><span class="pre">0xe008</span></code></td>
-<td>LUT access address and type</td>
-</tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">S_LUT_ACCESS_DATA</span></code></td>
-<td><code class="docutils literal"><span class="pre">0xe00c</span></code></td>
-<td>Data register of read or write LUT</td>
-</tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">S_LUT_CFG</span></code></td>
-<td><code class="docutils literal"><span class="pre">0xe010</span></code></td>
-<td>LUT’s type: exponent or linear. And the selection between LE and LO tables.</td>
-</tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">S_LUT_INFO</span></code></td>
-<td><code class="docutils literal"><span class="pre">0xe014</span></code></td>
-<td>LE and LO LUT index offset and selection</td>
-</tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">S_LUT_LE_START</span></code></td>
-<td><code class="docutils literal"><span class="pre">0xe018</span></code></td>
-<td>Start of LE LUT’s range</td>
-</tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">S_LUT_LE_END</span></code></td>
-<td><code class="docutils literal"><span class="pre">0xe01c</span></code></td>
-<td>End of LE LUT’s range</td>
-</tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">S_LUT_LO_START</span></code></td>
-<td><code class="docutils literal"><span class="pre">0xe020</span></code></td>
-<td>Start of LO LUT’s range</td>
-</tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">S_LUT_LO_END</span></code></td>
-<td><code class="docutils literal"><span class="pre">0xe024</span></code></td>
-<td>End of LO LUT’s range</td>
-</tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">S_LUT_LE_SLOPE_SCALE</span></code></td>
-<td><code class="docutils literal"><span class="pre">0xe028</span></code></td>
-<td>Slope scale parameter for LE LUT underflow and overflow, signed value</td>
-</tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">S_LUT_LE_SLOPE_SHIFT</span></code></td>
-<td><code class="docutils literal"><span class="pre">0xe02c</span></code></td>
-<td>Slope shift parameter for LE_LUT underflow and overflow, signed value</td>
-</tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">S_LUT_LO_SLOPE_SCALE</span></code></td>
-<td><code class="docutils literal"><span class="pre">0xe030</span></code></td>
-<td>Slope scale parameter for LO LUT underflow and overflow, signed value</td>
-</tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">S_LUT_LO_SLOPE_SHIFT</span></code></td>
-<td><code class="docutils literal"><span class="pre">0xe034</span></code></td>
-<td>Slope shift parameter for LO_LUT underflow and overflow, signed value</td>
-</tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">D_OP_ENABLE</span></code></td>
-<td><code class="docutils literal"><span class="pre">0xe038</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xe008</span></code></td>
 <td>Set it to 1 to kick off operation for current register group</td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_DATA_CUBE_WIDTH</span></code></td>
-<td><code class="docutils literal"><span class="pre">0xe03c</span></code></td>
-<td>Input cube’s width</td>
+<td><code class="docutils literal"><span class="pre">0xe00c</span></code></td>
+<td>Input data cube’s width</td>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">D_DATA_CUBE_HEIGHT</span></code></td>
-<td><code class="docutils literal"><span class="pre">0xe040</span></code></td>
-<td>Input cube’s height</td>
+<td><code class="docutils literal"><span class="pre">0xe010</span></code></td>
+<td>Input data cube’s height</td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_DATA_CUBE_CHANNEL</span></code></td>
-<td><code class="docutils literal"><span class="pre">0xe044</span></code></td>
-<td>Input cube’s channel</td>
+<td><code class="docutils literal"><span class="pre">0xe014</span></code></td>
+<td>Input data cube’s channel</td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_DST_BASE_ADDR_LOW</span></code></td>
-<td><code class="docutils literal"><span class="pre">0xe048</span></code></td>
-<td>Lower 32bits of output data address</td>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_SRC_BASE_ADDR_LOW</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xe018</span></code></td>
+<td>Lower 32bits of input data address</td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_DST_BASE_ADDR_HIGH</span></code></td>
-<td><code class="docutils literal"><span class="pre">0xe04c</span></code></td>
-<td>Higher 32bits of output data address when axi awaddr is 64bits</td>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_SRC_BASE_ADDR_HIGH</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xe01c</span></code></td>
+<td>Higher 32bits of input data address when axi araddr is 64bits</td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_DST_LINE_STRIDE</span></code></td>
-<td><code class="docutils literal"><span class="pre">0xe050</span></code></td>
-<td>Line stride of output data cube</td>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_SRC_LINE_STRIDE</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xe020</span></code></td>
+<td>Line stride of input cube</td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_DST_SURFACE_STRIDE</span></code></td>
-<td><code class="docutils literal"><span class="pre">0xe054</span></code></td>
-<td>Surface stride of output data cube</td>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_SRC_SURFACE_STRIDE</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xe024</span></code></td>
+<td>Surface stride of input cube</td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_DP_BS_CFG</span></code></td>
-<td><code class="docutils literal"><span class="pre">0xe058</span></code></td>
-<td>Configurations of BS module: bypass, algorithm, etc.</td>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_SRC_DMA_CFG</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xe028</span></code></td>
+<td>RAM type of input data cube</td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_DP_BS_ALU_CFG</span></code></td>
-<td><code class="docutils literal"><span class="pre">0xe05c</span></code></td>
-<td>Source type and shifter value of BS ALU</td>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_SRC_COMPRESSION_EN</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xe02c</span></code></td>
+<td>This register is not used in OpenDLA 1.0</td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_DP_BS_ALU_SRC_VALUE</span></code></td>
-<td><code class="docutils literal"><span class="pre">0xe060</span></code></td>
-<td>Operand value of BS ALU</td>
-</tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_DP_BS_MUL_CFG</span></code></td>
-<td><code class="docutils literal"><span class="pre">0xe064</span></code></td>
-<td>Source type and shifter value of BS MUL</td>
-</tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_DP_BS_MUL_SRC_VALUE</span></code></td>
-<td><code class="docutils literal"><span class="pre">0xe068</span></code></td>
-<td>Operand value of BS MUL</td>
-</tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_DP_BN_CFG</span></code></td>
-<td><code class="docutils literal"><span class="pre">0xe06c</span></code></td>
-<td>Configurations of BN module: bypass, algorithm, etc.</td>
-</tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_DP_BN_ALU_CFG</span></code></td>
-<td><code class="docutils literal"><span class="pre">0xe070</span></code></td>
-<td>Source type and shifter value of BN ALU</td>
-</tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_DP_BN_ALU_SRC_VALUE</span></code></td>
-<td><code class="docutils literal"><span class="pre">0xe074</span></code></td>
-<td>Operand value of BN ALU</td>
-</tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_DP_BN_MUL_CFG</span></code></td>
-<td><code class="docutils literal"><span class="pre">0xe078</span></code></td>
-<td>Source type and shifter value of BN MUL</td>
-</tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_DP_BN_MUL_SRC_VALUE</span></code></td>
-<td><code class="docutils literal"><span class="pre">0xe07c</span></code></td>
-<td>Operand value of BN MUL</td>
-</tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_DP_EW_CFG</span></code></td>
-<td><code class="docutils literal"><span class="pre">0xe080</span></code></td>
-<td>Configurations of EW module: bypass, algorithm, etc.</td>
-</tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_DP_EW_ALU_CFG</span></code></td>
-<td><code class="docutils literal"><span class="pre">0xe084</span></code></td>
-<td>Source type and bypass control of EW ALU</td>
-</tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_DP_EW_ALU_SRC_VALUE</span></code></td>
-<td><code class="docutils literal"><span class="pre">0xe088</span></code></td>
-<td>Operand value of EW ALU</td>
-</tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_DP_EW_ALU_CVT_OFFSET_VALUE</span></code></td>
-<td><code class="docutils literal"><span class="pre">0xe08c</span></code></td>
-<td>Converter offset of EW ALU</td>
-</tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_DP_EW_ALU_CVT_SCALE_VALUE</span></code></td>
-<td><code class="docutils literal"><span class="pre">0xe090</span></code></td>
-<td>Converter scale of EW ALU</td>
-</tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_DP_EW_ALU_CVT_TRUNCATE_VALUE</span></code></td>
-<td><code class="docutils literal"><span class="pre">0xe094</span></code></td>
-<td>Converter truncate of EW ALU</td>
-</tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_DP_EW_MUL_CFG</span></code></td>
-<td><code class="docutils literal"><span class="pre">0xe098</span></code></td>
-<td>Source type and bypass control of EW MUL</td>
-</tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_DP_EW_MUL_SRC_VALUE</span></code></td>
-<td><code class="docutils literal"><span class="pre">0xe09c</span></code></td>
-<td>Operand value of EW MUL</td>
-</tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_DP_EW_MUL_CVT_OFFSET_VALUE</span></code></td>
-<td><code class="docutils literal"><span class="pre">0xe0a0</span></code></td>
-<td>Converter offset of EW MUL</td>
-</tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_DP_EW_MUL_CVT_SCALE_VALUE</span></code></td>
-<td><code class="docutils literal"><span class="pre">0xe0a4</span></code></td>
-<td>Converter scale of EW MUL</td>
-</tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_DP_EW_MUL_CVT_TRUNCATE_VALUE</span></code></td>
-<td><code class="docutils literal"><span class="pre">0xe0a8</span></code></td>
-<td>Converter truncate of EW MUL</td>
-</tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_DP_EW_TRUNCATE_VALUE</span></code></td>
-<td><code class="docutils literal"><span class="pre">0xe0ac</span></code></td>
-<td>Truncate of EW</td>
-</tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_FEATURE_MODE_CFG</span></code></td>
-<td><code class="docutils literal"><span class="pre">0xe0b0</span></code></td>
-<td>Operation configuration: flying mode, output destination, Direct or Winograd mode, flush NaN to zero, batch number.</td>
-</tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_DST_DMA_CFG</span></code></td>
-<td><code class="docutils literal"><span class="pre">0xe0b4</span></code></td>
-<td>Destination RAM type</td>
-</tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_DST_BATCH_STRIDE</span></code></td>
-<td><code class="docutils literal"><span class="pre">0xe0b8</span></code></td>
-<td>Stride of output cubes in batch mode</td>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_OPERATION_MODE</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xe030</span></code></td>
+<td>Split number</td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_DATA_FORMAT</span></code></td>
-<td><code class="docutils literal"><span class="pre">0xe0bc</span></code></td>
-<td>Data precision</td>
+<td><code class="docutils literal"><span class="pre">0xe034</span></code></td>
+<td>Input data cube</td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_CVT_OFFSET</span></code></td>
-<td><code class="docutils literal"><span class="pre">0xe0c0</span></code></td>
-<td>Output converter offset</td>
-</tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_CVT_SCALE</span></code></td>
-<td><code class="docutils literal"><span class="pre">0xe0c4</span></code></td>
-<td>Output converter scale</td>
-</tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_CVT_SHIFT</span></code></td>
-<td><code class="docutils literal"><span class="pre">0xe0c8</span></code></td>
-<td>Output converter shifter value</td>
-</tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_STATUS</span></code></td>
-<td><code class="docutils literal"><span class="pre">0xe0cc</span></code></td>
-<td>Output of equal mode</td>
-</tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_STATUS_NAN_INPUT_NUM</span></code></td>
-<td><code class="docutils literal"><span class="pre">0xe0d0</span></code></td>
-<td>Input NaN element number</td>
-</tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_STATUS_INF_INPUT_NUM</span></code></td>
-<td><code class="docutils literal"><span class="pre">0xe0d4</span></code></td>
-<td>Input Infinity element number</td>
-</tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_STATUS_NAN_OUTPUT_NUM</span></code></td>
-<td><code class="docutils literal"><span class="pre">0xe0d8</span></code></td>
-<td>Output NaN element number</td>
-</tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_PERF_ENABLE</span></code></td>
-<td><code class="docutils literal"><span class="pre">0xe0dc</span></code></td>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_PERF_ENABLE</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xe038</span></code></td>
 <td>Enable/Disable performance counting</td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_PERF_WDMA_WRITE_STALL</span></code></td>
-<td><code class="docutils literal"><span class="pre">0xe0e0</span></code></td>
-<td>Count stall cycles of write DMA for one layer</td>
-</tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_PERF_LUT_UFLOW</span></code></td>
-<td><code class="docutils literal"><span class="pre">0xe0e4</span></code></td>
-<td>Element number of both table underflow</td>
-</tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_PERF_LUT_OFLOW</span></code></td>
-<td><code class="docutils literal"><span class="pre">0xe0e8</span></code></td>
-<td>Element number of both table overflow</td>
-</tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_PERF_OUT_SATURATION</span></code></td>
-<td><code class="docutils literal"><span class="pre">0xe0ec</span></code></td>
-<td>Element number of both table saturation</td>
-</tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_PERF_LUT_HYBRID</span></code></td>
-<td><code class="docutils literal"><span class="pre">0xe0f0</span></code></td>
-<td>Element number of both hit, or both miss situation that element underflow one table and at the same time overflow the other.</td>
-</tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_PERF_LUT_LE_HIT</span></code></td>
-<td><code class="docutils literal"><span class="pre">0xe0f4</span></code></td>
-<td>Element number of only LE table hit</td>
-</tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_PERF_LUT_LO_HIT</span></code></td>
-<td><code class="docutils literal"><span class="pre">0xe0f8</span></code></td>
-<td>Element number of only LO table hit</td>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_PERF_READ_STALL</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xe03c</span></code></td>
+<td>Counting stalls of read requests</td>
 </tr>
 </tbody>
 </table>
 </div>
-<div class="section" id="pdp-rdma">
-<h4>PDP_RDMA<a class="headerlink" href="#pdp-rdma" title="Permalink to this headline">¶</a></h4>
-<table border="1" class="colwidths-auto docutils" id="tab-pdp-rdma-registers">
-<caption><span class="caption-number">Table 27 </span><span class="caption-text">PDP_RDMA registers.</span><a class="headerlink" href="#tab-pdp-rdma-registers" title="Permalink to this table">¶</a></caption>
+<div class="section" id="cdp">
+<h4>CDP<a class="headerlink" href="#cdp" title="Permalink to this headline">¶</a></h4>
+<table border="1" class="colwidths-auto docutils" id="tab-cdp-registers">
+<caption><span class="caption-number">Table 30 </span><span class="caption-text">CDP registers.</span><a class="headerlink" href="#tab-cdp-registers" title="Permalink to this table">¶</a></caption>
 <thead valign="bottom">
 <tr class="row-odd"><th class="head">Name</th>
 <th class="head">Address</th>
@@ -3166,81 +3504,189 @@ their registers are not available either.  These registers are as noted below:</
 <td><code class="docutils literal"><span class="pre">0xf004</span></code></td>
 <td>Pointer for CSB master and data path to access groups</td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_OP_ENABLE</span></code></td>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">S_LUT_ACCESS_CFG</span></code></td>
 <td><code class="docutils literal"><span class="pre">0xf008</span></code></td>
+<td>LUT access address and type</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">S_LUT_ACCESS_DATA</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xf00c</span></code></td>
+<td>Data register of read or write LUT</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">S_LUT_CFG</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xf010</span></code></td>
+<td>LUT’s type: exponent or linear. And the selection between LE and LO tables.</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">S_LUT_INFO</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xf014</span></code></td>
+<td>LE and LO LUT index offset and selection</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">S_LUT_LE_START_LOW</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xf018</span></code></td>
+<td>Lower 32bits of start of LE LUT’s range</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">S_LUT_LE_START_HIGH</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xf01c</span></code></td>
+<td>Higher 6bits of start of LE LUT’s range</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">S_LUT_LE_END_LOW</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xf020</span></code></td>
+<td>Lower 32bits of end of LE LUT’s range</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">S_LUT_LE_END_HIGH</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xf024</span></code></td>
+<td>Higher 6bits of end of LE LUT’s range</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">S_LUT_LO_START_LOW</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xf028</span></code></td>
+<td>Lower 32bits of start of LO LUT’s range</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">S_LUT_LO_START_HIGH</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xf02c</span></code></td>
+<td>Higher 6bits of start of LO LUT’s range</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">S_LUT_LO_END_LOW</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xf030</span></code></td>
+<td>Lower 32bits of end of LO LUT’s range</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">S_LUT_LO_END_HIGH</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xf034</span></code></td>
+<td>Higher 6bits of end of LO LUT’s range</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">S_LUT_LE_SLOPE_SCALE</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xf038</span></code></td>
+<td>Slope scale parameter for LE LUT underflow and overflow, signed value</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">S_LUT_LE_SLOPE_SHIFT</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xf03c</span></code></td>
+<td>Slope shift parameter for LE_LUT underflow and overflow, signed value</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">S_LUT_LO_SLOPE_SCALE</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xf040</span></code></td>
+<td>Slope scale parameter for LO LUT underflow and overflow, signed value</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">S_LUT_LO_SLOPE_SHIFT</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xf044</span></code></td>
+<td>Slope shift parameter for LO_LUT underflow and overflow, signed value</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_OP_ENABLE</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xf048</span></code></td>
 <td>Set it to 1 to kick off operation for current register group</td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_DATA_CUBE_IN_WIDTH</span></code></td>
-<td><code class="docutils literal"><span class="pre">0xf00c</span></code></td>
-<td>Input data cube’s width</td>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_FUNC_BYPASS</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xf04c</span></code></td>
+<td>Square sum process bypass control and multiplier after interpolator bypass control</td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_DATA_CUBE_IN_HEIGHT</span></code></td>
-<td><code class="docutils literal"><span class="pre">0xf010</span></code></td>
-<td>Input data cube’s height</td>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_DST_BASE_ADDR_LOW</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xf050</span></code></td>
+<td>Lower 32bits of output data address</td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_DATA_CUBE_IN_CHANNEL</span></code></td>
-<td><code class="docutils literal"><span class="pre">0xf014</span></code></td>
-<td>Input data cube’s channel</td>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_DST_BASE_ADDR_HIGH</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xf054</span></code></td>
+<td>Higher 32bits of output data address when axi awaddr is 64bits</td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_FLYING_MODE</span></code></td>
-<td><code class="docutils literal"><span class="pre">0xf018</span></code></td>
-<td>Indicate source is SDP or external memory</td>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_DST_LINE_STRIDE</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xf058</span></code></td>
+<td>Line stride of output cube</td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_SRC_BASE_ADDR_LOW</span></code></td>
-<td><code class="docutils literal"><span class="pre">0xf01c</span></code></td>
-<td>Lower 32bits of input data address</td>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_DST_SURFACE_STRIDE</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xf05c</span></code></td>
+<td>Surface stride of output cube</td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_SRC_BASE_ADDR_HIGH</span></code></td>
-<td><code class="docutils literal"><span class="pre">0xf020</span></code></td>
-<td>Higher 32bits of input data address when axi araddr is 64bits</td>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_DST_DMA_CFG</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xf060</span></code></td>
+<td>RAM type of output data cube</td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_SRC_LINE_STRIDE</span></code></td>
-<td><code class="docutils literal"><span class="pre">0xf024</span></code></td>
-<td>Line stride of input cube</td>
-</tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_SRC_SURFACE_STRIDE</span></code></td>
-<td><code class="docutils literal"><span class="pre">0xf028</span></code></td>
-<td>Surface stride of input cube</td>
-</tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_SRC_RAM_CFG</span></code></td>
-<td><code class="docutils literal"><span class="pre">0xf02c</span></code></td>
-<td>RAM type of input data cube</td>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_DST_COMPRESSION_EN</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xf064</span></code></td>
+<td>This register is not used in OpenDLA 1.0</td>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">D_DATA_FORMAT</span></code></td>
-<td><code class="docutils literal"><span class="pre">0xf030</span></code></td>
-<td>Input data cube</td>
+<td><code class="docutils literal"><span class="pre">0xf068</span></code></td>
+<td>Precision of input data</td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_OPERATION_MODE_CFG</span></code></td>
-<td><code class="docutils literal"><span class="pre">0xf034</span></code></td>
-<td>Split number</td>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_NAN_FLUSH_TO_ZERO</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xf06c</span></code></td>
+<td>Option to flush input NaN to zero</td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_POOLING_KERNEL_CFG</span></code></td>
-<td><code class="docutils literal"><span class="pre">0xf038</span></code></td>
-<td>Kernel width and kernel stride</td>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_LRN_CFG</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xf070</span></code></td>
+<td>Normalization length</td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_POOLING_PADDING_CFG</span></code></td>
-<td><code class="docutils literal"><span class="pre">0xf03c</span></code></td>
-<td>Padding width</td>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_DATIN_OFFSET</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xf074</span></code></td>
+<td>Input data convertor offset</td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_PARTIAL_WIDTH_IN</span></code></td>
-<td><code class="docutils literal"><span class="pre">0xf040</span></code></td>
-<td>Partial width for first, last and middle partitions</td>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_DATIN_SCALE</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xf078</span></code></td>
+<td>Input data convertor scale</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_DATIN_SHIFTER</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xf07c</span></code></td>
+<td>Input data convertor shifter value</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_DATOUT_OFFSET</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xf080</span></code></td>
+<td>Output data convertor offset</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_DATOUT_SCALE</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xf084</span></code></td>
+<td>Output data convertor scale</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_DATOUT_SHIFTER</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xf088</span></code></td>
+<td>Output data convertor shifter value</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_NAN_INPUT_NUM</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xf08c</span></code></td>
+<td>input NaN element number</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_INF_INPUT_NUM</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xf090</span></code></td>
+<td>input Infinity element number</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_NAN_OUTPUT_NUM</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xf094</span></code></td>
+<td>output NaN element number</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_OUT_SATURATION</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xf098</span></code></td>
+<td>saturated element number.</td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_PERF_ENABLE</span></code></td>
-<td><code class="docutils literal"><span class="pre">0xf044</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xf09c</span></code></td>
 <td>Enable/Disable performance counting</td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_PERF_READ_STALL</span></code></td>
-<td><code class="docutils literal"><span class="pre">0xf048</span></code></td>
-<td>Element number that for both LUT underflow.</td>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_PERF_WRITE_STALL</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xf0a0</span></code></td>
+<td>Element number that for both LUT under-flow</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_PERF_LUT_UFLOW</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xf0a4</span></code></td>
+<td>Element number that for both LUT under-flow</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_PERF_LUT_OFLOW</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xf0a8</span></code></td>
+<td>Element number that for both LUT over-flow</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_PERF_LUT_HYBRID</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xf0ac</span></code></td>
+<td>Element number that for both LUT miss, one is over-flow and the other is overflow</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_PERF_LUT_LE_HIT</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xf0b0</span></code></td>
+<td>Element number that for LE_lut hit only</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_PERF_LUT_LO_HIT</span></code></td>
+<td><code class="docutils literal"><span class="pre">0xf0b4</span></code></td>
+<td>Element number that for LO_lut hit only</td>
 </tr>
 </tbody>
 </table>
 </div>
-<div class="section" id="pdp">
-<h4>PDP<a class="headerlink" href="#pdp" title="Permalink to this headline">¶</a></h4>
-<table border="1" class="colwidths-auto docutils" id="tab-pdp-registers">
-<caption><span class="caption-number">Table 28 </span><span class="caption-text">PDP registers.</span><a class="headerlink" href="#tab-pdp-registers" title="Permalink to this table">¶</a></caption>
+<div class="section" id="id5">
+<h4>RUBIK<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h4>
+<table border="1" class="colwidths-auto docutils" id="tab-rubik-registers">
+<caption><span class="caption-number">Table 31 </span><span class="caption-text">RUBIK registers.</span><a class="headerlink" href="#tab-rubik-registers" title="Permalink to this table">¶</a></caption>
 <thead valign="bottom">
 <tr class="row-odd"><th class="head">Name</th>
 <th class="head">Address</th>
@@ -3260,543 +3706,97 @@ their registers are not available either.  These registers are as noted below:</
 <td><code class="docutils literal"><span class="pre">0x10008</span></code></td>
 <td>Set it to 1 to kick off operation for current register group</td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_DATA_CUBE_IN_WIDTH</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x1000c</span></code></td>
-<td>Input data cube’s width</td>
-</tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_DATA_CUBE_IN_HEIGHT</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x10010</span></code></td>
-<td>Input data cube’s height</td>
-</tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_DATA_CUBE_IN_CHANNEL</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x10014</span></code></td>
-<td>Input data cube’s channel</td>
-</tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_DATA_CUBE_OUT_WIDTH</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x10018</span></code></td>
-<td>Output data cube’s width</td>
-</tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_DATA_CUBE_OUT_HEIGHT</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x1001c</span></code></td>
-<td>Output data cube’s height</td>
-</tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_DATA_CUBE_OUT_CHANNEL</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x10020</span></code></td>
-<td>Output data cube’s channel</td>
-</tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_OPERATION_MODE_CFG</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x10024</span></code></td>
-<td>Split number</td>
-</tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_NAN_FLUSH_TO_ZERO</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x10028</span></code></td>
-<td>Option to flush input NaN to zero</td>
-</tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_PARTIAL_WIDTH_IN</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x1002c</span></code></td>
-<td>Partial width for first, last and middle partitions of input cube</td>
-</tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_PARTIAL_WIDTH_OUT</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x10030</span></code></td>
-<td>Partial width for first, last and middle partitions of output cube</td>
-</tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_POOLING_KERNEL_CFG</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x10034</span></code></td>
-<td>Kernel width and kernel stride</td>
-</tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_RECIP_KERNEL_WIDTH</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x10038</span></code></td>
-<td>Reciprocal of pooling kernel width, set to actual value * (2^16) when INT8/INT16 format enabled. and set to actual value for fp16 precision mode with fp17 data format.</td>
-</tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_RECIP_KERNEL_HEIGHT</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x1003c</span></code></td>
-<td>Reciprocal of pooling kernel height, set to actual value * (2^16) when INT8/INT16 format enabled. and set to actual value for fp16 precision mode with fp17 data format.</td>
-</tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_POOLING_PADDING_CFG</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x10040</span></code></td>
-<td>Left/right/top/bottom padding size</td>
-</tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_POOLING_PADDING_VALUE_1_CFG</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x10044</span></code></td>
-<td>Padding_value*1</td>
-</tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_POOLING_PADDING_VALUE_2_CFG</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x10048</span></code></td>
-<td>Padding_value*2</td>
-</tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_POOLING_PADDING_VALUE_3_CFG</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x1004c</span></code></td>
-<td>Padding_value*3</td>
-</tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_POOLING_PADDING_VALUE_4_CFG</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x10050</span></code></td>
-<td>Padding_value*4</td>
-</tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_POOLING_PADDING_VALUE_5_CFG</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x10054</span></code></td>
-<td>Padding_value*5</td>
-</tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_POOLING_PADDING_VALUE_6_CFG</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x10058</span></code></td>
-<td>Padding_value*6</td>
-</tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_POOLING_PADDING_VALUE_7_CFG</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x1005c</span></code></td>
-<td>Padding_value*7</td>
-</tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_SRC_BASE_ADDR_LOW</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x10060</span></code></td>
-<td>Lower 32bits of input data address</td>
-</tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_SRC_BASE_ADDR_HIGH</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x10064</span></code></td>
-<td>Higher 32bits of input data address when axi araddr is 64bits</td>
-</tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_SRC_LINE_STRIDE</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x10068</span></code></td>
-<td>Line stride of input cube</td>
-</tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_SRC_SURFACE_STRIDE</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x1006c</span></code></td>
-<td>Surface stride of input cube</td>
-</tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_DST_BASE_ADDR_LOW</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x10070</span></code></td>
-<td>Lower 32bits of output data address</td>
-</tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_DST_BASE_ADDR_HIGH</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x10074</span></code></td>
-<td>Higher 32bits of output data address when axi awaddr is 64bits</td>
-</tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_DST_LINE_STRIDE</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x10078</span></code></td>
-<td>Line stride of output cube</td>
-</tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_DST_SURFACE_STRIDE</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x1007c</span></code></td>
-<td>Surface stride of output cube</td>
-</tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_DST_RAM_CFG</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x10080</span></code></td>
-<td>RAM type of destination cube</td>
-</tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_DATA_FORMAT</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x10084</span></code></td>
-<td>Precision of input data</td>
-</tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_INF_INPUT_NUM</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x10088</span></code></td>
-<td>Input infinity element number</td>
-</tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_NAN_INPUT_NUM</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x1008c</span></code></td>
-<td>Input NaN element number</td>
-</tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_NAN_OUTPUT_NUM</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x10090</span></code></td>
-<td>Output NaN element number</td>
-</tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_PERF_ENABLE</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x10094</span></code></td>
-<td>Enable/disable performance counting</td>
-</tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_PERF_WRITE_STALL</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x10098</span></code></td>
-<td>Counting stalls of write requests</td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="section" id="cdp-rdma">
-<h4>CDP_RDMA<a class="headerlink" href="#cdp-rdma" title="Permalink to this headline">¶</a></h4>
-<table border="1" class="colwidths-auto docutils" id="tab-cdp-rdma-registers">
-<caption><span class="caption-number">Table 29 </span><span class="caption-text">CDP_RDMA registers.</span><a class="headerlink" href="#tab-cdp-rdma-registers" title="Permalink to this table">¶</a></caption>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">Name</th>
-<th class="head">Address</th>
-<th class="head">Description</th>
-</tr>
-</thead>
-<tbody valign="top">
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">S_STATUS</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x11000</span></code></td>
-<td>Idle status of two register groups</td>
-</tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">S_POINTER</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x11004</span></code></td>
-<td>Pointer for CSB master and data path to access groups</td>
-</tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_OP_ENABLE</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x11008</span></code></td>
-<td>Set it to 1 to kick off operation for current register group</td>
-</tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_DATA_CUBE_WIDTH</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x1100c</span></code></td>
-<td>Input data cube’s width</td>
-</tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_DATA_CUBE_HEIGHT</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x11010</span></code></td>
-<td>Input data cube’s height</td>
-</tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_DATA_CUBE_CHANNEL</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x11014</span></code></td>
-<td>Input data cube’s channel</td>
-</tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_SRC_BASE_ADDR_LOW</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x11018</span></code></td>
-<td>Lower 32bits of input data address</td>
-</tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_SRC_BASE_ADDR_HIGH</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x1101c</span></code></td>
-<td>Higher 32bits of input data address when axi araddr is 64bits</td>
-</tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_SRC_LINE_STRIDE</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x11020</span></code></td>
-<td>Line stride of input cube</td>
-</tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_SRC_SURFACE_STRIDE</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x11024</span></code></td>
-<td>Surface stride of input cube</td>
-</tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_SRC_DMA_CFG</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x11028</span></code></td>
-<td>RAM type of input data cube</td>
-</tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_SRC_COMPRESSION_EN</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x1102c</span></code></td>
-<td>This register is not used in OpenDLA 1.0</td>
-</tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_OPERATION_MODE</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x11030</span></code></td>
-<td>Split number</td>
-</tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_DATA_FORMAT</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x11034</span></code></td>
-<td>Input data cube</td>
-</tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_PERF_ENABLE</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x11038</span></code></td>
-<td>Enable/Disable performance counting</td>
-</tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_PERF_READ_STALL</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x1103c</span></code></td>
-<td>Counting stalls of read requests</td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="section" id="cdp">
-<h4>CDP<a class="headerlink" href="#cdp" title="Permalink to this headline">¶</a></h4>
-<table border="1" class="colwidths-auto docutils" id="tab-cdp-registers">
-<caption><span class="caption-number">Table 30 </span><span class="caption-text">CDP registers.</span><a class="headerlink" href="#tab-cdp-registers" title="Permalink to this table">¶</a></caption>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">Name</th>
-<th class="head">Address</th>
-<th class="head">Description</th>
-</tr>
-</thead>
-<tbody valign="top">
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">S_STATUS</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x12000</span></code></td>
-<td>Idle status of two register groups</td>
-</tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">S_POINTER</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x12004</span></code></td>
-<td>Pointer for CSB master and data path to access groups</td>
-</tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">S_LUT_ACCESS_CFG</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x12008</span></code></td>
-<td>LUT access address and type</td>
-</tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">S_LUT_ACCESS_DATA</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x1200c</span></code></td>
-<td>Data register of read or write LUT</td>
-</tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">S_LUT_CFG</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x12010</span></code></td>
-<td>LUT’s type: exponent or linear. And the selection between LE and LO tables.</td>
-</tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">S_LUT_INFO</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x12014</span></code></td>
-<td>LE and LO LUT index offset and selection</td>
-</tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">S_LUT_LE_START_LOW</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x12018</span></code></td>
-<td>Lower 32bits of start of LE LUT’s range</td>
-</tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">S_LUT_LE_START_HIGH</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x1201c</span></code></td>
-<td>Higher 6bits of start of LE LUT’s range</td>
-</tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">S_LUT_LE_END_LOW</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x12020</span></code></td>
-<td>Lower 32bits of end of LE LUT’s range</td>
-</tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">S_LUT_LE_END_HIGH</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x12024</span></code></td>
-<td>Higher 6bits of end of LE LUT’s range</td>
-</tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">S_LUT_LO_START_LOW</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x12028</span></code></td>
-<td>Lower 32bits of start of LO LUT’s range</td>
-</tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">S_LUT_LO_START_HIGH</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x1202c</span></code></td>
-<td>Higher 6bits of start of LO LUT’s range</td>
-</tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">S_LUT_LO_END_LOW</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x12030</span></code></td>
-<td>Lower 32bits of end of LO LUT’s range</td>
-</tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">S_LUT_LO_END_HIGH</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x12034</span></code></td>
-<td>Higher 6bits of end of LO LUT’s range</td>
-</tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">S_LUT_LE_SLOPE_SCALE</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x12038</span></code></td>
-<td>Slope scale parameter for LE LUT underflow and overflow, signed value</td>
-</tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">S_LUT_LE_SLOPE_SHIFT</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x1203c</span></code></td>
-<td>Slope shift parameter for LE_LUT underflow and overflow, signed value</td>
-</tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">S_LUT_LO_SLOPE_SCALE</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x12040</span></code></td>
-<td>Slope scale parameter for LO LUT underflow and overflow, signed value</td>
-</tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">S_LUT_LO_SLOPE_SHIFT</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x12044</span></code></td>
-<td>Slope shift parameter for LO_LUT underflow and overflow, signed value</td>
-</tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_OP_ENABLE</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x12048</span></code></td>
-<td>Set it to 1 to kick off operation for current register group</td>
-</tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_FUNC_BYPASS</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x1204c</span></code></td>
-<td>Square sum process bypass control and multiplier after interpolator bypass control</td>
-</tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_DST_BASE_ADDR_LOW</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x12050</span></code></td>
-<td>Lower 32bits of output data address</td>
-</tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_DST_BASE_ADDR_HIGH</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x12054</span></code></td>
-<td>Higher 32bits of output data address when axi awaddr is 64bits</td>
-</tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_DST_LINE_STRIDE</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x12058</span></code></td>
-<td>Line stride of output cube</td>
-</tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_DST_SURFACE_STRIDE</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x1205c</span></code></td>
-<td>Surface stride of output cube</td>
-</tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_DST_DMA_CFG</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x12060</span></code></td>
-<td>RAM type of output data cube</td>
-</tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_DST_COMPRESSION_EN</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x12064</span></code></td>
-<td>This register is not used in OpenDLA 1.0</td>
-</tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_DATA_FORMAT</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x12068</span></code></td>
-<td>Precision of input data</td>
-</tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_NAN_FLUSH_TO_ZERO</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x1206c</span></code></td>
-<td>Option to flush input NaN to zero</td>
-</tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_LRN_CFG</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x12070</span></code></td>
-<td>Normalization length</td>
-</tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_DATIN_OFFSET</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x12074</span></code></td>
-<td>Input data convertor offset</td>
-</tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_DATIN_SCALE</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x12078</span></code></td>
-<td>Input data convertor scale</td>
-</tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_DATIN_SHIFTER</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x1207c</span></code></td>
-<td>Input data convertor shifter value</td>
-</tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_DATOUT_OFFSET</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x12080</span></code></td>
-<td>Output data convertor offset</td>
-</tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_DATOUT_SCALE</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x12084</span></code></td>
-<td>Output data convertor scale</td>
-</tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_DATOUT_SHIFTER</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x12088</span></code></td>
-<td>Output data convertor shifter value</td>
-</tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_NAN_INPUT_NUM</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x1208c</span></code></td>
-<td>input NaN element number</td>
-</tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_INF_INPUT_NUM</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x12090</span></code></td>
-<td>input Infinity element number</td>
-</tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_NAN_OUTPUT_NUM</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x12094</span></code></td>
-<td>output NaN element number</td>
-</tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_OUT_SATURATION</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x12098</span></code></td>
-<td>saturated element number.</td>
-</tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_PERF_ENABLE</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x1209c</span></code></td>
-<td>Enable/Disable performance counting</td>
-</tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_PERF_WRITE_STALL</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x120a0</span></code></td>
-<td>Element number that for both LUT under-flow</td>
-</tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_PERF_LUT_UFLOW</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x120a4</span></code></td>
-<td>Element number that for both LUT under-flow</td>
-</tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_PERF_LUT_OFLOW</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x120a8</span></code></td>
-<td>Element number that for both LUT over-flow</td>
-</tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_PERF_LUT_HYBRID</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x120ac</span></code></td>
-<td>Element number that for both LUT miss, one is over-flow and the other is overflow</td>
-</tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_PERF_LUT_LE_HIT</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x120b0</span></code></td>
-<td>Element number that for LE_lut hit only</td>
-</tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_PERF_LUT_LO_HIT</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x120b4</span></code></td>
-<td>Element number that for LO_lut hit only</td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="section" id="id5">
-<h4>RUBIK<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h4>
-<table border="1" class="colwidths-auto docutils" id="tab-rubik-registers">
-<caption><span class="caption-number">Table 31 </span><span class="caption-text">RUBIK registers.</span><a class="headerlink" href="#tab-rubik-registers" title="Permalink to this table">¶</a></caption>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">Name</th>
-<th class="head">Address</th>
-<th class="head">Description</th>
-</tr>
-</thead>
-<tbody valign="top">
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">S_STATUS</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x13000</span></code></td>
-<td>Idle status of two register groups</td>
-</tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">S_POINTER</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x13004</span></code></td>
-<td>Pointer for CSB master and data path to access groups</td>
-</tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">D_OP_ENABLE</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x13008</span></code></td>
-<td>Set it to 1 to kick off operation for current register group</td>
-</tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_MISC_CFG</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x1300c</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x1000c</span></code></td>
 <td>Operation mode and precision</td>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">D_DAIN_RAM_TYPE</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x13010</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x10010</span></code></td>
 <td>RAM type of input cube</td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_DATAIN_SIZE_0</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x13014</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x10014</span></code></td>
 <td>Input data cube’s width and height</td>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">D_DATAIN_SIZE_1</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x13018</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x10018</span></code></td>
 <td>Input data cube’s channel</td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_DAIN_ADDR_HIGH</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x1301c</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x1001c</span></code></td>
 <td>Higher 32bits of input data address when axi araddr is 64bits</td>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">D_DAIN_ADDR_LOW</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x13020</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x10020</span></code></td>
 <td>Lower 32bits of input data address</td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_DAIN_LINE_STRIDE</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x13024</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x10024</span></code></td>
 <td>Line stride of input data cube</td>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">D_DAIN_SURF_STRIDE</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x13028</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x10028</span></code></td>
 <td>Surface stride of input data cube</td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_DAIN_PLANAR_STRIDE</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x1302c</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x1002c</span></code></td>
 <td>Input data planar stride, for merge mode only</td>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">D_DAOUT_RAM_TYPE</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x13030</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x10030</span></code></td>
 <td>RAM type of output cube</td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_DATAOUT_SIZE_1</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x13034</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x10034</span></code></td>
 <td>Output data cube’s channel</td>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">D_DAOUT_ADDR_HIGH</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x13038</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x10038</span></code></td>
 <td>Higher 32bits of output data address when axi awaddr is 64bits</td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_DAOUT_ADDR_LOW</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x1303c</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x1003c</span></code></td>
 <td>Lower 32bits of output data address</td>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">D_DAOUT_LINE_STRIDE</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x13040</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x10040</span></code></td>
 <td>Line stride of output data cube</td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_CONTRACT_STRIDE_0</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x13044</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x10044</span></code></td>
 <td><p class="first">Input stride for each X step.</p>
 <p>Equals to (DATAOUT_CHANNEL+1) * BPE / 32 * DAIN_SURF_STRIDE</p>
 <p class="last">(BPE = (IN_PRECISION == INT8) ? 1 : 2;)</p>
 </td>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">D_CONTRACT_STRIDE_1</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x13048</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x10048</span></code></td>
 <td><p class="first">Output stride corresponding to each line in input cube.</p>
 <p class="last">equals to (DECONV_Y_STRIDE+1) * DAOUT_LINE_STRIDE</p>
 </td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_DAOUT_SURF_STRIDE</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x1304c</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x1004c</span></code></td>
 <td>Surface stride of output data cube</td>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">D_DAOUT_PLANAR_STRIDE</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x13050</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x10050</span></code></td>
 <td>Output data planar stride, for split mode only</td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_DECONV_STRIDE</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x13054</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x10054</span></code></td>
 <td>Deconvolution x stride and y stride</td>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">D_PERF_ENABLE</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x13058</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x10058</span></code></td>
 <td>Enable/Disable performance counting</td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">D_PERF_READ_STALL</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x1305c</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x1005c</span></code></td>
 <td>RD_STALL Count stall cycles of read DMA for one layer</td>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">D_PERF_WRITE_STALL</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x13060</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x10060</span></code></td>
 <td>WR_STALL Count stall cycles of write DMA for one layer</td>
 </tr>
 </tbody>
