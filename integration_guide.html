@@ -272,7 +272,9 @@ below.  The versions listed are used for testing.</p>
 <ul class="simple">
 <li>Java - jdk1.7</li>
 <li>Perl - perl-5.8.8</li>
-<li>CPP - gcc-4.0</li>
+<li>CPP - gcc-4.9.3</li>
+<li>Python - python2.6</li>
+<li>SystemC - systemc-2.3</li>
 </ul>
 </div>
 <div class="section" id="tree-build">
@@ -305,6 +307,12 @@ regression:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">./</span><span class="n">tools</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">tmake</span> <span class="o">-</span><span class="n">build</span> <span class="n">verif_sim</span>
 </pre></div>
 </div>
+<p>Additionally, there is a tmake target for the Cmodel of NVDLA, which lives
+in the <code class="docutils literal"><span class="pre">cmod/</span></code> directory.  If building the Virtual Platform, or another
+application that uses the NVDLA Cmodel, the following command will build it
+and install it into <code class="docutils literal"><span class="pre">outdir/nv_full/cmod/release</span></code>:</p>
+<blockquote>
+<div>./tools/bin/tmake -build cmod_top</div></blockquote>
 <div class="section" id="version-control-usage">
 <h3>Version control usage<a class="headerlink" href="#version-control-usage" title="Permalink to this headline">¶</a></h3>
 <p>NVDLA is developed in Git, on multiple branches.  It is important to use the
