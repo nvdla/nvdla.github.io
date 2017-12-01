@@ -274,8 +274,15 @@ below.  The versions listed are used for testing.</p>
 <li>Perl - perl-5.8.8</li>
 <li>CPP - gcc-4.9.3</li>
 <li>Python - python2.6</li>
-<li>SystemC - systemc-2.3</li>
+<li>SystemC - systemc-2.3.0</li>
 </ul>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">NVDLA requires the exact SystemC version specified (2.3.0).  Despite the
+subminor version change, 2.3.1 and 2.3.2 have compatibility issues with
+NVDLA, including issues with hierarchical binding, and the NVDLA Cmodel
+will fail at runtime when compiled with those versions.</p>
+</div>
 </div>
 <div class="section" id="tree-build">
 <span id="id1"></span><h2>Tree Build<a class="headerlink" href="#tree-build" title="Permalink to this headline">¶</a></h2>
