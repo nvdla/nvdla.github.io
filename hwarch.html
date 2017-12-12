@@ -27,7 +27,7 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Integrator’s Manual" href="integration_guide.html" />
-    <link rel="prev" title="Runtime environment" href="sw/runtime_environment.html" /> 
+    <link rel="prev" title="Test applications" href="sw/test_application.html" /> 
   </head>
   <body>
 <header class="navbar">
@@ -47,7 +47,7 @@
           <a href="integration_guide.html" title="Integrator’s Manual"
              accesskey="N">next</a></li>
         <li class="right">
-          <a href="sw/runtime_environment.html" title="Runtime environment"
+          <a href="sw/test_application.html" title="Test applications"
              accesskey="P">previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="index.html">NVDLA Open Source Project</a>&#187;</li>
         <li class="nav-item nav-item-1"><a href="contents.html">Documentation</a>&#187;</li> 
@@ -529,8 +529,8 @@ before data sent out to SDP, we need to chunk it by a shifter.</p>
 <li>SDP function support = Single Scaling</li>
 <li>BDMA function support = No</li>
 <li>Rubik function support = No</li>
-<li>Atomic - C sizing = 16</li>
-<li>Atomic - K sizing = 4</li>
+<li>Atomic - C sizing = 8</li>
+<li>Atomic - K sizing = 8</li>
 <li>SDP throughput = 4</li>
 <li>PDP throughput = 2</li>
 <li>CDP throughput = 2</li>
@@ -1240,6 +1240,11 @@ space is as shown in table <a class="reference internal" href="#tab-address-spac
 instance, smaller implementations of NVDLA may disable SDP, PDP, or CDP.  In
 such a case, the address space of those subunits is reserved, and their
 registers are not accessible.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Capability registers will be added to determine the configuration of
+each NVDLA implementation.</p>
+</div>
 <table border="1" class="docutils" id="tab-address-space">
 <caption><span class="caption-number">Table 10 </span><span class="caption-text">NVDLA address space.</span><a class="headerlink" href="#tab-address-space" title="Permalink to this table">¶</a></caption>
 <colgroup>
@@ -1271,7 +1276,7 @@ registers are not accessible.</p>
 <td><code class="docutils literal"><span class="pre">0x0000_2FFF</span></code></td>
 <td>4</td>
 </tr>
-<tr class="row-odd"><td>CVIF</td>
+<tr class="row-odd"><td>SRAMIF</td>
 <td><code class="docutils literal"><span class="pre">0x0000_3000</span></code></td>
 <td><code class="docutils literal"><span class="pre">0x0000_3FFF</span></code></td>
 <td>4</td>
@@ -1318,7 +1323,7 @@ registers are not accessible.</p>
 </tr>
 <tr class="row-even"><td>PDP (RDMA)</td>
 <td><code class="docutils literal"><span class="pre">0x0000_C000</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x0001_CFFF</span></code></td>
+<td><code class="docutils literal"><span class="pre">0x0000_CFFF</span></code></td>
 <td>4</td>
 </tr>
 <tr class="row-odd"><td>PDP</td>
@@ -1380,614 +1385,13 @@ registers are not accessible.</p>
 <td><code class="docutils literal"><span class="pre">0x000c</span></code></td>
 <td>Interrupt status</td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">HW_CONFIG0</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x0010</span></code></td>
-<td>HW capability register 0: supported data types</td>
-</tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">HW_CONFIG1</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x0014</span></code></td>
-<td>HW capability register 1: supported features</td>
-</tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">HW_CONFIG2</span></code></td>
-<td><code class="docutils literal"><span class="pre">0x0018</span></code></td>
-<td>HW capability register 2: design size configurations</td>
-</tr>
-</tbody>
-</table>
-<table border="1" class="docutils" id="tab-glb-fields">
-<caption><span class="caption-number">Table 12 </span><span class="caption-text">GLB register fields.</span><a class="headerlink" href="#tab-glb-fields" title="Permalink to this table">¶</a></caption>
-<colgroup>
-<col width="10%" />
-<col width="10%" />
-<col width="9%" />
-<col width="70%" />
-</colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head" colspan="2">Register/Field</th>
-<th class="head">Bits</th>
-<th class="head">Description</th>
-</tr>
-</thead>
-<tbody valign="top">
-<tr class="row-even"><td colspan="4"><code class="docutils literal"><span class="pre">HW_CONFIG0</span></code></td>
-</tr>
-<tr class="row-odd"><td>&#160;</td>
-<td><code class="docutils literal"><span class="pre">data_type_bin</span></code></td>
-<td>0</td>
-<td>support binary data type or not</td>
-</tr>
-<tr class="row-even"><td>&#160;</td>
-<td><code class="docutils literal"><span class="pre">data_type_int4</span></code></td>
-<td>1</td>
-<td>support signed int4 data type or not</td>
-</tr>
-<tr class="row-odd"><td>&#160;</td>
-<td><code class="docutils literal"><span class="pre">data_type_uint4</span></code></td>
-<td>2</td>
-<td>support unsigned int4 data type or not</td>
-</tr>
-<tr class="row-even"><td>&#160;</td>
-<td><code class="docutils literal"><span class="pre">data_type_int8</span></code></td>
-<td>3</td>
-<td>support signed int8 data type or not</td>
-</tr>
-<tr class="row-odd"><td>&#160;</td>
-<td><code class="docutils literal"><span class="pre">data_type_uint8</span></code></td>
-<td>4</td>
-<td>support unsigned int8 data type or not</td>
-</tr>
-<tr class="row-even"><td>&#160;</td>
-<td><code class="docutils literal"><span class="pre">data_type_int16</span></code></td>
-<td>5</td>
-<td>support signed int16 data type or not</td>
-</tr>
-<tr class="row-odd"><td>&#160;</td>
-<td><code class="docutils literal"><span class="pre">data_type_uint16</span></code></td>
-<td>6</td>
-<td>support unsigned int16 data type or not</td>
-</tr>
-<tr class="row-even"><td>&#160;</td>
-<td><code class="docutils literal"><span class="pre">data_type_int32</span></code></td>
-<td>7</td>
-<td>support signed int32 data type or not</td>
-</tr>
-<tr class="row-odd"><td>&#160;</td>
-<td><code class="docutils literal"><span class="pre">data_type_uint32</span></code></td>
-<td>8</td>
-<td>support unsigned int32 data type or not</td>
-</tr>
-<tr class="row-even"><td>&#160;</td>
-<td><code class="docutils literal"><span class="pre">data_type_fp16</span></code></td>
-<td>9</td>
-<td>support fp16 data type or not</td>
-</tr>
-<tr class="row-odd"><td>&#160;</td>
-<td><code class="docutils literal"><span class="pre">data_type_fp32</span></code></td>
-<td>10</td>
-<td>support fp32 data type or not</td>
-</tr>
-<tr class="row-even"><td>&#160;</td>
-<td><code class="docutils literal"><span class="pre">data_type_fp64</span></code></td>
-<td>11</td>
-<td>support fp64 data type or not</td>
-</tr>
-<tr class="row-odd"><td>&#160;</td>
-<td>reserved</td>
-<td>31..12</td>
-<td>reserved for future use</td>
-</tr>
-<tr class="row-even"><td colspan="4"><code class="docutils literal"><span class="pre">HW_CONFIG1</span></code></td>
-</tr>
-<tr class="row-odd"><td>&#160;</td>
-<td><code class="docutils literal"><span class="pre">Winograd</span></code></td>
-<td>0</td>
-<td>support Winograd convolution or not</td>
-</tr>
-<tr class="row-even"><td>&#160;</td>
-<td><code class="docutils literal"><span class="pre">Batch</span></code></td>
-<td>1</td>
-<td>support multi-batch convolution or not</td>
-</tr>
-<tr class="row-odd"><td>&#160;</td>
-<td><code class="docutils literal"><span class="pre">feature_comp</span></code></td>
-<td>2</td>
-<td>support feature compression in convolution or not</td>
-</tr>
-<tr class="row-even"><td>&#160;</td>
-<td><code class="docutils literal"><span class="pre">weight_comp</span></code></td>
-<td>3</td>
-<td>support weight compression in convolution or not</td>
-</tr>
-<tr class="row-odd"><td>&#160;</td>
-<td><code class="docutils literal"><span class="pre">second_mem_bus</span></code></td>
-<td>4</td>
-<td>support second memory bus or not</td>
-</tr>
-<tr class="row-even"><td>&#160;</td>
-<td><code class="docutils literal"><span class="pre">image_in</span></code></td>
-<td>5</td>
-<td>support image as input in convolution or not</td>
-</tr>
-<tr class="row-odd"><td>&#160;</td>
-<td><code class="docutils literal"><span class="pre">sdp</span></code></td>
-<td>6</td>
-<td>support SDP function or not</td>
-</tr>
-<tr class="row-even"><td>&#160;</td>
-<td><code class="docutils literal"><span class="pre">bdma</span></code></td>
-<td>7</td>
-<td>support BDMA function or not</td>
-</tr>
-<tr class="row-odd"><td>&#160;</td>
-<td><code class="docutils literal"><span class="pre">rubik</span></code></td>
-<td>8</td>
-<td>support Rubik function or not</td>
-</tr>
-<tr class="row-even"><td>&#160;</td>
-<td>reserved</td>
-<td>31..9</td>
-<td>reserved for future use</td>
-</tr>
-<tr class="row-odd"><td colspan="4"><code class="docutils literal"><span class="pre">HW_CONFIG2</span></code></td>
-</tr>
-<tr class="row-even"><td>&#160;</td>
-<td><code class="docutils literal"><span class="pre">atomic_c</span></code></td>
-<td>3..0</td>
-<td><p class="first">The parallel MAC operation in input feature channel dimension, encoded as below:</p>
-<p>0: 16</p>
-<p>1: 32</p>
-<p>2: 64</p>
-<p class="last">3: 128</p>
-</td>
-</tr>
-<tr class="row-odd"><td>&#160;</td>
-<td><code class="docutils literal"><span class="pre">atomic_k</span></code></td>
-<td>6..4</td>
-<td><p class="first">The parallel MAC operation at output feature channel dimension, encoded as below:</p>
-<p>0: 4</p>
-<p>1: 8</p>
-<p class="last">2: 16</p>
-</td>
-</tr>
-<tr class="row-even"><td>&#160;</td>
-<td><code class="docutils literal"><span class="pre">sdp_throughput</span></code></td>
-<td>11..7</td>
-<td><p class="first">The number of instances of SDP pipelines. The number of SDP pipelines determines the number of output features that can be generated each cycle.</p>
-<p class="last">Value range: 1~16</p>
-</td>
-</tr>
-<tr class="row-odd"><td>&#160;</td>
-<td><code class="docutils literal"><span class="pre">pdp_throughput</span></code></td>
-<td>14..12</td>
-<td><p class="first">The PDP throughput indicates the number of output features that can be generated each cycle.</p>
-<p class="last">Value range: 0~4</p>
-</td>
-</tr>
-<tr class="row-even"><td>&#160;</td>
-<td><code class="docutils literal"><span class="pre">cdp_throughput</span></code></td>
-<td>17..15</td>
-<td><p class="first">The number of output features that can be generated every cycle.</p>
-<p class="last">Value range: 0~4</p>
-</td>
-</tr>
-<tr class="row-odd"><td>&#160;</td>
-<td><code class="docutils literal"><span class="pre">cbuf_bank_count</span></code></td>
-<td>23..18</td>
-<td><p class="first">The number of convolutional buffer banks.</p>
-<p class="last">Value range: 2~32</p>
-</td>
-</tr>
-<tr class="row-even"><td>&#160;</td>
-<td><code class="docutils literal"><span class="pre">cbuf_bank_size</span></code></td>
-<td>25..24</td>
-<td><p class="first">The size of a single convolutional buffer bank, encoded as below:</p>
-<p>0: 4KB</p>
-<p>1: 8KB</p>
-<p>2: 16KB</p>
-<p class="last">3: 32KB</p>
-</td>
-</tr>
-<tr class="row-odd"><td>&#160;</td>
-<td><code class="docutils literal"><span class="pre">max_batch</span></code></td>
-<td>28..26</td>
-<td><p class="first">The maximum batching number that convolution function can support.</p>
-<p class="last">Value range: 1~32</p>
-</td>
-</tr>
-<tr class="row-even"><td>&#160;</td>
-<td><code class="docutils literal"><span class="pre">stripe_length</span></code></td>
-<td>31..29</td>
-<td>The stripe length in one stripe operation, encoded as log2(stripe_length)</td>
-</tr>
-</tbody>
-</table>
-<table border="1" class="docutils" id="tab-nvdla-preview-config">
-<caption><span class="caption-number">Table 13 </span><span class="caption-text">Hardware configuration of NVDLA preview release.</span><a class="headerlink" href="#tab-nvdla-preview-config" title="Permalink to this table">¶</a></caption>
-<colgroup>
-<col width="17%" />
-<col width="17%" />
-<col width="10%" />
-<col width="56%" />
-</colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head" colspan="2">Register/Field</th>
-<th class="head">Bits</th>
-<th class="head">Value</th>
-</tr>
-</thead>
-<tbody valign="top">
-<tr class="row-even"><td colspan="4"><code class="docutils literal"><span class="pre">HW_CONFIG0</span></code></td>
-</tr>
-<tr class="row-odd"><td>&#160;</td>
-<td><code class="docutils literal"><span class="pre">data_type_bin</span></code></td>
-<td>0</td>
-<td>0</td>
-</tr>
-<tr class="row-even"><td>&#160;</td>
-<td><code class="docutils literal"><span class="pre">data_type_int4</span></code></td>
-<td>1</td>
-<td>0</td>
-</tr>
-<tr class="row-odd"><td>&#160;</td>
-<td><code class="docutils literal"><span class="pre">data_type_uint4</span></code></td>
-<td>2</td>
-<td>0</td>
-</tr>
-<tr class="row-even"><td>&#160;</td>
-<td><code class="docutils literal"><span class="pre">data_type_int8</span></code></td>
-<td>3</td>
-<td>1</td>
-</tr>
-<tr class="row-odd"><td>&#160;</td>
-<td><code class="docutils literal"><span class="pre">data_type_uint8</span></code></td>
-<td>4</td>
-<td>0</td>
-</tr>
-<tr class="row-even"><td>&#160;</td>
-<td><code class="docutils literal"><span class="pre">data_type_int16</span></code></td>
-<td>5</td>
-<td>1</td>
-</tr>
-<tr class="row-odd"><td>&#160;</td>
-<td><code class="docutils literal"><span class="pre">data_type_uint16</span></code></td>
-<td>6</td>
-<td>0</td>
-</tr>
-<tr class="row-even"><td>&#160;</td>
-<td><code class="docutils literal"><span class="pre">data_type_int32</span></code></td>
-<td>7</td>
-<td>0</td>
-</tr>
-<tr class="row-odd"><td>&#160;</td>
-<td><code class="docutils literal"><span class="pre">data_type_uint32</span></code></td>
-<td>8</td>
-<td>0</td>
-</tr>
-<tr class="row-even"><td>&#160;</td>
-<td><code class="docutils literal"><span class="pre">data_type_fp16</span></code></td>
-<td>9</td>
-<td>1</td>
-</tr>
-<tr class="row-odd"><td>&#160;</td>
-<td><code class="docutils literal"><span class="pre">data_type_fp32</span></code></td>
-<td>10</td>
-<td>0</td>
-</tr>
-<tr class="row-even"><td>&#160;</td>
-<td><code class="docutils literal"><span class="pre">data_type_fp64</span></code></td>
-<td>11</td>
-<td>0</td>
-</tr>
-<tr class="row-odd"><td>&#160;</td>
-<td>reserved</td>
-<td>31..12</td>
-<td>reserved for future use</td>
-</tr>
-<tr class="row-even"><td colspan="4"><code class="docutils literal"><span class="pre">HW_CONFIG1</span></code></td>
-</tr>
-<tr class="row-odd"><td>&#160;</td>
-<td><code class="docutils literal"><span class="pre">Winograd</span></code></td>
-<td>0</td>
-<td>1</td>
-</tr>
-<tr class="row-even"><td>&#160;</td>
-<td><code class="docutils literal"><span class="pre">Batch</span></code></td>
-<td>1</td>
-<td>1</td>
-</tr>
-<tr class="row-odd"><td>&#160;</td>
-<td><code class="docutils literal"><span class="pre">feature_comp</span></code></td>
-<td>2</td>
-<td>0</td>
-</tr>
-<tr class="row-even"><td>&#160;</td>
-<td><code class="docutils literal"><span class="pre">weight_comp</span></code></td>
-<td>3</td>
-<td>1</td>
-</tr>
-<tr class="row-odd"><td>&#160;</td>
-<td><code class="docutils literal"><span class="pre">second_mem_bus</span></code></td>
-<td>4</td>
-<td>1</td>
-</tr>
-<tr class="row-even"><td>&#160;</td>
-<td><code class="docutils literal"><span class="pre">image_in</span></code></td>
-<td>5</td>
-<td>1</td>
-</tr>
-<tr class="row-odd"><td>&#160;</td>
-<td><code class="docutils literal"><span class="pre">sdp</span></code></td>
-<td>6</td>
-<td>1</td>
-</tr>
-<tr class="row-even"><td>&#160;</td>
-<td><code class="docutils literal"><span class="pre">bdma</span></code></td>
-<td>7</td>
-<td>1</td>
-</tr>
-<tr class="row-odd"><td>&#160;</td>
-<td><code class="docutils literal"><span class="pre">rubik</span></code></td>
-<td>8</td>
-<td>1</td>
-</tr>
-<tr class="row-even"><td>&#160;</td>
-<td>reserved</td>
-<td>31..9</td>
-<td>reserved for future use</td>
-</tr>
-<tr class="row-odd"><td colspan="4"><code class="docutils literal"><span class="pre">HW_CONFIG2</span></code></td>
-</tr>
-<tr class="row-even"><td>&#160;</td>
-<td><code class="docutils literal"><span class="pre">atomic_c</span></code></td>
-<td>3..0</td>
-<td><p class="first">2</p>
-<p class="last">The parallel MAC operation in input feature channel dimension is 64.</p>
-</td>
-</tr>
-<tr class="row-odd"><td>&#160;</td>
-<td><code class="docutils literal"><span class="pre">atomic_k</span></code></td>
-<td>6..4</td>
-<td><p class="first">2</p>
-<p class="last">The parallel MAC operation at output feature channel dimension is 16.</p>
-</td>
-</tr>
-<tr class="row-even"><td>&#160;</td>
-<td><code class="docutils literal"><span class="pre">sdp_throughput</span></code></td>
-<td>11..7</td>
-<td>16</td>
-</tr>
-<tr class="row-odd"><td>&#160;</td>
-<td><code class="docutils literal"><span class="pre">pdp_throughput</span></code></td>
-<td>14..12</td>
-<td>4</td>
-</tr>
-<tr class="row-even"><td>&#160;</td>
-<td><code class="docutils literal"><span class="pre">cdp_throughput</span></code></td>
-<td>17..15</td>
-<td>4</td>
-</tr>
-<tr class="row-odd"><td>&#160;</td>
-<td><code class="docutils literal"><span class="pre">cbuf_bank_count</span></code></td>
-<td>23..18</td>
-<td>16</td>
-</tr>
-<tr class="row-even"><td>&#160;</td>
-<td><code class="docutils literal"><span class="pre">cbuf_bank_size</span></code></td>
-<td>25..24</td>
-<td><p class="first">3</p>
-<p class="last">The size of a single convolutional buffer bank is 32KB.</p>
-</td>
-</tr>
-<tr class="row-odd"><td>&#160;</td>
-<td><code class="docutils literal"><span class="pre">max_batch</span></code></td>
-<td>28..26</td>
-<td>32</td>
-</tr>
-<tr class="row-even"><td>&#160;</td>
-<td><code class="docutils literal"><span class="pre">stripe_length</span></code></td>
-<td>31..29</td>
-<td><p class="first">4</p>
-<p class="last">The stripe length in one stripe operation is 16.</p>
-</td>
-</tr>
-</tbody>
-</table>
-<table border="1" class="docutils" id="tab-nvdla-small-config">
-<caption><span class="caption-number">Table 14 </span><span class="caption-text">Hardware configuration of NVDLA “small” configuration release.</span><a class="headerlink" href="#tab-nvdla-small-config" title="Permalink to this table">¶</a></caption>
-<colgroup>
-<col width="17%" />
-<col width="17%" />
-<col width="10%" />
-<col width="56%" />
-</colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head" colspan="2">Register/Field</th>
-<th class="head">Bits</th>
-<th class="head">Value</th>
-</tr>
-</thead>
-<tbody valign="top">
-<tr class="row-even"><td colspan="4"><code class="docutils literal"><span class="pre">HW_CONFIG0</span></code></td>
-</tr>
-<tr class="row-odd"><td>&#160;</td>
-<td><code class="docutils literal"><span class="pre">data_type_bin</span></code></td>
-<td>0</td>
-<td>0</td>
-</tr>
-<tr class="row-even"><td>&#160;</td>
-<td><code class="docutils literal"><span class="pre">data_type_int4</span></code></td>
-<td>1</td>
-<td>0</td>
-</tr>
-<tr class="row-odd"><td>&#160;</td>
-<td><code class="docutils literal"><span class="pre">data_type_uint4</span></code></td>
-<td>2</td>
-<td>0</td>
-</tr>
-<tr class="row-even"><td>&#160;</td>
-<td><code class="docutils literal"><span class="pre">data_type_int8</span></code></td>
-<td>3</td>
-<td>1</td>
-</tr>
-<tr class="row-odd"><td>&#160;</td>
-<td><code class="docutils literal"><span class="pre">data_type_uint8</span></code></td>
-<td>4</td>
-<td>0</td>
-</tr>
-<tr class="row-even"><td>&#160;</td>
-<td><code class="docutils literal"><span class="pre">data_type_int16</span></code></td>
-<td>5</td>
-<td>0</td>
-</tr>
-<tr class="row-odd"><td>&#160;</td>
-<td><code class="docutils literal"><span class="pre">data_type_uint16</span></code></td>
-<td>6</td>
-<td>0</td>
-</tr>
-<tr class="row-even"><td>&#160;</td>
-<td><code class="docutils literal"><span class="pre">data_type_int32</span></code></td>
-<td>7</td>
-<td>0</td>
-</tr>
-<tr class="row-odd"><td>&#160;</td>
-<td><code class="docutils literal"><span class="pre">data_type_uint32</span></code></td>
-<td>8</td>
-<td>0</td>
-</tr>
-<tr class="row-even"><td>&#160;</td>
-<td><code class="docutils literal"><span class="pre">data_type_fp16</span></code></td>
-<td>9</td>
-<td>0</td>
-</tr>
-<tr class="row-odd"><td>&#160;</td>
-<td><code class="docutils literal"><span class="pre">data_type_fp32</span></code></td>
-<td>10</td>
-<td>0</td>
-</tr>
-<tr class="row-even"><td>&#160;</td>
-<td><code class="docutils literal"><span class="pre">data_type_fp64</span></code></td>
-<td>11</td>
-<td>0</td>
-</tr>
-<tr class="row-odd"><td>&#160;</td>
-<td>reserved</td>
-<td>31..12</td>
-<td>reserved for future use</td>
-</tr>
-<tr class="row-even"><td colspan="4"><code class="docutils literal"><span class="pre">HW_CONFIG1</span></code></td>
-</tr>
-<tr class="row-odd"><td>&#160;</td>
-<td><code class="docutils literal"><span class="pre">Winograd</span></code></td>
-<td>0</td>
-<td>0</td>
-</tr>
-<tr class="row-even"><td>&#160;</td>
-<td><code class="docutils literal"><span class="pre">Batch</span></code></td>
-<td>1</td>
-<td>0</td>
-</tr>
-<tr class="row-odd"><td>&#160;</td>
-<td><code class="docutils literal"><span class="pre">feature_comp</span></code></td>
-<td>2</td>
-<td>0</td>
-</tr>
-<tr class="row-even"><td>&#160;</td>
-<td><code class="docutils literal"><span class="pre">weight_comp</span></code></td>
-<td>3</td>
-<td>0</td>
-</tr>
-<tr class="row-odd"><td>&#160;</td>
-<td><code class="docutils literal"><span class="pre">second_mem_bus</span></code></td>
-<td>4</td>
-<td>0</td>
-</tr>
-<tr class="row-even"><td>&#160;</td>
-<td><code class="docutils literal"><span class="pre">image_in</span></code></td>
-<td>5</td>
-<td>1</td>
-</tr>
-<tr class="row-odd"><td>&#160;</td>
-<td><code class="docutils literal"><span class="pre">sdp</span></code></td>
-<td>6</td>
-<td>1</td>
-</tr>
-<tr class="row-even"><td>&#160;</td>
-<td><code class="docutils literal"><span class="pre">bdma</span></code></td>
-<td>7</td>
-<td>0</td>
-</tr>
-<tr class="row-odd"><td>&#160;</td>
-<td><code class="docutils literal"><span class="pre">rubik</span></code></td>
-<td>8</td>
-<td>0</td>
-</tr>
-<tr class="row-even"><td>&#160;</td>
-<td>reserved</td>
-<td>31..9</td>
-<td>reserved for future use</td>
-</tr>
-<tr class="row-odd"><td colspan="4"><code class="docutils literal"><span class="pre">HW_CONFIG2</span></code></td>
-</tr>
-<tr class="row-even"><td>&#160;</td>
-<td><code class="docutils literal"><span class="pre">atomic_c</span></code></td>
-<td>3..0</td>
-<td><p class="first">0</p>
-<p class="last">The parallel MAC operation in input feature channel dimension is 16.</p>
-</td>
-</tr>
-<tr class="row-odd"><td>&#160;</td>
-<td><code class="docutils literal"><span class="pre">atomic_k</span></code></td>
-<td>6..4</td>
-<td><p class="first">0</p>
-<p class="last">The parallel MAC operation at output feature channel dimension is 4.</p>
-</td>
-</tr>
-<tr class="row-even"><td>&#160;</td>
-<td><code class="docutils literal"><span class="pre">sdp_throughput</span></code></td>
-<td>11..7</td>
-<td>4</td>
-</tr>
-<tr class="row-odd"><td>&#160;</td>
-<td><code class="docutils literal"><span class="pre">pdp_throughput</span></code></td>
-<td>14..12</td>
-<td>2</td>
-</tr>
-<tr class="row-even"><td>&#160;</td>
-<td><code class="docutils literal"><span class="pre">cdp_throughput</span></code></td>
-<td>17..15</td>
-<td>2</td>
-</tr>
-<tr class="row-odd"><td>&#160;</td>
-<td><code class="docutils literal"><span class="pre">cbuf_bank_count</span></code></td>
-<td>23..18</td>
-<td>4</td>
-</tr>
-<tr class="row-even"><td>&#160;</td>
-<td><code class="docutils literal"><span class="pre">cbuf_bank_size</span></code></td>
-<td>25..24</td>
-<td><p class="first">1</p>
-<p class="last">The size of a single convolutional buffer bank is 8KB.</p>
-</td>
-</tr>
-<tr class="row-odd"><td>&#160;</td>
-<td><code class="docutils literal"><span class="pre">max_batch</span></code></td>
-<td>28..26</td>
-<td>0</td>
-</tr>
-<tr class="row-even"><td>&#160;</td>
-<td><code class="docutils literal"><span class="pre">stripe_length</span></code></td>
-<td>31..29</td>
-<td><p class="first">4</p>
-<p class="last">The stripe length in one stripe operation is 16.</p>
-</td>
-</tr>
 </tbody>
 </table>
 </div>
 <div class="section" id="mcif">
 <h4>MCIF<a class="headerlink" href="#mcif" title="Permalink to this headline">¶</a></h4>
 <table border="1" class="docutils" id="tab-mcif-registers">
-<caption><span class="caption-number">Table 15 </span><span class="caption-text">MCIF registers.</span><a class="headerlink" href="#tab-mcif-registers" title="Permalink to this table">¶</a></caption>
+<caption><span class="caption-number">Table 12 </span><span class="caption-text">MCIF registers.</span><a class="headerlink" href="#tab-mcif-registers" title="Permalink to this table">¶</a></caption>
 <colgroup>
 <col width="25%" />
 <col width="16%" />
@@ -2031,10 +1435,10 @@ registers are not accessible.</p>
 </tbody>
 </table>
 </div>
-<div class="section" id="cvif">
-<h4>CVIF<a class="headerlink" href="#cvif" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="sramif">
+<h4>SRAMIF<a class="headerlink" href="#sramif" title="Permalink to this headline">¶</a></h4>
 <table border="1" class="docutils" id="tab-cvif-registers">
-<caption><span class="caption-number">Table 16 </span><span class="caption-text">CVIF registers.</span><a class="headerlink" href="#tab-cvif-registers" title="Permalink to this table">¶</a></caption>
+<caption><span class="caption-number">Table 13 </span><span class="caption-text">SRAMIF registers.</span><a class="headerlink" href="#tab-cvif-registers" title="Permalink to this table">¶</a></caption>
 <colgroup>
 <col width="25%" />
 <col width="16%" />
@@ -2073,7 +1477,7 @@ registers are not accessible.</p>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">STATUS</span></code></td>
 <td><code class="docutils literal"><span class="pre">0x3018</span></code></td>
-<td>Idle status of MCIF</td>
+<td>Idle status of SRAMIF</td>
 </tr>
 </tbody>
 </table>
@@ -2081,7 +1485,7 @@ registers are not accessible.</p>
 <div class="section" id="bdma">
 <h4>BDMA<a class="headerlink" href="#bdma" title="Permalink to this headline">¶</a></h4>
 <table border="1" class="docutils" id="tab-bdma-registers">
-<caption><span class="caption-number">Table 17 </span><span class="caption-text">BDMA registers.</span><a class="headerlink" href="#tab-bdma-registers" title="Permalink to this table">¶</a></caption>
+<caption><span class="caption-number">Table 14 </span><span class="caption-text">BDMA registers.</span><a class="headerlink" href="#tab-bdma-registers" title="Permalink to this table">¶</a></caption>
 <colgroup>
 <col width="29%" />
 <col width="15%" />
@@ -2184,7 +1588,7 @@ registers are not accessible.</p>
 <div class="section" id="cdma">
 <h4>CDMA<a class="headerlink" href="#cdma" title="Permalink to this headline">¶</a></h4>
 <table border="1" class="docutils" id="tab-cdma-registers">
-<caption><span class="caption-number">Table 18 </span><span class="caption-text">CDMA registers.</span><a class="headerlink" href="#tab-cdma-registers" title="Permalink to this table">¶</a></caption>
+<caption><span class="caption-number">Table 15 </span><span class="caption-text">CDMA registers.</span><a class="headerlink" href="#tab-cdma-registers" title="Permalink to this table">¶</a></caption>
 <colgroup>
 <col width="19%" />
 <col width="10%" />
@@ -2441,7 +1845,7 @@ registers are not accessible.</p>
 these modes are not shown as available in the hardware capability registers,
 their registers are not available either.  These registers are as noted below:</p>
 <table border="1" class="colwidths-auto docutils" id="tab-cdma-feature-registers">
-<caption><span class="caption-number">Table 19 </span><span class="caption-text">CDMA registers that are feature-specific.</span><a class="headerlink" href="#tab-cdma-feature-registers" title="Permalink to this table">¶</a></caption>
+<caption><span class="caption-number">Table 16 </span><span class="caption-text">CDMA registers that are feature-specific.</span><a class="headerlink" href="#tab-cdma-feature-registers" title="Permalink to this table">¶</a></caption>
 <thead valign="bottom">
 <tr class="row-odd"><th class="head">Feature</th>
 <th class="head">Registers</th>
@@ -2463,7 +1867,7 @@ their registers are not available either.  These registers are as noted below:</
 <div class="section" id="csc">
 <h4>CSC<a class="headerlink" href="#csc" title="Permalink to this headline">¶</a></h4>
 <table border="1" class="colwidths-auto docutils" id="tab-csc-registers">
-<caption><span class="caption-number">Table 20 </span><span class="caption-text">CSC registers.</span><a class="headerlink" href="#tab-csc-registers" title="Permalink to this table">¶</a></caption>
+<caption><span class="caption-number">Table 17 </span><span class="caption-text">CSC registers.</span><a class="headerlink" href="#tab-csc-registers" title="Permalink to this table">¶</a></caption>
 <thead valign="bottom">
 <tr class="row-odd"><th class="head">Name</th>
 <th class="head">Address</th>
@@ -2577,7 +1981,7 @@ their registers are not available either.  These registers are as noted below:</
 these modes are not shown as available in the hardware capability registers,
 their registers are not available either.  These registers are as noted below:</p>
 <table border="1" class="colwidths-auto docutils" id="tab-csc-feature-registers">
-<caption><span class="caption-number">Table 21 </span><span class="caption-text">CSC registers that are feature-specific.</span><a class="headerlink" href="#tab-csc-feature-registers" title="Permalink to this table">¶</a></caption>
+<caption><span class="caption-number">Table 18 </span><span class="caption-text">CSC registers that are feature-specific.</span><a class="headerlink" href="#tab-csc-feature-registers" title="Permalink to this table">¶</a></caption>
 <thead valign="bottom">
 <tr class="row-odd"><th class="head">Feature</th>
 <th class="head">Registers</th>
@@ -2596,7 +2000,7 @@ their registers are not available either.  These registers are as noted below:</
 <div class="section" id="cmac-a">
 <h4>CMAC_A<a class="headerlink" href="#cmac-a" title="Permalink to this headline">¶</a></h4>
 <table border="1" class="colwidths-auto docutils" id="tab-cmac-a-registers">
-<caption><span class="caption-number">Table 22 </span><span class="caption-text">CMAC_A registers.</span><a class="headerlink" href="#tab-cmac-a-registers" title="Permalink to this table">¶</a></caption>
+<caption><span class="caption-number">Table 19 </span><span class="caption-text">CMAC_A registers.</span><a class="headerlink" href="#tab-cmac-a-registers" title="Permalink to this table">¶</a></caption>
 <thead valign="bottom">
 <tr class="row-odd"><th class="head">Name</th>
 <th class="head">Address</th>
@@ -2626,7 +2030,7 @@ their registers are not available either.  These registers are as noted below:</
 <div class="section" id="cmac-b">
 <h4>CMAC_B<a class="headerlink" href="#cmac-b" title="Permalink to this headline">¶</a></h4>
 <table border="1" class="colwidths-auto docutils" id="tab-cmac-b-registers">
-<caption><span class="caption-number">Table 23 </span><span class="caption-text">CMAC_B registers.</span><a class="headerlink" href="#tab-cmac-b-registers" title="Permalink to this table">¶</a></caption>
+<caption><span class="caption-number">Table 20 </span><span class="caption-text">CMAC_B registers.</span><a class="headerlink" href="#tab-cmac-b-registers" title="Permalink to this table">¶</a></caption>
 <thead valign="bottom">
 <tr class="row-odd"><th class="head">Name</th>
 <th class="head">Address</th>
@@ -2656,7 +2060,7 @@ their registers are not available either.  These registers are as noted below:</
 <div class="section" id="cacc">
 <h4>CACC<a class="headerlink" href="#cacc" title="Permalink to this headline">¶</a></h4>
 <table border="1" class="colwidths-auto docutils" id="tab-cacc-registers">
-<caption><span class="caption-number">Table 24 </span><span class="caption-text">CACC registers.</span><a class="headerlink" href="#tab-cacc-registers" title="Permalink to this table">¶</a></caption>
+<caption><span class="caption-number">Table 21 </span><span class="caption-text">CACC registers.</span><a class="headerlink" href="#tab-cacc-registers" title="Permalink to this table">¶</a></caption>
 <thead valign="bottom">
 <tr class="row-odd"><th class="head">Name</th>
 <th class="head">Address</th>
@@ -2722,7 +2126,7 @@ their registers are not available either.  These registers are as noted below:</
 <div class="section" id="sdp-rdma">
 <h4>SDP_RDMA<a class="headerlink" href="#sdp-rdma" title="Permalink to this headline">¶</a></h4>
 <table border="1" class="colwidths-auto docutils" id="tab-sdp-rdma-registers">
-<caption><span class="caption-number">Table 25 </span><span class="caption-text">SDP_RDMA registers.</span><a class="headerlink" href="#tab-sdp-rdma-registers" title="Permalink to this table">¶</a></caption>
+<caption><span class="caption-number">Table 22 </span><span class="caption-text">SDP_RDMA registers.</span><a class="headerlink" href="#tab-sdp-rdma-registers" title="Permalink to this table">¶</a></caption>
 <thead valign="bottom">
 <tr class="row-odd"><th class="head">Name</th>
 <th class="head">Address</th>
@@ -2884,7 +2288,7 @@ their registers are not available either.  These registers are as noted below:</
 <div class="section" id="sdp">
 <h4>SDP<a class="headerlink" href="#sdp" title="Permalink to this headline">¶</a></h4>
 <table border="1" class="colwidths-auto docutils" id="tab-sdp-registers">
-<caption><span class="caption-number">Table 26 </span><span class="caption-text">SDP registers.</span><a class="headerlink" href="#tab-sdp-registers" title="Permalink to this table">¶</a></caption>
+<caption><span class="caption-number">Table 23 </span><span class="caption-text">SDP registers.</span><a class="headerlink" href="#tab-sdp-registers" title="Permalink to this table">¶</a></caption>
 <thead valign="bottom">
 <tr class="row-odd"><th class="head">Name</th>
 <th class="head">Address</th>
@@ -3150,7 +2554,7 @@ their registers are not available either.  These registers are as noted below:</
 <div class="section" id="pdp-rdma">
 <h4>PDP_RDMA<a class="headerlink" href="#pdp-rdma" title="Permalink to this headline">¶</a></h4>
 <table border="1" class="colwidths-auto docutils" id="tab-pdp-rdma-registers">
-<caption><span class="caption-number">Table 27 </span><span class="caption-text">PDP_RDMA registers.</span><a class="headerlink" href="#tab-pdp-rdma-registers" title="Permalink to this table">¶</a></caption>
+<caption><span class="caption-number">Table 24 </span><span class="caption-text">PDP_RDMA registers.</span><a class="headerlink" href="#tab-pdp-rdma-registers" title="Permalink to this table">¶</a></caption>
 <thead valign="bottom">
 <tr class="row-odd"><th class="head">Name</th>
 <th class="head">Address</th>
@@ -3240,7 +2644,7 @@ their registers are not available either.  These registers are as noted below:</
 <div class="section" id="pdp">
 <h4>PDP<a class="headerlink" href="#pdp" title="Permalink to this headline">¶</a></h4>
 <table border="1" class="colwidths-auto docutils" id="tab-pdp-registers">
-<caption><span class="caption-number">Table 28 </span><span class="caption-text">PDP registers.</span><a class="headerlink" href="#tab-pdp-registers" title="Permalink to this table">¶</a></caption>
+<caption><span class="caption-number">Table 25 </span><span class="caption-text">PDP registers.</span><a class="headerlink" href="#tab-pdp-registers" title="Permalink to this table">¶</a></caption>
 <thead valign="bottom">
 <tr class="row-odd"><th class="head">Name</th>
 <th class="head">Address</th>
@@ -3410,7 +2814,7 @@ their registers are not available either.  These registers are as noted below:</
 <div class="section" id="cdp-rdma">
 <h4>CDP_RDMA<a class="headerlink" href="#cdp-rdma" title="Permalink to this headline">¶</a></h4>
 <table border="1" class="colwidths-auto docutils" id="tab-cdp-rdma-registers">
-<caption><span class="caption-number">Table 29 </span><span class="caption-text">CDP_RDMA registers.</span><a class="headerlink" href="#tab-cdp-rdma-registers" title="Permalink to this table">¶</a></caption>
+<caption><span class="caption-number">Table 26 </span><span class="caption-text">CDP_RDMA registers.</span><a class="headerlink" href="#tab-cdp-rdma-registers" title="Permalink to this table">¶</a></caption>
 <thead valign="bottom">
 <tr class="row-odd"><th class="head">Name</th>
 <th class="head">Address</th>
@@ -3488,7 +2892,7 @@ their registers are not available either.  These registers are as noted below:</
 <div class="section" id="cdp">
 <h4>CDP<a class="headerlink" href="#cdp" title="Permalink to this headline">¶</a></h4>
 <table border="1" class="colwidths-auto docutils" id="tab-cdp-registers">
-<caption><span class="caption-number">Table 30 </span><span class="caption-text">CDP registers.</span><a class="headerlink" href="#tab-cdp-registers" title="Permalink to this table">¶</a></caption>
+<caption><span class="caption-number">Table 27 </span><span class="caption-text">CDP registers.</span><a class="headerlink" href="#tab-cdp-registers" title="Permalink to this table">¶</a></caption>
 <thead valign="bottom">
 <tr class="row-odd"><th class="head">Name</th>
 <th class="head">Address</th>
@@ -3686,7 +3090,7 @@ their registers are not available either.  These registers are as noted below:</
 <div class="section" id="id5">
 <h4>RUBIK<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h4>
 <table border="1" class="colwidths-auto docutils" id="tab-rubik-registers">
-<caption><span class="caption-number">Table 31 </span><span class="caption-text">RUBIK registers.</span><a class="headerlink" href="#tab-rubik-registers" title="Permalink to this table">¶</a></caption>
+<caption><span class="caption-number">Table 28 </span><span class="caption-text">RUBIK registers.</span><a class="headerlink" href="#tab-rubik-registers" title="Permalink to this table">¶</a></caption>
 <thead valign="bottom">
 <tr class="row-odd"><th class="head">Name</th>
 <th class="head">Address</th>
@@ -3904,7 +3308,7 @@ their registers are not available either.  These registers are as noted below:</
 <li><a class="reference internal" href="#address-space-layout">Address space layout</a><ul>
 <li><a class="reference internal" href="#glb">GLB</a></li>
 <li><a class="reference internal" href="#mcif">MCIF</a></li>
-<li><a class="reference internal" href="#cvif">CVIF</a></li>
+<li><a class="reference internal" href="#sramif">SRAMIF</a></li>
 <li><a class="reference internal" href="#bdma">BDMA</a></li>
 <li><a class="reference internal" href="#cdma">CDMA</a></li>
 <li><a class="reference internal" href="#csc">CSC</a></li>
@@ -3927,8 +3331,8 @@ their registers are not available either.  These registers are as noted below:</
 </ul>
 
   <h4>Previous topic</h4>
-  <p class="topless"><a href="sw/runtime_environment.html"
-                        title="previous chapter">Runtime environment</a></p>
+  <p class="topless"><a href="sw/test_application.html"
+                        title="previous chapter">Test applications</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="integration_guide.html"
                         title="next chapter">Integrator’s Manual</a></p>
@@ -3964,7 +3368,7 @@ their registers are not available either.  These registers are as noted below:</
           <a href="integration_guide.html" title="Integrator’s Manual"
              >next</a></li>
         <li class="right">
-          <a href="sw/runtime_environment.html" title="Runtime environment"
+          <a href="sw/test_application.html" title="Test applications"
              >previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="index.html">NVDLA Open Source Project</a>&#187;</li>
         <li class="nav-item nav-item-1"><a href="contents.html">Documentation</a>&#187;</li> 

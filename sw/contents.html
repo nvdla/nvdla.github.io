@@ -78,8 +78,94 @@
 <li class="toctree-l2"><a class="reference internal" href="runtime_environment.html#kernel-mode-driver">Kernel Mode Driver</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="test_application.html">Test applications</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="test_application.html#runtime-test-application">Runtime test application</a></li>
+<li class="toctree-l2"><a class="reference internal" href="test_application.html#compiler-test-application">Compiler test application</a></li>
+</ul>
+</li>
 </ul>
 </div>
+</div>
+<div class="section" id="browsing-source-code">
+<h1>Browsing Source Code<a class="headerlink" href="#browsing-source-code" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><dl class="first docutils">
+<dt>top (<a class="reference external" href="https://github.com/nvdla/sw">https://github.com/nvdla/sw</a>)</dt>
+<dd><ul class="first last">
+<li><dl class="first docutils">
+<dt>umd: <a class="reference internal" href="runtime_environment.html#user-mode-driver"><span class="std std-ref">User Mode Driver</span></a></dt>
+<dd><ul class="first last">
+<li><dl class="first docutils">
+<dt>core: NVDLA specific implementation of user mode components</dt>
+<dd><ul class="first last">
+<li><strong>runtime:</strong> <a class="reference internal" href="runtime_environment.html#runtime-environment"><span class="std std-ref">Runtime environment</span></a></li>
+<li><strong>compiler:</strong> <a class="reference internal" href="compilation_tool.html#compilation-tools"><span class="std std-ref">Compilation tools</span></a></li>
+<li><strong>include:</strong> Header file for common implementation</li>
+<li><strong>common:</strong> Implementation shared between runtime and compiler such as loadable and logging</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><strong>external:</strong> External modules used in UMD such as flatbuffers</li>
+<li><strong>include:</strong> <a class="reference internal" href="runtime_environment.html#umd-api"><span class="std std-ref">Application Programming Interface</span></a></li>
+<li><strong>make:</strong> Make files</li>
+<li><dl class="first docutils">
+<dt>port: <a class="reference internal" href="runtime_environment.html#umd-layer"><span class="std std-ref">Portability layer</span></a></dt>
+<dd><ul class="first last">
+<li><strong>linux:</strong> Portability layer for Linux</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>tests: Test applications</dt>
+<dd><ul class="first last">
+<li>runtime <a class="reference internal" href="test_application.html#runtime-test-app"><span class="std std-ref">Runtime test application</span></a></li>
+<li>compiler <a class="reference internal" href="test_application.html#compiler-test-app"><span class="std std-ref">Compiler test application</span></a></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>kmd: <a class="reference internal" href="runtime_environment.html#kernel-mode-driver"><span class="std std-ref">Kernel Mode Driver</span></a></dt>
+<dd><ul class="first last">
+<li><strong>Documentation:</strong> Device tree bindings for NVDLA device</li>
+<li><strong>firmware:</strong> Core DLA hardware programming including HW layer scheduler</li>
+<li><strong>include:</strong> <a class="reference internal" href="runtime_environment.html#kmd-interface"><span class="std std-ref">Core Engine Interface</span></a></li>
+<li><dl class="first docutils">
+<dt><strong>port:</strong> <a class="reference internal" href="runtime_environment.html#kmd-layer"><span class="std std-ref">Portability layer</span></a></dt>
+<dd><ul class="first last">
+<li><strong>linux:</strong> Portability layer for Linux</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><strong>prebuilt: Prebuilt binaries</strong></li>
+<li><dl class="first docutils">
+<dt>regression: Test regression framework</dt>
+<dd><ul class="first last">
+<li>flatbufs: Pre-generated loadables for sanity tests</li>
+<li>golden: Golden results</li>
+<li>scripts: Scripts used for test execution</li>
+<li>testplan: Test plans</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><strong>scripts: General scripts</strong></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
 </div>
 
 
@@ -88,6 +174,12 @@
           
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
+  <h3><a href="../contents.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Software Manual</a></li>
+<li><a class="reference internal" href="#browsing-source-code">Browsing Source Code</a></li>
+</ul>
+
   <h4>Previous topic</h4>
   <p class="topless"><a href="../roadmap.html"
                         title="previous chapter">Open Source Roadmap</a></p>
