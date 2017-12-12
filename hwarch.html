@@ -27,7 +27,7 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Integrator’s Manual" href="integration_guide.html" />
-    <link rel="prev" title="Test applications" href="sw/test_application.html" /> 
+    <link rel="prev" title="Virtual Platform" href="vp.html" /> 
   </head>
   <body>
 <header class="navbar">
@@ -47,7 +47,7 @@
           <a href="integration_guide.html" title="Integrator’s Manual"
              accesskey="N">next</a></li>
         <li class="right">
-          <a href="sw/test_application.html" title="Test applications"
+          <a href="vp.html" title="Virtual Platform"
              accesskey="P">previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="index.html">NVDLA Open Source Project</a>&#187;</li>
         <li class="nav-item nav-item-1"><a href="contents.html">Documentation</a>&#187;</li> 
@@ -73,7 +73,7 @@
 <p>NVDLA operation begins with the management processor (either a microcontroller or the main CPU) sending down the configuration of one hardware layer, along with an “activate” command. If data dependencies do not preclude this, multiple hardware layers can be sent down to different blocks and activated at the same time (i.e., if there exists another layer whose inputs do not depend on the output from the previous layer). Because every block has a double-buffer for its configuration registers, it can also capture a second layer’s configuration to begin immediately processing when the active layer has completed. Once a hardware engine finishes its active task, it will issue an interrupt to the management processor to report the completion, and the management processor will then begin the process again. This command-execute-interrupt flow repeats until inference on the entire network is complete.</p>
 <p>NVDLA has two modes of operation: independent mode and fused mode. Independent operation refers to each individual block being configured for when and what it executes, with each block working on its assigned task. Independent operation begins and ends with the assigned block performing memory-to-memory operations, in and out of main system memory or dedicated SRAM memory. Fused operation is similar to independent operation, however, some blocks can be assembled as a pipeline; this improves performance by bypassing the round trip through memory, instead having blocks communicate with each other through small FIFOs (i.e., the convolution core can pass data to the Single Data Point Processor, which can pass data to the Planar Data Processor, and in turn to the Cross-channel Data Processor without performing memory-to-memory operations in between).</p>
 <div class="figure align-center" id="id6">
-<span id="fig-arch-nvdla-block-diagram"></span><img alt="&quot;Headless NVDLA core&quot; architectural drawing.  A configuration interface block is connected to the outside world through the CSB/interrupt interface.  The memory interface block is connected outside with a DBB interface and a second, optional, DBB interface.  The memory interface connects to a convolution buffer, which connects to a convolution core; the memory interface also connects to the activation engine, the pooling engine, local response normalization engine, reshape engine, and bridge DMA engine.   The convolution core, activation engine, pooling engine, and local response normalization engine also form a pipeline." src="_images/nvdla-primer-core-diagram.svg" /><p class="caption"><span class="caption-number">Fig. 6 </span><span class="caption-text">NVDLA Core Block Diagram.</span></p>
+<span id="fig-arch-nvdla-block-diagram"></span><img alt="&quot;Headless NVDLA core&quot; architectural drawing.  A configuration interface block is connected to the outside world through the CSB/interrupt interface.  The memory interface block is connected outside with a DBB interface and a second, optional, DBB interface.  The memory interface connects to a convolution buffer, which connects to a convolution core; the memory interface also connects to the activation engine, the pooling engine, local response normalization engine, reshape engine, and bridge DMA engine.   The convolution core, activation engine, pooling engine, and local response normalization engine also form a pipeline." src="_images/nvdla-primer-core-diagram.svg" /><p class="caption"><span class="caption-number">Fig. 7 </span><span class="caption-text">NVDLA Core Block Diagram.</span></p>
 </div>
 <p>Each block in the NVDLA architecture exists to support specific operations integral to inference on deep neural networks. Inference operations are divided into five groups:</p>
 <ul class="simple">
@@ -591,16 +591,16 @@ attached to the NVDLA.</li>
 they attach these external connections to the rest of the system.</p>
 <div class="figure align-center" id="id7">
 <span id="fig-small-nvdla"></span><a class="reference internal image-reference" href="_images/nvdla-hwarch-small.svg"><img alt="_images/nvdla-hwarch-small.svg" src="_images/nvdla-hwarch-small.svg" /></a>
-<p class="caption"><span class="caption-number">Fig. 7 </span><span class="caption-text">Small NVDLA system.</span></p>
+<p class="caption"><span class="caption-number">Fig. 8 </span><span class="caption-text">Small NVDLA system.</span></p>
 </div>
 <div class="figure align-center" id="id8">
 <span id="fig-large-nvdla"></span><a class="reference internal image-reference" href="_images/nvdla-hwarch-large.svg"><img alt="_images/nvdla-hwarch-large.svg" src="_images/nvdla-hwarch-large.svg" /></a>
-<p class="caption"><span class="caption-number">Fig. 8 </span><span class="caption-text">Large NVDLA system.</span></p>
+<p class="caption"><span class="caption-number">Fig. 9 </span><span class="caption-text">Large NVDLA system.</span></p>
 </div>
-<p><a class="reference internal" href="#fig-small-nvdla"><span class="std std-numref">Fig. 7</span></a> shows a small system, for which NVDLA is directly
+<p><a class="reference internal" href="#fig-small-nvdla"><span class="std std-numref">Fig. 8</span></a> shows a small system, for which NVDLA is directly
 connected to the main CPU.  The small system has no NVDLA-dedicated SRAM,
 and all accesses hit the main system memory.  By comparison,
-<a class="reference internal" href="#fig-large-nvdla"><span class="std std-numref">Fig. 8</span></a> shows a somewhat larger system, in which the NVDLA
+<a class="reference internal" href="#fig-large-nvdla"><span class="std std-numref">Fig. 9</span></a> shows a somewhat larger system, in which the NVDLA
 connects to a microcontroller, which is responsible for managing the small
 details of programming the NVDLA (and, as such, freeing the main CPU from
 servicing low-level NVDLA interrupts).  The latter system also integrates a
@@ -768,12 +768,12 @@ such, the host cannot back-pressure NVDLA on this interface.</p>
 </div>
 <div class="section" id="interface-timing">
 <h4>Interface timing<a class="headerlink" href="#interface-timing" title="Permalink to this headline">¶</a></h4>
-<p>The timing diagram in <a class="reference internal" href="#fig-timing-diagram"><span class="std std-numref">Fig. 9</span></a> illustrates 4
+<p>The timing diagram in <a class="reference internal" href="#fig-timing-diagram"><span class="std std-numref">Fig. 10</span></a> illustrates 4
 transactions (2 writes, 2 reads) on the CSB bus between a requester and
 NVDLA.</p>
 <div class="figure align-center" id="id12">
 <span id="fig-timing-diagram"></span><a class="reference internal image-reference" href="_images/nvdla-hwarch-csb-timing.svg"><img alt="_images/nvdla-hwarch-csb-timing.svg" src="_images/nvdla-hwarch-csb-timing.svg" /></a>
-<p class="caption"><span class="caption-number">Fig. 9 </span><span class="caption-text">Interface timing example on the CSB.</span></p>
+<p class="caption"><span class="caption-number">Fig. 10 </span><span class="caption-text">Interface timing example on the CSB.</span></p>
 </div>
 </div>
 </div>
@@ -1143,10 +1143,10 @@ buffers in order to work together to form HW layers.</p>
 <div class="section" id="implementation">
 <h4>Implementation<a class="headerlink" href="#implementation" title="Permalink to this headline">¶</a></h4>
 <div class="figure align-center" id="id19">
-<span id="fig-regfile"></span><img alt="_images/nvdla-hwarch-regfile.svg" src="_images/nvdla-hwarch-regfile.svg" /><p class="caption"><span class="caption-number">Fig. 10 </span><span class="caption-text">Implementation overview of ping-pong register file.</span></p>
+<span id="fig-regfile"></span><img alt="_images/nvdla-hwarch-regfile.svg" src="_images/nvdla-hwarch-regfile.svg" /><p class="caption"><span class="caption-number">Fig. 11 </span><span class="caption-text">Implementation overview of ping-pong register file.</span></p>
 </div>
 <p>Each pipeline stage has the ping-pong mechanism built into its register
-file, as shown in <a class="reference internal" href="#fig-regfile"><span class="std std-numref">Fig. 10</span></a>.  In detail, each register file
+file, as shown in <a class="reference internal" href="#fig-regfile"><span class="std std-numref">Fig. 11</span></a>.  In detail, each register file
 implementation has three register groups; the two ping-pong groups
 (duplicated register group 0, and group 1) share the same addresses, and the
 third register group is a dedicated non-shadowed group (shown above as the
@@ -3331,8 +3331,8 @@ their registers are not available either.  These registers are as noted below:</
 </ul>
 
   <h4>Previous topic</h4>
-  <p class="topless"><a href="sw/test_application.html"
-                        title="previous chapter">Test applications</a></p>
+  <p class="topless"><a href="vp.html"
+                        title="previous chapter">Virtual Platform</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="integration_guide.html"
                         title="next chapter">Integrator’s Manual</a></p>
@@ -3368,7 +3368,7 @@ their registers are not available either.  These registers are as noted below:</
           <a href="integration_guide.html" title="Integrator’s Manual"
              >next</a></li>
         <li class="right">
-          <a href="sw/test_application.html" title="Test applications"
+          <a href="vp.html" title="Virtual Platform"
              >previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="index.html">NVDLA Open Source Project</a>&#187;</li>
         <li class="nav-item nav-item-1"><a href="contents.html">Documentation</a>&#187;</li> 
