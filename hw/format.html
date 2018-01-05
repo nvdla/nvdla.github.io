@@ -1,0 +1,1297 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Data Formats &#8212; NVDLA Documentation</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <link rel="stylesheet" href="../_static/nvdla.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/styles.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Integrator’s Manual" href="../integration_guide.html" />
+    <link rel="prev" title="Hardware Architectural Specification" href="../hwarch.html" /> 
+  </head>
+  <body>
+<header class="navbar">
+  <nav class="container navbar navbar-light bg-faded">
+    <a class="navbar-brand" href="https://www.nvidia.com/">
+      <div class="logo"></div>
+    </a>
+  </nav>
+</header>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <div class="container">
+      <div class="row">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right first">
+          <a href="../integration_guide.html" title="Integrator’s Manual"
+             accesskey="N">next</a></li>
+        <li class="right">
+          <a href="../hwarch.html" title="Hardware Architectural Specification"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">NVDLA Open Source Project</a>&#187;</li>
+        <li class="nav-item nav-item-1"><a href="../contents.html">Documentation</a>&#187;</li> 
+      </ul>
+      </div>
+      </div>
+    </div>
+  <div class="document">
+    <div class="container">
+      <div class="row">
+        <div class="col-xs-12 col-md-9">
+          
+  <div class="section" id="data-formats">
+<h1>Data Formats<a class="headerlink" href="#data-formats" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>DLA engine supports various types of CNN layers like convolution layer,
+pooling, ReLU, LRN, etc. To improve the performance DLA engine also
+applies some options like Winograd, weight compression and multi-batch
+mode. To support these layers DLA engine uses specified input and output
+data formats.</p>
+<p>There are two main types of input formats. They are weight data and
+activation data. The weight formats include below branches:</p>
+<ul class="simple">
+<li>weight for direct convolution</li>
+<li>weight for image input</li>
+<li>weight for Winograd convolution</li>
+</ul>
+<p>Two options for weight formats:</p>
+<ul class="simple">
+<li>channel post-extension for image input mode</li>
+<li>sparse compression</li>
+</ul>
+<p>The activation formats supported by DLA engine includes:</p>
+<ul class="simple">
+<li>feature data format</li>
+<li>pixel format (ROI input)</li>
+</ul>
+<p>The output formats supported by DLA engine includes:</p>
+<ul class="simple">
+<li>feature data format</li>
+</ul>
+<p>Besides, DLA engine will fetch below auxiliary formats from external
+memory</p>
+<ul class="simple">
+<li>bias data</li>
+<li>PReLU data</li>
+<li>batch-normalization data</li>
+<li>element-wise data</li>
+</ul>
+<p>Channel extension refers to a set of mapping rule for both weight data
+and activation data to fit with accelerator. It includes:</p>
+<ul class="simple">
+<li>Channel extension for Winograd convolution</li>
+<li>Channel pre-extension for image input mode</li>
+<li>Channel post-extension for image input mode</li>
+</ul>
+<p>The channel post-extension for image input mode is an option for
+performance. Other two are mandatory for their working mode. HW handles
+all channel extension on feature/pixel data, while SW shall do channel
+extension to weight data accordingly.</p>
+<p>All data formats should be mapping in memory with rules.</p>
+<div class="section" id="precision-type">
+<h3>Precision Type<a class="headerlink" href="#precision-type" title="Permalink to this headline">¶</a></h3>
+<p>NVDLA engine pipeline support three types of data precision. They are
+int8, int16 and fp16. For int8, one element of data refers to an 8-bit
+signed integer. For int16, one element refers to a 16-bit signed
+integer. For fp16, one element refers to a 16-bit floating point data,
+which is also named as half-precision floating-point format.</p>
+<p>All input feature data should belong to one of three precision types.
+And all image input data will be converted to one precision type before
+calculation. For example, DLA engine can take a T_R10G10B10A2 image as
+input (for first layer) and convert the component to int8, int16 or
+fp16.</p>
+</div>
+</div>
+<div class="section" id="feature-data-format">
+<span id="id1"></span><h2>Feature Data Format<a class="headerlink" href="#feature-data-format" title="Permalink to this headline">¶</a></h2>
+<p>DLA engine maintains a private data format for all supported HW-layers.
+The data format is called feature data format. This format is only
+generated by DLA engine itself.</p>
+<p>All elements of feature data for one layer are organized as a 3D data
+cube. Three dimensions are width (W), height (H) and channel size (C).
+The memory mapping rules are:</p>
+<ul class="simple">
+<li>Adding data into end of channel if the original data is not 32byte
+aligned in C direction.</li>
+<li>The attached data can be any value except NaN when it’s fp16.</li>
+<li>Split the data cube into 1x1x32byte small atom cubes.</li>
+<li>Reordering atom cubes in by progressively scanning the data cube.
+Scanning order: W (line) -&gt; H (height) -&gt; C (channel).</li>
+<li>Map all atom cubes into memory by scanning sequence.</li>
+<li>All atom cubes in the same line are mapped compactly.</li>
+<li>Atom cube mapping at line boundary and/or surface boundary can be
+either adjacently or incompactly. But they are always 32-byte
+aligned.</li>
+<li>In conclusion, mapping in memory follows pitch linear format. The
+order is C’ (32byte) -&gt; W -&gt; H -&gt; C (surfaces). Here C’ changes
+fastest and C changes slowest.</li>
+</ul>
+<p><a class="reference internal" href="#fig-packed-feature-diagram"><span class="std std-numref">Fig. 12</span></a> is a case of feature data that all small cubes are mapped
+compactly. This is called packed feature data. If the line or surface of
+small cubes is not mapped compactly, it is called unpacked. See <a class="reference internal" href="#fig-unpacked-feature-diagram"><span class="std std-numref">Fig. 13</span></a>.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Line stride and surface stride of feature data shall always align to
+32bytes. Start address has same alignment as well. This is mandatory
+requirement.</p>
+</div>
+<div class="figure align-center" id="id3">
+<span id="fig-packed-feature-diagram"></span><img alt="../_images/format_packed_feature_diagram.svg" src="../_images/format_packed_feature_diagram.svg" /><p class="caption"><span class="caption-number">Fig. 12 </span><span class="caption-text">Packed feature data</span></p>
+</div>
+<div class="figure align-center" id="id4">
+<span id="fig-unpacked-feature-diagram"></span><img alt="../_images/format_unpacked_feature_diagram.svg" src="../_images/format_unpacked_feature_diagram.svg" /><p class="caption"><span class="caption-number">Fig. 13 </span><span class="caption-text">Unpacked feature data</span></p>
+</div>
+<p>If a 1x1xC feature data cube maps as surface-packed, NVDLA can treat it
+like (C/32) x1x 32 cube to save bandwidth.</p>
+<p>Mapping of feature data cube is done by NVDLA core logic. Falcon does
+not involve in mapping procedures.</p>
+</div>
+<div class="section" id="pixel-format">
+<h2>Pixel Format<a class="headerlink" href="#pixel-format" title="Permalink to this headline">¶</a></h2>
+<p>DLA engine supports pixel data for ROI. The pixel data comes from a part
+or a whole image. The pixel formats are listed in table <a class="reference internal" href="#tab-pixel-formats"><span class="std std-numref">Table 29</span></a>.</p>
+<p>When NVDLA takes image as input data, there are some limits of
+configuration.</p>
+<ul class="simple">
+<li>Channel size. The valid channel size highly depends on each format.
+Please see table <a class="reference internal" href="#tab-pixel-formats"><span class="std std-numref">Table 29</span></a>.</li>
+<li>Input precision. The input precision highly depends on pixel each
+format. Please see table <a class="reference internal" href="#tab-pixel-formats"><span class="std std-numref">Table 29</span></a>. DMA logic will turn unsigned integer
+value to signed integer value automatically.</li>
+<li><strong>Both start address and line stride of pitch linear shall aligned to
+32 bytes. This is mandatory requirement.</strong></li>
+<li>It may have redundant data between 32-byte aligned address and first
+element. NVDLA use x offset to indicate how many redundant data are.
+The unit of offset is pixel.</li>
+</ul>
+<table border="1" class="docutils" id="tab-pixel-formats">
+<caption><span class="caption-number">Table 29 </span><span class="caption-text">Pixel formats and valid setting</span><a class="headerlink" href="#tab-pixel-formats" title="Permalink to this table">¶</a></caption>
+<colgroup>
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Format Name</th>
+<th class="head"># of planar</th>
+<th class="head">Valid
+channel
+size
+setting</th>
+<th class="head">Valid input
+precision
+setting</th>
+<th class="head">Valid X
+offset
+range</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>T_R8</td>
+<td>1</td>
+<td>1</td>
+<td>int8</td>
+<td>0~31</td>
+</tr>
+<tr class="row-odd"><td>T_R10</td>
+<td>1</td>
+<td>1</td>
+<td>int16</td>
+<td>0~15</td>
+</tr>
+<tr class="row-even"><td>T_R12</td>
+<td>1</td>
+<td>1</td>
+<td>int16</td>
+<td>0~15</td>
+</tr>
+<tr class="row-odd"><td>T_R16</td>
+<td>1</td>
+<td>1</td>
+<td>int16</td>
+<td>0~15</td>
+</tr>
+<tr class="row-even"><td>T_R16_I</td>
+<td>1</td>
+<td>1</td>
+<td>int16</td>
+<td>0~15</td>
+</tr>
+<tr class="row-odd"><td>T_R16_F</td>
+<td>1</td>
+<td>1</td>
+<td>int16</td>
+<td>0~15</td>
+</tr>
+<tr class="row-even"><td>T_A16B16G16
+R16</td>
+<td>1</td>
+<td>4</td>
+<td>int16</td>
+<td>0~3</td>
+</tr>
+<tr class="row-odd"><td>T_X16B16G16
+R16</td>
+<td>1</td>
+<td>4</td>
+<td>int16</td>
+<td>0~3</td>
+</tr>
+<tr class="row-even"><td>T_A16B16G16
+R16_F</td>
+<td>1</td>
+<td>4</td>
+<td>fp16</td>
+<td>0~3</td>
+</tr>
+<tr class="row-odd"><td>T_A16Y16U16
+V16</td>
+<td>1</td>
+<td>4</td>
+<td>int16</td>
+<td>0~3</td>
+</tr>
+<tr class="row-even"><td>T_V16U16Y16
+A16</td>
+<td>1</td>
+<td>4</td>
+<td>int16</td>
+<td>0~3</td>
+</tr>
+<tr class="row-odd"><td>T_A16Y16U16
+V16_F</td>
+<td>1</td>
+<td>4</td>
+<td>fp16</td>
+<td>0~3</td>
+</tr>
+<tr class="row-even"><td>T_A8B8G8R8</td>
+<td>1</td>
+<td>4</td>
+<td>int8</td>
+<td>0~7</td>
+</tr>
+<tr class="row-odd"><td>T_A8R8G8B8</td>
+<td>1</td>
+<td>4</td>
+<td>int8</td>
+<td>0~7</td>
+</tr>
+<tr class="row-even"><td>T_B8G8R8A8</td>
+<td>1</td>
+<td>4</td>
+<td>int8</td>
+<td>0~7</td>
+</tr>
+<tr class="row-odd"><td>T_R8G8B8A8</td>
+<td>1</td>
+<td>4</td>
+<td>int8</td>
+<td>0~7</td>
+</tr>
+<tr class="row-even"><td>T_X8B8G8R8</td>
+<td>1</td>
+<td>4</td>
+<td>int8</td>
+<td>0~7</td>
+</tr>
+<tr class="row-odd"><td>T_X8R8G8B8</td>
+<td>1</td>
+<td>4</td>
+<td>int8</td>
+<td>0~7</td>
+</tr>
+<tr class="row-even"><td>T_B8G8R8X8</td>
+<td>1</td>
+<td>4</td>
+<td>int8</td>
+<td>0~7</td>
+</tr>
+<tr class="row-odd"><td>T_R8G8B8X8</td>
+<td>1</td>
+<td>4</td>
+<td>int8</td>
+<td>0~7</td>
+</tr>
+<tr class="row-even"><td>T_A2B10G10R
+10</td>
+<td>1</td>
+<td>4</td>
+<td>int16</td>
+<td>0~7</td>
+</tr>
+<tr class="row-odd"><td>T_A2R10G10B
+10</td>
+<td>1</td>
+<td>4</td>
+<td>int16</td>
+<td>0~7</td>
+</tr>
+<tr class="row-even"><td>T_B10G10R10
+A2</td>
+<td>1</td>
+<td>4</td>
+<td>int16</td>
+<td>0~7</td>
+</tr>
+<tr class="row-odd"><td>T_R10G10B10
+A2</td>
+<td>1</td>
+<td>4</td>
+<td>int16</td>
+<td>0~7</td>
+</tr>
+<tr class="row-even"><td>T_A2Y10U10V
+10</td>
+<td>1</td>
+<td>4</td>
+<td>int16</td>
+<td>0~7</td>
+</tr>
+<tr class="row-odd"><td>T_V10U10Y10
+A2</td>
+<td>1</td>
+<td>4</td>
+<td>int16</td>
+<td>0~7</td>
+</tr>
+<tr class="row-even"><td>T_A8Y8U8V8</td>
+<td>1</td>
+<td>4</td>
+<td>int8</td>
+<td>0~7</td>
+</tr>
+<tr class="row-odd"><td>T_V8U8Y8A8</td>
+<td>1</td>
+<td>4</td>
+<td>int8</td>
+<td>0~7</td>
+</tr>
+<tr class="row-even"><td>T_Y8___U8V8
+_N444</td>
+<td>2</td>
+<td>3</td>
+<td>int8</td>
+<td>0~31</td>
+</tr>
+<tr class="row-odd"><td>T_Y8___V8U8
+_N444</td>
+<td>2</td>
+<td>3</td>
+<td>int8</td>
+<td>0~31</td>
+</tr>
+<tr class="row-even"><td>T_Y10___U10
+V10_N444</td>
+<td>2</td>
+<td>3</td>
+<td>int16</td>
+<td>0~15</td>
+</tr>
+<tr class="row-odd"><td>T_Y10___V10
+U10_N444</td>
+<td>2</td>
+<td>3</td>
+<td>int16</td>
+<td>0~15</td>
+</tr>
+<tr class="row-even"><td>T_Y12___U12
+V12_N444</td>
+<td>2</td>
+<td>3</td>
+<td>int16</td>
+<td>0~15</td>
+</tr>
+<tr class="row-odd"><td>T_Y12___V12
+U12_N444</td>
+<td>2</td>
+<td>3</td>
+<td>int16</td>
+<td>0~15</td>
+</tr>
+<tr class="row-even"><td>T_Y16___U16
+V16_N444</td>
+<td>2</td>
+<td>3</td>
+<td>int16</td>
+<td>0~15</td>
+</tr>
+<tr class="row-odd"><td>T_Y16___V16
+U16_N444</td>
+<td>2</td>
+<td>3</td>
+<td>int16</td>
+<td>0~15</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="weight-format">
+<span id="id2"></span><h2>Weight Format<a class="headerlink" href="#weight-format" title="Permalink to this headline">¶</a></h2>
+<p>Unlike pixel data or feature data, weight data are generated long before
+convolution operation. And DLA engine never changes them during
+operation. Software should map weight data with property rules to fit
+with the calculation sequence in DLA.</p>
+<p>The original weight data has 4 dimensions: width, height, channel and
+number of kernels. They can construct as a group of 3D data cubes. One
+data cube is called a kernel. See <a class="reference internal" href="#fig-original-weight-data"><span class="std std-numref">Fig. 14</span></a>.</p>
+<p>DLA engine support 4 types of weight data. They are weight for direct
+convolution, weight for Winograd convolution, weight for image input and
+weight for deconvolution. There are two options for weight to improve
+DLA performance: sparse compression and channel post-extension.</p>
+<p>DLA engine support 4 basic formats of weight data for different
+operation mode:</p>
+<ul class="simple">
+<li>weight for direct convolution</li>
+<li>weight for image input</li>
+<li>weight for deconvolution</li>
+<li>weight for Winograd convolution</li>
+</ul>
+<p>There are some mandatory requirements for some formats:</p>
+<ul class="simple">
+<li>channel pre-extension for image input</li>
+<li>channel extension for Winograd</li>
+<li>Set split for deconvolution</li>
+</ul>
+<p>And two options for weight formats:</p>
+<ul class="simple">
+<li>channel post-extension</li>
+<li>sparse compressing</li>
+</ul>
+<table border="1" class="docutils" id="tab-weight-formats">
+<caption><span class="caption-number">Table 30 </span><span class="caption-text">Weight formats and options</span><a class="headerlink" href="#tab-weight-formats" title="Permalink to this table">¶</a></caption>
+<colgroup>
+<col width="34%" />
+<col width="36%" />
+<col width="30%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Weight types</th>
+<th class="head">Sparse compression option</th>
+<th class="head">Post-extension option</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Weight for DC</td>
+<td>Support</td>
+<td><strong>NOT support</strong></td>
+</tr>
+<tr class="row-odd"><td>Weight for Winograd</td>
+<td>Support</td>
+<td><strong>NOT support</strong></td>
+</tr>
+<tr class="row-even"><td>Weight for image input</td>
+<td>Support</td>
+<td>Support</td>
+</tr>
+<tr class="row-odd"><td>Weight for deconvolution</td>
+<td>Support</td>
+<td><strong>NOT support</strong></td>
+</tr>
+</tbody>
+</table>
+<div class="figure align-center" id="id5">
+<span id="fig-original-weight-data"></span><a class="reference internal image-reference" href="../_images/format_original_weight_data.svg"><img alt="../_images/format_original_weight_data.svg" src="../_images/format_original_weight_data.svg" /></a>
+<p class="caption"><span class="caption-number">Fig. 14 </span><span class="caption-text">Original weight data</span></p>
+</div>
+<div class="section" id="basic-weight-for-direct-convolution">
+<h3>Basic Weight for Direct Convolution<a class="headerlink" href="#basic-weight-for-direct-convolution" title="Permalink to this headline">¶</a></h3>
+<p>Basic weight for direct convolution is the most basic and common weight
+format. Other weight formats are all extended from this format.</p>
+<p>The mapping rules of uncompressed weight for direct convolution are:</p>
+<ul class="simple">
+<li>Distribute the kernels into groups. For int16 and fp16 weight, one
+group has 16 kernels. For int8, one group has 32 kernels. Last group
+can have fewer kernels.</li>
+<li>Divide each kernel to 1x1x64-element small cubes. For int16/fp16 the
+small cube is 128 bytes each; and for int8 the small cube is 64 bytes
+each. Do not append 0 if channel size is not divisible by 128/64.</li>
+<li>After division, all weights are stored in 1x1xC’ small cubes, where
+C’ is no more than 128 bytes.</li>
+<li>Scan the 1x1xC’ small cubes in a group with C’-&gt;K-&gt;W-&gt;H-&gt;C sequence.
+Here C’ changes fastest and C changes slowest. And map them compactly
+as scanning sequence.</li>
+<li>Map the weight groups compactly. Do not append any 0s between group
+boundaries.</li>
+<li>Append 0s at end of all mapped weight for 128-byte alignment.</li>
+</ul>
+<p>Diagram below shows how a group of 3x3x192Byte kernel maps for direct
+convolution.</p>
+<div class="figure align-center" id="id6">
+<span id="fig-dc-weight-mapping"></span><a class="reference internal image-reference" href="../_images/format_dc_weight_mapping.svg"><img alt="../_images/format_dc_weight_mapping.svg" src="../_images/format_dc_weight_mapping.svg" /></a>
+<p class="caption"><span class="caption-number">Fig. 15 </span><span class="caption-text">Weight mapping for direct convolution inside one group</span></p>
+</div>
+</div>
+<div class="section" id="basic-weight-for-image-input">
+<h3>Basic Weight for image input<a class="headerlink" href="#basic-weight-for-image-input" title="Permalink to this headline">¶</a></h3>
+<p>Weight mapping for image input is like weight for direct convolution.
+The main difference is that image weight needs an additional channel
+extension step ahead of mapping steps for direct convolution weight.</p>
+<p>The channel pre-extension for image weight is a mandatory requirement,
+while channel post-extension is an option to improve performance.</p>
+<dl class="docutils">
+<dt>..note::</dt>
+<dd>Channel pre-extension for image weight is different from
+channel extension for Winograd convolution.</dd>
+</dl>
+<p>The key idea of per-extension is to turn all weights in same line to a
+single channel. <a class="reference internal" href="#fig-dc-channel-extension-for-image-for-weight"><span class="std std-numref">Fig. 16</span></a>
+is a case for an int16 image input whose channel size is 3.</p>
+<div class="figure align-center" id="id7">
+<span id="fig-dc-channel-extension-for-image-for-weight"></span><a class="reference internal image-reference" href="../_images/format_dc_channel_extension_for_image_for_weight.svg"><img alt="../_images/format_dc_channel_extension_for_image_for_weight.svg" src="../_images/format_dc_channel_extension_for_image_for_weight.svg" /></a>
+<p class="caption"><span class="caption-number">Fig. 16 </span><span class="caption-text">Channel extension for image weight</span></p>
+</div>
+<p>Channel pre-extension is the first step for image weight. Then all
+extended kernels follow the same steps of weight for direct convolution.
+That is, SW still need to do group and channel distribution after
+channel extension.</p>
+</div>
+<div class="section" id="basic-weight-for-winograd-convolution">
+<h3>Basic Weight for Winograd Convolution<a class="headerlink" href="#basic-weight-for-winograd-convolution" title="Permalink to this headline">¶</a></h3>
+<p>The memory mapping of Winograd weight is very different from direct
+convolution. There are two phases to process the weights. Phase 1 is to
+do channel extension and conversion for each kernel. Phase 2 is to group
+the kernels and map small cubes in memory.</p>
+<p>Steps of phase 1:</p>
+<ul class="simple">
+<li>Divide kernels to 1x1x32Byte small cubes. If the channel size is not
+divisible by 32, append 0s.</li>
+<li>Do channel extension in if convolution stride is not 1. The new width
+and height of a kernel should be 3 after extension.</li>
+<li>Convert the kernel from 3x3xC cube to a 4x4xC cube. The equation is
+GWGT. Here W is each 4x4x1 of weight cube, G is a 4 x 3 matrix and GT
+is transpose matrix.</li>
+<li>During conversion, a scaling factor may involve. Please see the Winograd
+convolution documentation for reference.</li>
+<li>The width and height of a kernel should be 4 after conversion.</li>
+</ul>
+<div class="math">
+\[\begin{split}G = \begin{bmatrix}
+1 &amp; 0 &amp; 0 \\
+0.5 &amp; 0.5 &amp; 0.5 \\
+0.5 &amp; - 0.5 &amp; 0.5 \\
+0 &amp; 0 &amp; 1 \\
+\end{bmatrix}\end{split}\]</div>
+<p>Matrix for weight transfer for Winograd</p>
+<p>Steps of phase 2:</p>
+<ul class="simple">
+<li>Distribute the converted kernels into groups. For int16 and fp16
+weight, one group has 16 kernels. For int8, one group has 32 kernels.</li>
+<li>Divide converted kernels to 4x4x4 elements small cubes. For
+int16/fp16 small cube is 128 bytes each. For int8 small cube is 64
+bytes each. The channel size should always divisible by 4.</li>
+<li>Scan the 4x4x4 elements small cubes in a group with K-&gt;C sequence.
+Take int16 for example, the scan order is small cube 0 of K0, small
+cube 0 of K1, small cube 0 of K2, …, small cube 0 of K15, small cube
+1 of K0, small cube 1 of K1, …, small cube 1 of K15, …, small cube N
+of K15.</li>
+<li>Maps the 4x4x4 elements small cubes closely with scanning order</li>
+<li>Maps the weight groups one by one closely</li>
+</ul>
+<p>The phase 2 is similar to weight for direct convolution except the small
+cube size is 4x4x4 elements.</p>
+<p>Figure below shows how to do channel extension to one kernel and map the
+data.</p>
+<div class="figure align-center" id="id8">
+<span id="fig-channel-extension-and-conversion-for-wingorad"></span><img alt="../_images/format_channel_extension_and_conversion_for_wingorad.svg" src="../_images/format_channel_extension_and_conversion_for_wingorad.svg" /><p class="caption"><span class="caption-number">Fig. 17 </span><span class="caption-text">Channel extension and conversion for Winograd</span></p>
+</div>
+</div>
+<div class="section" id="weight-channel-post-extension-for-image-input">
+<h3>Weight Channel Post-extension for image input<a class="headerlink" href="#weight-channel-post-extension-for-image-input" title="Permalink to this headline">¶</a></h3>
+<p>Weight channel post-extension is an option to enhance MAC efficiency
+when channel size is less than 32. It is available for image input mode
+only.</p>
+<p>Key idea of channel post-extension is to combine two neighbor lines to
+saving the efficiency. It allows two-line (C&lt;=32) or four-line (C&lt;=16)
+combination. 1, 2 and 4 parameters are available.</p>
+<p>If this option is enabled, NVDLA manage to post-extend input feature (or
+image) data in CSC sub units. And SW needs to adjust weight mapping
+order.</p>
+<p>The channel post-extension is done after pre-extension. Figure below
+shows one case which parameter is 2.</p>
+<div class="figure align-center" id="id9">
+<span id="fig-weight-channel-post-extension-2"></span><img alt="../_images/format_weight_channel_post_extension_2.svg" src="../_images/format_weight_channel_post_extension_2.svg" /><p class="caption"><span class="caption-number">Fig. 18 </span><span class="caption-text">Weight channel post-extension, parameter = 2</span></p>
+</div>
+<p>Flow of pre-extension, post-extension, mapping and compression option
+for image weight:</p>
+<ul class="simple">
+<li>Do pre-extension</li>
+<li>Do post-extension</li>
+<li>Remap weight data</li>
+<li>Do weight compression.</li>
+</ul>
+<p>Some tips for post-extension:</p>
+<ul class="simple">
+<li>Channel post-extension cannot be used in Winograd convolution</li>
+<li>Channel post-extension only support 2-line and 4-line.</li>
+<li>If weight height is not divisible by 2 (2-lines) or 4 (4-lines), do
+NOT append 0s. This is unlike channel extension for Winograd.</li>
+</ul>
+</div>
+<div class="section" id="sparse-compression-option">
+<h3>Sparse Compression option<a class="headerlink" href="#sparse-compression-option" title="Permalink to this headline">¶</a></h3>
+<p>To reduce the bandwidth and power consumption on memory interface, NVDLA
+engine support weight sparse compression option. All four weight formats
+can support sparse compression. This option requires additional steps
+after basic mapping and post-extension option.</p>
+<p>Sparse algorithm uses one-bit tag to indicate a weight element is zero
+or not. Bit tags of one kernel group compose a weight mask bit group, or
+WMB. WMBs reside in a dedicate memory surface. Since 0 values are marked
+by bit tags (assign 0 to corresponding bit), they can be removed from
+original weight memory surface. A third memory surface recodes remaining
+byte number of each kernel group (WGS).</p>
+<p>The steps of weight compression are:</p>
+<ul class="simple">
+<li>Always use 1 bit to indicate 1 element of weight. For int16 and fp16,
+1 bit represents 2 bytes of weight data; for int8, 1 bit represents 1
+byte of weight data.</li>
+<li>Compress weight group by group. Assembly of bits for one weight group
+is called WMB. The bits in WMB are stored as little-endian.</li>
+<li>Align WMB surface to 128-byte by adding 0 bits in the end</li>
+<li>Remove all 0 weights in original surface and pack them compactly.</li>
+<li>Align compressed weight surface to 128-byte by adding 0s in the end.</li>
+<li>Calculate the byte number of each compressed group. The remaining
+byte number of each group is called weight group size or WGS. One WGS
+is of 32-bit wise.</li>
+<li>Store WGS, WMB and compressed weight into three separated memory
+surfaces.</li>
+</ul>
+<p>The diagram below shows the memory mapping of compressed weight format.</p>
+<div class="figure align-center" id="id10">
+<span id="fig-memory-mapping-of-compressed-weight"></span><img alt="../_images/format_memory_mapping_of_compressed_weight.svg" src="../_images/format_memory_mapping_of_compressed_weight.svg" /><p class="caption"><span class="caption-number">Fig. 19 </span><span class="caption-text">Memory mapping of compressed weight</span></p>
+</div>
+</div>
+</div>
+<div class="section" id="bias-data-format">
+<h2>Bias Data Format<a class="headerlink" href="#bias-data-format" title="Permalink to this headline">¶</a></h2>
+<p>Bias data is another optional input data for convolution layers. When
+this option is enabled, DLA engine will add the bias data to result of
+convolution before writing back to memory.</p>
+<p>There are three types of bias data,</p>
+<ul class="simple">
+<li>Per layer bias data</li>
+<li>Per channel bias data</li>
+<li>Per element bias data</li>
+</ul>
+<p>They both store in memory for DLA engine to fetch.</p>
+<p>If the output feature data cube is WxHxC, check below table for the
+corresponding bias cube size:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="42%" />
+<col width="58%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Per Layer</th>
+<th class="head">1x1x1 (Register)</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Per Channel</td>
+<td>1x1xC</td>
+</tr>
+<tr class="row-odd"><td>Per Element</td>
+<td>WxHxC</td>
+</tr>
+</tbody>
+</table>
+<p>For INT pipeline, bias data can be either INT8 or INT16, and FP16 type
+of bias data is in16-bit fp16 format. They are generated along with CNN
+network.</p>
+<p>The memory mapping of bias data is described as below:</p>
+<p><strong>Per Channel:</strong></p>
+<ul class="simple">
+<li>Two bytes per element with INT16/FP16 or 1 byte per element with INT8</li>
+</ul>
+<div class="figure align-center" id="id11">
+<span id="fig-memory-mapping-of-per-channel-bias-data-case1"></span><img alt="../_images/format_memory_mapping_of_per_channel_bias_data_case1.svg" src="../_images/format_memory_mapping_of_per_channel_bias_data_case1.svg" /><p class="caption"><span class="caption-number">Fig. 20 </span><span class="caption-text">Memory Mapping of Per Channel Bias Data (Case 1)</span></p>
+</div>
+<ul class="simple">
+<li>2 bytes per element with INT8:</li>
+</ul>
+<div class="figure align-center" id="id12">
+<span id="fig-memory-mapping-of-per-channel-bias-data-case2"></span><img alt="../_images/format_memory_mapping_of_per_channel_bias_data_case2.svg" src="../_images/format_memory_mapping_of_per_channel_bias_data_case2.svg" /><p class="caption"><span class="caption-number">Fig. 21 </span><span class="caption-text">Memory Mapping of Per Channel Bias Data (Case 2)</span></p>
+</div>
+<ul class="simple">
+<li>2 bytes per element with INT8:</li>
+</ul>
+<p><strong>Per Element:</strong></p>
+<ul class="simple">
+<li>Two bytes per element with INT16/FP16 or 1 byte per element with INT8</li>
+</ul>
+<div class="figure align-center" id="id13">
+<span id="fig-memory-mapping-of-per-element-bias-data-case1"></span><img alt="../_images/format_memory_mapping_of_per_element_bias_data_case1.svg" src="../_images/format_memory_mapping_of_per_element_bias_data_case1.svg" /><p class="caption"><span class="caption-number">Fig. 22 </span><span class="caption-text">Memory Mapping of Per Element Bias Data (Case 1)</span></p>
+</div>
+<ul class="simple">
+<li>2 bytes per element with INT8:</li>
+</ul>
+<div class="figure align-center" id="id14">
+<span id="fig-memory-mapping-of-per-element-bias-data-case2"></span><img alt="../_images/format_memory_mapping_of_per_element_bias_data_case2.svg" src="../_images/format_memory_mapping_of_per_element_bias_data_case2.svg" /><p class="caption"><span class="caption-number">Fig. 23 </span><span class="caption-text">Memory Mapping of Per Element Bias Data (Case 2)</span></p>
+</div>
+</div>
+<div class="section" id="prelu-data-format">
+<h2>PReLU Data Format<a class="headerlink" href="#prelu-data-format" title="Permalink to this headline">¶</a></h2>
+<p>Each PReLU data just have one component and it will be fed into
+multiplier of SDP.</p>
+<p>PReLU always operated per-channel thus there is only one type of PReLU
+data:</p>
+<ul class="simple">
+<li>Per channel PReLU data</li>
+</ul>
+<p>Per channel PReLU data is stored in memory in a continuous 1x1xC space.
+Be noted that C is in unit of channel.</p>
+<ul class="simple">
+<li>For INT8/16, each channel can occupy 1 or 2 bytes depending on B/N/E
+RDMA_DATA_SIZE</li>
+<li>In FP16 types, each channel need 2 bytes data</li>
+</ul>
+<p>The memory mapping of PRelu data is described as below:</p>
+<ul class="simple">
+<li>Two bytes per element with INT16/FP16 or 1 byte per element with INT8</li>
+</ul>
+<div class="figure align-center" id="id15">
+<span id="fig-memory-mapping-of-per-channel-prelu-data-case1"></span><img alt="../_images/format_memory_mapping_of_per_channel_prelu_data_case1.svg" src="../_images/format_memory_mapping_of_per_channel_prelu_data_case1.svg" /><p class="caption"><span class="caption-number">Fig. 24 </span><span class="caption-text">Memory Mapping of Per Channel PReLU Data (Case 1)</span></p>
+</div>
+<ul class="simple">
+<li>2 bytes per element with INT8:</li>
+</ul>
+<div class="figure align-center" id="id16">
+<span id="fig-memory-mapping-of-per-channel-prelu-data-case2"></span><img alt="../_images/format_memory_mapping_of_per_channel_prelu_data_case2.svg" src="../_images/format_memory_mapping_of_per_channel_prelu_data_case2.svg" /><p class="caption"><span class="caption-number">Fig. 25 </span><span class="caption-text">Memory Mapping of Per Channel PReLU Data (Case 2)</span></p>
+</div>
+</div>
+<div class="section" id="batch-normalization-data-format">
+<h2>Batch Normalization Data Format<a class="headerlink" href="#batch-normalization-data-format" title="Permalink to this headline">¶</a></h2>
+<p>Batch Normalization data is another optional input data for batch
+normalization layers.</p>
+<p>Each normalization data consists of two parts, one is to add onto the
+feature data and the other is to multiple with the result after
+addition.</p>
+<p>There are two types of batch normalization data</p>
+<ul class="simple">
+<li>Per channel batch normalization data</li>
+<li>Per layer batch normalization data</li>
+</ul>
+<p>Per channel batch normalization data is stored in memory in a continuous
+1x1xC space. Be noted that C is in unit of channel.</p>
+<ul class="simple">
+<li>In INT8/16 types, each of the two parts of normalization data can be
+either 1 byte or 2 bytes, so each channel need 2*1 or 2*2 bytes data</li>
+<li>In FP16 types, each of the two parts of normalization data is 2 byte,
+so each channel need 4 bytes data</li>
+</ul>
+<p>The pair data of each element are always packed together in memory. The
+memory mapping of data is described as below:</p>
+<ul class="simple">
+<li>Two bytes per element with INT16/FP16 or 1 byte per element with INT8</li>
+</ul>
+<div class="figure align-center" id="id17">
+<span id="fig-memory-mapping-of-batch-normalization-data-case1"></span><img alt="../_images/format_memory_mapping_of_batch_normalization_data_case1.svg" src="../_images/format_memory_mapping_of_batch_normalization_data_case1.svg" /><p class="caption"><span class="caption-number">Fig. 26 </span><span class="caption-text">Memory Mapping of Batch Normalization Data (Case 1)</span></p>
+</div>
+<ul class="simple">
+<li>2 bytes per element with INT8:</li>
+</ul>
+<div class="figure align-center" id="id18">
+<span id="fig-memory-mapping-of-batch-normalization-data-case2"></span><img alt="../_images/format_memory_mapping_of_batch_normalization_data_case2.svg" src="../_images/format_memory_mapping_of_batch_normalization_data_case2.svg" /><p class="caption"><span class="caption-number">Fig. 27 </span><span class="caption-text">Memory Mapping of Batch Normalization Data (Case 2)</span></p>
+</div>
+<p>Per layer batch normalization data is stored in register.</p>
+<p>Be noted that INT8 and INT16 here means the processing precision, so
+when the layer is running from INT16 to INT8 or INT8 to INT16 precision
+conversion, batch normalization data need set to processing precision
+which is always INT8.</p>
+</div>
+<div class="section" id="element-wise-data-format">
+<h2>Element-Wise Data Format<a class="headerlink" href="#element-wise-data-format" title="Permalink to this headline">¶</a></h2>
+<p>Element-Wise data is another optional input data for Element-Wise
+layers.</p>
+<p>Each Element-Wise data consists of just one part and either for ALU or
+multiplier.</p>
+<p>There are one type of element-wise data</p>
+<ul class="simple">
+<li>Per element Element-Wise data</li>
+</ul>
+<p>Per element Element-Wise data is stored in memory with size of W x H x
+C.</p>
+<ul class="simple">
+<li>In INT8 /16types, each of the two parts of element-wise data can be
+either 1 byte or 2 bytes, so each element need 1/2 bytes data</li>
+<li>In FP16 types, each of the two parts of element-wise data is 2 bytes,
+so each element need 2 bytes data</li>
+</ul>
+<p>From algorithm perspective, element-wise employs ALU or MUL only but
+never both, however, DLA hardware support employ both operations for
+per-element operation, in this case, each element size should be x2 of
+description above;</p>
+<p>The memory mapping of data is described as below:</p>
+<ul class="simple">
+<li>Two bytes per element with INT16/FP16 or 1 byte per element with INT8</li>
+</ul>
+<div class="figure align-center" id="id19">
+<span id="fig-memory-mapping-of-element-wise-data-case1"></span><img alt="../_images/format_memory_mapping_of_element_wise_data_case1.svg" src="../_images/format_memory_mapping_of_element_wise_data_case1.svg" /><p class="caption"><span class="caption-number">Fig. 28 </span><span class="caption-text">Memory Mapping of Element Wise Data (Case 1)</span></p>
+</div>
+<ul class="simple">
+<li>2 bytes per element with INT8:</li>
+</ul>
+<div class="figure align-center" id="id20">
+<span id="fig-memory-mapping-of-element-wise-data-case2"></span><img alt="../_images/format_memory_mapping_of_element_wise_data_case2.svg" src="../_images/format_memory_mapping_of_element_wise_data_case2.svg" /><p class="caption"><span class="caption-number">Fig. 29 </span><span class="caption-text">Memory Mapping of Element Wise Data (Case 2)</span></p>
+</div>
+<p>Be noted that INT8 and INT16 here means the processing precision, so
+when the layer is running from INT16 to INT8 or INT8 to INT16 precision
+conversion, Element-Wise data need set to processing precision which is
+always INT8.</p>
+<p>Normally, one atom contains 1x1x32Bytes data, but it’s no longer true
+for:</p>
+<ul class="simple">
+<li>Bias data format;</li>
+<li>PReLU data format;</li>
+<li>Batch normalization data format;</li>
+<li>Element-wise data format</li>
+</ul>
+<p>The bytes-per-atom for those formats should be computed by:</p>
+<p>BytesPerAtom=ElementPerAtom * ComponentsPerElement * BytesPerComponent</p>
+<p>Where ElementPerAtom is decided by PROC_PRECISION of SDP data pipeline:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">PROC_PRECISION</th>
+<th class="head">ElementPerAtom</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>INT8</td>
+<td>32</td>
+</tr>
+<tr class="row-odd"><td>INT16/FP16</td>
+<td>16</td>
+</tr>
+</tbody>
+</table>
+<p>ComponentsPerElement is decided by use case (or DATA_USE register):</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="65%" />
+<col width="35%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Use case</th>
+<th class="head">ComponentsPerElement</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Bias</td>
+<td>1</td>
+</tr>
+<tr class="row-odd"><td>PReLU</td>
+<td>1</td>
+</tr>
+<tr class="row-even"><td>BatchNormalization</td>
+<td>2</td>
+</tr>
+<tr class="row-odd"><td>Element-wise (Only ALU or MUL enabled)</td>
+<td>1</td>
+</tr>
+<tr class="row-even"><td>Element-wise (Both ALU/MUL are enabled)</td>
+<td>2</td>
+</tr>
+</tbody>
+</table>
+<p>BytesPerComponent is decided by precision (or DATA_SIZE register)</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="37%" />
+<col width="63%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">DATA_SIZE</th>
+<th class="head">BytesPerComponent</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>ONE_BYTE</td>
+<td>1</td>
+</tr>
+<tr class="row-odd"><td>TWO_BYTE</td>
+<td>2</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="alignment-of-start-address-and-stride">
+<h2>Alignment of Start Address and Stride<a class="headerlink" href="#alignment-of-start-address-and-stride" title="Permalink to this headline">¶</a></h2>
+<p>Here is the conclusion of requirements of alignment:</p>
+<table border="1" class="docutils" id="tab-requirements-of-alignment">
+<caption><span class="caption-number">Table 31 </span><span class="caption-text">Requirements of alignment</span><a class="headerlink" href="#tab-requirements-of-alignment" title="Permalink to this table">¶</a></caption>
+<colgroup>
+<col width="17%" />
+<col width="17%" />
+<col width="17%" />
+<col width="17%" />
+<col width="17%" />
+<col width="17%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Data
+format</th>
+<th class="head">Alignmen
+t
+of start
+address</th>
+<th class="head">Alignmen
+t
+of line
+stride</th>
+<th class="head">Alignmen
+t
+of
+surface
+stride</th>
+<th class="head">Alignmen
+t
+of
+planar/
+cube
+stride</th>
+<th class="head">Alignmen
+t
+of data
+size</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Feature
+data
+cube</td>
+<td>32 bytes</td>
+<td>32 bytes</td>
+<td>32 bytes</td>
+<td>32 bytes</td>
+<td>NA</td>
+</tr>
+<tr class="row-odd"><td>uncompre
+ssed/
+compress
+ed
+weight</td>
+<td>256
+bytes</td>
+<td>NA</td>
+<td>NA</td>
+<td>NA</td>
+<td>128
+bytes</td>
+</tr>
+<tr class="row-even"><td>WMB</td>
+<td>256
+bytes</td>
+<td>NA</td>
+<td>NA</td>
+<td>NA</td>
+<td>128
+bytes</td>
+</tr>
+<tr class="row-odd"><td>WGS</td>
+<td>256
+bytes</td>
+<td>NA</td>
+<td>NA</td>
+<td>NA</td>
+<td>128
+bytes</td>
+</tr>
+<tr class="row-even"><td>Pitch
+linear
+pixel</td>
+<td>32 bytes</td>
+<td>32 bytes</td>
+<td>&#160;</td>
+<td>NA</td>
+<td>NA</td>
+</tr>
+<tr class="row-odd"><td>Bias</td>
+<td>32 bytes</td>
+<td>32 bytes</td>
+<td>32 bytes</td>
+<td>NA</td>
+<td>NA</td>
+</tr>
+<tr class="row-even"><td>PReLU</td>
+<td>32 bytes</td>
+<td>N/A</td>
+<td>N/A</td>
+<td>NA</td>
+<td>NA</td>
+</tr>
+<tr class="row-odd"><td>Batch
+Normaliz
+ation</td>
+<td>32 bytes</td>
+<td>NA</td>
+<td>NA</td>
+<td>NA</td>
+<td>NA</td>
+</tr>
+<tr class="row-even"><td>Element-
+wise</td>
+<td>32 bytes</td>
+<td>32 bytes</td>
+<td>NA</td>
+<td>NA</td>
+<td>32bytes</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="data-file-format">
+<h1>Data file format<a class="headerlink" href="#data-file-format" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="feature-data-file-input-feature-map-dat">
+<h2>Feature data file (input_feature_map.dat)<a class="headerlink" href="#feature-data-file-input-feature-map-dat" title="Permalink to this headline">¶</a></h2>
+<p>This data file contains input feature data or image for one HW layer.
+Please refer to <a class="reference internal" href="#feature-data-format"><span class="std std-ref">Feature Data Format</span></a> for the format of 2D data.</p>
+<p>Below table describes the fields in the header. The fields are optional
+and informative.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head"><strong>Field</strong></th>
+<th class="head"><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Data_size</td>
+<td>Number of bytes of data in this
+data file.</td>
+</tr>
+<tr class="row-odd"><td>Data_type</td>
+<td><p class="first">0x25 (indicates feature data)</p>
+<p class="last">Any value may be filled in the
+gap of adjacent lines or surfaces
+if lines or surfaces are not
+packed.</p>
+</td>
+</tr>
+<tr class="row-even"><td>Kernel_num</td>
+<td>Can be ignored for feature data
+file.</td>
+</tr>
+<tr class="row-odd"><td>W</td>
+<td>Cube width in element unit</td>
+</tr>
+<tr class="row-even"><td>H</td>
+<td>Cube height in element unit</td>
+</tr>
+<tr class="row-odd"><td>C</td>
+<td>Cube channel number in element
+unit</td>
+</tr>
+<tr class="row-even"><td>Line_stride</td>
+<td>Line stride, in bytes.</td>
+</tr>
+<tr class="row-odd"><td>Surface_stride</td>
+<td>Surface stride, in bytes.</td>
+</tr>
+<tr class="row-even"><td>Precision</td>
+<td>Input data cube’s precision: one
+of INT8/INT16/FP16</td>
+</tr>
+<tr class="row-odd"><td>CRC</td>
+<td>Can be ignored</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="weight-wgs-wmb-data-file">
+<h2>Weight/WGS/WMB data file<a class="headerlink" href="#weight-wgs-wmb-data-file" title="Permalink to this headline">¶</a></h2>
+<p>This data file contains weight, wgs or wmb data. Please refer to
+<a class="reference internal" href="#weight-format"><span class="std std-ref">Weight Format</span></a> for the formats of them.</p>
+<p>Below table describes the fields in the header. The fields are optional
+and informative.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="19%" />
+<col width="81%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head"><strong>Field</strong></th>
+<th class="head"><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Data_size</td>
+<td>Number of bytes of data in this data file</td>
+</tr>
+<tr class="row-odd"><td>Data_type</td>
+<td>0x2 (indicates weight data)</td>
+</tr>
+<tr class="row-even"><td>Kernel_num</td>
+<td>Number of kernels</td>
+</tr>
+<tr class="row-odd"><td>W</td>
+<td>Width in element unit of each kernel</td>
+</tr>
+<tr class="row-even"><td>H</td>
+<td>Height in element unit of each kernel</td>
+</tr>
+<tr class="row-odd"><td>C</td>
+<td>Channel number in element unit of each kernel</td>
+</tr>
+<tr class="row-even"><td>Precision</td>
+<td>Input weight’s precision: one of INT8/INT16/FP16</td>
+</tr>
+<tr class="row-odd"><td>CRC</td>
+<td>Can be ingored</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="output-feature-map-dat">
+<h2>output_feature_map.dat<a class="headerlink" href="#output-feature-map-dat" title="Permalink to this headline">¶</a></h2>
+<p>Plain data dumped byte by byte from memory.</p>
+</div>
+<div class="section" id="endianness">
+<h2>Endianness<a class="headerlink" href="#endianness" title="Permalink to this headline">¶</a></h2>
+<p>The data’s endianness is little-endian for INT16 and FP16.</p>
+<p>Example:</p>
+<blockquote>
+<div><div class="line-block">
+<div class="line">Precision is INT16.</div>
+<div class="line">A line in input_feature_map.dat:</div>
+<div class="line-block">
+<div class="line">Low
+address——————————————————————————————High
+address</div>
+<div class="line">0x02 0x00 0x04 0x00 0x02 0x00 0x04 0x00 0x02 0x00 0x04 0x00 0x02 0x00 0x04 0x00…</div>
+</div>
+<div class="line">The values of the int16 elements: 0x0002, 0x0004, 0x0002, 0x0004, 0x0002, 0x0004, 0x0002, 0x0004…</div>
+</div>
+</div></blockquote>
+</div>
+</div>
+
+
+        </div>
+        <div class="col-xs-12 col-md-3">
+          
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../contents.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Data Formats</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a><ul>
+<li><a class="reference internal" href="#precision-type">Precision Type</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#feature-data-format">Feature Data Format</a></li>
+<li><a class="reference internal" href="#pixel-format">Pixel Format</a></li>
+<li><a class="reference internal" href="#weight-format">Weight Format</a><ul>
+<li><a class="reference internal" href="#basic-weight-for-direct-convolution">Basic Weight for Direct Convolution</a></li>
+<li><a class="reference internal" href="#basic-weight-for-image-input">Basic Weight for image input</a></li>
+<li><a class="reference internal" href="#basic-weight-for-winograd-convolution">Basic Weight for Winograd Convolution</a></li>
+<li><a class="reference internal" href="#weight-channel-post-extension-for-image-input">Weight Channel Post-extension for image input</a></li>
+<li><a class="reference internal" href="#sparse-compression-option">Sparse Compression option</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#bias-data-format">Bias Data Format</a></li>
+<li><a class="reference internal" href="#prelu-data-format">PReLU Data Format</a></li>
+<li><a class="reference internal" href="#batch-normalization-data-format">Batch Normalization Data Format</a></li>
+<li><a class="reference internal" href="#element-wise-data-format">Element-Wise Data Format</a></li>
+<li><a class="reference internal" href="#alignment-of-start-address-and-stride">Alignment of Start Address and Stride</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#data-file-format">Data file format</a><ul>
+<li><a class="reference internal" href="#feature-data-file-input-feature-map-dat">Feature data file (input_feature_map.dat)</a></li>
+<li><a class="reference internal" href="#weight-wgs-wmb-data-file">Weight/WGS/WMB data file</a></li>
+<li><a class="reference internal" href="#output-feature-map-dat">output_feature_map.dat</a></li>
+<li><a class="reference internal" href="#endianness">Endianness</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../hwarch.html"
+                        title="previous chapter">Hardware Architectural Specification</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../integration_guide.html"
+                        title="next chapter">Integrator’s Manual</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/hw/format.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+  </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <div class="container">
+      <div class="row">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right first">
+          <a href="../integration_guide.html" title="Integrator’s Manual"
+             >next</a></li>
+        <li class="right">
+          <a href="../hwarch.html" title="Hardware Architectural Specification"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">NVDLA Open Source Project</a>&#187;</li>
+        <li class="nav-item nav-item-1"><a href="../contents.html">Documentation</a>&#187;</li> 
+      </ul>
+      </div>
+      </div>
+    </div>
+<div class="footer" role="contentinfo">
+<div class="container">
+<div class="row">
+&#169; <a
+href="../copyright.html">Copyright</a> 2017, NVIDIA Corporation.
+<a href="http://www.nvidia.com/object/legal_info.html">Legal Information.</a>
+<a href="http://www.nvidia.com/object/privacy_policy.html">Privacy Policy.</a>
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.5.
+</div>
+</div>
+</div>
+  </body>
+</html>
