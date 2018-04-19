@@ -4,34 +4,23 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>Open NVDLA Repository Updates &#8212; NVDLA Documentation</title>
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-
     <link rel="stylesheet" href="_static/nvdla.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="_static/styles.css" type="text/css" />
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    './',
-        VERSION:     '0.0.0',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true,
-        SOURCELINK_SUFFIX: '.txt'
-      };
-    </script>
+    <script type="text/javascript" src="_static/documentation_options.js"></script>
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="NVIDIA Open NVDLA License and Agreement v1.0" href="license.html" />
-    <link rel="prev" title="Integrator’s Manual" href="integration_guide.html" />
+    <link rel="prev" title="Virtual Platform" href="vp.html" />
  
 <script src="//assets.adobedtm.com/b92787824f2e0e9b68dc2e993f9bd995339fe417/satelliteLib-30c8ffcc8ece089156fd5590fbcf390ffc296f51.js"></script>
-  </head>
-  <body>
+  </head><body>
 <header class="navbar">
   <nav class="container navbar navbar-light bg-faded">
     <a class="navbar-brand" href="https://www.nvidia.com/">
@@ -49,7 +38,7 @@
           <a href="license.html" title="NVIDIA Open NVDLA License and Agreement v1.0"
              accesskey="N">next</a></li>
         <li class="right">
-          <a href="integration_guide.html" title="Integrator’s Manual"
+          <a href="vp.html" title="Virtual Platform"
              accesskey="P">previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="index.html">NVDLA Open Source Project</a>&#187;</li>
         <li class="nav-item nav-item-1"><a href="contents.html">Documentation</a>&#187;</li> 
@@ -64,49 +53,58 @@
           
   <div class="section" id="open-nvdla-repository-updates">
 <span id="updates"></span><h1>Open NVDLA Repository Updates<a class="headerlink" href="#open-nvdla-repository-updates" title="Permalink to this headline">¶</a></h1>
-<p>This document is a quick reference guide to changes in the NVDLA repository. Most recent updates are at the top of the document.  Detailed information can be obtained from the <code class="docutils literal"><span class="pre">git</span></code> list of commits.</p>
+<p>This document is a quick reference guide to changes in the NVDLA repository. Most recent updates are at the top of the document.  Detailed information can be obtained from the <code class="docutils literal notranslate"><span class="pre">git</span></code> list of commits.</p>
 <div class="section" id="id1">
-<h2>12/1/2017<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
-<p>Released a SystemC model of the NVDLA hardware, suitable for simulation and
-verification.  This SystemC model lives in <code class="docutils literal"><span class="pre">cmod/</span></code>, and information on
-building it is in the <a class="reference internal" href="integration_guide.html#tree-build"><span class="std std-ref">Tree Build</span></a> section.</p>
-<p>Additionally, this release contains experiemental support for building the
-NVDLA RTL using Verilator; for more information on this, see the
-<a class="reference internal" href="integration_guide.html#verilator-testbench"><span class="std std-ref">Verilator Testbench</span></a> section.</p>
+<h2>4/19/2017<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p>First release of NVDLA V2 – the configurable NVDLA.  This release also includes
+a new testbench which can be used to validate the design.  However,
+the only tested configuration is the “nv_small” configuration. See
+the <a class="reference internal" href="hw/v2/scalability.html"><span class="doc">Scalability parameters and ConfigROM</span></a> document for details on the nv_small
+design configuration parameters.  While the nv_small config passes many
+tests, coverage isn’t yet to tapeout quality levels.</p>
 </div>
 <div class="section" id="id2">
-<h2>11/21/2017<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<h2>12/1/2017<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<p>Released a SystemC model of the NVDLA hardware, suitable for simulation and
+verification.  This SystemC model lives in <code class="docutils literal notranslate"><span class="pre">cmod/</span></code>, and information on
+building it is in the <a class="reference internal" href="hw/v1/integration_guide.html#tree-build"><span class="std std-ref">Tree Build</span></a> section.</p>
+<p>Additionally, this release contains experiemental support for building the
+NVDLA RTL using Verilator; for more information on this, see the
+<a class="reference internal" href="hw/v1/integration_guide.html#verilator-testbench"><span class="std std-ref">Verilator Testbench</span></a> section.</p>
+</div>
+<div class="section" id="id3">
+<h2>11/21/2017<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
 <p>A few updates in the nvdla hardware tree, most notably moving further
 development on the non-configurable NVDLA implementation to its own stable
-branch, <code class="docutils literal"><span class="pre">nvdlav1</span></code>, and renaming the full-precision non-configurable
-implementation to <code class="docutils literal"><span class="pre">nv_full</span></code>.  The <code class="docutils literal"><span class="pre">master</span></code> branch, from now on, will
+branch, <code class="docutils literal notranslate"><span class="pre">nvdlav1</span></code>, and renaming the full-precision non-configurable
+implementation to <code class="docutils literal notranslate"><span class="pre">nv_full</span></code>.  The <code class="docutils literal notranslate"><span class="pre">master</span></code> branch, from now on, will
 contain potentially-destabilizing ongoing effort for a configurable NVDLA.
 Note that the default branch has changed, and users may wish to modify which
 upstream branch they are tracking.</p>
 <p>This release includes bugfixes for Xilinx Vivado and Mentor Questa simulators.</p>
 </div>
-<div class="section" id="id3">
-<h2>11/1/2017<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id4">
+<h2>11/1/2017<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
 <p>First drop of RTL build system to be used for creating multiple NVDLA configurations.  The
 configurations themselves will be checked in as features become available.  All configuration
 parameters to create a small config NVDLA with 64 MACs is expected before the end 2017.</p>
 </div>
-<div class="section" id="id4">
-<h2>10/24/2017<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id5">
+<h2>10/24/2017<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
 <p>Initial release of the NVDLA Kernel Mode Driver (KMD) for Linux.</p>
 </div>
-<div class="section" id="id5">
-<h2>10/18/2017<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id6">
+<h2>10/18/2017<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
 <p>The traceplayer testbench has been updated to split the memory model into two logically separate region. Support was added to the axi_slave and memory model for non-zero burst lengths which is used by the cvsram interface. Added cvsram form of sanity tests. Added sdp and pdp sanity tests. Added googlenet_conv2_3x3_int16 and cc_alexnet_conv5_relu5_int16_dtest_cvsram layer tests.</p>
 <p>Changes to address issues #16, #23, #24 on the NVDLA GitHub site.</p>
 </div>
-<div class="section" id="id6">
-<h2>10/6/2017<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id7">
+<h2>10/6/2017<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h2>
 <p>The large configuration RTL is updated to a 64-bit address bus on the DBBIF and RAMIF busses.  The previous design was 32-bit externally and 40-bit internally.  This reflects the final size for the large configuration.</p>
 <p>Changes to address issues #6, #7, #9 on the NVDLA GitHub site.</p>
 </div>
-<div class="section" id="id7">
-<h2>9/25/2017<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id8">
+<h2>9/25/2017<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h2>
 <p>Initial release of large configuration RTL, trace player testbench, synthesis scripts, performance model spreadsheet, and documentation.</p>
 </div>
 </div>
@@ -120,20 +118,21 @@ parameters to create a small config NVDLA with 64 MACs is expected before the en
   <h3><a href="contents.html">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">Open NVDLA Repository Updates</a><ul>
-<li><a class="reference internal" href="#id1">12/1/2017</a></li>
-<li><a class="reference internal" href="#id2">11/21/2017</a></li>
-<li><a class="reference internal" href="#id3">11/1/2017</a></li>
-<li><a class="reference internal" href="#id4">10/24/2017</a></li>
-<li><a class="reference internal" href="#id5">10/18/2017</a></li>
-<li><a class="reference internal" href="#id6">10/6/2017</a></li>
-<li><a class="reference internal" href="#id7">9/25/2017</a></li>
+<li><a class="reference internal" href="#id1">4/19/2017</a></li>
+<li><a class="reference internal" href="#id2">12/1/2017</a></li>
+<li><a class="reference internal" href="#id3">11/21/2017</a></li>
+<li><a class="reference internal" href="#id4">11/1/2017</a></li>
+<li><a class="reference internal" href="#id5">10/24/2017</a></li>
+<li><a class="reference internal" href="#id6">10/18/2017</a></li>
+<li><a class="reference internal" href="#id7">10/6/2017</a></li>
+<li><a class="reference internal" href="#id8">9/25/2017</a></li>
 </ul>
 </li>
 </ul>
 
   <h4>Previous topic</h4>
-  <p class="topless"><a href="integration_guide.html"
-                        title="previous chapter">Integrator’s Manual</a></p>
+  <p class="topless"><a href="vp.html"
+                        title="previous chapter">Virtual Platform</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="license.html"
                         title="next chapter">NVIDIA Open NVDLA License and Agreement v1.0</a></p>
@@ -146,12 +145,14 @@ parameters to create a small config NVDLA with 64 MACs is expected before the en
    </div>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
+    <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <div><input type="text" name="q" /></div>
-      <div><input type="submit" value="Go" /></div>
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
+    </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -169,7 +170,7 @@ parameters to create a small config NVDLA with 64 MACs is expected before the en
           <a href="license.html" title="NVIDIA Open NVDLA License and Agreement v1.0"
              >next</a></li>
         <li class="right">
-          <a href="integration_guide.html" title="Integrator’s Manual"
+          <a href="vp.html" title="Virtual Platform"
              >previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="index.html">NVDLA Open Source Project</a>&#187;</li>
         <li class="nav-item nav-item-1"><a href="contents.html">Documentation</a>&#187;</li> 
@@ -184,7 +185,7 @@ parameters to create a small config NVDLA with 64 MACs is expected before the en
 href="copyright.html">Copyright</a> 2017, NVIDIA Corporation.
 <a href="http://www.nvidia.com/object/legal_info.html">Legal Information.</a>
 <a href="http://www.nvidia.com/object/privacy_policy.html">Privacy Policy.</a>
-Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.6.
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.2.
 </div>
 </div>
 </div>

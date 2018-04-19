@@ -1,0 +1,165 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Hardware Manual &#8212; NVDLA Documentation</title>
+    <link rel="stylesheet" href="../_static/nvdla.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/styles.css" type="text/css" />
+    <script type="text/javascript" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Hardware Architectural Specification" href="v1/hwarch.html" />
+    <link rel="prev" title="Open Source Roadmap" href="../roadmap.html" />
+ 
+<script src="//assets.adobedtm.com/b92787824f2e0e9b68dc2e993f9bd995339fe417/satelliteLib-30c8ffcc8ece089156fd5590fbcf390ffc296f51.js"></script>
+  </head><body>
+<header class="navbar">
+  <nav class="container navbar navbar-light bg-faded">
+    <a class="navbar-brand" href="https://www.nvidia.com/">
+      <div class="logo"></div>
+    </a>
+  </nav>
+</header>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <div class="container">
+      <div class="row">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right first">
+          <a href="v1/hwarch.html" title="Hardware Architectural Specification"
+             accesskey="N">next</a></li>
+        <li class="right">
+          <a href="../roadmap.html" title="Open Source Roadmap"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">NVDLA Open Source Project</a>&#187;</li>
+        <li class="nav-item nav-item-1"><a href="../contents.html">Documentation</a>&#187;</li> 
+      </ul>
+      </div>
+      </div>
+    </div>
+  <div class="document">
+    <div class="container">
+      <div class="row">
+        <div class="col-xs-12 col-md-9">
+          
+  <div class="section" id="hardware-manual">
+<h1>Hardware Manual<a class="headerlink" href="#hardware-manual" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+</div>
+<ul class="simple">
+<li><a class="reference internal" href="v1/hwarch.html"><span class="doc">Hardware Architectural Specification</span></a> – a design-level view of the NVDLA hardware architecture,
+including detail on each sub-component, and register-level documentation.</li>
+</ul>
+<div class="section" id="nvdla-v1">
+<h2>NVDLA v1<a class="headerlink" href="#nvdla-v1" title="Permalink to this headline">¶</a></h2>
+<p>This is the non-configurable “full-precision” version of NVDLA. The design code is in nvdlav1 branch.</p>
+<ul class="simple">
+<li><a class="reference internal" href="format.html"><span class="doc">In-memory data formats</span></a> – description of the in-memory format for weight and activation data.</li>
+<li><a class="reference internal" href="v1/integration_guide.html"><span class="doc">Integrator’s Manual</span></a> – a guide for SoC integrators, including a
+walk-through of the NVDLA build infrastructure, NVDLA’s testbenches, and
+synthesis scripts.</li>
+<li><a class="reference internal" href="v1/ias/precision.html"><span class="doc">Precision Preservation</span></a> – the technologies used to keep the precision when formats INT8/INT16/FP16 are used.</li>
+<li><a class="reference internal" href="v1/ias/lut-programming.html"><span class="doc">LUT programming</span></a> – the guide to programming lut tables</li>
+<li><a class="reference internal" href="v1/ias/unit_description.html"><span class="doc">Unit Description</span></a> – description of internal architecture of sub-units</li>
+<li><a class="reference internal" href="v1/ias/programming_guide.html"><span class="doc">Programming Guide</span></a> – programming guide of sub-units</li>
+</ul>
+</div>
+<div class="section" id="nvdla-v2">
+<h2>NVDLA v2<a class="headerlink" href="#nvdla-v2" title="Permalink to this headline">¶</a></h2>
+<p>This version is scalable design of NVDLA. Currently, the config nv_small is verified. The architecture of sub-units is same as NVDLA v1.</p>
+<ul class="simple">
+<li><a class="reference internal" href="v2/environment_setup_guide.html"><span class="doc">NVDLA Environment Setup Guide</span></a> – Please follow this document to setup tools and dependency libraries</li>
+<li><a class="reference internal" href="v2/scalability.html"><span class="doc">Scalability parameters and ConfigROM</span></a> – Scalability parameters and ConfigROM contents in nv_large and nv_small configurations</li>
+<li><a class="reference internal" href="v2/integration_guide.html"><span class="doc">Integrator’s Manual</span></a> – a guide for SoC integrators, including NVDLA
+system inferce introduction, synthesis scripts.</li>
+<li><a class="reference internal" href="v2/verif_guide.html"><span class="doc">NVDLA Verification Suite User Guide</span></a> – NVDLA Verification Suite User Guide</li>
+</ul>
+</div>
+</div>
+
+
+        </div>
+        <div class="col-xs-12 col-md-3">
+          
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../contents.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Hardware Manual</a><ul>
+<li><a class="reference internal" href="#nvdla-v1">NVDLA v1</a></li>
+<li><a class="reference internal" href="#nvdla-v2">NVDLA v2</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../roadmap.html"
+                        title="previous chapter">Open Source Roadmap</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="v1/hwarch.html"
+                        title="next chapter">Hardware Architectural Specification</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/hw/contents.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+  </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <div class="container">
+      <div class="row">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right first">
+          <a href="v1/hwarch.html" title="Hardware Architectural Specification"
+             >next</a></li>
+        <li class="right">
+          <a href="../roadmap.html" title="Open Source Roadmap"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">NVDLA Open Source Project</a>&#187;</li>
+        <li class="nav-item nav-item-1"><a href="../contents.html">Documentation</a>&#187;</li> 
+      </ul>
+      </div>
+      </div>
+    </div>
+<div class="footer" role="contentinfo">
+<div class="container">
+<div class="row">
+&#169; <a
+href="../copyright.html">Copyright</a> 2017, NVIDIA Corporation.
+<a href="http://www.nvidia.com/object/legal_info.html">Legal Information.</a>
+<a href="http://www.nvidia.com/object/privacy_policy.html">Privacy Policy.</a>
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.2.
+</div>
+</div>
+</div>
+<script type="text/javascript">_satellite.pageBottom();</script>
+  </body>
+</html>

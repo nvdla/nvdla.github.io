@@ -1,0 +1,2084 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Programming Guide &#8212; NVDLA Documentation</title>
+    <link rel="stylesheet" href="../../../_static/nvdla.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/styles.css" type="text/css" />
+    <script type="text/javascript" src="../../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="NVDLA Environment Setup Guide" href="../../v2/environment_setup_guide.html" />
+    <link rel="prev" title="Unit Description" href="unit_description.html" />
+ 
+<script src="//assets.adobedtm.com/b92787824f2e0e9b68dc2e993f9bd995339fe417/satelliteLib-30c8ffcc8ece089156fd5590fbcf390ffc296f51.js"></script>
+  </head><body>
+<header class="navbar">
+  <nav class="container navbar navbar-light bg-faded">
+    <a class="navbar-brand" href="https://www.nvidia.com/">
+      <div class="logo"></div>
+    </a>
+  </nav>
+</header>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <div class="container">
+      <div class="row">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right first">
+          <a href="../../v2/environment_setup_guide.html" title="NVDLA Environment Setup Guide"
+             accesskey="N">next</a></li>
+        <li class="right">
+          <a href="unit_description.html" title="Unit Description"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">NVDLA Open Source Project</a>&#187;</li>
+        <li class="nav-item nav-item-1"><a href="../../../contents.html">Documentation</a>&#187;</li>
+          <li class="nav-item nav-item-2"><a href="../../contents.html" accesskey="U">Hardware Manual</a>&#187;</li> 
+      </ul>
+      </div>
+      </div>
+    </div>
+  <div class="document">
+    <div class="container">
+      <div class="row">
+        <div class="col-xs-12 col-md-9">
+          
+  <div class="section" id="programming-guide">
+<h1>Programming Guide<a class="headerlink" href="#programming-guide" title="Permalink to this headline">¶</a></h1>
+<p>(Notice: This version of <em>Unit Description</em> is only for nvdlav1 release.
+Please refer to <em>Scalability parameters and ConfigROM</em> for other configurations)</p>
+<div class="section" id="bdma-programming">
+<h2>BDMA programming<a class="headerlink" href="#bdma-programming" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="background">
+<h3>Background<a class="headerlink" href="#background" title="Permalink to this headline">¶</a></h3>
+<p>We suggest NVDLA memory accesses are based on internal SRAM to achieve best
+performance and we designed BDMA for this purpose.</p>
+<p>The supported memory transfers are:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="45%" />
+<col width="55%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Source type</th>
+<th class="head">Destination type</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>External DRAM</td>
+<td>Internal SRAM</td>
+</tr>
+<tr class="row-odd"><td>External DRAM</td>
+<td>External DRAM</td>
+</tr>
+<tr class="row-even"><td>Internal SRAM</td>
+<td>External DRAM</td>
+</tr>
+<tr class="row-odd"><td>Internal SRAM</td>
+<td>Internal SRAM</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="programming">
+<h3>Programming<a class="headerlink" href="#programming" title="Permalink to this headline">¶</a></h3>
+<p>The programming model for BDMA is different from others due to special
+use scenario on BDMA. Take convolution as an example, in order to make a
+convolution layer operation happen, BDMA has to transfer
+input_feature/weight/mean/bias into internal SRAM. If BDMA also uses the
+traditional programming model, CPU will act as:</p>
+<p>Issue setting for single transfer of input feature</p>
+<p>Wait for interrupt</p>
+<p>Issue setting for single transfer for weight</p>
+<p>Wait for interrupt</p>
+<p>…</p>
+<p>The total time is:</p>
+<p>4(Weight/Image/Mean/Bias) * CPU_ISR_Time + 4*TransactionTime;</p>
+<p>This process is boring and many interactions between CPU and BDMA are
+needed. In order to improve the efficiency, a new programming model for
+BDMA is listed as below:</p>
+<ol class="arabic simple">
+<li>CPU issue setting for single transfer of input feature (set interrupt
+flag as false)</li>
+<li>Pooling BDMA if there’s empty slot for program (BDMA support 20
+register entries thus most of time, polling always return true)</li>
+<li>CPU issue setting for single transfer of weight (set interrupt flag
+as false, if it’s not the last transfer request)</li>
+<li>Repeat 2~3 until all data transfer request are done and set interrupt
+flag as true for last request</li>
+<li>Wait for interrupt</li>
+</ol>
+<p>The total time for outstanding based programming model is:</p>
+<p>1*CPU_ISR_Time + 4*Transaction_Time;</p>
+<p>We introduce 2 terminologies to describe procedure above:</p>
+<ul class="simple">
+<li>Operation: Each individual BDMA transaction is called as operation.
+One operation may or may not trigger interrupt depending on software
+setting. take example above, transfer of activation, weight, mean,
+bias are 4 different BDMA operation.</li>
+<li>Group: group is consisted by one or more BDMA operations depending on
+software configuration. Set GRP&lt;0|1&gt;_LAUNCH as YES is treated as end
+of a group.</li>
+</ul>
+<p>During one BDMA group register programming, hardware acts as:</p>
+<ul class="simple">
+<li>Software program one BDMA operation then set the EN bit</li>
+<li>Hardware “cache” the corresponding BDMA registers to its internal
+slot, no actual memory transaction carried out. There’re totally 20
+slots thus we can support 20 BDMA operations in one group as maximum;</li>
+<li>Software poll the free slots by read STATUS.FREE_SLOTS, if it’s
+bigger than 0, it means software is allowed to program the next BDMA
+operation;</li>
+<li>For the last BDMA operation in one group, software has to set
+CFG_LAUNCH&lt;0|1&gt;.GRP&lt;0|1&gt;_LAUNCH = YES;</li>
+<li>Hardware will actually kick of all the “cached” BDMA operations in
+this group (by detect INTERRUPT=YES).</li>
+<li>After all BDMA operation done, corresponding interrupt will be
+generated.</li>
+</ul>
+<p>For below section, if there’s no special declaration, all address refers
+to data address in SRAM.</p>
+</div>
+<div class="section" id="buffer-allocation">
+<h3>Buffer allocation<a class="headerlink" href="#buffer-allocation" title="Permalink to this headline">¶</a></h3>
+<p>Before introduce buffer allocation formula, we need to understand the
+related register definition:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Register</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>CFG_LINE</td>
+<td><p class="first">Indicate the valid data size per
+line. This register should be
+configured as:</p>
+<p class="last">valid_bytes_per_line/32-1</p>
+</td>
+</tr>
+<tr class="row-odd"><td>CFG_LINE_REPEAT</td>
+<td><p class="first">Number of lines per surface. This
+register should be configured as:</p>
+<p class="last">surface_height-1</p>
+</td>
+</tr>
+<tr class="row-even"><td>CFG_SRC/DST_LINE</td>
+<td><p class="first">Number of bytes per src/dst line
+(padding are included). It should
+be configured as:</p>
+<p class="last">total_bytes_per_line</p>
+</td>
+</tr>
+<tr class="row-odd"><td>CFG_SURF_REPEAT</td>
+<td>Number of surfaces in one data
+cube</td>
+</tr>
+<tr class="row-even"><td>CFG_SRC/DST_SURF</td>
+<td><p class="first">Number of bytes per surface (line
+padding are included). It should
+be configured as:</p>
+<p class="last">total_bytes_per_surface</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Given the register definition above, the formula for buffer allocation
+are:</p>
+<div class="math notranslate">
+\[src\_cube\_size = CFG\_SRC\_SURF * CFG\_SRC\_REPEAT\]</div>
+<div class="math notranslate">
+\[dst\_cube\_size = CFG\_DST\_SURF * CFG\_DST\_REPEAT\]</div>
+<p>The formula for actual bytes transferred is:
+.. math:: actual_size = (CFG_LINE - 1) * 32 * CFG_LINE_REPEAT * CFG_SURF_REPEAT</p>
+</div>
+</div>
+<div class="section" id="rubik-programming">
+<h2>Rubik programming<a class="headerlink" href="#rubik-programming" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="features">
+<h3>Features<a class="headerlink" href="#features" title="Permalink to this headline">¶</a></h3>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Mode</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Contract</td>
+<td>Worked as final phase of
+deconvolution to reorder the
+output layout;</td>
+</tr>
+<tr class="row-odd"><td>Split</td>
+<td>Convert the feature format to
+M-planar format</td>
+</tr>
+<tr class="row-even"><td>Merge</td>
+<td>Convert the M-planar format to
+feature format.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="id1">
+<h3>Programming<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="contract">
+<h4>Contract<a class="headerlink" href="#contract" title="Permalink to this headline">¶</a></h4>
+<ol class="arabic">
+<li><p class="first">Config the RUBIK_MODE= CONTRACT</p>
+</li>
+<li><p class="first">Configure the input cube information:</p>
+<p>D_DAIN_RAM_TYPE: The input memory type;</p>
+<p>D_DATAIN_SIZE_0/1: The input W/H/C;</p>
+<p>D_DAIN_ADDR_HIGH/LOW: The input cube start address;</p>
+<p>D_DAIN_LINE/SURF_STRIDE: The input cube line/surface stride;</p>
+</li>
+<li><p class="first">Configure the output cube information:</p>
+</li>
+</ol>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Register</th>
+<th class="head">Value</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>D_DATAOUT_SIZE_1</td>
+<td>(DATAIN_CHANNEL+1)/((
+DECONV_X_STRIDE+1)*(
+DECONV_Y_STRIDE+1))-1</td>
+</tr>
+<tr class="row-odd"><td>D_DAOUT_ADDR_HIGH/LOW</td>
+<td>The output cube start address</td>
+</tr>
+<tr class="row-even"><td>D_DAOUT_LINE/SURFACE_STRIDE</td>
+<td>The output cube line/surface
+stride</td>
+</tr>
+<tr class="row-odd"><td>D_CONTRACT_STRIDE_0</td>
+<td>Ceil((DATAOUT_CHANNEL+1) * BPE /
+32) * DAIN_SURF_STRIDE</td>
+</tr>
+<tr class="row-even"><td>D_CONTRACT_STRIDE_1</td>
+<td>(DECONV_Y_STRIDE+1) *
+DAOUT_LINE_STRIDE</td>
+</tr>
+</tbody>
+</table>
+<ol class="arabic" start="4">
+<li><p class="first">Configure the stride information:</p>
+<p>D_DECONV_STRIDE: The x/y stride relationship between input/output
+cube. It’s not necessary to configure those values the same as
+deconvolution stride.</p>
+</li>
+<li><p class="first">Configure the op_en to kick-off the hardware layer;</p>
+</li>
+</ol>
+</div>
+<div class="section" id="split-merge">
+<h4>Split/Merge<a class="headerlink" href="#split-merge" title="Permalink to this headline">¶</a></h4>
+<p>Most of the configurations are the same as Contract mode except:</p>
+<ol class="arabic">
+<li><p class="first">RUBIK_MODE should be SPLIT/MERGE;</p>
+</li>
+<li><p class="first">D_DAIN_PLANAR_STRIDE has to be configured for merge mode;</p>
+</li>
+<li><p class="first">Registers below are not necessary to program for split mode:</p>
+<p>D_CONTRACT_STRIDE_0/1</p>
+<p>D_DAIN_PLANAR_STRIDE</p>
+<p>D_DAOUT_SURF_STRIDE</p>
+<p>D_DECONV_STRIDE</p>
+</li>
+<li><p class="first">Registers below are not necessary to program for merge mode:</p>
+<p>D_CONTRACT_STRIDE_0/1</p>
+<p>D_DAIN_SURF_STRIDE</p>
+<p>D_DAOUT_PLANAR_STRIDE</p>
+<p>D_DECONV_STRIDE</p>
+</li>
+</ol>
+<p>For split mode, DATAOUT_CHANNEL is used to specify number of channels
+needs to split thus it equals to output planar number.</p>
+</div>
+</div>
+</div>
+<div class="section" id="convolution-pipeline-programming">
+<h2>Convolution pipeline programming<a class="headerlink" href="#convolution-pipeline-programming" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id2">
+<h3>Features<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<p>From algorithm wise, convolution pipeline in NVDLA supports algorithm
+features below:</p>
+<table border="1" class="docutils" id="tab-algorithm-features-cc">
+<caption><span class="caption-number">Table 58 </span><span class="caption-text">List of algorithm features supported by convolution pipeline</span><a class="headerlink" href="#tab-algorithm-features-cc" title="Permalink to this table">¶</a></caption>
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Feature</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Convolution</td>
+<td>Convolution layer functionality.
+It supports image input and
+feature input</td>
+</tr>
+<tr class="row-odd"><td>Deconvolution</td>
+<td>Deconvolution layer
+functionality; It supports
+feature input only.
+(Actually, deconvolution is a
+NVDLA software feature instead of
+hardware)</td>
+</tr>
+<tr class="row-even"><td>Dilation</td>
+<td>A technology to expand kernel
+coverage without introduce more
+network parameters.</td>
+</tr>
+<tr class="row-odd"><td>Padding</td>
+<td>Padding size on the
+left/right/top/bottom of input
+data cube</td>
+</tr>
+<tr class="row-even"><td>conv_stride</td>
+<td>The number of input element
+should be skipped in x/y
+direction after one output
+element be calculated</td>
+</tr>
+</tbody>
+</table>
+<p>From performance wise, convolution pipeline implements features below to
+accelerate convolution process:</p>
+<table border="1" class="docutils" id="tab-performance-features-cc">
+<caption><span class="caption-number">Table 59 </span><span class="caption-text">List of performance features supported by convolution pipeline</span><a class="headerlink" href="#tab-performance-features-cc" title="Permalink to this table">¶</a></caption>
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Feature</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Winograd</td>
+<td>A fast convolution method (2.25x
+throughput than direct
+convolution), NVDLA support
+equivalent kernel size = 3x3 only
+(equivalent means kernel after
+channel extension)</td>
+</tr>
+<tr class="row-odd"><td>Channel Post-extension</td>
+<td>A method to improve MAC
+efficiency when channel size is
+too small (For image input only).</td>
+</tr>
+<tr class="row-even"><td>Multi-Batch mode</td>
+<td>A method to improve MAC
+efficiency when atomic number in
+one stripe operation is too small
+(e.g.: InnerProduct layer).</td>
+</tr>
+<tr class="row-odd"><td>Weight compression</td>
+<td>A method to save weight data
+loading bandwidth.</td>
+</tr>
+</tbody>
+</table>
+<p>Besides hardware features, different working modes will impact
+performance as well:</p>
+<table border="1" class="docutils" id="tab-working-modes-cc">
+<caption><span class="caption-number">Table 60 </span><span class="caption-text">List of working modes supported by convolution pipeline</span><a class="headerlink" href="#tab-working-modes-cc" title="Permalink to this table">¶</a></caption>
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Working mode</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Full input &amp; weight</td>
+<td>If both weight/feature can be
+fitted to CONV_BUF, this mode
+delivers best performance</td>
+</tr>
+<tr class="row-odd"><td>Full input, partial weight</td>
+<td><p class="first">If feature can be fitted to
+CONV_BUF while only part of
+weight can be fitted to CONV_BUF</p>
+<p class="last">Comparing with full feature &amp;
+weight, it has the same
+performance for single hardware
+layer, but weight can’t be
+re-used.</p>
+</td>
+</tr>
+<tr class="row-even"><td>Split H</td>
+<td>A software feature which utilize
+multiple HWLs to process an input
+data cube. It will be used when
+above cases are failed to match.</td>
+</tr>
+</tbody>
+</table>
+<p>Here’s the detailed explanation about those working modes:</p>
+<ul class="simple">
+<li><strong>Full input &amp; weight mode</strong></li>
+</ul>
+<p>Condition: Both input feature and weight cube can be fitted in CONV_BUF</p>
+<p>Fit case: small sized input/weight data</p>
+<p>Data refetch: No</p>
+<p>Weight refetch: No</p>
+<p>Output sequence: K’(32 or 16)W HK</p>
+<p>In this mode, entire input/weight will be loaded to CONV_BUF which means
+CONV_BUF should be large enough to store W*H*C+R*S*C*K data elements
+thus:</p>
+<div class="math notranslate">
+\[banks\_for\_data = ceil(\frac{entry\_per\_slice*H}{256})\]</div>
+<div class="math notranslate">
+\[banks\_for\_weight = ceil(\frac{R * S * C * K * BPE}{256*128})\]</div>
+<ul class="simple">
+<li><strong>Full input, partial weight mode</strong></li>
+</ul>
+<p>Condition: Entire input feature data and part of weight data
+(2*kernel_per_group) can be filled in CONV_BUF</p>
+<p>Fit case: small sized input and small/middle sized weight data</p>
+<p>Data refetch: No</p>
+<p>Weight refetch: No</p>
+<p>Output sequence: K’(32 or 16)W HK</p>
+<p>Full input feature mode is a most common case for many networks. Because
+the output sequence goes at K direction at last phase, it can be easily
+connected to pooling logic without big buffering requirement. Below
+formula should be satisfied when planning CONV_BUF layout:</p>
+<div class="math notranslate">
+\[banks\_for\_data = ceil(\frac{entry\_per\_slice*H}{256})\]</div>
+<div class="math notranslate">
+\[banks\_for\_weight &gt;= ceil(\frac{R * S * C * 2 * kernel_per_group * BPE}{256*128})\]</div>
+<p>The reason for 2*kernel_per_group is to keep CDMA and CMAC working at
+the same time to hide kernel loading latency, however,
+1*kernel_per_group also workable but the performance is reduced.</p>
+<ul class="simple">
+<li><strong>Split H</strong></li>
+</ul>
+<p>We can see only full mode is supported by convolution pipeline. If one
+network layer has large input which exceed the CONV_BUF capacity,
+software has to split the big input cube into smaller cubes in vertical
+direction. This mechanism called “Split H mode”.</p>
+<p>Be noticed that there must be max(R-stride_y, 0) overlapped lines between 2 consecutive
+cube to make sure the convolution results are expected.</p>
+</div>
+<div class="section" id="strategy-selection">
+<h3>Strategy selection<a class="headerlink" href="#strategy-selection" title="Permalink to this headline">¶</a></h3>
+<p>Convolution pipeline has different features/working modes, we should
+follow the rule below to mapping the network parameter into hardware
+layers:</p>
+<ol class="arabic simple">
+<li>Decide the algorithm features (<a class="reference internal" href="#tab-algorithm-features-cc"><span class="std std-numref">Table 58</span></a>) from network definition;</li>
+<li>Select the hardware performance optimization features (<a class="reference internal" href="#tab-performance-features-cc"><span class="std std-numref">Table 59</span></a>):</li>
+</ol>
+<p>a) If this is the first layer (image input) and any item in <a class="reference internal" href="unit_description.html#tab-limits-of-channel-post-extension"><span class="std std-numref">Table 46</span></a>
+is satisfied, channel post extension should be used.</p>
+<p>b) If this is the feature input and <em>ceil(R/stride_y) == 3 &amp;&amp;
+ceil(S/stride_x) == 3</em> is true, winograd mode should be used;</p>
+<p>c) If this is inner product layer and CONV_BUF is big enough to maintain
+BATCH_NUMBER input cubes, multi-batch mode should be chosen. “Big
+enough” here means:</p>
+<div class="math notranslate">
+\[ceil(BATCH\_NUMBER * entry\_per\_slice * H / 256) &lt;= BANKS\_FOR\_DATA\]</div>
+<p>d) If <em>(compressed_weight_size+wmb_size+wgs_size) &lt; weight_size</em> and
+there’s no conflict with <a class="reference internal" href="../../format.html#tab-weight-formats"><span class="std std-numref">Table 34</span></a>, weight compress should be used;</p>
+<p>3. Decide the working modes by comparing actual data/weight size with
+available CONV_BUF banks. The priority is: “Full weight&amp;input” &gt; “Full
+input &amp; Partial weight” &gt; “Split H”. When split H mode used, it’s better
+split H into smaller one to make sure weight are all kept in CONV_BUF
+thus weight can be re-used.</p>
+</div>
+<div class="section" id="id3">
+<h3>Programming<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="register-definition">
+<h4>Register definition<a class="headerlink" href="#register-definition" title="Permalink to this headline">¶</a></h4>
+<p>Before introduce the convolution pipeline programming, it’s necessary to
+explain the meaning of the registers and how they’re calculated.</p>
+<p>CC has 5 pipelines, each pipeline stage has its own registers. For any
+register, if it has the same name across pipeline stage, it means they
+have the same value.</p>
+<p>Most of the registers in those groups are straightforward thus we just
+highlight the registers which might confuse people in this section:</p>
+<ul class="simple">
+<li><em>&lt;CDMA|CSC&gt;.WEIGHT/DATA_SKIP_RELEASE:</em> Indicate whether or not skip
+release of the slices in CONV_BUF. If SKIP_RELEASE=false, different
+strategy are applied on feature/weight:<ul>
+<li>For feature release, software is able to control how much slices
+should be released by specify D_RELEASE;</li>
+<li>For weight release, only release all or release none is supported;</li>
+</ul>
+</li>
+<li><em>&lt;CDMA|CSC&gt;.WEIGHT/DATA_REUSE</em>: Indicate whether or not re-use the
+weight/data from previous hardware-layer. If this flag is set, CDMA
+fetch will be fully(partially) skipped (depending on CDMA_HEIGHT of
+Nth layer and D_RELEASE/CSC_HEIGHT of N-1th layer: if
+CDMA_HEIGHT<sub>N</sub> &lt;= (CSC_HEIGHT-D_RELEASE):sub:<cite>N-1</cite>, the
+N<sup>th</sup> CDMA fetch will be skipped).</li>
+<li>CDMA.LINE_STRIDE/LINE_STRIDE_UV: Those 2 registers are used for
+PITCH_LINEAR only, the value of those registers should be larger than
+the actual data per line.</li>
+</ul>
+<p>Actual data per line is different according to different input format
+and pixel format, please refer to: LINE_STRIDE/LINE_STRIDE_UV about its
+calculation.</p>
+<p>Besides, the requirement of alignment in <a class="reference internal" href="../../format.html#tab-requirements-of-alignment"><span class="std std-numref">Table 35</span></a>
+should also be satisfied.</p>
+<ul class="simple">
+<li>CDMA.PIXEL_SIGN_OVERRIDE:</li>
+</ul>
+<p>This field take effect for image input only.</p>
+<p>The override field does not directly change the sign bit of input
+values. It co-works with CDMA convertor. When convertor in CDMA is
+enabled, original values will be extended to int17 and then be
+calculated with offset and scaling factor.</p>
+<p>For example, if input format is R_8 and override field is UNSIGNED, the
+input value 0x87 will be extended as 0x00087 and sent into convertor.
+And if input format is R_8 and override field is SIGNED, the input value
+0x87 will be extended as 0x1ff87 and sent into convertor.</p>
+<p>In conclusion:</p>
+<ul class="simple">
+<li>Sign override register field only affects INT/UINT pixel formats.</li>
+<li>Sign override register field should co-work with CDMA convertor.</li>
+<li>If CDMA convertor is not enabled, all values are treated as
+int8/int16/fp16, no matter how sign override is set.</li>
+<li>CDMA.D_DAIN_MAP:<ul>
+<li>If LINE_STRIDE equals to bytes_per_line, it means this data cube
+is “LINE_PACKED”</li>
+<li>If D_SURF_STRIDE equals to LINE_STRIDE*H, it means the data cube
+is “SURF_PACKED”</li>
+</ul>
+</li>
+<li>&lt;CDMA|CSC&gt;.D_BANK: Indicate number of banks allocated for
+data/weight. Please refer to: 10.1.3 about the calculation.</li>
+<li>&lt;CDMA|CSC&gt;.D_ENTRY_PER_SLICE: Entry per slice means how many CONV_BUF
+entries a slice occupied, it’s decided by multiple factors:
+convolution mode, width, channel size, stride, etc. Please refer to:
+ENTRY_PER_SLICE for detail.</li>
+<li><em>CDMA.FETCH_GRAIN</em>: This is the threshold to trigger CDMA working:
+CDMA won’t work until the empty entries in CONV_BUF reaches
+(fetch_grain+1)*ENTRY_PER_SLICE. The values of this register is a
+trade-off of fetch efficiency and fetch delay: a large value will
+benefit fetch efficiency since CDMA have larger room when sending
+request, however, if this value is too large, CDMA will wait for a
+quite long time to wait CONV_BUF release enough entries.</li>
+</ul>
+<p>For LINE_UNPACKED mode, this register will be ignored by hardware and
+behaves as this register set to 0.</p>
+<ul class="simple">
+<li><em>&lt;CDMA|CSC&gt;.WEIGHT_BYTES</em>: It should be configured as:
+weight_size=R*S*C*BPE*K. Regardless of weight compress mode or
+uncompressed mode.</li>
+<li><em>CDMA.PIXEL_X/Y_OFFSET</em>: Configuration of those 2 registers is
+depending on PIXEL_MAPPING:<ul>
+<li><em>PITCH_LINEAR</em>: The address configured to D_DAIN_ADDR_HIGH/LOW_0
+should be 32bytes aligned, however, the start address of an ROI
+might not aligned to that address. Then, PIXEL_X_OFFSET is
+introduced.</li>
+</ul>
+</li>
+</ul>
+<table border="1" class="docutils">
+<colgroup>
+<col width="100%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><p class="first">D_DAIN_ADDR_HIGH/LOW_0 = roi_address &amp;(~0x1F); // The nearest 32bytes
+aligned address;</p>
+<p>PIXEL_X_OFFSET=(roi_address&amp;0x1F)/bytes_per_pixel // The offset in
+unit of pixel</p>
+<p class="last">PIXEL_Y_OFFSET = 0; // The 32bytes aligned address and roi address
+should be in the same line</p>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="figure align-center" id="fig-image116-pitch-linear-roi">
+<img alt="../../../_images/ias_image116_pitch_linear_roi.png" src="../../../_images/ias_image116_pitch_linear_roi.png" />
+</div>
+<ul class="simple">
+<li>CSC.WEIGHT/DATAIN_SIZE_EXT: The input weight/feature cube size seen
+from CSC. SW should configure those values based on formula below:</li>
+</ul>
+<p>DATAIN_SIZE_EXT: (W/H/C is the width/height/channel of input data cube)</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="25%" />
+<col width="25%" />
+<col width="25%" />
+<col width="25%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Mode</th>
+<th class="head">Width</th>
+<th class="head">Height</th>
+<th class="head">Channel</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Winograd</td>
+<td>ceil((W+(PL+PR)
+)/stride_x)</td>
+<td>ceil((H+PT+PB)/
+stride_y)</td>
+<td>C*stride_x*stri
+de_y</td>
+</tr>
+<tr class="row-odd"><td>Image input</td>
+<td>W</td>
+<td>H</td>
+<td>C</td>
+</tr>
+<tr class="row-even"><td>Direct</td>
+<td>W</td>
+<td>H</td>
+<td>C</td>
+</tr>
+</tbody>
+</table>
+<p>WEIGHT_SIZE_EXT (S/R/C is the width/height/channel of input weight cube
+and let C’ be 32bytes aligned version of C, which means: C’=ceil(C, 16)
+for INT/FP16 and C’=ceil(C, 32)):</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="24%" />
+<col width="24%" />
+<col width="24%" />
+<col width="27%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Mode</th>
+<th class="head">Width</th>
+<th class="head">Height</th>
+<th class="head">Channel</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Winograd</td>
+<td>4 (The size
+after
+pre-transform)</td>
+<td>4 (The size
+after
+pre-transform)</td>
+<td>C’*stride_x*str
+ide_y</td>
+</tr>
+<tr class="row-odd"><td>Image input</td>
+<td>1</td>
+<td>R</td>
+<td>C*S</td>
+</tr>
+<tr class="row-even"><td>Direct_CONV</td>
+<td>S</td>
+<td>R</td>
+<td>C</td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li>CSC.CONV_STRIDE_X/Y_EXT: The stride size seen from CSC. (SX/SY is the
+stride size configured for CDMA: D_CONV_STRIDE)</li>
+</ul>
+<table border="1" class="docutils">
+<colgroup>
+<col width="39%" />
+<col width="30%" />
+<col width="30%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Mode</th>
+<th class="head">Stride_X</th>
+<th class="head">Stride_Y</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Winograd</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr class="row-odd"><td>Image input</td>
+<td>SX</td>
+<td>SY</td>
+</tr>
+<tr class="row-even"><td>Direct_CONV</td>
+<td>SX</td>
+<td>SY</td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li>CSC.D_ATOMICS: Hardware uses this register to decide stripe size:</li>
+</ul>
+<div class="code c highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">int</span> <span class="n">calc_stripe_size</span><span class="p">(</span><span class="nb">int</span> <span class="n">atomics</span><span class="p">,</span> <span class="nb">int</span> <span class="n">processed</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="nb">int</span> <span class="n">stripe_size</span><span class="p">;</span>
+    <span class="nb">int</span> <span class="n">remain_atomics</span> <span class="o">=</span> <span class="n">atomics</span> <span class="o">-</span> <span class="n">processed</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span> <span class="n">remain_atomics</span> <span class="o">&lt;</span> <span class="mi">32</span> <span class="o">&amp;&amp;</span> <span class="n">remain_atomics</span> <span class="o">&gt;=</span> <span class="mi">16</span> <span class="p">)</span> <span class="p">{</span>
+        <span class="n">stripe_size</span> <span class="o">=</span> <span class="n">remain_atomics</span><span class="p">;</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="k">assert</span><span class="p">(</span><span class="n">remain_atomics</span> <span class="o">&gt;</span> <span class="mi">16</span><span class="p">);</span>
+        <span class="n">stripe_size</span> <span class="o">=</span> <span class="mi">16</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="n">stripe_size</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The register value of D_ATOMICS itself is calculated by:</p>
+<div class="code c highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">int</span> <span class="n">calc_atomics</span><span class="p">(</span><span class="nb">int</span> <span class="n">out_width</span><span class="p">,</span> <span class="nb">int</span> <span class="n">out_height</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">return</span> <span class="n">out_width</span><span class="o">*</span><span class="n">out_height</span><span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>CSC.D_RELEASE: Hardware uses this field to decide how many input
+slices should be released after current hardware layer.</li>
+<li>&lt;CDMA|CSC&gt;.ZERO_PADDING_VALUE: see <a class="reference internal" href="precision.html#convolution-convertors"><span class="std std-ref">Convolution convertors</span></a>. Be noticed both CDMA
+and CSC has this register, but they has different meaning:</li>
+</ul>
+<p>For CDMA, the padding value in register will be operated w/ CDMA input
+convertor, the convert output is the actual padding value applied;</p>
+<p>For CSC, the padding value in register will be directly applied w/o any
+more operation;</p>
+<ul class="simple">
+<li>CACC.D_DATAOUT_MAP:</li>
+</ul>
+<p>This register is used to control the data reordering logic in CACC,
+the configuration of this register should follow the table
+below:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="43%" />
+<col width="28%" />
+<col width="28%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Configure</th>
+<th class="head">Line_Packed</th>
+<th class="head">Surf_Packed</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>1x1</td>
+<td>True</td>
+<td>True</td>
+</tr>
+<tr class="row-odd"><td>Multi-Batch mode</td>
+<td>False</td>
+<td>False</td>
+</tr>
+<tr class="row-even"><td>Direct convolution</td>
+<td>False</td>
+<td>False</td>
+</tr>
+<tr class="row-odd"><td>Winograd</td>
+<td>False</td>
+<td>False</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><p class="first">CACC. D_DATAOUT_SIZE_0</p>
+<p>This register is used to set the output size of convolution:</p>
+</li>
+</ul>
+<table border="1" class="docutils">
+<colgroup>
+<col width="17%" />
+<col width="41%" />
+<col width="42%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">CONV_MODE</th>
+<th class="head">DATAOUT_WIDTH</th>
+<th class="head">DATAOUT_HEIGHT</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>DC</td>
+<td><p class="first">S’=(S-1)*dilation_x + 1</p>
+<p class="last">(LP+RP-S’)/stride_x + 1</p>
+</td>
+<td><p class="first">R’=(R-1)*dilation_y + 1</p>
+<p class="last">(TP+H+BP-R’)/stride_y + 1</p>
+</td>
+</tr>
+<tr class="row-odd"><td>IMG</td>
+<td>(LP+W+RP-S)/stride_x + 1</td>
+<td>(TP+H+BP-R)/stride_y + 1</td>
+</tr>
+<tr class="row-even"><td>Winograd</td>
+<td>CSC.WIDTH_EXT – 4</td>
+<td>CSC.HEIGHT_EXT - 4</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="deconvolution">
+<h3>Deconvolution<a class="headerlink" href="#deconvolution" title="Permalink to this headline">¶</a></h3>
+<p>Deconvolution is a software feature, but it’s necessary to mention the
+basic flow here to help user understand how it’s supported.</p>
+<p>There’re 2 phases:</p>
+<ul class="simple">
+<li>Convolution:</li>
+</ul>
+<p>This phase includes conv_stride_x * conv_stride_y hardware layers.</p>
+<ol class="arabic">
+<li><p class="first">Software should split the kernels to conv_stride_x*conv_stride_y sets.
+Suppose the original kernel size is:
+RxSxC, the splitted kernel size is:</p>
+<p>S’=ceil(S/stride_x)</p>
+<p>R’=ceil(R/stride_y)</p>
+<p>C’=C</p>
+<p>K’=K</p>
+</li>
+<li><p class="first">Kick-off convolution hardware layers based on different kernel set.
+The output cube size of each hardware layer is:</p>
+<p>W’ = (W-S’)+1</p>
+<p>H’=(H-R’)+1</p>
+<p>C’=K</p>
+</li>
+</ol>
+<ul class="simple">
+<li>Reorder:</li>
+</ul>
+<p>The output cube from phase I is not the order we want, Rubik engine
+should be employed to reorder it.</p>
+<p>There’re 2 options about how those hardware layers should be scheduled:</p>
+<ol class="loweralpha simple">
+<li>Finish all stride_x*stride_y hardware layers then start rubik, total
+hardware layers is: stride_x*stride_y (convolution) + 1 (rubik);</li>
+<li>Finish stride_x convolution hardware layers then start rubik, total
+hardware layers is: (stride_x + 1)*stride_y;</li>
+</ol>
+<p>Generally, b) is the suggested scheduling strategy because:</p>
+<ol class="arabic simple">
+<li>It has better performance, here’s a timeline diagram which shows
+method a) vs b). It shows b) is (stride_x*stride_y-1)*t1 quicker than
+a).</li>
+</ol>
+<div class="figure align-center" id="fig-image117-deconv-scheduling">
+<img alt="../../../_images/ias_image117_deconv_schedluing.svg" src="../../../_images/ias_image117_deconv_schedluing.svg" /></div>
+<ol class="arabic simple" start="2">
+<li>Method b) has smaller memory footprint requirement (W’, H’ are the
+output width/height of each convolution hardware layer).</li>
+</ol>
+<table border="1" class="docutils">
+<colgroup>
+<col width="22%" />
+<col width="26%" />
+<col width="26%" />
+<col width="26%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Method</th>
+<th class="head">Convolution
+output buffer</th>
+<th class="head">Rubik output
+buffer</th>
+<th class="head">Total</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Method a)</td>
+<td>W’*H’*K*stride_
+x*stride_y</td>
+<td>W’*H’*K*stride_
+x*stride_y</td>
+<td>2*W’*H’*K*strid
+e_x*stride_y</td>
+</tr>
+<tr class="row-odd"><td>Method b)</td>
+<td><p class="first">W’*H’*K*stride_
+x*2</p>
+<p class="last">(x2 is not
+mandatory but
+suggested for
+performance)</p>
+</td>
+<td>W’*H’*K*stride_
+x*stride_y</td>
+<td>W’*H’*K*stride_
+x*(stride_y+2)</td>
+</tr>
+</tbody>
+</table>
+<p>For most case, stride_y&gt;2 thus method b) has smaller memory requirement.</p>
+</div>
+</div>
+<div class="section" id="sdp-programming">
+<h2>SDP programming<a class="headerlink" href="#sdp-programming" title="Permalink to this headline">¶</a></h2>
+<p>Not all the use scenarios in <a class="reference internal" href="unit_description.html#tab-sdp-supported-use-scenarios"><span class="std std-numref">Table 51</span></a> are necessary to explain, we’ll
+discuss bias addition/batch-norm/element-wise operations below (other
+features are precision related which already covered by <a class="reference internal" href="precision.html"><span class="doc">Precision Preservation</span></a>):</p>
+<div class="section" id="bias-addition">
+<h3>Bias addition<a class="headerlink" href="#bias-addition" title="Permalink to this headline">¶</a></h3>
+<p>As mentioned in <a class="reference internal" href="unit_description.html#tab-sdp-supported-use-scenarios"><span class="std std-numref">Table 51</span></a>, bias addition can be done by any of SDP
+sub-module, let’s take using X1 sub-module for bias addition as an
+example to explain the programming sequence:</p>
+<ul>
+<li><p class="first">Software has to prepare bias data cube, it has to be INT16 for
+INT8/16 pipeline and FP16 for FP16 pipeline.</p>
+</li>
+<li><p class="first">Configure the SDP RDMA (most of the registers are intuitional, will
+highlights bias specific registers only ):</p>
+<ol class="loweralpha simple">
+<li>We use bias addition, so, BRDMA_DATA_USE=ALU should be configured</li>
+<li>BRDMA_DATA_MODE configuration is based on bias mode</li>
+</ol>
+</li>
+<li><p class="first">Configure the SDP BS sub-module:</p>
+<ol class="loweralpha">
+<li><p class="first">D_DP_BS_CFG</p>
+<p>BS_BYPASS=NO</p>
+<p>BS_ALU_BYPASS=NO</p>
+<p>BS_ALU_ALGO = SUM</p>
+<p>BS_MUL_BYPASS = YES</p>
+</li>
+<li><p class="first">D_DP_BS_ALU_CFG</p>
+<p>For per-element/kernel bias, operands should come from MC:</p>
+<p>BS_ALU_SRC = MEM</p>
+<p>For per cube bias, operands should come from register:</p>
+<p>BS_ALU_SRC = REG</p>
+<p>BS_ALU_SRC_VALUE = ?? (The value you want)</p>
+<p>BS_ALU_SHIFT_VALUE: Based on precision study results</p>
+</li>
+</ol>
+</li>
+</ul>
+</div>
+<div class="section" id="batch-normalization">
+<h3>Batch normalization<a class="headerlink" href="#batch-normalization" title="Permalink to this headline">¶</a></h3>
+<p>Batch normalization can be realized by any of X/Y, let’s still use
+X1 sub-module as an example to show the steps to program batch
+normalization:</p>
+<ul>
+<li><p class="first">Software has to tightly pack mean/variance into one data cube
+(M0V0M1V1…), if mean/variance are 2 bytes per element there’ll be 4
+bytes for a mean/variance pair. Those 2 bytes will be interpreted as
+INT16 for INT8/16 pipe and FP16 for FP16 pipe.</p>
+</li>
+<li><p class="first">Configure the SDP RDMA (most of the registers are intuitional, will
+highlights batch-norm specific registers only ):</p>
+<ol class="loweralpha simple">
+<li>Both ALU/MUL will be used for batch normalization, so,
+BRDMA_DATA_USE=BOTH should be configured</li>
+<li>BRDMA_DATA_MODE configuration is based on batch normalization mode</li>
+</ol>
+</li>
+<li><p class="first">Configure the SDP BS sub-module:</p>
+<ol class="loweralpha">
+<li><p class="first">D_DP_BS_CFG</p>
+<p>BS_BYPASS=NO</p>
+<p>BS_ALU_BYPASS=NO</p>
+<p>BS_ALU_ALGO = SUM</p>
+<p>BS_MUL_BYPASS = NO</p>
+</li>
+<li><p class="first">D_DP_BS_ALU_CFG</p>
+<p>BS_ALU_SRC = MEM (Bias data always from MC regardless of
+per-kernel/element)</p>
+<p>BS_ALU_SHIFT_VALUE: Based on precision study results</p>
+</li>
+<li><p class="first">D_DP_BS_MUL_CFG</p>
+<p>BS_MUL_SRC=MEM</p>
+<p>BS_MUL_SHIFT_VALUE: Based on precision study results</p>
+</li>
+</ol>
+</li>
+</ul>
+<p>For any case when both MUL/ALU are used, we can support combinations
+below:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">ALU</th>
+<th class="head">MUL</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>REG</td>
+<td>MC</td>
+</tr>
+<tr class="row-odd"><td>MC</td>
+<td>REG</td>
+</tr>
+<tr class="row-even"><td>MC, Per-channel</td>
+<td>MC, Per-channel</td>
+</tr>
+<tr class="row-odd"><td>MC, Per-element</td>
+<td>MC, Per-element</td>
+</tr>
+<tr class="row-even"><td>REG</td>
+<td>REG</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="element-wise">
+<h3>Element-wise<a class="headerlink" href="#element-wise" title="Permalink to this headline">¶</a></h3>
+<p>Element-wise can be realized by any of SDP sub-unit, again, let’s still
+use X1 module as an example about the element-wise configuration steps:</p>
+<ul>
+<li><p class="first">Different from bias/batch-norm, the element-wise input cube is from
+upstream hardware layer thus software didn’t need do anything to
+prepare surface</p>
+</li>
+<li><p class="first">Configure the SDP RDMA (most of the registers are intuitional, will
+highlights element-wise specific registers only ):</p>
+<ol class="loweralpha simple">
+<li>BRDMA_DATA_USE=? Is based on element-wise type. For PROD eltwise
+operation, it should be MUL, otherwise, use ALU;</li>
+<li>BRDMA_DATA_MODE= PER_ELEMENT</li>
+</ol>
+</li>
+<li><p class="first">Configure the SDP BS sub-module:</p>
+<ol class="loweralpha">
+<li><p class="first">D_DP_BS_CFG</p>
+<p>BS_BYPASS=NO</p>
+<p>BS_ALU_BYPASS=? (For eltwise=MAX/SUM)</p>
+<p>BS_ALU_ALGO : Based on element-wise operation type</p>
+<p>BS_MUL_BYPASS = ? (No, For eltwise=PROD)</p>
+</li>
+<li><p class="first">D_DP_BS_ALU_CFG</p>
+<p>BS_ALU_SRC = MEM</p>
+<p>BS_ALU_SHIFT_VALUE: Based on precision study results</p>
+</li>
+<li><p class="first">D_DP_BS_MUL_CFG</p>
+<p>BS_MUL_SRC = MEM</p>
+<p>BS_MUL_SHIFT_VALUE: Based on precision study results</p>
+</li>
+</ol>
+</li>
+</ul>
+</div>
+<div class="section" id="compare-mode">
+<h3>Compare mode<a class="headerlink" href="#compare-mode" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="normal-comparision">
+<h4>Normal comparision<a class="headerlink" href="#normal-comparision" title="Permalink to this headline">¶</a></h4>
+<p>SDP implemented compare mode in Y module to support software based
+redundant computing.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Use scenarios</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Offline vs offline</td>
+<td><p class="first">Both of the 2 data stream are
+come from MC/SRAM</p>
+<p class="last">The is used to support
+postprocessor modules (CDP/PDP)
+redundant computing</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>In this mode, SW will schedule 3 HWLs:</p>
+<p>1<sup>st</sup> HWL to run any module then output result to addr0;</p>
+<p>2<sup>nd</sup> HWL to run exact the same setting as 1<sup>st</sup> layer
+then output to addr1;</p>
+<p>3<sup>rd</sup> HWL to run SDP_Y in compare mode which has configuration
+as:</p>
+<p>D_SRC_BASE_ADDR_LOW/HIGH = addr0</p>
+<p>D_EW_BASE_ADDR_LOW/HIGH = addr1</p>
+<p>D_DP_BS_CFG.BS_BYPASS=YES</p>
+<p>D_DP_BN_CFG.BN_BYPASS=YES</p>
+<p>D_DP_EW_CFG. EW_BYPASS = NO</p>
+<p>D_DP_EW_CFG. EW_ALU_BYPASS=NO</p>
+<p>D_DP_EW_CFG. EW_ALU_ALGO=EQL</p>
+<p>After 3<sup>rd</sup> HWL execution done, SW should check D_STATUS to see
+whether difference found.</p>
+<p><strong>NOTE: When SDP EQL mode is enabled, D_FEATURE_MODE_CFG.WINOGAD has to
+be OFF and D_FEATURE_MODE_CFG.BATCH_NUMBER has to be 0</strong></p>
+</div>
+<div class="section" id="batch-mode-comparison">
+<h4>Batch mode comparison<a class="headerlink" href="#batch-mode-comparison" title="Permalink to this headline">¶</a></h4>
+<p>Batch mode is a special case of offline/offline comparison, as SDP_Y
+RDMA doesn’t support load multiple data cubes in one HWL, batch mode has
+to be handled in a special way. There’re 2 cases: In order to facilitate
+further discussion, we denote symbols below:</p>
+<p><em>Dimension: WxHxC</em></p>
+<p><em>Batch_Num: N</em></p>
+<p><em>Batch stride: BATCH_STRIDE</em></p>
+<p>There’re 2 cases depending on the attributes of each data cube:</p>
+<ul class="simple">
+<li>If the data cube are line packed and surface packed:</li>
+</ul>
+<p>For thise case, we’ll treat N data cubes as one super cube:</p>
+<p>W’= ceil(C/KPG)*W*H, KPG= is_int8 ? 32:16;</p>
+<p>H’=N</p>
+<p>C’=KPG</p>
+<p>line_stride: BATCH_STRIDE</p>
+<p>surface_stride: BATCH_STRIDE*N</p>
+<ul class="simple">
+<li>Otherwise:</li>
+</ul>
+<p>As there’re bubbles between each data cube and the contents of those
+bubbles are un-determistic, we have to compare those cube one by one
+thus N HWL are necessary.</p>
+</div>
+</div>
+</div>
+<div class="section" id="pdp-programming">
+<h2>PDP programming<a class="headerlink" href="#pdp-programming" title="Permalink to this headline">¶</a></h2>
+<p>The most complex logic for PDP programming is deciding which working
+mode can be used. PDP supports 3 different working modes:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Mode</th>
+<th class="head">Attribute</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>On-the-fly</td>
+<td>Input data comes from SDP,
+recommended whenever possible</td>
+</tr>
+<tr class="row-odd"><td>Offline - No split width</td>
+<td>Comparing with on-the-fly, this
+mode need one SDP write and one
+PDP read, this increased the
+memory traffic</td>
+</tr>
+<tr class="row-even"><td>Offline – split width</td>
+<td>Comparing with “no split width”,
+this mode need over-fetch between
+overlapped region thus bandwidth
+further increased</td>
+</tr>
+</tbody>
+</table>
+<p>The working mode selection strategy is:</p>
+<ul class="simple">
+<li>As mentioned in Section “Planar Data Processor” of Unit Description document, PDP has 7KB internal buffer to save
+intermediate results during pooling, thus the maximum supported
+output width is a fixed number. (Refer to: 10.1.4:
+calculate_pdp_max_width)</li>
+<li>Calculate the actual pooling output:</li>
+</ul>
+<div class="code c highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pooled_width</span> <span class="o">=</span> <span class="n">static_cast</span><span class="o">&lt;</span><span class="nb">int</span><span class="o">&gt;</span><span class="p">(</span><span class="n">ceil</span><span class="p">(</span><span class="n">static_cast</span><span class="o">&lt;</span><span class="nb">float</span><span class="o">&gt;</span><span class="p">(</span><span class="n">width</span> <span class="o">+</span> <span class="n">pad_left</span> <span class="o">+</span> <span class="n">pad_right</span> <span class="o">-</span> <span class="n">kernel_w</span><span class="p">)</span> <span class="o">/</span> <span class="n">stride_w</span><span class="p">))</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+<span class="k">if</span> <span class="p">((</span><span class="n">pooled_width</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> \<span class="o">*</span> <span class="n">stride_w</span> <span class="o">&gt;=</span> <span class="n">width</span> <span class="o">+</span> <span class="n">pad_left</span><span class="p">)</span> <span class="p">{</span>
+    <span class="o">--</span><span class="n">pooled_width</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>Decide working mode</li>
+</ul>
+<div class="code c highlight-default notranslate"><div class="highlight"><pre><span></span>typedef enum {
+    PDP_FLYING_MODE,
+    PDP_OFFLINE_MODE,
+} pdp_mode;
+static pdp_mode get_pdp_mode( int width_output, int max_fly_width, bool is_full_conv )
+{
+    // convolution mode should also be taking into consideration: If software split
+    // convolution layer into different hardware layers, PDP can&#39;t working on-the-fly
+    return (width_output &lt;= max_fly_width) &amp;&amp; is_full_conv ? PDP_FLYING_MODE : PDP_OFFLINE_MODE;
+}
+</pre></div>
+</div>
+<ul>
+<li><p class="first">If PDP working offline mode, we need to calculate splitted width and
+split number as well (please see: 10.1.4 for detail)</p>
+<p>Be noticed: The pseudo code in: 10.1.3 just configured to make
+hardware work, if possible, software should try to make sure the
+starting address (in/out or both) of each splitted band be 256 align,
+this will greatly improve NVDLA memory throughput.</p>
+</li>
+</ul>
+<div class="section" id="on-the-fly-processing">
+<h3>On-the-fly processing<a class="headerlink" href="#on-the-fly-processing" title="Permalink to this headline">¶</a></h3>
+<p>The programming sequence for on-the-fly PDP mode is (most of the
+registers are intuitional, will highlights on-the-fly mode specific
+registers only):</p>
+<ul>
+<li><p class="first">PDP-RDMA is not necessary to config because our input is from SDP;</p>
+</li>
+<li><p class="first">D_OPERATION_MODE_CFG</p>
+<p>POOLING_METHOD: Based on pooling method used in algorithm</p>
+<p>FLYING_MODE= ON_FLYING</p>
+<p>SPLIT_NUM=0</p>
+</li>
+</ul>
+</div>
+<div class="section" id="offline-processing-without-split-width">
+<h3>Offline processing without split width<a class="headerlink" href="#offline-processing-without-split-width" title="Permalink to this headline">¶</a></h3>
+<p>The programming sequence for this mode is:</p>
+<ul>
+<li><p class="first">Appropriate address/memory type should be set to PDP-RDMA;</p>
+</li>
+<li><p class="first">D_OPERATION_MODE_CFG</p>
+<p>POOLING_METHOD: Based on pooling method used in algorithm</p>
+<p>FLYING_MODE= OFF_FLYING</p>
+<p>SPLIT_NUM=0</p>
+</li>
+<li><p class="first">D_PARTIAL_WIDTH_IN</p>
+<p>PARTIAL_WIDTH_IN_FIRST=info-&gt;first_in_width</p>
+</li>
+<li><p class="first">D_PARTIAL_WIDTH_OUT</p>
+<p>PARTIAL_WIDTH_OUT_FIRST=info-&gt;first_out_width</p>
+</li>
+</ul>
+</div>
+<div class="section" id="offline-processing-with-split-width">
+<h3>Offline processing with split width<a class="headerlink" href="#offline-processing-with-split-width" title="Permalink to this headline">¶</a></h3>
+<p>The programming sequence for this mode is:</p>
+<ul>
+<li><p class="first">Appropriate address/memory type should be set to PDP-RDMA;</p>
+</li>
+<li><p class="first">D_OPERATION_MODE_CFG</p>
+<p>POOLING_METHOD: Based on pooling method used in algorithm</p>
+<p>FLYING_MODE= OFF_FLYING</p>
+<p>SPLIT_NUM=info-&gt;split_num</p>
+</li>
+<li><p class="first">D_PARTIAL_WIDTH_IN</p>
+<p>PARTIAL_WIDTH_IN_FIRST=info-&gt;first_in_width</p>
+<p>PARTIAL_WIDTH_IN_MID=info-&gt;split_num==1 ? 0:info-&gt;mid_in_width</p>
+<p>PARTIAL_WIDTH_IN_LAST= info-&gt;last_in_width</p>
+</li>
+<li><p class="first">D_PARTIAL_WIDTH_OUT</p>
+<p>PARTIAL_WIDTH_OUT_FIRST=info-&gt;first_out_width</p>
+<p>PARTIAL_WIDTH_OUT_MID= info-&gt;split_num==1 ? 0:info-&gt;mid_out_width</p>
+<p>PARTIAL_WIDTH_OUT_LAST= info-&gt;last_out_width</p>
+</li>
+</ul>
+<p>When hardware processing done, there’ll be interrupt fired from PDP
+submodule to inform CPU that PDP hardware layer is done for any of above
+mode.</p>
+</div>
+<div class="section" id="id4">
+<h3>Register definition<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<p>Beside working modes, it’s also necessary to mention some of the
+interested registers:</p>
+<ol class="loweralpha simple">
+<li>D_POOLING_PADDING_CFG: The padding size on left/right/top/bottom. If
+greater than 0, D_POOLING_PADDING_VALUE_*_CFG will be appended to
+input data. This register will be take into account for AVE/MAX/MIN
+mode;</li>
+<li>D_POOLING_PADDING_VALUE_*_CFG: The padded value. This register will
+be took into account for AVE mode only;</li>
+</ol>
+</div>
+</div>
+<div class="section" id="cdp-programming">
+<h2>CDP programming<a class="headerlink" href="#cdp-programming" title="Permalink to this headline">¶</a></h2>
+<p>CDP always working on offline, there’s no special mode for CDP and the
+precision related configuration already discussed.
+So, skip the CDP programming here.</p>
+<p>After hardware layer processing done, there’ll be interrupt fired to
+CPU.</p>
+</div>
+<div class="section" id="debug-features">
+<h2>Debug features<a class="headerlink" href="#debug-features" title="Permalink to this headline">¶</a></h2>
+<p>NVDLA implemented debug registers to facilitate silicon debug. Those
+registers are dedicated per register group and won’t be cleared until
+the corresponding group starts. It will be incremented by 1 when certain
+condition meets.</p>
+<p>Those registers can be classified as 2 groups below:</p>
+<div class="section" id="precision-debug">
+<h3>Precision debug<a class="headerlink" href="#precision-debug" title="Permalink to this headline">¶</a></h3>
+<p>If saturation counter (see <a class="reference internal" href="precision.html#convertor-statistics"><span class="std std-ref">Convertor statistics</span></a>) exceed threshold (defined by
+software), this means convertor parameters (scaling, offset) are
+in-properly set;</p>
+<p>If LUT overflow/underflow counter (<a class="reference internal" href="lut-programming.html#lut-statistics"><span class="std std-ref">LUT Statistics</span></a>) exceed threshold (defined
+by software), this means LUT is in-properly set;</p>
+</div>
+<div class="section" id="performance-debug">
+<h3>Performance debug<a class="headerlink" href="#performance-debug" title="Permalink to this headline">¶</a></h3>
+<p>NVDLA is a fix function engine, the latency is predictable inside each
+sub-unit, but the read/write response from out-side is not deterministic
+thus we implemented performance registers below to help SW analysis the
+bottleneck of un-expected performance drop.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="33%" />
+<col width="33%" />
+<col width="33%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Sub unit</th>
+<th class="head">Register name</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>CDMA</td>
+<td>D_PERF_ENABLE</td>
+<td>Control register to
+enable/disable perf
+Counter</td>
+</tr>
+<tr class="row-odd"><td>&#160;</td>
+<td>D_PERF_DAT_READ_STAL
+L</td>
+<td>Count stall cycles
+of data read DMA for
+one layer</td>
+</tr>
+<tr class="row-even"><td>&#160;</td>
+<td>D_PERF_WT_READ_STALL</td>
+<td>Count total latency
+of data read DMA for
+one layer</td>
+</tr>
+<tr class="row-odd"><td>&#160;</td>
+<td>D_PERF_DAT_READ_LATE
+NCY</td>
+<td>Count stall cycles
+of weight read DMA
+for one layer</td>
+</tr>
+<tr class="row-even"><td>&#160;</td>
+<td>D_PERF_WT_READ_LATEN
+CY</td>
+<td>Count total latency
+of weight read DMA
+for one layer</td>
+</tr>
+<tr class="row-odd"><td>SDP</td>
+<td>D_PERF_ENABLE</td>
+<td>Control register to
+enable/disable perf
+Counter</td>
+</tr>
+<tr class="row-even"><td>&#160;</td>
+<td>D_PERF_MRDMA_READ_ST
+ALL</td>
+<td>Count stall cycles
+of M read DMA for
+one layer</td>
+</tr>
+<tr class="row-odd"><td>&#160;</td>
+<td>D_PERF_BRDMA_READ_ST
+ALL</td>
+<td>Count stall cycles
+of B read DMA for
+one layer</td>
+</tr>
+<tr class="row-even"><td>&#160;</td>
+<td>D_PERF_NRDMA_READ_ST
+ALL</td>
+<td>Count stall cycles
+of N read DMA for
+one layer</td>
+</tr>
+<tr class="row-odd"><td>&#160;</td>
+<td>D_PERF_ERDMA_READ_ST
+ALL</td>
+<td>Count stall cycles
+of E read DMA for
+one layer</td>
+</tr>
+<tr class="row-even"><td>&#160;</td>
+<td>D_PERF_WDMA_WRITE_ST
+ALL</td>
+<td>Count stall cycles
+of write DMA for one
+layer</td>
+</tr>
+<tr class="row-odd"><td>CDP</td>
+<td>D_PERF_ENABLE</td>
+<td>Control register to
+enable/disable perf
+Counter</td>
+</tr>
+<tr class="row-even"><td>&#160;</td>
+<td>D_PERF_READ_STALL</td>
+<td>Count stall cycles
+of read DMA for one
+layer</td>
+</tr>
+<tr class="row-odd"><td>&#160;</td>
+<td>D_PERF_WRITE_STALL</td>
+<td>Count stall cycles
+of wirte DMA for one
+layer</td>
+</tr>
+<tr class="row-even"><td>PDP</td>
+<td>D_PERF_ENABLE</td>
+<td>Control register to
+enable/disable perf
+Counter</td>
+</tr>
+<tr class="row-odd"><td>&#160;</td>
+<td>D_PERF_READ_STALL</td>
+<td>Count stall cycles
+of read DMA for one
+layer</td>
+</tr>
+<tr class="row-even"><td>&#160;</td>
+<td>D_PERF_WRITE_STALL</td>
+<td>Count stall cycles
+of wirte DMA for one
+layer</td>
+</tr>
+<tr class="row-odd"><td>RUBIK</td>
+<td>D_PERF_ENABLE</td>
+<td>Control register to
+enable/disable perf
+Counter</td>
+</tr>
+<tr class="row-even"><td>&#160;</td>
+<td>D_PERF_READ_STALL</td>
+<td>Count stall cycles
+of read DMA for one
+layer</td>
+</tr>
+<tr class="row-odd"><td>&#160;</td>
+<td>D_PERF_WRITE_STALL</td>
+<td>Count stall cycles
+of wirte DMA for one
+layer</td>
+</tr>
+<tr class="row-even"><td>BDMA</td>
+<td>CFG_STATUS_PERF_STAL
+L_COUNT_EN</td>
+<td>Control register to
+enable/disable perf
+Counter</td>
+</tr>
+<tr class="row-odd"><td>&#160;</td>
+<td>STATUS_PERF_GRP0_REA
+D_STALL</td>
+<td>Count stall cycles
+of read DMA for
+group0</td>
+</tr>
+<tr class="row-even"><td>&#160;</td>
+<td>STATUS_PERF_GRP0_WRI
+TE_STALL</td>
+<td>Count stall cycles
+of wirte DMA for
+group0</td>
+</tr>
+<tr class="row-odd"><td>&#160;</td>
+<td>STATUS_PERF_GRP1_REA
+D_STALL</td>
+<td>Count stall cycles
+of read DMA for
+group1</td>
+</tr>
+<tr class="row-even"><td>&#160;</td>
+<td>STATUS_PERF_GRP1_WRI
+TE_STALL</td>
+<td>Count stall cycles
+of read DMA for
+group1</td>
+</tr>
+</tbody>
+</table>
+<p>For each sub-unit, we have “EN” register to allow software
+enable/disable those counting register to save power.</p>
+</div>
+</div>
+<div class="section" id="limitation">
+<h2>Limitation<a class="headerlink" href="#limitation" title="Permalink to this headline">¶</a></h2>
+<p>Though we’ve already highlight hardware restrictions in the chapters
+above, but we’d like to centralize the limitations here to facilitate
+users quick check illegal settings.</p>
+<div class="section" id="data-format">
+<h3>Data Format<a class="headerlink" href="#data-format" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>The “Invalid case” in <a class="reference internal" href="../../format.html#tab-precision-conversion-conv"><span class="std std-numref">Table 29</span></a> to <a class="reference internal" href="../../format.html#tab-precision-conversion-poolong"><span class="std std-numref">Table 32</span></a> are not allowed;</li>
+<li>The alignment for address/line_stride/surf_stride in :<a class="reference internal" href="../../format.html#tab-requirements-of-alignment"><span class="std std-numref">Table 35</span></a> should
+be satisfied when allocating buffer;</li>
+<li>LINE_STRIDE: line stide has to bigger than the actual size per line,
+please refer to: 10.1.1 for minimal line_stride calculation;</li>
+<li>For 1x1xC cube, it should always be line_packed and surf_packed.</li>
+</ul>
+</div>
+<div class="section" id="csb-master">
+<h3>CSB_MASTER<a class="headerlink" href="#csb-master" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Any read access or write access to reserved register address
+(0x14000~0x3FFFF) is forbidden. CSB master do not
+support for these addresses. Any access to these addresses may cause
+unknow result.</li>
+</ul>
+</div>
+<div class="section" id="bdma">
+<h3>BDMA<a class="headerlink" href="#bdma" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>When both group0 and group1 are both busy, no more command is allowed
+even if there are free slot</li>
+<li>All operations in one BDMA HWL should has the same destination memory
+type (DST_RAM_TYPE)</li>
+</ul>
+</div>
+<div class="section" id="convolution">
+<h3>Convolution<a class="headerlink" href="#convolution" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="general">
+<h4>General<a class="headerlink" href="#general" title="Permalink to this headline">¶</a></h4>
+<ul>
+<li><p class="first">There’re multiple pipeline stages in convolution pipeline, the
+op_enable programming sequence has to be in reverse order, e.g.:
+CONV_ACCUCONV_MACCONV_SCCONV_BUFCONV_DMA</p>
+</li>
+<li><p class="first">WMB and weight data MUST has the same RAM type.</p>
+</li>
+<li><p class="first">If weight_format=compressed, banks_for_data+banks_for_weight must be
+less than 16 (Bank 15 is reserved for WMB).</p>
+</li>
+<li><p class="first">WEIGHT_BANK should be allocated large enough to store one kernel
+group weight plus 128Bytes; For compression mode, BANK for WMB is
+fixed as 1, this means WMB for one kernel group should always less
+than 32KB-128B so that additional 128Bytes can be stored in that
+bank.</p>
+</li>
+<li><p class="first">CSC:: RLS_SLICES: This register should never exceed
+DATAIN_HEIGHT_EXT, Even with the partial release in pervious layer,
+the unreleased slices will be counted into datain_height_ext of CSC
+register (but not in datain_height of CDMA register).</p>
+<p>For example, in first layer we input 10 slices and release 6 slices,
+there are 4 slices remain in CBUF.</p>
+</li>
+</ul>
+<p>And with second layer we fetch new 7 slices from CDMA and combined with
+remain slices to do convolution. The setting of CDMA datain_height
+should be 7 and CSC datain_height_ext should be (7+4) = 11. And at this
+time rls_slices should not more than 11.</p>
+<ul class="simple">
+<li>The right/bottom padding should be carefully configured to make sure
+all the data will be used for convolution, which means:</li>
+</ul>
+<div class="math notranslate">
+\[(Output\_Width - 1) * stride\_x + S == PL + Input\_Width + PR\]</div>
+<div class="math notranslate">
+\[(Output\_height - 1) * stride\_y + R == PT + Input\_Height + PB\]</div>
+<p>Where, PL/PT are the left/top padding which are get from network
+definition; PR/PB are the right/bottom padding which are configured by
+user;</p>
+<ul class="simple">
+<li>Data re-use can be take effect when all conditions below are meet:<ul>
+<li>Skip_rls is set as true for previous layer;</li>
+<li>Conv_mode and DATA_BANK are kept unchanged comparing with previous
+layer;</li>
+</ul>
+</li>
+<li>Left/Right padding should be less than S, Top/Bottom padding should
+be less than R</li>
+</ul>
+</div>
+<div class="section" id="image">
+<h4>Image<a class="headerlink" href="#image" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li>For image input, pixel_y_offset should be set as 0 for pitch linear;</li>
+<li>If channel post extension enabled, the limitations in <a class="reference internal" href="unit_description.html#tab-limits-of-channel-post-extension"><span class="std std-numref">Table 46</span></a>  has
+to be meet;</li>
+<li>Dilation is not supported</li>
+</ul>
+</div>
+<div class="section" id="dc">
+<h4>DC<a class="headerlink" href="#dc" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li>No special limitation;</li>
+</ul>
+</div>
+<div class="section" id="winograd">
+<h4>Winograd<a class="headerlink" href="#winograd" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li>Output width and height must be 4 divisible and &gt;= 8;</li>
+<li>The equivalent kernel size should be 3x3;</li>
+</ul>
+</div>
+<div class="section" id="multi-batch">
+<h4>Multi-batch<a class="headerlink" href="#multi-batch" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li>The start address of each input feature cube has to be carefully
+arranged to make sure their offset is a fixed number as BATCH_STRIDE.</li>
+</ul>
+<p>Supported feature crossing:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="14%" />
+<col width="14%" />
+<col width="14%" />
+<col width="14%" />
+<col width="14%" />
+<col width="14%" />
+<col width="14%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">&#160;</th>
+<th class="head">Channel
+-post
+extensi
+on</th>
+<th class="head">Multi-b
+atch</th>
+<th class="head">Deconv</th>
+<th class="head">Image
+Input</th>
+<th class="head">Dilatio
+n</th>
+<th class="head">Winogra
+d</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Channel
+-post
+extensi
+on</td>
+<td>&#160;</td>
+<td>N</td>
+<td>N</td>
+<td>Y</td>
+<td>N</td>
+<td>N</td>
+</tr>
+<tr class="row-odd"><td>Multi-b
+atch</td>
+<td>N</td>
+<td>&#160;</td>
+<td>Y</td>
+<td>N</td>
+<td>Y</td>
+<td>N</td>
+</tr>
+<tr class="row-even"><td>Deconv</td>
+<td>N</td>
+<td>Y</td>
+<td>&#160;</td>
+<td>N</td>
+<td>N</td>
+<td>N</td>
+</tr>
+<tr class="row-odd"><td>Image
+In</td>
+<td>Y</td>
+<td>N</td>
+<td>N</td>
+<td>&#160;</td>
+<td>N</td>
+<td>N</td>
+</tr>
+<tr class="row-even"><td>Dilatio
+n</td>
+<td>N</td>
+<td>Y</td>
+<td>N</td>
+<td>N</td>
+<td>&#160;</td>
+<td>N</td>
+</tr>
+<tr class="row-odd"><td>Winogra
+d</td>
+<td>N</td>
+<td>N</td>
+<td>N</td>
+<td>N</td>
+<td>N</td>
+<td>&#160;</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="lut">
+<h3>LUT<a class="headerlink" href="#lut" title="Permalink to this headline">¶</a></h3>
+<ul>
+<li><p class="first">For linear mode, the table start/end should meet the requirements
+below:</p>
+<p>LE_END-LE_START == 1&lt;&lt;(LE_INDEX_SELECT+6)</p>
+<p>LO_END-LO_START == 1&lt;&lt;(LO_INDEX_SELECT+8)</p>
+</li>
+<li><p class="first">For linear mode, the “select” field shouldn’t exceed the bit-depth of
+hardware thus we have limitations below:</p>
+</li>
+</ul>
+<table border="1" class="docutils">
+<colgroup>
+<col width="17%" />
+<col width="41%" />
+<col width="41%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">&#160;</th>
+<th class="head">SDP</th>
+<th class="head">CDP</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>INT8</td>
+<td><p class="first">LE: [-6~25]</p>
+<p class="last">LO: [-8~23]</p>
+</td>
+<td><p class="first">LE: [-6~15]</p>
+<p class="last">LO: [-8~13]</p>
+</td>
+</tr>
+<tr class="row-odd"><td>INT16</td>
+<td><p class="first">LE: [-6~25]</p>
+<p class="last">LO: [-8~23]</p>
+</td>
+<td><p class="first">LE: [-6~31]</p>
+<p class="last">LO: [-8~29]</p>
+</td>
+</tr>
+<tr class="row-even"><td>FP16</td>
+<td><p class="first">LO: [-128, 119]</p>
+<p class="last">LE: [-128, 121]</p>
+</td>
+<td><p class="first">LO: [-128, 119]</p>
+<p class="last">LE: [-128, 121]</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>For FP16 above, another constrain should take into consideration:
+LX_START/END registers are FP32 and:</p>
+<p>LE_END = LE_START + pow(2, LE_INDEX_SELECT +6)</p>
+<p>In order to make sure LE_END larger than LE_START, constrain below
+should be satisfied:</p>
+<p>LE_START/pow(2, LE_INDEX_SELECT +6) &lt; pow(2, 24), thus:</p>
+<p>LE_START &lt; pow(2, LE_INDEX_SELECT+30)</p>
+<p>For the same reason, LO_START &lt; pow(2, LO_INDEX_SELECT+32)</p>
+<ul>
+<li><p class="first">For exponential mode, the table start/end should meet the
+requirements below:</p>
+<p>LE_END-LE_START==(1&lt;&lt;(LE_INDEX_OFFSET+64)).</p>
+</li>
+</ul>
+<p>If the value calculated by formula below exceed the INT32/FP32
+representable, use INT32_MAX or FP32_MAX instead.</p>
+<ul class="simple">
+<li>For exponential mode, we also have constrain on LE_INDEX_OFFSET:</li>
+</ul>
+<table border="1" class="docutils">
+<colgroup>
+<col width="21%" />
+<col width="39%" />
+<col width="39%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">&#160;</th>
+<th class="head">SDP</th>
+<th class="head">CDP</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>INT8</td>
+<td>[-64, 31]</td>
+<td>[-64, 20]</td>
+</tr>
+<tr class="row-odd"><td>INT16</td>
+<td>[-64, 31]</td>
+<td>[-64, 36]</td>
+</tr>
+<tr class="row-even"><td>FP16</td>
+<td>[-126, 127]</td>
+<td>[-126, 127]</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="sdp">
+<h3>SDP<a class="headerlink" href="#sdp" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id5">
+<h4>General<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h4>
+<ul>
+<li><p class="first">When SRC is configured as REG, corresponding RDMA shouldn’t be
+enabled.</p>
+</li>
+<li><p class="first">If EQL mode is enabled, Y ALU convertor must be bypassed (except
+FP16) and all the operations after ALU should be bypassed.</p>
+</li>
+<li><p class="first">If PReLU is enabled for one sub-unit, the ALU in that unit MUST be
+bypassed.</p>
+</li>
+<li><p class="first">For PROC_PRECISION==FP16:</p>
+<p>If EW_ALU_BYPASS==NO &amp;&amp; D_DP_EW_ALU_CFG. EW_ALU_SRC==MEM, then,
+EW_ALU_CVT_BYPASS must be NO;</p>
+<p>If EW_MUL_BYPASS==NO &amp;&amp; D_DP_EW_MUL_CFG. EW_MUL_SRC==MEM, then,
+EW_MUL_CVT_BYPASS must be NO;</p>
+</li>
+</ul>
+</div>
+<div class="section" id="id6">
+<h4>DC<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li>Precision conversion is not allowed if SDP output to PDP or EQL mode;</li>
+<li>For INT16INT8, HW has no requirement on channel size configuration,
+but if C is not 32 elements aligned, HW will read/write the
+additional memory thus SW has to guarantee the allocated src/dst data
+cube is big enough;</li>
+</ul>
+</div>
+<div class="section" id="winograd-batch">
+<h4>Winograd/Batch<a class="headerlink" href="#winograd-batch" title="Permalink to this headline">¶</a></h4>
+<ul>
+<li><p class="first">SDP has to work on the fly with CC</p>
+</li>
+<li><p class="first">SDP_Y can’t work at EQL mode (EW_ALU_ALGO != EQL)</p>
+</li>
+<li><p class="first">If multi-batch is enabled, registers below has to be 64 bytes
+aligned:</p>
+<div class="line-block">
+<div class="line">DST_BASE_ADDR</div>
+<div class="line">DST_LINE_STRIDE</div>
+<div class="line">DST_SURFACE_STRIDE</div>
+</div>
+<p>BS/BN/EW_BS_BASE_ADDR_LOW/HIGH</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="cdp">
+<h3>CDP<a class="headerlink" href="#cdp" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Maximum supported local_size is 9.</li>
+</ul>
+</div>
+<div class="section" id="pdp">
+<h3>PDP<a class="headerlink" href="#pdp" title="Permalink to this headline">¶</a></h3>
+<ul>
+<li><p class="first">PL/PR should be carefully programmed to make sure each input sample
+are used:</p>
+<p>(PL+W+PR-Kernel_W)%stride_x == 0</p>
+</li>
+<li><p class="first">PL/PR should be less than kernel_width;</p>
+</li>
+<li><p class="first">For any mode, first/mid/last_out_width should be less than maximum
+flying width (see 10.1.4)</p>
+</li>
+<li><p class="first">For non-split mode, CUBE_IN_WIDTH + PL should be equals to
+(CUBE_OUT_WIDTH-1)*stride_x + kernel_width;</p>
+</li>
+<li><p class="first">For split mode:</p>
+</li>
+</ul>
+<p>For split_num =2:</p>
+<ul class="simple">
+<li>First_out_width + last_out_width should be equals to CUBE_OUT_WIDTH;</li>
+<li>First_in_width + PL should be equals to (first_out_width-1)*stride_x
++ kernel_width;</li>
+<li>Last_in_width + PR + overlap should be equals to
+(last_out_width-1)*stride_x + kernel_width;</li>
+<li>if kernel &gt;=kernel_stride, kernel_w – stride_x should be &lt;=
+first_in_width; Otherwise, stride_x – kernel_w &lt; last_in_width;</li>
+</ul>
+<p>For split_num &gt; 2:</p>
+<ul class="simple">
+<li>first_out_width + last_out_width + mid_out_width*(split_num-2) should
+be equals to CUBE_OUT_WIDTH;</li>
+<li>first_in_width + PL should be equals to (first_out_width-1)*stride_x
++ kernel_w;</li>
+<li>mid_in_width + overlap should be equals to (mid_out_width-1)*stride_x
++ kernel_w;</li>
+<li>last_in_width + PR + overlap should be equals to
+(last_out_width-1)*stride_x + kernel_w;</li>
+<li>if kernel_w &gt;=kernel_stride, kernel_w – stride_x should be &lt;=
+&lt;first|mid&gt;_in_width; Otherwise, stride_x – kernel_w should be &lt;
+&lt;last|mid&gt;_in_width;</li>
+<li>Maximum supported pooling kernel size is 8</li>
+</ul>
+</div>
+<div class="section" id="rubik">
+<h3>Rubik<a class="headerlink" href="#rubik" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>For contract mode, the address/line_stride for both input/output
+should be 32bytes aligned;</li>
+<li>For split/merge mode, the address/line_stride should be 64bytes
+aligned for planar data(output of split mode, input of merge mode)</li>
+<li>deconv_x_stride * datain_width should be &lt;=8192</li>
+</ul>
+</div>
+</div>
+</div>
+
+
+        </div>
+        <div class="col-xs-12 col-md-3">
+          
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../../contents.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Programming Guide</a><ul>
+<li><a class="reference internal" href="#bdma-programming">BDMA programming</a><ul>
+<li><a class="reference internal" href="#background">Background</a></li>
+<li><a class="reference internal" href="#programming">Programming</a></li>
+<li><a class="reference internal" href="#buffer-allocation">Buffer allocation</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#rubik-programming">Rubik programming</a><ul>
+<li><a class="reference internal" href="#features">Features</a></li>
+<li><a class="reference internal" href="#id1">Programming</a><ul>
+<li><a class="reference internal" href="#contract">Contract</a></li>
+<li><a class="reference internal" href="#split-merge">Split/Merge</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#convolution-pipeline-programming">Convolution pipeline programming</a><ul>
+<li><a class="reference internal" href="#id2">Features</a></li>
+<li><a class="reference internal" href="#strategy-selection">Strategy selection</a></li>
+<li><a class="reference internal" href="#id3">Programming</a><ul>
+<li><a class="reference internal" href="#register-definition">Register definition</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#deconvolution">Deconvolution</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#sdp-programming">SDP programming</a><ul>
+<li><a class="reference internal" href="#bias-addition">Bias addition</a></li>
+<li><a class="reference internal" href="#batch-normalization">Batch normalization</a></li>
+<li><a class="reference internal" href="#element-wise">Element-wise</a></li>
+<li><a class="reference internal" href="#compare-mode">Compare mode</a><ul>
+<li><a class="reference internal" href="#normal-comparision">Normal comparision</a></li>
+<li><a class="reference internal" href="#batch-mode-comparison">Batch mode comparison</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#pdp-programming">PDP programming</a><ul>
+<li><a class="reference internal" href="#on-the-fly-processing">On-the-fly processing</a></li>
+<li><a class="reference internal" href="#offline-processing-without-split-width">Offline processing without split width</a></li>
+<li><a class="reference internal" href="#offline-processing-with-split-width">Offline processing with split width</a></li>
+<li><a class="reference internal" href="#id4">Register definition</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#cdp-programming">CDP programming</a></li>
+<li><a class="reference internal" href="#debug-features">Debug features</a><ul>
+<li><a class="reference internal" href="#precision-debug">Precision debug</a></li>
+<li><a class="reference internal" href="#performance-debug">Performance debug</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#limitation">Limitation</a><ul>
+<li><a class="reference internal" href="#data-format">Data Format</a></li>
+<li><a class="reference internal" href="#csb-master">CSB_MASTER</a></li>
+<li><a class="reference internal" href="#bdma">BDMA</a></li>
+<li><a class="reference internal" href="#convolution">Convolution</a><ul>
+<li><a class="reference internal" href="#general">General</a></li>
+<li><a class="reference internal" href="#image">Image</a></li>
+<li><a class="reference internal" href="#dc">DC</a></li>
+<li><a class="reference internal" href="#winograd">Winograd</a></li>
+<li><a class="reference internal" href="#multi-batch">Multi-batch</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#lut">LUT</a></li>
+<li><a class="reference internal" href="#sdp">SDP</a><ul>
+<li><a class="reference internal" href="#id5">General</a></li>
+<li><a class="reference internal" href="#id6">DC</a></li>
+<li><a class="reference internal" href="#winograd-batch">Winograd/Batch</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#cdp">CDP</a></li>
+<li><a class="reference internal" href="#pdp">PDP</a></li>
+<li><a class="reference internal" href="#rubik">Rubik</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="unit_description.html"
+                        title="previous chapter">Unit Description</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../../v2/environment_setup_guide.html"
+                        title="next chapter">NVDLA Environment Setup Guide</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../../_sources/hw/v1/ias/programming_guide.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+  </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <div class="container">
+      <div class="row">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right first">
+          <a href="../../v2/environment_setup_guide.html" title="NVDLA Environment Setup Guide"
+             >next</a></li>
+        <li class="right">
+          <a href="unit_description.html" title="Unit Description"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">NVDLA Open Source Project</a>&#187;</li>
+        <li class="nav-item nav-item-1"><a href="../../../contents.html">Documentation</a>&#187;</li>
+          <li class="nav-item nav-item-2"><a href="../../contents.html" >Hardware Manual</a>&#187;</li> 
+      </ul>
+      </div>
+      </div>
+    </div>
+<div class="footer" role="contentinfo">
+<div class="container">
+<div class="row">
+&#169; <a
+href="../../../copyright.html">Copyright</a> 2017, NVIDIA Corporation.
+<a href="http://www.nvidia.com/object/legal_info.html">Legal Information.</a>
+<a href="http://www.nvidia.com/object/privacy_policy.html">Privacy Policy.</a>
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.2.
+</div>
+</div>
+</div>
+<script type="text/javascript">_satellite.pageBottom();</script>
+  </body>
+</html>

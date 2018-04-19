@@ -4,23 +4,13 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>NVDLA Primer &#8212; NVDLA Documentation</title>
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-
     <link rel="stylesheet" href="_static/nvdla.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="_static/styles.css" type="text/css" />
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    './',
-        VERSION:     '0.0.0',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true,
-        SOURCELINK_SUFFIX: '.txt'
-      };
-    </script>
+    <script type="text/javascript" src="_static/documentation_options.js"></script>
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
@@ -30,8 +20,7 @@
     <link rel="prev" title="NVDLA Index of Documentation" href="contents.html" />
  
 <script src="//assets.adobedtm.com/b92787824f2e0e9b68dc2e993f9bd995339fe417/satelliteLib-30c8ffcc8ece089156fd5590fbcf390ffc296f51.js"></script>
-  </head>
-  <body>
+  </head><body>
 <header class="navbar">
   <nav class="container navbar navbar-light bg-faded">
     <a class="navbar-brand" href="https://www.nvidia.com/">
@@ -264,7 +253,7 @@ data to the Single Data Point Processor, which can pass data to the Planar
 Data Processor, and in turn to the Cross-channel Data Processor).</li>
 </ul>
 <div class="figure align-center" id="id2">
-<span id="fig-core-diagram"></span><img alt="&quot;Headless NVDLA core&quot; architectural drawing.  A configuration interface block is connected to the outside world through the CSB/interrupt interface.  The memory interface block is connected outside with a DBB interface and a second, optional, DBB interface.  The memory interface connects to a convolution buffer, which connects to a convolution core; the memory interface also connects to the activation engine, the pooling engine, local response normalization engine, reshape engine, and bridge DMA engine.   The convolution core, activation engine, pooling engine, and local response normalization engine also form a pipeline." src="_images/nvdla-primer-core-diagram.svg" /><p class="caption"><span class="caption-number">Fig. 2 </span><span class="caption-text">Internal architecture of NVDLA core.</span></p>
+<span id="fig-core-diagram"></span><img alt="&quot;Headless NVDLA core&quot; architectural drawing.  A configuration interface block is connected to the outside world through the CSB/interrupt interface.  The memory interface block is connected outside with a DBB interface and a second, optional, DBB interface.  The memory interface connects to a convolution buffer, which connects to a convolution core; the memory interface also connects to the activation engine, the pooling engine, local response normalization engine, reshape engine, and bridge DMA engine.   The convolution core, activation engine, pooling engine, and local response normalization engine also form a pipeline." src="_images/nvdla-primer-core-diagram1.svg" /><p class="caption"><span class="caption-number">Fig. 2 </span><span class="caption-text">Internal architecture of NVDLA core.</span></p>
 </div>
 <div class="section" id="connections">
 <h3>Connections<a class="headerlink" href="#connections" title="Permalink to this headline">¶</a></h3>
@@ -321,7 +310,7 @@ to as the “convolution buffer”.  This design greatly improves memory
 efficiency over sending a request to the system memory controller for each
 independent time a weight or feature is needed.</p>
 <p>The convolution unit maps onto TensorFlow operations such as
-<code class="docutils literal"><span class="pre">tf.nn.conv2d</span></code>.</p>
+<code class="docutils literal notranslate"><span class="pre">tf.nn.conv2d</span></code>.</p>
 </div>
 <div class="section" id="single-data-point-processor">
 <h4>Single Data Point Processor<a class="headerlink" href="#single-data-point-processor" title="Permalink to this headline">¶</a></h4>
@@ -334,8 +323,8 @@ activation functions, as well as other element-wise operations, including
 ReLU, PReLU, precision scaling, batch normalization, bias addition, or other
 complex non-linear functions, such as a sigmoid or a hyperbolic tangent.</p>
 <p>The SDP maps onto TensorFlow operations including
-<code class="docutils literal"><span class="pre">tf.nn.batch_normalization</span></code>, <code class="docutils literal"><span class="pre">tf.nn.bias_add</span></code>, <code class="docutils literal"><span class="pre">tf.nn.elu</span></code>,
-<code class="docutils literal"><span class="pre">tf.nn.relu</span></code>, <code class="docutils literal"><span class="pre">tf.sigmoid</span></code>, <code class="docutils literal"><span class="pre">tf.tanh</span></code>, and more.</p>
+<code class="docutils literal notranslate"><span class="pre">tf.nn.batch_normalization</span></code>, <code class="docutils literal notranslate"><span class="pre">tf.nn.bias_add</span></code>, <code class="docutils literal notranslate"><span class="pre">tf.nn.elu</span></code>,
+<code class="docutils literal notranslate"><span class="pre">tf.nn.relu</span></code>, <code class="docutils literal notranslate"><span class="pre">tf.sigmoid</span></code>, <code class="docutils literal notranslate"><span class="pre">tf.tanh</span></code>, and more.</p>
 </div>
 <div class="section" id="planar-data-processor">
 <h4>Planar Data Processor<a class="headerlink" href="#planar-data-processor" title="Permalink to this headline">¶</a></h4>
@@ -343,8 +332,8 @@ complex non-linear functions, such as a sigmoid or a hyperbolic tangent.</p>
 are common in CNN applications.  It is configurable at runtime to support
 different pool group sizes, and supports three pooling functions:
 maximum-pooling, minimum-pooling, and average-pooling.</p>
-<p>The PDP maps onto the the <code class="docutils literal"><span class="pre">tf.nn.avg_pool</span></code>, <code class="docutils literal"><span class="pre">tf.nn.max_pool</span></code>, and
-<code class="docutils literal"><span class="pre">tf.nn.pool</span></code> operations.</p>
+<p>The PDP maps onto the the <code class="docutils literal notranslate"><span class="pre">tf.nn.avg_pool</span></code>, <code class="docutils literal notranslate"><span class="pre">tf.nn.max_pool</span></code>, and
+<code class="docutils literal notranslate"><span class="pre">tf.nn.pool</span></code> operations.</p>
 </div>
 <div class="section" id="cross-channel-data-processor">
 <h4>Cross-channel Data Processor<a class="headerlink" href="#cross-channel-data-processor" title="Permalink to this headline">¶</a></h4>
@@ -352,7 +341,7 @@ maximum-pooling, minimum-pooling, and average-pooling.</p>
 the local response normalization (LRN) function – a special normalization
 function that operates on channel dimensions, as opposed to the spatial
 dimensions.</p>
-<p>The CDP maps onto the <code class="docutils literal"><span class="pre">tf.nn.local_response_normalization</span></code> function.</p>
+<p>The CDP maps onto the <code class="docutils literal notranslate"><span class="pre">tf.nn.local_response_normalization</span></code> function.</p>
 </div>
 <div class="section" id="data-reshape-engine">
 <h4>Data Reshape Engine<a class="headerlink" href="#data-reshape-engine" title="Permalink to this headline">¶</a></h4>
@@ -364,8 +353,8 @@ operations may be used to separate out different features or spatial regions
 of an image, and “reshape-transpose” operations (common in deconvolutional
 networks) create output data with larger dimensions than the input dataset.</p>
 <p>The data reshape engine maps onto TensorFlow operations such as
-<code class="docutils literal"><span class="pre">tf.nn.conv2d_transpose</span></code>, <code class="docutils literal"><span class="pre">tf.concat</span></code>, <code class="docutils literal"><span class="pre">tf.slice</span></code>, and
-<code class="docutils literal"><span class="pre">tf.transpose</span></code>.</p>
+<code class="docutils literal notranslate"><span class="pre">tf.nn.conv2d_transpose</span></code>, <code class="docutils literal notranslate"><span class="pre">tf.concat</span></code>, <code class="docutils literal notranslate"><span class="pre">tf.slice</span></code>, and
+<code class="docutils literal notranslate"><span class="pre">tf.transpose</span></code>.</p>
 </div>
 <div class="section" id="bridge-dma">
 <h4>Bridge DMA<a class="headerlink" href="#bridge-dma" title="Permalink to this headline">¶</a></h4>
@@ -508,7 +497,7 @@ loadable image.</p>
 loadable images, binding input and output tensors to memory locations, and
 running inference. This layer loads the network into memory in a defined
 set of data structures, and passes it to the KMD in an implementation-defined
-fashion. On Linux, for instance, this could be an <code class="docutils literal"><span class="pre">ioctl()</span></code>, passing data
+fashion. On Linux, for instance, this could be an <code class="docutils literal notranslate"><span class="pre">ioctl()</span></code>, passing data
 from the user-mode driver to the kernel-mode driver; on a single-process system
 in which the KMD runs in the same environment as the UMD, this could be a simple function call.</p>
 <p>KMD’s main entry point receives an inference job in memory, selects from multiple
@@ -907,12 +896,14 @@ investigation into these topics, as needed.</p>
    </div>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
+    <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <div><input type="text" name="q" /></div>
-      <div><input type="submit" value="Go" /></div>
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
+    </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -945,7 +936,7 @@ investigation into these topics, as needed.</p>
 href="copyright.html">Copyright</a> 2017, NVIDIA Corporation.
 <a href="http://www.nvidia.com/object/legal_info.html">Legal Information.</a>
 <a href="http://www.nvidia.com/object/privacy_policy.html">Privacy Policy.</a>
-Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.6.
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.2.
 </div>
 </div>
 </div>

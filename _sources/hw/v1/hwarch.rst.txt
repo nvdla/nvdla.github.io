@@ -21,7 +21,7 @@ NVDLA has two modes of operation: independent mode and fused mode. Independent o
 
 .. _fig_arch_nvdla_block_diagram:
 
-.. figure:: nvdla-primer-core-diagram.svg
+.. figure:: ../../nvdla-primer-core-diagram.svg
   :alt: "Headless NVDLA core" architectural drawing.  A configuration interface block is connected to the outside world through the CSB/interrupt interface.  The memory interface block is connected outside with a DBB interface and a second, optional, DBB interface.  The memory interface connects to a convolution buffer, which connects to a convolution core; the memory interface also connects to the activation engine, the pooling engine, local response normalization engine, reshape engine, and bridge DMA engine.   The convolution core, activation engine, pooling engine, and local response normalization engine also form a pipeline.
   :align: center
 
@@ -586,17 +586,17 @@ Small sized NVDLA implementations target smaller workloads, as such, these imple
 * Feature supporting - Winograd = No
 * Feature supporting - Second Memory Bus = No
 * Feature supporting - Compression = No
-* Image input support = A8R8G8B8
+* Image input support = R8, A8B8G8R8, A8R8G8B8, B8G8R8A8, R8G8B8A8, X8B8G8R8, X8R8G8B8, B8G8R8X8, R8G8B8X8, Y8___U8V8, Y8___V8U8
 * SDP function support = Single Scaling
 * BDMA function support = No
 * Rubik function support = No
 * Atomic - C sizing = 8
 * Atomic - K sizing = 8
-* SDP throughput = 4
-* PDP throughput = 2
-* CDP throughput = 2
-* BUFF bank # = 4
-* BUFF bank size = 8KB
+* SDP throughput = 1
+* PDP throughput = 1
+* CDP throughput = 1
+* BUFF bank # = 32
+* BUFF bank size = 4KB
  
 Large NVDLA Implementation Example
 -----------------------------------

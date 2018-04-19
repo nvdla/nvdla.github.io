@@ -4,34 +4,23 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>Virtual Platform &#8212; NVDLA Documentation</title>
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-
     <link rel="stylesheet" href="_static/nvdla.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="_static/styles.css" type="text/css" />
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    './',
-        VERSION:     '0.0.0',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true,
-        SOURCELINK_SUFFIX: '.txt'
-      };
-    </script>
+    <script type="text/javascript" src="_static/documentation_options.js"></script>
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Hardware Architectural Specification" href="hwarch.html" />
+    <link rel="next" title="Open NVDLA Repository Updates" href="updates.html" />
     <link rel="prev" title="Test applications" href="sw/test_application.html" />
  
 <script src="//assets.adobedtm.com/b92787824f2e0e9b68dc2e993f9bd995339fe417/satelliteLib-30c8ffcc8ece089156fd5590fbcf390ffc296f51.js"></script>
-  </head>
-  <body>
+  </head><body>
 <header class="navbar">
   <nav class="container navbar navbar-light bg-faded">
     <a class="navbar-brand" href="https://www.nvidia.com/">
@@ -46,7 +35,7 @@
       <h3>Navigation</h3>
       <ul>
         <li class="right first">
-          <a href="hwarch.html" title="Hardware Architectural Specification"
+          <a href="updates.html" title="Open NVDLA Repository Updates"
              accesskey="N">next</a></li>
         <li class="right">
           <a href="sw/test_application.html" title="Test applications"
@@ -66,9 +55,9 @@
 <h1>Virtual Platform<a class="headerlink" href="#virtual-platform" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="overview">
 <h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
-<p>The NVDLA virtual platform provides a register-accurate system on which software can be quickly developed and debugged. The virtual platform is based on GreenSocs <a class="reference external" href="https://git.greensocs.com/qemu/qbox">QBOX</a>, a solution for co-simulation with QEMU and SystemC. <a class="reference internal" href="#fig-vp-top"><span class="std std-numref">Fig. 6</span></a> below shows the top level diagram of the NVDLA virtual simulator. A QEMU emulator of ARMv8 ‘virt’ SoC board is included to provide high performance CPU emulation and generic devices. The emulator is wrapped inside a standard SystemC module with a set of TLM-2.0 interfaces to interact with other SystemC modules.</p>
+<p>The NVDLA virtual platform provides a register-accurate system on which software can be quickly developed and debugged. The virtual platform is based on GreenSocs <a class="reference external" href="https://git.greensocs.com/qemu/qbox">QBOX</a>, a solution for co-simulation with QEMU and SystemC. <a class="reference internal" href="#fig-vp-top"><span class="std std-numref">Fig. 89</span></a> below shows the top level diagram of the NVDLA virtual simulator. A QEMU emulator of ARMv8 ‘virt’ SoC board is included to provide high performance CPU emulation and generic devices. The emulator is wrapped inside a standard SystemC module with a set of TLM-2.0 interfaces to interact with other SystemC modules.</p>
 <div class="figure align-center" id="id1">
-<span id="fig-vp-top"></span><img alt="NVDLA Virtual Platform Top Level Diagram." src="_images/nvdla-vp-top.svg" /><p class="caption"><span class="caption-number">Fig. 6 </span><span class="caption-text">NVDLA Virtual Platform.</span></p>
+<span id="fig-vp-top"></span><img alt="NVDLA Virtual Platform Top Level Diagram." src="_images/nvdla-vp-top.svg" /><p class="caption"><span class="caption-number">Fig. 89 </span><span class="caption-text">NVDLA Virtual Platform.</span></p>
 </div>
 </div>
 <div class="section" id="using-the-virtual-simulator">
@@ -94,12 +83,12 @@
 <li>libcap dev</li>
 <li>libattr1 dev</li>
 </ul>
-<p>Several tools like Java and Perl are also required to build the NVDLA hardware tree. Please refer to <a class="reference internal" href="integration_guide.html#env-setup"><span class="std std-ref">Environment Setup</span></a> for details.</p>
+<p>Several tools like Java and Perl are also required to build the NVDLA hardware tree. Please refer to <a class="reference internal" href="hw/v1/integration_guide.html#env-setup"><span class="std std-ref">Environment Setup</span></a> for details.</p>
 </div>
 <div class="section" id="download-the-virtual-simulator">
 <h4>Download the Virtual Simulator<a class="headerlink" href="#download-the-virtual-simulator" title="Permalink to this headline">¶</a></h4>
 <p>The NVDLA virtual simulator source code can be downloaded from <a class="reference external" href="https://github.com/nvdla/vp">github</a>.</p>
-<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> git clone https://github.com/nvdla/vp.git
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> git clone https://github.com/nvdla/vp.git
 <span class="gp">$</span> <span class="nb">cd</span> vp
 <span class="gp">$</span> git submodule update --init --recursive
 </pre></div>
@@ -108,11 +97,11 @@
 <div class="section" id="install-dependencies">
 <h4>Install Dependencies<a class="headerlink" href="#install-dependencies" title="Permalink to this headline">¶</a></h4>
 <p>Install required tools and libraries:</p>
-<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> sudo apt-get install g++ cmake libboost-dev python-dev libglib2.0-dev libpixman-1-dev liblua5.2-dev swig libcap-dev libattr1-dev
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> sudo apt-get install g++ cmake libboost-dev python-dev libglib2.0-dev libpixman-1-dev liblua5.2-dev swig libcap-dev libattr1-dev
 </pre></div>
 </div>
 <p>Download and install SystemC 2.3.0 (Please be noted that SystemC 2.3.1/2.3.2 is currently not supported):</p>
-<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> wget -O systemc-2.3.0a.tar.gz http://www.accellera.org/images/downloads/standards/systemc/systemc-2.3.0a.tar.gz
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> wget -O systemc-2.3.0a.tar.gz http://www.accellera.org/images/downloads/standards/systemc/systemc-2.3.0a.tar.gz
 <span class="gp">$</span> tar -xzvf systemc-2.3.0a.tar.gz
 <span class="gp">$</span> <span class="nb">cd</span> systemc-2.3.0a
 <span class="gp">$</span> sudo mkdir -p /usr/local/systemc-2.3.0/
@@ -123,8 +112,8 @@
 <span class="gp">$</span> sudo make install
 </pre></div>
 </div>
-<p>Download and build NVDLA CMOD. Please refer to <a class="reference internal" href="integration_guide.html#tree-build"><span class="std std-ref">Tree Build</span></a> for details on building the NVDLA hardware tree, and make sure the required tools listed in <a class="reference internal" href="integration_guide.html#env-setup"><span class="std std-ref">Environment Setup</span></a> are installed first.</p>
-<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> git clone https://github.com/nvdla/hw.git
+<p>Download and build NVDLA CMOD. Please refer to <a class="reference internal" href="hw/v1/integration_guide.html#tree-build"><span class="std std-ref">Tree Build</span></a> for details on building the NVDLA hardware tree, and make sure the required tools listed in <a class="reference internal" href="hw/v1/integration_guide.html#env-setup"><span class="std std-ref">Environment Setup</span></a> are installed first.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> git clone https://github.com/nvdla/hw.git
 <span class="gp">$</span> <span class="nb">cd</span> hw
 <span class="gp">$</span> make
 <span class="gp">$</span> tools/bin/tmake -build cmod_top
@@ -135,15 +124,15 @@
 <div class="section" id="build-and-install-the-virtual-simulator">
 <h4>Build and Install the Virtual Simulator<a class="headerlink" href="#build-and-install-the-virtual-simulator" title="Permalink to this headline">¶</a></h4>
 <p>Cmake build under the vp repository directory:</p>
-<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> cmake -DCMAKE_INSTALL_PREFIX<span class="o">=[</span>install dir<span class="o">]</span> -DSYSTEMC_PREFIX<span class="o">=[</span>systemc prefix<span class="o">]</span> -DNVDLA_HW_PREFIX<span class="o">=[</span>nvdla_hw prefix<span class="o">]</span> -DNVDLA_HW_PROJECT<span class="o">=[</span>nvdla_hw project name<span class="o">]</span>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> cmake -DCMAKE_INSTALL_PREFIX<span class="o">=[</span>install dir<span class="o">]</span> -DSYSTEMC_PREFIX<span class="o">=[</span>systemc prefix<span class="o">]</span> -DNVDLA_HW_PREFIX<span class="o">=[</span>nvdla_hw prefix<span class="o">]</span> -DNVDLA_HW_PROJECT<span class="o">=[</span>nvdla_hw project name<span class="o">]</span>
 </pre></div>
 </div>
 <p><em>install dir</em> is where you would like to install the virtual simulator, <em>systemc prefix</em> is the SystemC installation directory, <em>nvdla_hw prefix</em> is the local NVDLA HW repository, and <em>nvdla_hw project name</em> is the NVDLA HW project name. Example:</p>
-<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> cmake -DCMAKE_INSTALL_PREFIX<span class="o">=</span>build -DSYSTEMC_PREFIX<span class="o">=</span>/usr/local/systemc-2.3.0/ -DNVDLA_HW_PREFIX<span class="o">=</span>/usr/local/nvdla/hw -DNVDLA_HW_PROJECT<span class="o">=</span>nv_full
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> cmake -DCMAKE_INSTALL_PREFIX<span class="o">=</span>build -DSYSTEMC_PREFIX<span class="o">=</span>/usr/local/systemc-2.3.0/ -DNVDLA_HW_PREFIX<span class="o">=</span>/usr/local/nvdla/hw -DNVDLA_HW_PROJECT<span class="o">=</span>nv_full
 </pre></div>
 </div>
 <p>Compile and install:</p>
-<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> make
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> make
 <span class="gp">$</span> make install
 </pre></div>
 </div>
@@ -164,13 +153,13 @@
 <div class="section" id="running-kernel-image-in-the-virtual-simulator">
 <h4>Running Kernel Image In the Virtual Simulator<a class="headerlink" href="#running-kernel-image-in-the-virtual-simulator" title="Permalink to this headline">¶</a></h4>
 <p>Start the virtual simulator:</p>
-<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> <span class="nb">export</span> <span class="nv">SC_SIGNAL_WRITE_CHECK</span><span class="o">=</span>DISABLE
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> <span class="nb">export</span> <span class="nv">SC_SIGNAL_WRITE_CHECK</span><span class="o">=</span>DISABLE
 <span class="gp">$</span> ./build/bin/aarch64_toplevel -c conf/aarch64_nvdla.lua
 <span class="go">Login the kernel. The demo image uses account &#39;root&#39; and password &#39;nvdla&#39;.</span>
 </pre></div>
 </div>
 <p>Some demo tests are provided in the <em>tests</em> directory, you can run them after login as root:</p>
-<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">#</span> mount -t 9p -o <span class="nv">trans</span><span class="o">=</span>virtio r /mnt
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> mount -t 9p -o <span class="nv">trans</span><span class="o">=</span>virtio r /mnt
 <span class="gp">#</span> <span class="nb">cd</span> /mnt/tests/hello
 <span class="gp">#</span> ./aarch64_hello
 </pre></div>
@@ -181,7 +170,7 @@
 </div>
 <div class="section" id="running-the-virtual-simulator-from-docker">
 <h3>Running the Virtual Simulator From Docker<a class="headerlink" href="#running-the-virtual-simulator-from-docker" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> docker pull nvdla/vp
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> docker pull nvdla/vp
 <span class="gp">$</span> docker run -it -v /home:/home nvdla/vp
 <span class="gp">$</span> <span class="nb">cd</span> /usr/local/nvdla
 <span class="gp">$</span> aarch64_toplevel -c aarch64_nvdla.lua
@@ -193,7 +182,7 @@
 <div class="section" id="debugging-the-virtual-simulator">
 <h3>Debugging the Virtual Simulator<a class="headerlink" href="#debugging-the-virtual-simulator" title="Permalink to this headline">¶</a></h3>
 <p>Before debugging the virtual simulator, you need to build the debug version of the simulator:</p>
-<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> cmake -DCMAKE_INSTALL_PREFIX<span class="o">=[</span>install dir<span class="o">]</span> -DSYSTEMC_PREFIX<span class="o">=[</span>systemc prefix<span class="o">]</span> -DNVDLA_HW_PREFIX<span class="o">=[</span>nvdla_hw prefix<span class="o">]</span> -DNVDLA_HW_PROJECT<span class="o">=[</span>nvdla_hw project name<span class="o">]</span> -DCMAKE_BUILD_TYPE<span class="o">=</span>Debug
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> cmake -DCMAKE_INSTALL_PREFIX<span class="o">=[</span>install dir<span class="o">]</span> -DSYSTEMC_PREFIX<span class="o">=[</span>systemc prefix<span class="o">]</span> -DNVDLA_HW_PREFIX<span class="o">=[</span>nvdla_hw prefix<span class="o">]</span> -DNVDLA_HW_PROJECT<span class="o">=[</span>nvdla_hw project name<span class="o">]</span> -DCMAKE_BUILD_TYPE<span class="o">=</span>Debug
 <span class="gp">$</span> make
 <span class="gp">$</span> make install
 </pre></div>
@@ -207,7 +196,7 @@
 </ul>
 <p>If both control strings are set, the simulator will pick the one set by environment variable <em>SC_LOG</em>.</p>
 <p>The format of the control string is:</p>
-<div class="highlight-console"><div class="highlight"><pre><span></span><span class="go">&quot;outfile:&lt;log_file&gt;;verbosity_level:&lt;info_level&gt;;&lt;msg_string&gt;:&lt;report_level&gt;&quot;</span>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">&quot;outfile:&lt;log_file&gt;;verbosity_level:&lt;info_level&gt;;&lt;msg_string&gt;:&lt;report_level&gt;&quot;</span>
 <span class="go">&lt;log_file&gt;: log output file name</span>
 <span class="go">&lt;info_level&gt;: info verbosity -- sc_none/sc_low/sc_medium/sc_high/sc_full/sc_debug</span>
 <span class="go">&lt;msg_string&gt;: message string specified in sc_report.</span>
@@ -215,12 +204,12 @@
 </pre></div>
 </div>
 <p>Here are some useful control string examples:</p>
-<div class="highlight-console"><div class="highlight"><pre><span></span><span class="go">export SC_LOG=&quot;outfile:sc.log;verbosity_level:sc_debug;csb_adaptor:enable&quot; -- print the register access transaction from QEMU to NVDLA</span>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">export SC_LOG=&quot;outfile:sc.log;verbosity_level:sc_debug;csb_adaptor:enable&quot; -- print the register access transaction from QEMU to NVDLA</span>
 <span class="go">export SC_LOG=&quot;outfile:sc.log;verbosity_level:sc_debug;dbb_adaptor:enable;sram_adaptor:enable&quot; -- print the memory access from NVDLA to external memory</span>
 </pre></div>
 </div>
 <p>You should be able to see logs like:</p>
-<div class="highlight-console"><div class="highlight"><pre><span></span><span class="go">Info: nvdla.csb_adaptor: GP: iswrite=0 addr=0x300c len=4 data=0x 00000000 resp=TLM_OK_RESPONSE</span>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">Info: nvdla.csb_adaptor: GP: iswrite=0 addr=0x300c len=4 data=0x 00000000 resp=TLM_OK_RESPONSE</span>
 <span class="go">Info: nvdla.dbb_adaptor: GP: iswrite=1 addr=0xc0001e80 len=64 data=0x abcd01b0 abcd01b1 abcd01b2 abcd01b3 abcd01b4 abcd01b5 abcd01b6 abcd01b7 abcd01b8 abcd01b9 abcd01ba abcd01bb abcd01bc abcd01bd abcd01be abcd01bf resp=TLM_OK_RESPONSE</span>
 </pre></div>
 </div>
@@ -228,7 +217,7 @@
 <div class="section" id="gdb">
 <h4>GDB<a class="headerlink" href="#gdb" title="Permalink to this headline">¶</a></h4>
 <p>You can also use GDB to debug the virtual simulator. First run the simulator, then get the PID of the process and use GDB to attach to it.</p>
-<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> ps -ef <span class="p">|</span> grep aarch64_toplevel
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> ps -ef <span class="p">|</span> grep aarch64_toplevel
 <span class="gp">$</span> gdb attach &lt;PID&gt;
 </pre></div>
 </div>
@@ -245,7 +234,7 @@
 <div class="section" id="configure">
 <h3>Configure<a class="headerlink" href="#configure" title="Permalink to this headline">¶</a></h3>
 <p>Use <em>qemu_aarch64_virt_defconfig</em> as base config, then set the customized configurations:</p>
-<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> make qemu_aarch64_virt_defconfig
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> make qemu_aarch64_virt_defconfig
 <span class="gp">$</span> make menuconfig
 <span class="go">* Target Options -&gt; Target Architecture -&gt; AArch64 (little endian)</span>
 <span class="go">* Target Options -&gt; Target Architecture Variant -&gt; cortex-A57</span>
@@ -264,7 +253,7 @@
 </div>
 <div class="section" id="build">
 <h3>Build<a class="headerlink" href="#build" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> make -j4
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> make -j4
 </pre></div>
 </div>
 <p>When it’s done, you can find the kernel image and rootfs in <em>output/image</em>.</p>
@@ -318,8 +307,8 @@
   <p class="topless"><a href="sw/test_application.html"
                         title="previous chapter">Test applications</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="hwarch.html"
-                        title="next chapter">Hardware Architectural Specification</a></p>
+  <p class="topless"><a href="updates.html"
+                        title="next chapter">Open NVDLA Repository Updates</a></p>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
@@ -329,12 +318,14 @@
    </div>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
+    <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <div><input type="text" name="q" /></div>
-      <div><input type="submit" value="Go" /></div>
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
+    </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -349,7 +340,7 @@
       <h3>Navigation</h3>
       <ul>
         <li class="right first">
-          <a href="hwarch.html" title="Hardware Architectural Specification"
+          <a href="updates.html" title="Open NVDLA Repository Updates"
              >next</a></li>
         <li class="right">
           <a href="sw/test_application.html" title="Test applications"
@@ -367,7 +358,7 @@
 href="copyright.html">Copyright</a> 2017, NVIDIA Corporation.
 <a href="http://www.nvidia.com/object/legal_info.html">Legal Information.</a>
 <a href="http://www.nvidia.com/object/privacy_policy.html">Privacy Policy.</a>
-Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.6.
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.2.
 </div>
 </div>
 </div>

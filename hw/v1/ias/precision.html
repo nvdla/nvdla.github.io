@@ -1,0 +1,806 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Precision Preservation &#8212; NVDLA Documentation</title>
+    <link rel="stylesheet" href="../../../_static/nvdla.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/styles.css" type="text/css" />
+    <script type="text/javascript" src="../../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="LUT programming" href="lut-programming.html" />
+    <link rel="prev" title="Integrator’s Manual" href="../integration_guide.html" />
+ 
+<script src="//assets.adobedtm.com/b92787824f2e0e9b68dc2e993f9bd995339fe417/satelliteLib-30c8ffcc8ece089156fd5590fbcf390ffc296f51.js"></script>
+  </head><body>
+<header class="navbar">
+  <nav class="container navbar navbar-light bg-faded">
+    <a class="navbar-brand" href="https://www.nvidia.com/">
+      <div class="logo"></div>
+    </a>
+  </nav>
+</header>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <div class="container">
+      <div class="row">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right first">
+          <a href="lut-programming.html" title="LUT programming"
+             accesskey="N">next</a></li>
+        <li class="right">
+          <a href="../integration_guide.html" title="Integrator’s Manual"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">NVDLA Open Source Project</a>&#187;</li>
+        <li class="nav-item nav-item-1"><a href="../../../contents.html">Documentation</a>&#187;</li>
+          <li class="nav-item nav-item-2"><a href="../../contents.html" accesskey="U">Hardware Manual</a>&#187;</li> 
+      </ul>
+      </div>
+      </div>
+    </div>
+  <div class="document">
+    <div class="container">
+      <div class="row">
+        <div class="col-xs-12 col-md-9">
+          
+  <div class="section" id="precision-preservation">
+<h1>Precision Preservation<a class="headerlink" href="#precision-preservation" title="Permalink to this headline">¶</a></h1>
+<p>Though most software-based DNN implementations are FP32-based, many studies have already
+shown that lower precision is sufficient for inference.  As such, NVDLA chooses to
+support INT8/INT16/FP16 as a trade-off between precision and
+performance/area.  At the same time, NVDLA adopts technologies to
+keep the precision loss under control.  Below, we give a diagram with an overview of NVDLA’s
+precision-preservation architecture.</p>
+<div class="figure align-center" id="id3">
+<span id="fig-image53-nvdla-precision"></span><img alt="../../../_images/ias_image53_nvdla_precision.svg" src="../../../_images/ias_image53_nvdla_precision.svg" /><p class="caption"><span class="caption-number">Fig. 32 </span><span class="caption-text">NVDLA precision-preservation architecture</span></p>
+</div>
+<p>In total, there are four types of approaches to precision control in the NVDLA
+pipeline:</p>
+<ul>
+<li><p class="first">Convertor:</p>
+<p>The formula for a convertor in INT8 and INT16 is: <span class="math notranslate">\(y = saturation\_round{(x - offset_{int}) * scaling_{int} &gt;&gt; shifter_{uint}}\)</span></p>
+<p><cite>offset</cite>, <cite>scaling</cite>, and <cite>shifter</cite> are programmable registers to allow
+software to control the output dynamic range. Saturation is dependent on the number of output bits.</p>
+<p>For INT8 and INT16, <cite>offset</cite> and <cite>scaling</cite> are treated as signed integers, and the exact
+number of bits is depends on the input operands.
+<cite>shifter</cite> is a 5 bits unsigned integer (always specifying a right shift); the
+rounding method used after the shift is to “round half away from zero”.</p>
+<p>For FP16, the dynamic range that can be represented by FP16 representable is large, and so
+convertor and shifter logic is not implemented in hardware.</p>
+<p>The convertor is able to keep the best possible precision even if input data are not
+symmetric to 0, or dynamic range is not 2<sup>N</sup>; NVDLA uses it
+to convert internal precision (high) to external (low, typically
+INT8/INT16/FP16).</p>
+</li>
+<li><p class="first">Truncate:</p>
+<p>Truncation is enabled for INT8/INT16 only.  The formula for truncation is: <span class="math notranslate">\(y = saturate\_round (x[msb : lsb])\)</span></p>
+<p><cite>lsb</cite> is a programmable register; <cite>msb</cite> is defined as <cite>lsb</cite> + <cite>output_bits</cite>.</p>
+<p>Similarly to the convertor, the rounding method used in truncation is also “round
+half away from zero”.</p>
+<p>Truncation is used in NVDLA internal pipe where the <span class="math notranslate">\(y\)</span> has enough bits
+(compared to convertor case); it is the result of a trade-off
+between precision and area.</p>
+</li>
+<li><p class="first">Shifter:</p>
+<p>The shifter exists to make sure that the bias can be added to convolution
+results; it has the formula <span class="math notranslate">\(y = saturate ( x &lt;&lt; shifter )\)</span>.</p>
+<p><cite>shifter</cite> is a programmable register. The saturate function depends on the number of output bits.</p>
+</li>
+<li><p class="first">LUT:</p>
+<p>Look-up tables are used to deal with non-linear function in networks; these functions include
+sigmoid/tanh activation, or local response normalization as mentioned
+in <a class="reference external" href="http://nvdla.org/hw/format.html">Data Formats</a>.  We use an innovative 2 level hybrid LUT to mimic those
+non-linear functions; for more detail, see <a class="reference internal" href="lut-programming.html"><span class="doc">LUT programming</span></a>.</p>
+</li>
+</ul>
+<div class="section" id="fp16-error-threshold">
+<h2>FP16 error threshold<a class="headerlink" href="#fp16-error-threshold" title="Permalink to this headline">¶</a></h2>
+<p>We know that the output of computations on floating-point data are highly depending on computation order.
+As a result, when comparing the results of tests that are computed in FP16 space, we should allow some certain threshold of error when
+comparing NVDLA’s output against reference.  Below is a summary of the thresholds that are applied for each module.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="14%" />
+<col width="86%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Sub-module</th>
+<th class="head">Threshold</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>CC DC</td>
+<td><span class="math notranslate">\(fabs(a-b) \leq 2^{max\_exp-20} * R * S * C * 2 * scale + 2^{exp(a)-10}\)</span></td>
+</tr>
+<tr class="row-odd"><td>CC Winograd</td>
+<td><span class="math notranslate">\(fabs(a-b) \leq 2^{max\_exp-20} * 18 * C * 2 * scale + 2^{exp(a)-10}\)</span></td>
+</tr>
+<tr class="row-even"><td>SDP</td>
+<td>Bit-by-bit identical</td>
+</tr>
+<tr class="row-odd"><td>CDP</td>
+<td><span class="math notranslate">\((fabs(a-b) \leq 0.0001) \&amp;\&amp; (\frac{fabs(a-b)}{max\_value} \leq 0.001)\)</span></td>
+</tr>
+<tr class="row-even"><td>PDP</td>
+<td><span class="math notranslate">\((fabs(a-b) \leq 0.0001) \&amp;\&amp; (\frac{fabs(a-b)}{max\_value} \leq 0.001)\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>In the above table, note that:</p>
+<ul>
+<li><p class="first"><span class="math notranslate">\(exp(a)\)</span> in DC/Winograd is the operation to extract exponential
+field of an input: <span class="math notranslate">\(exp(a) = ((a&gt;&gt;10) \&amp; 0x1f) - 15\)</span> .</p>
+</li>
+<li><p class="first"><span class="math notranslate">\(max\_exp: in DC/Winograd is the maximum exponential value of :math:`wt*data\)</span>
+inside a convolution kernel.  As data moves in a sliding window,
+max_exp is different element-by-element:</p>
+<div class="math notranslate">
+\[\begin{split}max\_exp=\max_{s=0...S-1\\r=0...R-1\\c=0...C-1}(exp(data_{r,s,c})\&amp;(\sim\ 0x3)+exp(wt_{r,s,c})\&amp;(\sim\ 0x3))\end{split}\]</div>
+</li>
+<li><p class="first"><strong>max_value</strong> in CDP is the maximum value inside one square sum window.</p>
+</li>
+<li><p class="first"><strong>max_value</strong> in PDP is the maximum value inside one pooling window.</p>
+</li>
+</ul>
+</div>
+<div class="section" id="convertor-programming">
+<h2>Convertor programming<a class="headerlink" href="#convertor-programming" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="programming-interface">
+<h3>Programming interface<a class="headerlink" href="#programming-interface" title="Permalink to this headline">¶</a></h3>
+<p>As mentioned above, for a given convertor, there are 3 parameters:
+<cite>offset</cite>, <cite>scaling</cite> and <cite>shifter</cite>.  Depending on the use cases, those
+parameters have different encodings:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="18%" />
+<col width="16%" />
+<col width="18%" />
+<col width="24%" />
+<col width="24%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Parameter</th>
+<th class="head">INT-&gt;INT</th>
+<th class="head">INT-&gt;FP16</th>
+<th class="head">FP16-&gt;INT</th>
+<th class="head">FP16-&gt;FP16</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Offset</td>
+<td>INT32</td>
+<td>INT32</td>
+<td>Not supported</td>
+<td>Not supported</td>
+</tr>
+<tr class="row-odd"><td>Scaling</td>
+<td>INT16</td>
+<td>INT16</td>
+<td>Not supported</td>
+<td>Not supported</td>
+</tr>
+<tr class="row-even"><td>Shifter</td>
+<td>UINT5</td>
+<td>UINT5</td>
+<td>Not supported</td>
+<td>Not supported</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="convolution-convertors">
+<span id="id1"></span><h3>Convolution convertors<a class="headerlink" href="#convolution-convertors" title="Permalink to this headline">¶</a></h3>
+<p>The following is a list of place where convertors or truncation might be used for a convolution
+layer (please refer to <a class="reference internal" href="#fig-image53-nvdla-precision"><span class="std std-numref">Fig. 32</span></a> about
+where’re the convertors in system):</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="25%" />
+<col width="25%" />
+<col width="25%" />
+<col width="25%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Convertor</th>
+<th class="head">Functionality</th>
+<th class="head">Limitation</th>
+<th class="head">Owner</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>cc_cvt</td>
+<td><p class="first">For image
+input, this
+convertor
+responsible for
+mean
+subtraction and
+8 bit
+conversion;</p>
+<p class="last">For feature
+input, this
+convertor won’t
+be used</p>
+</td>
+<td><p class="first">INT8/INT16 only</p>
+<p class="last">For FP16,
+subtract mean
+data only</p>
+</td>
+<td>HW</td>
+</tr>
+<tr class="row-odd"><td>wt_cvt</td>
+<td>Convert weight
+data to
+INT8/16/FP16
+representable</td>
+<td>Offset is not
+allowed</td>
+<td>SW</td>
+</tr>
+<tr class="row-even"><td>pra_trunc</td>
+<td>Truncate the
+winograd
+pre-transformed
+results to
+INT8/16/FP16
+representable</td>
+<td>Used for
+winograd mode
+and
+CSC.PROC_PRECIS
+ION=INT8/INT16
+only</td>
+<td>HW</td>
+</tr>
+<tr class="row-odd"><td>cc_out_trunc</td>
+<td>Truncate the
+data to
+INT32/FP32
+before sending
+to SDP</td>
+<td>CACC.PROC_PRECI
+SION=INT8/INT16
+only</td>
+<td>HW</td>
+</tr>
+<tr class="row-even"><td>bs_cvt</td>
+<td>Convert bias
+data to
+INT8/16/FP16
+representable</td>
+<td>N/A</td>
+<td>SW</td>
+</tr>
+<tr class="row-odd"><td>bs_shifter</td>
+<td>Shifter the
+input bias to
+make it addable
+with
+convolution
+pipeline
+results</td>
+<td>SDP.PROC_PRECIS
+ION=INT8/INT16
+only</td>
+<td>HW</td>
+</tr>
+</tbody>
+</table>
+<div class="math notranslate">
+\[\begin{split}\begin{equation}\begin{cases}
+SF_{bs}*2^{bs\_trunc}=\frac{SF_{in}*SF_{wt}}{2^{pra\_trunc+cc\_out\_trunc}},&amp;\text{conv=winograd}\\
+SF_{bs}*2^{bs\_trunc}=\frac{SF_{in}*SF_{wt}}{2^{cc\_out\_trunc}},&amp;\text{conv=DC}
+\end{cases}\end{equation}\end{split}\]</div>
+<p>In case of input data encoded with offset (<em>x’=(x-offset)*SF</em>), this
+offset should be carefully considered for cases below:</p>
+<ul class="simple">
+<li>Padding:</li>
+</ul>
+<p>Convolution supports zero-padding, however, if the input encoded with
+“offset”, it means x=0 becomes x’=(0-offset)*SF=-offset*SF thus
+hardware should do “valued padding” instead of “zero padding”.
+Convolution has a register named as:</p>
+<p>PADDING_VALUE, this register should be set as –offset*SF for INT8/16
+pipeline. However, for FP16, we assume there’s no offset thus
+PADDING_VALUE should be set as 0;</p>
+<ul class="simple">
+<li>Activation:</li>
+</ul>
+<p>As discussed above, activation such as ReLU is a piece wise
+function:</p>
+<div class="math notranslate">
+\[\begin{split}\begin{equation}\begin{cases}
+y=x,&amp;\text{x&gt;0}\\
+y=0,&amp;\text{otherwise}
+\end{cases}\end{equation}\end{split}\]</div>
+<p>0 plays a important role to decide activation output, unfortunately,
+if “offset” is enabled on input convolution data, the “0” is no
+longer 0 in the encoded activation data:</p>
+<p>Let’s deduce the CC output (activation layer input) offset based on
+convolution definition:</p>
+<p>Given: <span class="math notranslate">\(In_{int}=SF_{in}*(In-Offset_{in}),\ Wt_{int}=SF_{wt}*Wt,\ CC_{FP}=\sum{In*Wt},\)</span></p>
+<div class="math notranslate">
+\[\begin{split}\begin{align*}
+CC_{int} &amp; = \frac{\sum{In_{int}*Wt_{int}}}{2^{pra\_trunc+cc\_out\_trunc}} \\
+&amp; = \frac{\sum{SF_{in}*(In-offset_{in})*SF_{wt}*Wt}}{2^{pra\_trunc+cc\_out\_trunc}} \\
+&amp; = \frac{SF_{in}*SF_{wt}*\sum{(In-offset_{in})*Wt}}{2^{pra\_trunc+cc\_out\_trunc}} \\
+&amp; = \frac{SF_{in}*SF_{wt}*(\sum{In*wt}-offset_{in}*\sum{Wt})}{2^{pra\_trunc+cc\_out\_trunc}} \\
+&amp; = \frac{SF_{in}*SF_{wt}*(CC_{FP}-offset_{in}*\sum{Wt})}{2^{pra\_trunc+cc\_out\_trunc}}
+\end{align*}\end{split}\]</div>
+<p>(The truncate for activation/weight are merged to <span class="math notranslate">\(SF_{in}\)</span>, <span class="math notranslate">\(SF_{wt}\)</span> in formula above
+to simplify deduction)</p>
+<p>So, the CC output offset is: <span class="math notranslate">\(\frac{SF_{in}*SF_{wt}*offset_{in}*\Sigma{W_t}}{2^{pra\_trunc+cc\_out\_trunc}}\)</span>.</p>
+<p>Please be noticed: The formula above is assuming no quantization
+error, in practice, there’ll be quantization error on weight thus
+actual offset is <span class="math notranslate">\(\frac{SF_{in}*SF_{wt}*offset_{in}*\Sigma{W^{'}_t}}{2^{pra\_trunc+cc\_out\_trunc}}\)</span>.</p>
+<p>Where <span class="math notranslate">\(W^{'}_t\)</span> is the low precision version of weight which takes weight
+quantization error into consideration.</p>
+<p><span class="math notranslate">\(\Sigma{W^{'}_t}\)</span> is different channel-by-channel which means <span class="math notranslate">\(\frac{SF_{in}*SF_{wt}*offset_{in}*\Sigma{W^{'}_t}}{2^{pra\_trunc+cc\_out\_trunc}}\)</span> also vary channel by
+channel thus per-channel operation has to be adopted to compensate
+the CC output offset. This compensation is done by ALU module in
+X1/X2/Y in SDP.</p>
+</div>
+<div class="section" id="sdp-convertors">
+<h3>SDP convertors<a class="headerlink" href="#sdp-convertors" title="Permalink to this headline">¶</a></h3>
+<p>SDP has kinds of use scenarios, table below lists how those use
+scenarios maps to SDP sub-modules (For the meaning of X/Y, please refer
+to <a class="reference internal" href="#fig-image53-nvdla-precision"><span class="std std-numref">Fig. 32</span></a>)</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="72%" />
+<col width="28%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Use scenario</th>
+<th class="head">Sub-module</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Bias addition</td>
+<td>X or Y</td>
+</tr>
+<tr class="row-odd"><td>Batch Normalization</td>
+<td>X or Y</td>
+</tr>
+<tr class="row-even"><td>Element-wise</td>
+<td>X or Y</td>
+</tr>
+<tr class="row-odd"><td>Activation(ReLU/PReLU)</td>
+<td>X or Y</td>
+</tr>
+<tr class="row-even"><td>Activation(Sigmoid/TanH, etc)</td>
+<td>Y</td>
+</tr>
+<tr class="row-odd"><td>Precision conversion</td>
+<td>X or Y</td>
+</tr>
+</tbody>
+</table>
+<p>Let’s review those cases one by one:</p>
+<div class="section" id="bias-addition">
+<h4>Bias addition<a class="headerlink" href="#bias-addition" title="Permalink to this headline">¶</a></h4>
+<p>This already covered by <a class="reference internal" href="#id1">Convolution convertors</a></p>
+</div>
+<div class="section" id="batch-normalization">
+<h4>Batch normalization<a class="headerlink" href="#batch-normalization" title="Permalink to this headline">¶</a></h4>
+<p>Here’s a list of convertor/shifters needed to realize batch
+normalization function in SDP:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="25%" />
+<col width="25%" />
+<col width="25%" />
+<col width="25%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Convertor</th>
+<th class="head">Functionality</th>
+<th class="head">Limitation</th>
+<th class="head">Owner</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>bn_m_cvt</td>
+<td>Convert the
+offline trained
+batch
+normalization
+mean data to
+INT8/16/FP16
+representable</td>
+<td>N/A</td>
+<td>SW</td>
+</tr>
+<tr class="row-odd"><td>bn_m_shifter</td>
+<td>Shift the
+bn_m_cvt
+converted
+values to have
+the same
+scaling factor
+as input</td>
+<td>For
+SDP.PROC_PRECIS
+ION=INT8/INT16
+only</td>
+<td>HW</td>
+</tr>
+<tr class="row-even"><td>bn_v_cvt</td>
+<td>Convert the
+offline trained
+batch
+normalization
+1/variance to
+INT8/16/FP16
+representable</td>
+<td>Offset is not
+allowed</td>
+<td>SW</td>
+</tr>
+</tbody>
+</table>
+<p>The input of batch normalization should be either from CONV/MC or
+previous pipeline stages thus we should assume <span class="math notranslate">\(O_{in}, SF_{in}\)</span> are applied on input.</p>
+<p>In order to make mean addable with input data, formula below should be
+satisfied:</p>
+<div class="math notranslate">
+\[SF_{in} = SF_{bs\_m\_cvt} * 2^{bn\_m\_shifter}\]</div>
+</div>
+<div class="section" id="element-wise">
+<h4>Element wise<a class="headerlink" href="#element-wise" title="Permalink to this headline">¶</a></h4>
+<p>Here’s a list of convertor/shifters needed to related to element wise
+operation in SDP:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="25%" />
+<col width="25%" />
+<col width="25%" />
+<col width="25%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Convertor</th>
+<th class="head">Functionality</th>
+<th class="head">Limitation</th>
+<th class="head">Owner</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>ew_cvt</td>
+<td>The convertor
+applied on
+element-wise
+input, as
+element-wise
+are cube-based,
+the
+element-wise
+hardware layer
+are the output
+of upstream
+hardware layers</td>
+<td>For
+SDP.PROC_PRECIS
+ION=INT8/INT16
+only</td>
+<td>HW</td>
+</tr>
+<tr class="row-odd"><td>ew_inv_cvt</td>
+<td>Align the
+offset/scaling
+factors to meet
+the requirement
+of different
+element wise
+operation(see
+below). If the
+requirement
+already
+satisfied, this
+convertor can
+be bypassed.</td>
+<td>For
+SDP.PROC_PRECIS
+ION=INT8/INT16
+only</td>
+<td>HW</td>
+</tr>
+</tbody>
+</table>
+<p>Since there might be 2 convertors applied on E-RDMA stream, if original
+input is x, the output from ew_inv_cvt is:</p>
+<div class="math notranslate">
+\[x'=\{(x-O_{ew\_cvt})*SF_{ew\_cvt}-O_{ew\_inv\_cvt}\}*SF_{ew\_inv\_cvt}=\{x-(O_{ew\_cvt}+\frac{O_{ew\_inv\_cvt}}{SF_{ew\_cvt}})\}*SF_{ew\_cvt}*SF_{ew\_inv\_cvt}\]</div>
+<p>In order to make element-wise acts as we supposed, the convertor
+parameter should be carefully configured based on different element-wise
+operation (Assume convertor parameter from BN module is: <span class="math notranslate">\(O_{in}, SF_{in}\)</span>):</p>
+<ul>
+<li><p class="first">MAX</p>
+<p>The offset/scaling applied on input stream and E-RDMA stream should
+be the same, which means:</p>
+</li>
+</ul>
+<div class="math notranslate">
+\[O_{in}==O_{ew\_cvt}+\frac{O_{ew\_inv\_cvt}}{SF_{ew\_cvt}}\]</div>
+<div class="math notranslate">
+\[SF_{in}==SF_{ew\_cvt}*SF_{ew\_inv\_cvt}\]</div>
+<ul>
+<li><p class="first">SUM</p>
+<p>The scaling factor applied on both stream should be the same:</p>
+</li>
+</ul>
+<div class="math notranslate">
+\[SF_{in} == SF_{ew\_cvt} * SF_{ew\_inv\_cvt}\]</div>
+<ul>
+<li><p class="first">PROD</p>
+<p>The offset applied on E-RDMA stream should be 0:</p>
+</li>
+</ul>
+<div class="math notranslate">
+\[O_{ew\_cvt} + \frac{O_{ew\_inv\_cvt}}{SF_{ew\_cvt}} == 0\]</div>
+</div>
+<div class="section" id="activation-relu-prelu">
+<h4>Activation (ReLU/PReLU)<a class="headerlink" href="#activation-relu-prelu" title="Permalink to this headline">¶</a></h4>
+<p>The input offset of ReLU, PReLU already
+eliminated in ALU unit of X1/X2/Y thus the 0s in ReLU/PReLU is real
+“0”, so, we don’t need to worry modules;</p>
+</div>
+<div class="section" id="activation-sigmoid-tanh-etc">
+<h4>Activation (Sigmoid/TanH, etc.)<a class="headerlink" href="#activation-sigmoid-tanh-etc" title="Permalink to this headline">¶</a></h4>
+<p>If complex activation function (e.g.: sigmoid or TanH) are used, LUT
+has to be used to mimic the curve of those functions. The LUT
+coverage has to be precisely matched with the input convertor
+parameter to make it acts as you want.</p>
+<p>Let’s use an example to explain this match process: suppose [100,
+300] is the most interesting data range, user will program LUT
+(suppose we have 257 LUT entries) as:</p>
+<p>LUT[0]=f(100),</p>
+<p>LUT[1]=f(100+200/256)</p>
+<p>…</p>
+<p>LUT[256]=f(300)</p>
+<p>This means, if you want to get the correct LUT output, the LUT input
+has to be <span class="math notranslate">\(x^{'} = (x - O) * SF\)</span>, where O=100, SF=200/256</p>
+<p>So, software has to carefully program the convertors before LUT to
+achieve this.</p>
+</div>
+<div class="section" id="precision-conversion">
+<h4>Precision conversion<a class="headerlink" href="#precision-conversion" title="Permalink to this headline">¶</a></h4>
+<p>SDP supports various format conversions, when
+conversion from high precision to low (e.g.: INT16-&gt;INT8,
+FP16-&gt;INT16/8), a convertor is suggested to avoid the interested
+data range be rounding/saturated.</p>
+<p>The conversion can be done by any of the convertors in SDP pipeline
+(except ew_inv_cvt).</p>
+</div>
+</div>
+<div class="section" id="cdp-convertors">
+<h3>CDP convertors<a class="headerlink" href="#cdp-convertors" title="Permalink to this headline">¶</a></h3>
+<p>CDP has convertors listed below:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="25%" />
+<col width="25%" />
+<col width="26%" />
+<col width="25%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Convertor</th>
+<th class="head">Functionality</th>
+<th class="head">Limitation</th>
+<th class="head">Owner</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>cdp_in_cvt</td>
+<td>Convert the
+input data
+compatible with
+LUT
+requirement,
+which means,
+the output of
+this convertor
+should be:
+x*2<sup>N</sup></td>
+<td>For
+CDP.INPUT_DATA_T
+YPE=INT8/INT16
+only</td>
+<td>HW</td>
+</tr>
+<tr class="row-odd"><td>cdp_lut_cvt</td>
+<td>Each LUT entry
+has 16bits (can
+be interpreted
+as INT16 or
+FP16 based on
+pipeline), the
+original f(x)
+has to be
+converted to
+specified
+format to keep
+a high
+precision</td>
+<td>No offset
+allowed</td>
+<td>SW</td>
+</tr>
+<tr class="row-even"><td>cdp_out_cvt</td>
+<td>Convert the
+results to
+INT8/16/FP16
+before output
+to external</td>
+<td>For
+CDP.INPUT_DATA_T
+YPE=INT8/INT16
+only</td>
+<td>HW</td>
+</tr>
+</tbody>
+</table>
+<p>Suppose the CDP input has, in order to make LUT input has the form of
+x*2<sup>M</sup>, cdp_in_cvt has to be programmed as:</p>
+<div class="math notranslate">
+\[O_{cdp\_in\_cvt} = -O_{in} * SF_{in}\]</div>
+<div class="math notranslate">
+\[SF_{cdp\_in\_cvt} = \frac{2^M}{SF_{in}}\]</div>
+<p>Value M should be selected by precision study.</p>
+<p>Suppose CDP output is encoded as <span class="math notranslate">\(O_{out}, SF_{out}\)</span>, cdp_lut_cvt and cdp_out_cvt has to be
+programmed as:</p>
+<div class="math notranslate">
+\[O_{out} == \frac{O_{cdp\_out\_cvt}}{SF_{cdp\_lut\_cvt} * 2^M}\]</div>
+<div class="math notranslate">
+\[SF_{out} == SF_{cdp\_lut\_cvt} * SDP_{cdp\_out\_cvt} * 2^M\]</div>
+</div>
+<div class="section" id="pdp-convertors">
+<h3>PDP convertors<a class="headerlink" href="#pdp-convertors" title="Permalink to this headline">¶</a></h3>
+<p>There’s no convertor instanced in PDP. But be noticed that the PDP
+padding value is intended to compensate the input offset, for FP16 pipe,
+they’re ignored as we assume there’s no offset for FP16 pipe;</p>
+</div>
+<div class="section" id="convertor-statistics">
+<span id="id2"></span><h3>Convertor statistics<a class="headerlink" href="#convertor-statistics" title="Permalink to this headline">¶</a></h3>
+<p>NVDLA implemented counters to evaluate number of samples overflowed
+during convertor. The overflow is defined as:</p>
+<div class="math notranslate">
+\[INT32: x &lt; -2147483648 || x &gt; 2147483647\]</div>
+<div class="math notranslate">
+\[INT16: x &lt; -32768 || x &gt; 32767\]</div>
+<div class="math notranslate">
+\[INT8: x &lt; -128 || x &gt; 127\]</div>
+<div class="math notranslate">
+\[FP16: fabs(x) &gt;= 65504\]</div>
+<p>Here’s a list of saturation counters in NVDLA pipeline:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="42%" />
+<col width="58%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Register</th>
+<th class="head">Valid condition</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>CACC. D_OUT_SATURATION</td>
+<td>Always enabled</td>
+</tr>
+<tr class="row-odd"><td>SDP.D_PERF_OUT_SATURATION</td>
+<td><p class="first">PERF_SAT_EN=YES &amp;&amp;</p>
+<p class="last">PROC_PRECISION== OUT_PRECISION==FP16</p>
+</td>
+</tr>
+<tr class="row-even"><td>CDP.D_OUT_SATURATION</td>
+<td>Always enabled</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+
+        </div>
+        <div class="col-xs-12 col-md-3">
+          
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../../contents.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Precision Preservation</a><ul>
+<li><a class="reference internal" href="#fp16-error-threshold">FP16 error threshold</a></li>
+<li><a class="reference internal" href="#convertor-programming">Convertor programming</a><ul>
+<li><a class="reference internal" href="#programming-interface">Programming interface</a></li>
+<li><a class="reference internal" href="#convolution-convertors">Convolution convertors</a></li>
+<li><a class="reference internal" href="#sdp-convertors">SDP convertors</a><ul>
+<li><a class="reference internal" href="#bias-addition">Bias addition</a></li>
+<li><a class="reference internal" href="#batch-normalization">Batch normalization</a></li>
+<li><a class="reference internal" href="#element-wise">Element wise</a></li>
+<li><a class="reference internal" href="#activation-relu-prelu">Activation (ReLU/PReLU)</a></li>
+<li><a class="reference internal" href="#activation-sigmoid-tanh-etc">Activation (Sigmoid/TanH, etc.)</a></li>
+<li><a class="reference internal" href="#precision-conversion">Precision conversion</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#cdp-convertors">CDP convertors</a></li>
+<li><a class="reference internal" href="#pdp-convertors">PDP convertors</a></li>
+<li><a class="reference internal" href="#convertor-statistics">Convertor statistics</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../integration_guide.html"
+                        title="previous chapter">Integrator’s Manual</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="lut-programming.html"
+                        title="next chapter">LUT programming</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../../_sources/hw/v1/ias/precision.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+  </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <div class="container">
+      <div class="row">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right first">
+          <a href="lut-programming.html" title="LUT programming"
+             >next</a></li>
+        <li class="right">
+          <a href="../integration_guide.html" title="Integrator’s Manual"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">NVDLA Open Source Project</a>&#187;</li>
+        <li class="nav-item nav-item-1"><a href="../../../contents.html">Documentation</a>&#187;</li>
+          <li class="nav-item nav-item-2"><a href="../../contents.html" >Hardware Manual</a>&#187;</li> 
+      </ul>
+      </div>
+      </div>
+    </div>
+<div class="footer" role="contentinfo">
+<div class="container">
+<div class="row">
+&#169; <a
+href="../../../copyright.html">Copyright</a> 2017, NVIDIA Corporation.
+<a href="http://www.nvidia.com/object/legal_info.html">Legal Information.</a>
+<a href="http://www.nvidia.com/object/privacy_policy.html">Privacy Policy.</a>
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.2.
+</div>
+</div>
+</div>
+<script type="text/javascript">_satellite.pageBottom();</script>
+  </body>
+</html>

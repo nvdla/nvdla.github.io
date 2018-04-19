@@ -1,0 +1,1111 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Integrator’s Manual &#8212; NVDLA Documentation</title>
+    <link rel="stylesheet" href="../../_static/nvdla.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/styles.css" type="text/css" />
+    <script type="text/javascript" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Scalability parameters and ConfigROM" href="scalability.html" />
+    <link rel="prev" title="NVDLA Environment Setup Guide" href="environment_setup_guide.html" />
+ 
+<script src="//assets.adobedtm.com/b92787824f2e0e9b68dc2e993f9bd995339fe417/satelliteLib-30c8ffcc8ece089156fd5590fbcf390ffc296f51.js"></script>
+  </head><body>
+<header class="navbar">
+  <nav class="container navbar navbar-light bg-faded">
+    <a class="navbar-brand" href="https://www.nvidia.com/">
+      <div class="logo"></div>
+    </a>
+  </nav>
+</header>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <div class="container">
+      <div class="row">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right first">
+          <a href="scalability.html" title="Scalability parameters and ConfigROM"
+             accesskey="N">next</a></li>
+        <li class="right">
+          <a href="environment_setup_guide.html" title="NVDLA Environment Setup Guide"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">NVDLA Open Source Project</a>&#187;</li>
+        <li class="nav-item nav-item-1"><a href="../../contents.html">Documentation</a>&#187;</li>
+          <li class="nav-item nav-item-2"><a href="../contents.html" accesskey="U">Hardware Manual</a>&#187;</li> 
+      </ul>
+      </div>
+      </div>
+    </div>
+  <div class="document">
+    <div class="container">
+      <div class="row">
+        <div class="col-xs-12 col-md-9">
+          
+  <div class="section" id="integrator-s-manual">
+<h1><a class="toc-backref" href="#id13">Integrator’s Manual</a><a class="headerlink" href="#integrator-s-manual" title="Permalink to this headline">¶</a></h1>
+<div class="contents topic" id="contents">
+<p class="topic-title first">Contents</p>
+<ul class="simple">
+<li><a class="reference internal" href="#integrator-s-manual" id="id13">Integrator’s Manual</a><ul>
+<li><a class="reference internal" href="#introduction" id="id14">Introduction</a></li>
+<li><a class="reference internal" href="#hardware-system-interface" id="id15">Hardware System Interface</a></li>
+<li><a class="reference internal" href="#tree-build" id="id16">Tree Build</a></li>
+<li><a class="reference internal" href="#performance-model" id="id17">Performance Model</a></li>
+<li><a class="reference internal" href="#library-cells" id="id18">Library Cells</a></li>
+<li><a class="reference internal" href="#synthesis" id="id19">Synthesis</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="introduction">
+<h2><a class="toc-backref" href="#id14">Introduction</a><a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<p>This document introduces essential knowledge for how to integrate NVDLA into
+an SoC.  It includes detail on bus interfaces, power on sequence, address
+map, cell requirements, and synthesis.</p>
+<p>The open source repository contains the NVDLA design RTL, a testbench, a
+performance estimation spreadheet, and a set of synthesis scripts.</p>
+</div>
+<div class="section" id="hardware-system-interface">
+<h2><a class="toc-backref" href="#id15">Hardware System Interface</a><a class="headerlink" href="#hardware-system-interface" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="overview">
+<h3>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h3>
+<p>NVDLA is a fixed function accelerator engine which is targeted towards deep
+learning.  This section introduces the NVDLA external interface and
+recommended connections.</p>
+</div>
+<div class="section" id="system-diagram">
+<h3>System Diagram<a class="headerlink" href="#system-diagram" title="Permalink to this headline">¶</a></h3>
+<p>The following diagram shows the NVDLA connections to an SoC.</p>
+<div class="figure align-center" id="fig-system-interfaces">
+<a class="reference internal image-reference" href="../../_images/ig_system_interfaces1.png"><img alt="System Interface Diagram" src="../../_images/ig_system_interfaces1.png" style="width: 538.0px; height: 259.5px;" /></a>
+</div>
+<p>NVDLA receives commands from the host processor via the CSB interface.  The two
+independent memory interfaces provide access to storage for
+data feeding NVDLA and output data from NVDLA.  The interrupt provides a notification
+to a controlling CPU that NVDLA has completed a task.</p>
+</div>
+<div class="section" id="interfaces">
+<h3>Interfaces<a class="headerlink" href="#interfaces" title="Permalink to this headline">¶</a></h3>
+<p>NVDLA’s external pins are grouped into the following interfaces:</p>
+<ol class="arabic simple">
+<li>Clock and Reset interface</li>
+<li>System Data interface</li>
+<li>Configure interface</li>
+<li>Interrupt interface</li>
+<li>Power control</li>
+<li>DFT interface</li>
+</ol>
+<div class="section" id="clock-and-reset-interface">
+<h4>Clock and reset interface<a class="headerlink" href="#clock-and-reset-interface" title="Permalink to this headline">¶</a></h4>
+<p>There are two clock domains in NVDLA, dla_core_clk and dla_csb_clk. They are
+asynchronous with respect to each other, and have no required frequency relationship.
+Most of the sub-units
+are in dla_core_clk domain. The Csb_master sub-unit which translates configuration
+commands from host clock domain to dla_core_clk domain. To reduce power consumptions,
+clock gating technology has been deployed in NVDLA.</p>
+<p>The main reset signal of NVDLA is dla_reset_rstn. Internal to NVDLA it’s synchronized to
+one of the two clock domains before use.  The NVDLA design utilizaes asynchronous reset
+flops, so only the deassertion edge of the dla_reset_rstn signal is synchronized.  The
+assertion edge is passed through.
+The other reset signal, direct_reset_, is
+useful for ATPG testing since it bypasses the internal synchronization.</p>
+<table border="1" class="colwidths-given docutils" id="id2">
+<caption><span class="caption-number">Table 61 </span><span class="caption-text">Clock and Reset Signals</span><a class="headerlink" href="#id2" title="Permalink to this table">¶</a></caption>
+<colgroup>
+<col width="20%" />
+<col width="40%" />
+<col width="40%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Signal Name</th>
+<th class="head">Description</th>
+<th class="head">Recommended Connection</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>dla_core_clk</td>
+<td>Functional clock for NVDLA</td>
+<td>Always ticking clock</td>
+</tr>
+<tr class="row-odd"><td>dla_csb_clk</td>
+<td>CSB bus clock for NVDLA configuration, same clock domain as host</td>
+<td>Clock of the configurable interface</td>
+</tr>
+<tr class="row-even"><td>global_clk_ovr_on</td>
+<td>Can be used to disable all non-inferred clock gates.  Typically not used.</td>
+<td>Connect to a register in system controller which is reset to 0.
+You can also tie to low.</td>
+</tr>
+<tr class="row-odd"><td>tmc2slcg_disable_clock_gating</td>
+<td>Disable clock gating during DFT operations.</td>
+<td>Connect system DFT controller, should be 0 in normal function mode.</td>
+</tr>
+<tr class="row-even"><td>direct_reset_</td>
+<td>DFT reset to allow for direct reset controllability during ATPG testing.</td>
+<td>Typically routed to a chip level port.</td>
+</tr>
+<tr class="row-odd"><td>dla_reset_rstn</td>
+<td>Main functional reset for DLA block.</td>
+<td>System reset controller, can be hard-wired control logic or connect to register if SW reset is desired.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="system-data-interfaces-dbbif-and-sramif">
+<h4>System Data Interfaces (DBBIF and SRAMIF)<a class="headerlink" href="#system-data-interfaces-dbbif-and-sramif" title="Permalink to this headline">¶</a></h4>
+<p>NVDLA accesses external data through two data master interfaces: DBBIF and SRAMIF
+In the RTL these are are sometimes referred to as dbb and cvsram.  Later version will
+likely all references to dbbif and sramif.
+DBBIF typically is connected to off chip DRAM and provides high bandwidth with longer latency. SRAMIF
+is typically connected to an on-chip SRAM and provides high bandwidth with low.
+In current release the bus interfaces are designed to run optimally with max latency on DBBIF of up to
+1440 cycles and an SRAMIF latency of up to 128 cycles.
+To support the two different memory subsystem characteristics there are some minor difference in
+implementation between the NVDLA’s bus interface logic between DBBIF and SRAMIF.</p>
+<p>More information on the DBBIF and SRAMIF interfaces, including signal naming, can be found
+in the NVDLA Hardware Architecture Guide.</p>
+</div>
+<div class="section" id="configuration-interface">
+<h4>Configuration Interface<a class="headerlink" href="#configuration-interface" title="Permalink to this headline">¶</a></h4>
+<p>The host uses the CSB (Config Space Bus) interface to access NVDLA registers. Each request to
+CSB has a fixed request size of 32 bits of data, and has a fixed 16-bit address size.
+CSB does not support any form of burst requests; each packet sent down the request channel
+is independent from any other packet.</p>
+<p>A detailed interface description of the configuration interface can be found in NVDLA Architecture document.</p>
+</div>
+<div class="section" id="power-control">
+<h4>Power control<a class="headerlink" href="#power-control" title="Permalink to this headline">¶</a></h4>
+<p>Depending on the target library the RAM cells in NVDLA could be gated to reduce power
+consumption when NVDLA is inactive. Each layout partition has one ram power control bus, allowing
+power to be ramped up/down one or more partitions at a time.  If a user is using RAM cells
+without power controls, those signals can be tied to 0.</p>
+<table border="1" class="colwidths-given docutils" id="id3">
+<caption><span class="caption-number">Table 62 </span><span class="caption-text">Power Control Signals</span><a class="headerlink" href="#id3" title="Permalink to this table">¶</a></caption>
+<colgroup>
+<col width="20%" />
+<col width="40%" />
+<col width="40%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Signal Name</th>
+<th class="head">Description</th>
+<th class="head">Recommended Connection</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>nvdla_pwrbus_ram_*_pd[7:0]</td>
+<td>RAM power gate.  These signals are routed to the SLEEP_EN bus on the RAM macro wrappers.
+They can be used for controlling low power modes of the target RAMs.</td>
+<td>SoC power management unit or tie to 0</td>
+</tr>
+<tr class="row-odd"><td>nvdla_pwrbus_ram_*_pd[8]</td>
+<td>RAM retention control.  This signal is routed to the RET_EN signal on the RAM macro wrappers.
+It can be used for controlling retention control, or any other semi-static RAM configuration bit.</td>
+<td>SoC power management unit or tie to 0</td>
+</tr>
+<tr class="row-even"><td>nvdla_pwrbus_ram_*_pd[31:9]</td>
+<td>Not used</td>
+<td>Tie to 0</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="dft">
+<h4>DFT<a class="headerlink" href="#dft" title="Permalink to this headline">¶</a></h4>
+<p>In current release, NVDLA has implemented one signal named test_mode to enable DFT.</p>
+<table border="1" class="colwidths-given docutils" id="id4">
+<caption><span class="caption-number">Table 63 </span><span class="caption-text">DFT Signals</span><a class="headerlink" href="#id4" title="Permalink to this table">¶</a></caption>
+<colgroup>
+<col width="20%" />
+<col width="40%" />
+<col width="40%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Signal Name</th>
+<th class="head">Description</th>
+<th class="head">Recommended Connection</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>test_mode</td>
+<td>Enable test mode.  The only use of this signal currently is to select between
+the functional and DFT reset signals.</td>
+<td>Should connect to the system DFT controller as needed.  Otherwise, tie to 0.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="section" id="tree-build">
+<h2><a class="toc-backref" href="#id16">Tree Build</a><a class="headerlink" href="#tree-build" title="Permalink to this headline">¶</a></h2>
+<p>Please follow instructions in <a class="reference internal" href="environment_setup_guide.html"><span class="doc">NVDLA Environment Setup Guide</span></a>, section
+<em>Tools and Dependency Libraries Setup</em> to setup environment and section
+<em>Build test bench and run protect tests</em> to run a small set of tests to make
+sure tree is in good health.</p>
+<p>If CMOD is also be required to integrate to system level cmod environment.
+Please follow <a class="reference internal" href="environment_setup_guide.html"><span class="doc">NVDLA Environment Setup Guide</span></a>, section <em>Build CMOD</em> to build
+CMOD headers and dynamically linked shared object.</p>
+</div>
+<div class="section" id="performance-model">
+<h2><a class="toc-backref" href="#id17">Performance Model</a><a class="headerlink" href="#performance-model" title="Permalink to this headline">¶</a></h2>
+<p>Included in the repository is a spreadsheet based performance model.  This spreadsheet models the
+performance for three popular convolutional networks: AlexNet, GoogleNet, and ResNet50.  Additional
+networks could be added by following the structure of the three provided.  Performance calculated
+is ideal performance as it doesn’t account for some software overhead.  The spreadsheet is located
+in the repository at hw/perf/DLA_OpenSource_Performance.xlsx.  The first tab in the spreadsheet, named
+“Readme”, describes how the model works.  It calculates the following metrics.</p>
+<ul class="simple">
+<li>Average run time for a frame</li>
+<li>Frames per second</li>
+<li>Hardware MAC utilization</li>
+<li>Network MAC utilization</li>
+</ul>
+<p>The tool can be used to look at the affect of different hardware configurations on network performance.</p>
+</div>
+<div class="section" id="library-cells">
+<h2><a class="toc-backref" href="#id18">Library Cells</a><a class="headerlink" href="#library-cells" title="Permalink to this headline">¶</a></h2>
+<p>There are a few library cells which the NVDLA design requires.  These cells are instantiated
+by the design, but only behavioral models are provided.  The integrator will need to provide
+a mapping to a technology library.  Typically, the effort would be to create a Verilog
+wrapper module which has the same ports as the RTL version provided in the release, and
+which instantiates a standard cell or memory from a local library.</p>
+<div class="section" id="synchronizers">
+<h3>Synchronizers<a class="headerlink" href="#synchronizers" title="Permalink to this headline">¶</a></h3>
+<p>The NVDLA design instantes four types of clock domain crossing synchronizers.  These cells
+are modelled with RTL Verilog so they are synthesizable.  However, like all synchronizers,
+they should be replaced with a standard cell designed to reduce MTBF.  To replace, the
+RTL impelemtnation of the cells below can be removed (keeping the port list), and replaced
+with an instantiation of a standard cell synchronizer as appropriate.</p>
+<ul>
+<li><p class="first">p_SSYNC2DO_C_PP</p>
+<p>Two flop stage deep synchronizer with an active low asynchronous reset/clear pin.</p>
+</li>
+<li><p class="first">p_SSYNC3DO</p>
+<p>Three flop stage deep synchronizer.</p>
+</li>
+<li><p class="first">p_SSYNC3DO_C_PPP</p>
+<p>Three flop stage deep synchronizer with an active low asynchronous reset/clear pin.</p>
+</li>
+<li><p class="first">p_SSYNC3DO_S_PPP</p>
+<p>Three flop stage deep synchronizer with an active low asynchronous set pin.</p>
+</li>
+</ul>
+</div>
+<div class="section" id="memories-sram">
+<h3>Memories (SRAM)<a class="headerlink" href="#memories-sram" title="Permalink to this headline">¶</a></h3>
+<p>The memories instantiated in the NVDLA design have a logical interface which is fairly common
+across RAM compilers.  The release contains a behavioral model for these RAMS which can be
+used for simulation.  For synthesis, these behavioral models will need to be replaced with
+a Verilog wrapper which maps to RAM cells from a local library.</p>
+<p>All functionality for a RAM can be inferred from the RAM name:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">RAM</span><span class="o">&lt;</span><span class="n">Arch</span><span class="o">&gt;</span><span class="n">_</span><span class="o">&lt;</span><span class="n">Depth</span><span class="o">&gt;</span><span class="n">X</span><span class="o">&lt;</span><span class="n">Width</span><span class="o">&gt;</span><span class="p">[</span><span class="n">_Options</span><span class="p">]</span><span class="o">&lt;</span><span class="n">_Mux</span><span class="o">-</span><span class="n">Option</span><span class="o">&gt;</span><span class="n">_</span><span class="o">&lt;</span><span class="n">Rev</span><span class="o">&gt;</span>
+
+<span class="n">Arch</span>        <span class="n">required</span><span class="p">,</span> <span class="n">physical</span> <span class="n">implementation</span> <span class="n">of</span> <span class="n">the</span> <span class="n">cell</span><span class="p">:</span>
+              <span class="o">-</span><span class="n">PDP</span>  <span class="n">pseudo</span><span class="o">-</span><span class="n">dual</span> <span class="n">port</span> <span class="n">SRAM</span><span class="o">.</span>  <span class="n">Created</span> <span class="n">by</span> <span class="n">double</span> <span class="n">clocking</span>
+                    <span class="n">a</span> <span class="n">single</span> <span class="n">port</span> <span class="n">RAM</span><span class="o">.</span>
+              <span class="o">-</span><span class="n">DP</span>   <span class="n">true</span> <span class="n">dual</span> <span class="n">port</span> <span class="n">SRAM</span><span class="o">.</span>  <span class="n">Always</span> <span class="n">has</span> <span class="n">independent</span> <span class="n">read</span>
+                    <span class="ow">and</span> <span class="n">write</span> <span class="n">ports</span><span class="o">.</span>
+<span class="n">Depth</span>       <span class="n">required</span><span class="p">,</span> <span class="n">number</span> <span class="n">of</span> <span class="n">words</span> <span class="ow">in</span> <span class="n">the</span> <span class="n">RAM</span>
+<span class="n">Width</span>       <span class="n">required</span><span class="p">,</span> <span class="n">number</span> <span class="n">of</span> <span class="n">bits</span> <span class="ow">in</span> <span class="n">the</span> <span class="n">RAM</span>
+<span class="n">Options</span>     <span class="n">GL</span> <span class="k">for</span> <span class="nb">all</span> <span class="n">RAMs</span>
+<span class="n">Mux</span><span class="o">-</span><span class="n">Option</span>  <span class="n">Required</span><span class="p">,</span> <span class="n">fixed</span> <span class="n">width</span> <span class="n">field</span> <span class="n">describing</span> <span class="n">column</span> <span class="n">mux</span> <span class="n">options</span>
+              <span class="o">-</span> <span class="n">Mn</span>  <span class="n">Column</span> <span class="n">mux</span> <span class="n">specification</span><span class="o">.</span>
+<span class="n">Rev</span>         <span class="n">Revision</span><span class="p">:</span> <span class="n">E2</span> <span class="k">for</span> <span class="n">DP</span> <span class="n">RAMS</span><span class="p">,</span> <span class="n">D2</span> <span class="k">for</span> <span class="n">PDP</span> <span class="n">RAMs</span>
+</pre></div>
+</div>
+<div class="section" id="ramdp-dual-port-sram">
+<h4>RAMDP: Dual-Port SRAM<a class="headerlink" href="#ramdp-dual-port-sram" title="Permalink to this headline">¶</a></h4>
+<p>This section describes a dual-port SRAM design. The macro is designed to perform
+read and write operations independently.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="25%" />
+<col width="23%" />
+<col width="15%" />
+<col width="38%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Pin</th>
+<th class="head">Type</th>
+<th class="head">Presence</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td colspan="4">Read/Write Pins</td>
+</tr>
+<tr class="row-odd"><td>CLK_R</td>
+<td>Input; Clock</td>
+<td>Default</td>
+<td>Memory read clock</td>
+</tr>
+<tr class="row-even"><td>CLK_W</td>
+<td>Input; Clock</td>
+<td>Default</td>
+<td>Memory write clock</td>
+</tr>
+<tr class="row-odd"><td>RADR_[msb:0]</td>
+<td>Input</td>
+<td>Default</td>
+<td>Synchronous read
+address input</td>
+</tr>
+<tr class="row-even"><td>RD_[msb:0]</td>
+<td>Output</td>
+<td>Default</td>
+<td>Memory read data
+output</td>
+</tr>
+<tr class="row-odd"><td>RE</td>
+<td>Input</td>
+<td>Default</td>
+<td>Synchronous read
+enable</td>
+</tr>
+<tr class="row-even"><td>WADR_[msb:0]</td>
+<td>Input</td>
+<td>Default</td>
+<td>Synchronous write
+address input</td>
+</tr>
+<tr class="row-odd"><td>WD_[msb:0]</td>
+<td>Input</td>
+<td>Default</td>
+<td>Synchronous write
+data input</td>
+</tr>
+<tr class="row-even"><td>WE</td>
+<td>Input</td>
+<td>Default</td>
+<td>Synchronous write
+enable</td>
+</tr>
+<tr class="row-odd"><td colspan="4">Misc. Pins.  These will depend on the target RAM library for
+whether they are necessary.</td>
+</tr>
+<tr class="row-even"><td>IDDQ</td>
+<td>Input</td>
+<td>Default</td>
+<td>Asynchronous stand-by
+mode enable pin</td>
+</tr>
+<tr class="row-odd"><td>SLEEP_EN_[7:0]</td>
+<td>Input</td>
+<td>Default</td>
+<td>Power gating controls</td>
+</tr>
+<tr class="row-even"><td>RET_EN</td>
+<td>Input</td>
+<td>Default</td>
+<td>Retention enable</td>
+</tr>
+<tr class="row-odd"><td>RET_SVOP[1:0]</td>
+<td>Input</td>
+<td>Default</td>
+<td>Timing margin control
+pins</td>
+</tr>
+</tbody>
+</table>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>RAMDP is a true dual port high density SRAM, which allows read and write to operate at the same time.</p>
+<p>All write operations are synchronized to the rising edge of write memory clock, CLK_W. The SRAM core is written when WE = ‘1’.</p>
+<p>Read operation is synchronized to the rising edge of the read memory clock, CLK_R.  The SRAM core is read when RE = ‘1’.
+A latch holds the read data whenever RE = ‘0’. There is no write through capability.
+If the read address matches the write address, read out data may be corrupted.</p>
+<div class="figure align-center" id="id5">
+<a class="reference internal image-reference" href="../../_images/ig_sram_dp_read_timing1.png"><img alt="Dual Port RAM Read Timing" src="../../_images/ig_sram_dp_read_timing1.png" style="width: 706.0px; height: 354.0px;" /></a>
+<p class="caption"><span class="caption-number">Fig. 83 </span><span class="caption-text">Dual Port RAM Read Timing</span></p>
+</div>
+<div class="figure align-center" id="id6">
+<a class="reference internal image-reference" href="../../_images/ig_sram_dp_write_timing1.png"><img alt="Dual Port RAM Write Timing" src="../../_images/ig_sram_dp_write_timing1.png" style="width: 671.0px; height: 372.5px;" /></a>
+<p class="caption"><span class="caption-number">Fig. 84 </span><span class="caption-text">Dual Port RAM Write Timing</span></p>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+<div class="line"><br /></div>
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="rampdp-pseudo-dual-port-sram">
+<h4>RAMPDP: Pseudo-Dual Port SRAM<a class="headerlink" href="#rampdp-pseudo-dual-port-sram" title="Permalink to this headline">¶</a></h4>
+<p>This section describes an embedded pseudo-dual port SRAM macro. The RAMPDP macro behaves like a dual
+port RAM, but is created by double clocking a single port RAM.</p>
+<p>The following enumerates the RAMPDP pins and corresponding functions.</p>
+<p>Note that:
+* All pin power is referenced to VDD.
+* All enables are active high.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="25%" />
+<col width="23%" />
+<col width="15%" />
+<col width="38%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Pin</th>
+<th class="head">Type</th>
+<th class="head">Presence</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td colspan="4">Read/Write Pins</td>
+</tr>
+<tr class="row-odd"><td>CLK</td>
+<td>Input; Clock</td>
+<td>Default</td>
+<td>Memory clock</td>
+</tr>
+<tr class="row-even"><td>RADR_[msb:0]</td>
+<td>Input</td>
+<td>Default</td>
+<td>Synchronous read
+address input</td>
+</tr>
+<tr class="row-odd"><td>RD_[msb:0]</td>
+<td>Output</td>
+<td>Default</td>
+<td>Memory read data
+output</td>
+</tr>
+<tr class="row-even"><td>RE</td>
+<td>Input</td>
+<td>Default</td>
+<td>Synchronous read
+enable</td>
+</tr>
+<tr class="row-odd"><td>WADR_[msb:0]</td>
+<td>Input</td>
+<td>Default</td>
+<td>Synchronous write
+address input</td>
+</tr>
+<tr class="row-even"><td>WD_[msb:0]</td>
+<td>Input</td>
+<td>Default</td>
+<td>Synchronous write
+data input</td>
+</tr>
+<tr class="row-odd"><td>WE</td>
+<td>Input</td>
+<td>Default</td>
+<td>Synchronous write
+enable</td>
+</tr>
+<tr class="row-even"><td colspan="4">Misc. Pins.  These will depend on the target RAM library for
+whether they are necessary.</td>
+</tr>
+<tr class="row-odd"><td>IDDQ</td>
+<td>Input</td>
+<td>Default</td>
+<td>Asynchronous stand-by
+mode enable pin</td>
+</tr>
+<tr class="row-even"><td>SLEEP_EN_[7:0]</td>
+<td>Input</td>
+<td>Default</td>
+<td>Power gating controls</td>
+</tr>
+<tr class="row-odd"><td>RET_EN</td>
+<td>Input</td>
+<td>Default</td>
+<td>Retention enable</td>
+</tr>
+<tr class="row-even"><td>RET_SVOP[1:0]</td>
+<td>Input</td>
+<td>Default</td>
+<td>Timing margin control
+pins</td>
+</tr>
+</tbody>
+</table>
+<div class="figure align-center" id="id7">
+<a class="reference internal image-reference" href="../../_images/ig_sram_pdp_timing1.png"><img alt="Pseudo Dual Port RAM Timing" src="../../_images/ig_sram_pdp_timing1.png" style="width: 748.0px; height: 473.0px;" /></a>
+<p class="caption"><span class="caption-number">Fig. 85 </span><span class="caption-text">Pseudo Dual Port RAM Timing</span></p>
+</div>
+<p>The RAMPDP behaves like a dual port RAM, but is created by double clocking a single port RAM.
+It can perform a ‘single read’ (1R), a ‘single write’ (1W) or a ‘read followed by write’ (1R+1W)
+operation in any given clock cycle.
+A read operation is performed when the signal RE is active high (RE= ‘1’). The output data
+will be driven to the output port RD in the same cycle read commands are issued.
+A latch holds the read data when ‘RE’=0. A write operation is performed when WE is high (WE= ‘1’).
+The input data must be put on the input data bus WD at the same time with the write command.
+Note that if the read and write address match during a (1R+1W) operation, i.e. RE=WE=’1’, the
+read data will contain the previous contents of the RAM (read occurs before write).</p>
+</div>
+</div>
+</div>
+<div class="section" id="synthesis">
+<h2><a class="toc-backref" href="#id19">Synthesis</a><a class="headerlink" href="#synthesis" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id1">
+<h3>Overview<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<p>This release contains reference synthesis setup for the NVDLA design with Design Compiler (Wireload Model/Topographical).</p>
+</div>
+<div class="section" id="directory-structure">
+<h3>Directory structure<a class="headerlink" href="#directory-structure" title="Permalink to this headline">¶</a></h3>
+<p>The release directory structure for synthesis is shown below:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>&lt;NVDLA_RELEASE&gt;
+   |--- syn
+   |--- scripts
+   |       |--- syn_launch.sh
+   |       |--- default_config.sh
+   |       |--- dc_run.tcl
+   |       |--- dc_interactive.tcl
+   |       `--- dc_app_vars.tcl
+   |--- templates
+   |       |--- config.sh
+   |       `--- cg_latency_lut.tcl
+   `--- cons
+          |--- NV_NVDLA_partition_a.sdc
+          |--- NV_NVDLA_partition_c.sdc
+          |--- NV_NVDLA_partition_m.sdc
+          |--- NV_NVDLA_partition_o.sdc
+          `--- NV_NVDLA_partition_p.sdc
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">NV_NVDLA_partition_*</span></code> are synthesis <strong>“TOP_NAMES”</strong> - The designs will be compiled at this
+hierarchy, and netlists will be generated for these designs. These are independent
+sub-designs for synthesis, which are instantiated in a top-level wrapper.</p>
+</div>
+<div class="section" id="requirements">
+<h3>Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline">¶</a></h3>
+<p>You will need a *NIX machine able to run Design Compiler.
+The scripts have been tested with Design Compiler version 2016.12 and newer.
+Memory and CPU requirements vary.</p>
+</div>
+<div class="section" id="synthesis-configuration">
+<h3>Synthesis Configuration<a class="headerlink" href="#synthesis-configuration" title="Permalink to this headline">¶</a></h3>
+<p>To be able to run synthesis, you will need a config file - You can use
+the “&lt;NVDLA_ROOT&gt;/syn/dc/templates/config.sh” file  as reference. This file is in “bash” syntax.</p>
+<p>There are many required and optional variables. Table below lists the supported
+variables, meanings and defaults.</p>
+<div class="line-block">
+<div class="line"><br /></div>
+<div class="line"><br /></div>
+</div>
+<table border="1" class="colwidths-given docutils" id="id8">
+<caption><span class="caption-number">Table 64 </span><span class="caption-text">Design Related Options</span><a class="headerlink" href="#id8" title="Permalink to this table">¶</a></caption>
+<colgroup>
+<col width="25%" />
+<col width="75%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Variable</th>
+<th class="head">Comments</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">NVDLA_ROOT</span></code></td>
+<td>Location on disk for the NVDLA source “hw” directory.</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">TOP_NAMES</span></code></td>
+<td>Space separated list of TOP_NAMES to synthesize. You may choose to synthesize all or a subset of TOP_NAMES.
+Defaults to
+“NV_NVDLA_partition_a NV_NVDLA_partition_c NV_NVDLA_partition_o NV_NVDLA_partition_m NV_NVDLA_partition_p”</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">RTL_SEARCH_PATH</span></code></td>
+<td>Space separated list of search paths (directories) for locating all the pieces of RTL.
+Defaults to an empty string.
+Please do not include paths to non synthesizable (behavioral) RAM models, like the ones in <code class="docutils literal notranslate"><span class="pre">${NVDLA_ROOT}/vmod/rams/model</span></code></td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">RTL_INCLUDE_SEARCH_PATH</span></code></td>
+<td>Space separated list of search paths (directories) for locating all the supplementary Verilog include files.
+Defaults to an empty string.</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">EXTRA_RTL</span></code></td>
+<td>List of files to read in, apart from the modules that can be found in the search paths.
+Defaults to an empty string.</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">RTL_EXTENSIONS</span></code></td>
+<td>List of extensions for the source RTL files.
+Defaults to “.v .sv .gv”</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">RTL_INCLUDE_EXTENSIONS</span></code></td>
+<td>List of extensions for supplementary Verilog include files. Defaults to “.vh .svh”</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">DEF</span></code></td>
+<td><p class="first">Path to directory containing floorplans in the “DEF” format. Files should be named by the TOP_NAMES, with the extension “.def”
+This variable defaults to a directory called  “def” in the current directory</p>
+<p class="last">We do not provide templates, because it depends on the process node, and the memory compiler being used.</p>
+</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">CONS</span></code></td>
+<td><p class="first">Path to directory containing constraints in the “SDC” format.
+Files should be named by the TOP_NAMES, with the extension “.sdc”
+This directory may also contain “&lt;TOP_NAME&gt;.tcl” to specify any non-SDC constraints to guide synthesis.
+All of these constraints are sourced before compiling the design.
+This variable defaults to a directory called “cons” in the current directory.</p>
+<p class="last">We provide template SDCs for all logical partitions in the <cite>${NVDLA_ROOT}/syn/cons</cite> directory including
+clock constraints etc. You may provide your own constraints, based on the process node you are targeting.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="line-block">
+<div class="line"><br /></div>
+<div class="line"><br /></div>
+<div class="line"><br /></div>
+</div>
+<table border="1" class="colwidths-given docutils" id="id9">
+<caption><span class="caption-number">Table 65 </span><span class="caption-text">Tool Related Options</span><a class="headerlink" href="#id9" title="Permalink to this table">¶</a></caption>
+<colgroup>
+<col width="25%" />
+<col width="75%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Variable</th>
+<th class="head">Comments</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">DC_PATH</span></code></td>
+<td>Location of the Design Compiler installation.
+Defaults to an empty string</td>
+</tr>
+</tbody>
+</table>
+<div class="line-block">
+<div class="line"><br /></div>
+<div class="line"><br /></div>
+<div class="line"><br /></div>
+</div>
+<table border="1" class="colwidths-given docutils" id="id10">
+<caption><span class="caption-number">Table 66 </span><span class="caption-text">Library Related Options</span><a class="headerlink" href="#id10" title="Permalink to this table">¶</a></caption>
+<colgroup>
+<col width="25%" />
+<col width="75%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Variable</th>
+<th class="head">Comments</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">TARGET_LIB</span></code></td>
+<td>Path to a single standard cell library that will be used to map the design to (the “target” library).
+Defaults to an empty string.</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">LINK_LIB</span></code></td>
+<td>Path to all the libraries that are required to link the design.
+This should include the target library as well.
+Include any RAM compiler timing libraries here.
+Defaults to an empty string.</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">TF_FILE</span></code></td>
+<td>Path to the “Milkyway Technology File” that is used to create the Milkyway models for the physical library.
+Please check with your standard cell library vendor for the right file to use.
+Defaults to an empty string.
+Required for DC-Topographical</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">TLUPLUS_FILE</span></code></td>
+<td>Path to the “TLUPlus” files that will be used for RC extraction
+Please check with your standard cell library vendor for the right file to use.
+Defaults to an empty string.
+Required for DC-Topographical</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">TLUPLUS_MAPPING_FILE</span></code></td>
+<td>Path to the “Tech2ITF” mapping file, that maps layer names from between the Milkyway Tech file and the interconnect technology format file.
+Please check with your standard cell library vendor for the right file to use.
+Defaults to an empty string.
+Required for DC-Topographical</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">MIN_ROUTING_LAYER</span></code></td>
+<td>Bottom routing layer for signal nets.
+Please check with place-and-route methodology for the right value.
+Defaults to an empty string.
+Required for DC-Topographical</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">MAX_ROUTING_LAYER</span></code></td>
+<td>Top routing layer for signal nets.
+Please check with place-and-route methodology for the right value.
+Defaults to an empty string.
+Required for DC-Topographical</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">HORIZONTAL_LAYERS</span></code></td>
+<td>Space separated list of layers with preferred horizontal routing.
+Defaults to an empty string.</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">VERTICAL_LAYERS</span></code></td>
+<td>Space separated list of layers with preferred vertical routing.
+Defaults to an empty string.</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">DONT_USE_LIST</span></code></td>
+<td>Space separated list of regular expressions for cells that you do not wish to map your design to.
+A “dont_use” will be applied on these cells in Design Compiler.
+Defaults to an empty string.</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">WIRELOAD_MODEL_FILE</span></code></td>
+<td>A file containing a “wireload model” - a lookup table for resistance and capacitance calculation based on fanout.
+Refer to the lcug16_Defining_Wire_Load_Groups.htm on the Synopsys Solvnet site
+for more information regarding wire load modeling.
+Not required if your standard cell library contains the wireload models built in.
+Not required for DC-Topographical.
+Defaults to an empty string.</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">WIRELOAD_MODEL_NAME</span></code></td>
+<td>Name of the wireload model lookup table (if you have multiple tables)
+Not required for DC-Topographical.
+Defaults to an empty string.</td>
+</tr>
+</tbody>
+</table>
+<div class="line-block">
+<div class="line"><br /></div>
+<div class="line"><br /></div>
+<div class="line"><br /></div>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p>We do not supply timing models or synthesizable RTL for the RAMs in the design.
+These need to be provided by the user for the process node/ memory compiler being used.</p>
+<p class="last">Please DO NOT include <code class="docutils literal notranslate"><span class="pre">${NVDLA_ROOT}/vmod/rams/model</span></code> in the RTL_SEARCH_PATH - They are simulation models, not synthesizable.</p>
+</div>
+<table border="1" class="colwidths-given docutils" id="id11">
+<caption><span class="caption-number">Table 67 </span><span class="caption-text">Miscellaneous Options</span><a class="headerlink" href="#id11" title="Permalink to this table">¶</a></caption>
+<colgroup>
+<col width="25%" />
+<col width="75%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Variable</th>
+<th class="head">Comments</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">TIGHTEN_CGE</span></code></td>
+<td>Boolean, “1” to enable over constraining the CG-Enable paths. See section 5.5.2 below
+Default is set to “0”</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">CGLUT_FILE</span></code></td>
+<td>File containing the fanout-based CG over constraint lookup table to pessimize the CG enable paths. See section 5.5.2 below.
+Please see “${NVDLA_ROOT}/syn/templates/cg_latency_lut.tcl” for an example.
+Defaults to an empty string.</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">DC_NUM_CORES</span></code></td>
+<td>The number of CPU cores available for Design Compiler.
+Defaults to ‘1’
+Note: Single CPU core synthesis may see a long overall runtime.</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">AREA_RECOVERY</span></code></td>
+<td>Boolean, “1” to Run quick area optimization by undoing some optimizations on paths with positive slack.
+Defaults to “1”.</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">INCREMENTAL_RECOMPILE_COUNT</span></code></td>
+<td>Number of rounds of incremental compiles  to run in Design Compiler.
+Defaults to “1” - This amounts to 2 rounds of compile, one for mapping - the “main” compile
+and one for incremental optimization - the “incremental” compile.</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">COMMAND_PREFIX</span></code></td>
+<td><p class="first">String.
+Defaults to an empty string.
+This will be pre-fixed to the dc_shell command .
+Use this to manage job submission  on LSF farm or grid, as appropriate.
+Use literal strings “&lt;MODULE&gt;” and “&lt;LOG&gt;” to substitute module name and log directory for each TOP_NAMES.
+In the absence of a command prefix, the synthesis  jobs for each TOP_NAMES will run serially.
+If you do provide a command prefix, make sure that it is non-blocking, so that all synthesis jobs
+can be parallelized. Otherwise, the jobs are run serially.
+Example:</p>
+<div class="last highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">export</span> <span class="n">COMMAND_PREFIX</span><span class="o">=</span><span class="s2">&quot;bsub -q some_queue -o &lt;LOG&gt;/&lt;MODULE&gt;.lsf.log&quot;</span>
+</pre></div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="synthesis-constraints">
+<h3>Synthesis constraints<a class="headerlink" href="#synthesis-constraints" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="clock-constraints">
+<h4>Clock Constraints<a class="headerlink" href="#clock-constraints" title="Permalink to this headline">¶</a></h4>
+<p>The clock constraints are provided through an SDC file.
+You will find reference constraints in “${NVDLA_ROOT}/syn/cons/NV_NVDLA_partition*.sdc”.
+These contain clock targets for the 16nm process. You will need to scale the clock
+constraints to the target process/synthesis corner as appropriate.
+The SDC files also contain some timing exceptions (false paths) as well.
+Please populate the SDC files for all TOP_NAMES in a single directory, and set the CONS variable
+in the configuration file described in the previous section.</p>
+<p>You can also add additional non-SDC constraints, like, for example, specific clock gating styles, etc. in &lt;CONS&gt;/NV_NVDLA_partition*.tcl</p>
+</div>
+<div class="section" id="clock-gate-enable-path-over-constraining">
+<h4>Clock Gate Enable Path Over constraining<a class="headerlink" href="#clock-gate-enable-path-over-constraining" title="Permalink to this headline">¶</a></h4>
+<p>The flow allows for over constraining the CG enable paths to pessimize synthesis to take into account post-CTS latencies.
+This is achieved through a fanout-based lookup table in TCL syntax. See “${NVDLA_ROOT}/syn/templates/cg_latency_lut.tcl” for an example.
+Provide the path to this file as the CGLUT_FILE variable in the configuration file.
+To enable the over constraining, please set TIGHTEN_CGE variable to 1 in the configuration file.</p>
+</div>
+<div class="section" id="physical-constraints">
+<h4>Physical Constraints<a class="headerlink" href="#physical-constraints" title="Permalink to this headline">¶</a></h4>
+<p>If you are running physical synthesis, you can provide floorplans in DEF syntax for
+RAM/IO placement as input, depending on your physical implementation.
+Populate the DEF files for all TOP_NAMES in a single directory, and provide the path
+to the directory as the DEF variable.</p>
+<p>You can also provide constraints in TCL syntax, through “&lt;CONS&gt;/NV_NVDLA_partition*.tcl” files.</p>
+</div>
+</div>
+<div class="section" id="running-synthesis">
+<h3>Running synthesis<a class="headerlink" href="#running-synthesis" title="Permalink to this headline">¶</a></h3>
+<p>You can run synthesis using the “${NVDLA_ROOT}/syn/dc/scripts/syn_launch.sh” bash script.
+The supported arguments to the scripts are in table below.</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<table border="1" class="colwidths-given docutils" id="id12">
+<caption><span class="caption-number">Table 68 </span><span class="caption-text">Miscellaneous Options</span><a class="headerlink" href="#id12" title="Permalink to this table">¶</a></caption>
+<colgroup>
+<col width="25%" />
+<col width="75%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Argument</th>
+<th class="head">Explanation</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">-config</span></code></td>
+<td>Path to the synthesis configuration file (see section 5.4)
+If not provided, the flow will look for a file called “config.sh” in the current directory.</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">-mode</span></code></td>
+<td><p class="first">Specifies which tool to use for synthesis. Use one of the following:</p>
+<div class="last highlight-default notranslate"><div class="highlight"><pre><span></span>“wlm” =&gt; Use Design Compiler (non-topographical) for wireload model based synthesis (non-physical)
+“dct” =&gt; Use DC-Topographical
+“dcg” =&gt; Use DC-Graphical along with “-spg” in the compile command.
+“de”  =&gt; Use DC Explorer for synthesis.
+</pre></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">-build</span></code></td>
+<td>Sandbox of synthesis. Optional.
+Defaults to “<code class="docutils literal notranslate"><span class="pre">nvdla_syn_&lt;timestamp&gt;</span></code>”</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">-modules</span></code></td>
+<td>Space separated list of modules to run synthesis on / restore database for.
+If not specified, the TOP_NAMES must be populated in the configuration file.</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">-restore</span></code></td>
+<td>Path to design database (in DDC format) to restore.</td>
+</tr>
+</tbody>
+</table>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="section" id="running-non-physical-synthesis-wireload-models">
+<h4>Running Non-physical synthesis (Wireload Models)<a class="headerlink" href="#running-non-physical-synthesis-wireload-models" title="Permalink to this headline">¶</a></h4>
+<p>You can run:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>${NVDLA_ROOT}/syn/dc/scripts/syn_launch.sh -mode wlm -config /path/to/config.sh
+</pre></div>
+</div>
+<p>You will need to have a wire load model defined in your standard cell library, or in a
+separate file (in liberty syntax, as described in the lcug16_Defining_Wire_Load_Groups.htm
+on Synopsys solvnet)</p>
+<p>In the configuration file the following variables are required to be defined:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">WIRELOAD_MODEL_NAME</span>
+<span class="n">TARGET_LIB</span>
+<span class="n">LINK_LIB</span>
+<span class="n">DC_PATH</span>
+</pre></div>
+</div>
+<p>The following variables are optional:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">WIRELOAD_MODEL_FILE</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="running-physical-synthesis">
+<h4>Running physical synthesis<a class="headerlink" href="#running-physical-synthesis" title="Permalink to this headline">¶</a></h4>
+<p>You can run one of the following, To pick DC-Topographical/DC-Graphical/DC Explorer:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>${NVDLA_ROOT}/syn/dc/scripts/syn_launch.sh -mode dct -config /path/to/config.sh
+${NVDLA_ROOT}/syn/dc/scripts/syn_launch.sh -mode dcg -config /path/to/config.sh
+${NVDLA_ROOT}/syn/dc/scripts/syn_launch.sh -mode de -config /path/to/config.sh
+</pre></div>
+</div>
+<p>In the configuration file, the following variables are required to be defined:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">TARGET_LIB</span>
+<span class="n">LINK_LIB</span>
+<span class="n">MW_LIB</span>
+<span class="n">DC_PATH</span>
+<span class="n">TF_FILE</span>
+<span class="n">TLUPLUS_FILE</span>
+<span class="n">TLUPLUS_MAPPING_FILE</span>
+<span class="n">MIN_ROUTING_LAYER</span>
+<span class="n">MAX_ROUTING_LAYER</span>
+</pre></div>
+</div>
+<p>Additionally, you may require the following variables depending on how your physical library views were built:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">HORIZONTAL_LAYERS</span>
+<span class="n">VERTICAL_LAYERS</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="restoring-a-design-database">
+<h4>Restoring a design database<a class="headerlink" href="#restoring-a-design-database" title="Permalink to this headline">¶</a></h4>
+<p>You can run one of the following, To restore a design database from a previous synthesis run with the reference methodology:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>${NVDLA_ROOT}/syn/dc/scripts/syn_launch.sh -mode &lt;mode_used_for_synthesis&gt; -config /path/to/config.sh -build &lt;build_tag_used_for_synthesis&gt; -restore /path/to/build/db/&lt;module&gt;.ddc -modules &lt;module&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="synthesis-outputs">
+<h3>Synthesis outputs<a class="headerlink" href="#synthesis-outputs" title="Permalink to this headline">¶</a></h3>
+<p>In the synthesis sandbox, the following outputs are generated:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>&lt;BUILD&gt;
+   |--- fv
+   |     `--- NV_NVDLA_parition*
+   |              `--- NV_NVDLA_parition*.svf
+   |--- net
+   |     |--- NV_NVDLA_partition*.gv (Mapped Netlist)
+   |     |--- NV_NVDLA_partition*.full.def (complete output DEF)
+   |     `--- NV_NVDLA_partition*.sdc (Output SDC)
+   |--- db
+   |     `--- NV_NVDLA_partition*.ddc (Synthesis design Database)
+   |           (There are also a few intermediate design databases here)
+   `--- report
+           |--- NV_NVDLA_partition*.check_design
+           |--- NV_NVDLA_partition*.check_timing
+           `--- NV_NVDLA_partition*.final.report
+                      (Detailed timing/QoR information)
+                      (There are also reports generated at intermediate stages)
+</pre></div>
+</div>
+<p>Here is the end of <strong>Integrator’s Manual</strong>.</p>
+</div>
+</div>
+</div>
+
+
+        </div>
+        <div class="col-xs-12 col-md-3">
+          
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../contents.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Integrator’s Manual</a><ul>
+<li><a class="reference internal" href="#introduction">Introduction</a></li>
+<li><a class="reference internal" href="#hardware-system-interface">Hardware System Interface</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#system-diagram">System Diagram</a></li>
+<li><a class="reference internal" href="#interfaces">Interfaces</a><ul>
+<li><a class="reference internal" href="#clock-and-reset-interface">Clock and reset interface</a></li>
+<li><a class="reference internal" href="#system-data-interfaces-dbbif-and-sramif">System Data Interfaces (DBBIF and SRAMIF)</a></li>
+<li><a class="reference internal" href="#configuration-interface">Configuration Interface</a></li>
+<li><a class="reference internal" href="#power-control">Power control</a></li>
+<li><a class="reference internal" href="#dft">DFT</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#tree-build">Tree Build</a></li>
+<li><a class="reference internal" href="#performance-model">Performance Model</a></li>
+<li><a class="reference internal" href="#library-cells">Library Cells</a><ul>
+<li><a class="reference internal" href="#synchronizers">Synchronizers</a></li>
+<li><a class="reference internal" href="#memories-sram">Memories (SRAM)</a><ul>
+<li><a class="reference internal" href="#ramdp-dual-port-sram">RAMDP: Dual-Port SRAM</a></li>
+<li><a class="reference internal" href="#rampdp-pseudo-dual-port-sram">RAMPDP: Pseudo-Dual Port SRAM</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#synthesis">Synthesis</a><ul>
+<li><a class="reference internal" href="#id1">Overview</a></li>
+<li><a class="reference internal" href="#directory-structure">Directory structure</a></li>
+<li><a class="reference internal" href="#requirements">Requirements</a></li>
+<li><a class="reference internal" href="#synthesis-configuration">Synthesis Configuration</a></li>
+<li><a class="reference internal" href="#synthesis-constraints">Synthesis constraints</a><ul>
+<li><a class="reference internal" href="#clock-constraints">Clock Constraints</a></li>
+<li><a class="reference internal" href="#clock-gate-enable-path-over-constraining">Clock Gate Enable Path Over constraining</a></li>
+<li><a class="reference internal" href="#physical-constraints">Physical Constraints</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#running-synthesis">Running synthesis</a><ul>
+<li><a class="reference internal" href="#running-non-physical-synthesis-wireload-models">Running Non-physical synthesis (Wireload Models)</a></li>
+<li><a class="reference internal" href="#running-physical-synthesis">Running physical synthesis</a></li>
+<li><a class="reference internal" href="#restoring-a-design-database">Restoring a design database</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#synthesis-outputs">Synthesis outputs</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="environment_setup_guide.html"
+                        title="previous chapter">NVDLA Environment Setup Guide</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="scalability.html"
+                        title="next chapter">Scalability parameters and ConfigROM</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/hw/v2/integration_guide.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+  </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <div class="container">
+      <div class="row">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right first">
+          <a href="scalability.html" title="Scalability parameters and ConfigROM"
+             >next</a></li>
+        <li class="right">
+          <a href="environment_setup_guide.html" title="NVDLA Environment Setup Guide"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">NVDLA Open Source Project</a>&#187;</li>
+        <li class="nav-item nav-item-1"><a href="../../contents.html">Documentation</a>&#187;</li>
+          <li class="nav-item nav-item-2"><a href="../contents.html" >Hardware Manual</a>&#187;</li> 
+      </ul>
+      </div>
+      </div>
+    </div>
+<div class="footer" role="contentinfo">
+<div class="container">
+<div class="row">
+&#169; <a
+href="../../copyright.html">Copyright</a> 2017, NVIDIA Corporation.
+<a href="http://www.nvidia.com/object/legal_info.html">Legal Information.</a>
+<a href="http://www.nvidia.com/object/privacy_policy.html">Privacy Policy.</a>
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.2.
+</div>
+</div>
+</div>
+<script type="text/javascript">_satellite.pageBottom();</script>
+  </body>
+</html>

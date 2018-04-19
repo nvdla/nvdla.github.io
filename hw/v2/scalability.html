@@ -1,0 +1,2586 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Scalability parameters and ConfigROM &#8212; NVDLA Documentation</title>
+    <link rel="stylesheet" href="../../_static/nvdla.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/styles.css" type="text/css" />
+    <script type="text/javascript" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="NVDLA Verification Suite User Guide" href="verif_guide.html" />
+    <link rel="prev" title="Integrator’s Manual" href="integration_guide.html" />
+ 
+<script src="//assets.adobedtm.com/b92787824f2e0e9b68dc2e993f9bd995339fe417/satelliteLib-30c8ffcc8ece089156fd5590fbcf390ffc296f51.js"></script>
+  </head><body>
+<header class="navbar">
+  <nav class="container navbar navbar-light bg-faded">
+    <a class="navbar-brand" href="https://www.nvidia.com/">
+      <div class="logo"></div>
+    </a>
+  </nav>
+</header>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <div class="container">
+      <div class="row">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right first">
+          <a href="verif_guide.html" title="NVDLA Verification Suite User Guide"
+             accesskey="N">next</a></li>
+        <li class="right">
+          <a href="integration_guide.html" title="Integrator’s Manual"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">NVDLA Open Source Project</a>&#187;</li>
+        <li class="nav-item nav-item-1"><a href="../../contents.html">Documentation</a>&#187;</li>
+          <li class="nav-item nav-item-2"><a href="../contents.html" accesskey="U">Hardware Manual</a>&#187;</li> 
+      </ul>
+      </div>
+      </div>
+    </div>
+  <div class="document">
+    <div class="container">
+      <div class="row">
+        <div class="col-xs-12 col-md-9">
+          
+  <div class="section" id="scalability-parameters-and-configrom">
+<h1>Scalability parameters and ConfigROM<a class="headerlink" href="#scalability-parameters-and-configrom" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="scalability-parameters">
+<h2>Scalability parameters<a class="headerlink" href="#scalability-parameters" title="Permalink to this headline">¶</a></h2>
+<p>Note that the current source code has only been tested for the nv_small
+configuration, and while the nv_small configuration passes many tests,
+additionall coverage is necessary to get it to tapeout quality.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="25%" />
+<col width="25%" />
+<col width="25%" />
+<col width="25%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head"><strong>Scalability
+Parameter</strong></th>
+<th class="head"><strong>Description</strong></th>
+<th class="head"><strong>INT8 Large
+Config(nv_large
+)</strong></th>
+<th class="head"><strong>INT8 Small
+Config(nv_small
+)</strong></th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>NVDLA_FEATURE_D
+ATA_TYPE_BINARY
+/INT4/INT8/INT16
+INT32/FP16/FP32
+/FP64</td>
+<td>Identify the
+data type of
+input feature
+data</td>
+<td>INT8</td>
+<td>INT8</td>
+</tr>
+<tr class="row-odd"><td>NVDLA_WEIGHT_D
+ATA_TYPE_BINARY
+/INT4/INT8/INT16
+INT32/FP16/FP32
+/FP64</td>
+<td>Identify the
+data type of
+input weight
+data</td>
+<td>INT8</td>
+<td>INT8</td>
+</tr>
+<tr class="row-even"><td>NVDLA_WEIGHT_CO
+MPRESSION_ENABL
+E</td>
+<td>Support of the
+feature of
+weight
+compression.
+Disable this
+can save area
+in CBUF</td>
+<td>YES</td>
+<td>NO</td>
+</tr>
+<tr class="row-odd"><td>NVDLA_WINOG
+RAD_ENABLE</td>
+<td>Support of the
+optimization
+feature of
+weight
+compression.
+Disable this
+can save area
+of
+CSC/CMAC/CACC</td>
+<td>YES</td>
+<td>NO</td>
+</tr>
+<tr class="row-even"><td>NVDLA_MAC_ATOMI
+C_C_SIZE</td>
+<td>MAC atomic size
+of input
+channel number</td>
+<td>64</td>
+<td>8</td>
+</tr>
+<tr class="row-odd"><td>NVDLA_MAC_ATOMI
+C_K_SIZE</td>
+<td>MAC atomic size
+of output
+kernel number</td>
+<td>32</td>
+<td>8</td>
+</tr>
+<tr class="row-even"><td>NVDLA_MEMORY_A
+TOMIC_SIZE</td>
+<td>Memory smallest
+access size,
+also the data
+cube is aligned
+with this size.
+Note: the size
+is # of feature
+data type</td>
+<td>32</td>
+<td>8</td>
+</tr>
+<tr class="row-odd"><td>NVDLA_BATCH_ENA
+BLE</td>
+<td><p class="first">Support of
+optimization
+feature of
+batch.</p>
+<p class="last">Disable this
+can save area
+in
+SDP/CACC/CSC/CD
+MA</p>
+</td>
+<td>YES</td>
+<td>No</td>
+</tr>
+<tr class="row-even"><td>NVDLA_MAX_BATCH
+_SIZE</td>
+<td>Maximum batch
+size, this will
+directly impact
+the local
+buffer size</td>
+<td>32</td>
+<td><ul class="first last simple">
+<li></li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td>NVDLA_CBUF_BANK
+_NUMBER</td>
+<td>Convolutional
+buffer bank
+number</td>
+<td>16</td>
+<td>32</td>
+</tr>
+<tr class="row-even"><td>NVDLA_CBUF_BANK
+_WIDTH</td>
+<td>Convolutional
+buffer bank
+data width</td>
+<td>64B</td>
+<td>8B</td>
+</tr>
+<tr class="row-odd"><td>NVDLA_CBUF_BANK
+_DEPTH</td>
+<td>Convolutional
+buffer
+bank depth</td>
+<td>512</td>
+<td>512</td>
+</tr>
+<tr class="row-even"><td>NVDLA_SECONDARY
+_MEMIF_ENABLE</td>
+<td>Support the
+secondary
+memory interface
+(SRAMIF)</td>
+<td>Yes</td>
+<td>No</td>
+</tr>
+<tr class="row-odd"><td>NVDLA_SDP_LUT_E
+NABLE</td>
+<td>SDP support
+Look-up-Table
+for non-linear
+function</td>
+<td>Yes</td>
+<td>No</td>
+</tr>
+<tr class="row-even"><td>NVDLA_SDP_BS_E
+NABLE</td>
+<td>SDP support
+Bias/Scaling
+function</td>
+<td>Yes</td>
+<td>Yes</td>
+</tr>
+<tr class="row-odd"><td>NVDLA_SDP_BN_E
+NABLE</td>
+<td>SDP support
+Batch-Normaliza
+tion
+function</td>
+<td>Yes</td>
+<td>Yes</td>
+</tr>
+<tr class="row-even"><td>NVDLA_SDP_EW_E
+NABLE</td>
+<td>SDP support
+Element-wise-op
+eration
+function</td>
+<td>Yes</td>
+<td>No</td>
+</tr>
+<tr class="row-odd"><td>NVDLA_SDP_BS_TH
+ROUGHPUT</td>
+<td>Throughput of
+SDP
+Bias/Scaling
+function</td>
+<td>16</td>
+<td>1</td>
+</tr>
+<tr class="row-even"><td>NVDLA_SDP_BN_TH
+ROUGHPUT</td>
+<td>Throughput of
+SDP
+Batch-Normaliza
+tion
+function</td>
+<td>16</td>
+<td>1</td>
+</tr>
+<tr class="row-odd"><td>NVDLA_SDP_EW_TH
+ROUGHPUT</td>
+<td>Throughput of
+SDP
+Element-wise-op
+eration
+function</td>
+<td>4</td>
+<td><ul class="first last simple">
+<li></li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td>NVDLA_BDMA_ENA
+BLE</td>
+<td>Support
+the bridge
+DMA engine
+function</td>
+<td>Yes</td>
+<td>No</td>
+</tr>
+<tr class="row-odd"><td>NVDLA_RUBIK_ENA
+BLE</td>
+<td>Support the
+rubik engine
+function</td>
+<td>Yes</td>
+<td>No</td>
+</tr>
+<tr class="row-even"><td>NVDLA_PDP_ENABL
+E</td>
+<td>Support PDP
+engine function</td>
+<td>Yes</td>
+<td>Yes</td>
+</tr>
+<tr class="row-odd"><td>NVDLA_PDP_THROU
+GHPUT</td>
+<td>Throughput
+of PDP engine
+function</td>
+<td>8</td>
+<td>1</td>
+</tr>
+<tr class="row-even"><td>NVDLA_CDP_ENAB
+LE</td>
+<td>Support CDP
+engine function</td>
+<td>Yes</td>
+<td>Yes</td>
+</tr>
+<tr class="row-odd"><td>NVDLA_CDP_THROU
+GHPUT</td>
+<td>Throughput of
+CDP engine
+function</td>
+<td>8</td>
+<td>1</td>
+</tr>
+<tr class="row-even"><td>NVDLA_PRIMARY_M
+EMIF_MAX_BURST
+_LENGTH</td>
+<td>Primary memory
+interface
+maximum burst
+length number</td>
+<td>1</td>
+<td>4</td>
+</tr>
+<tr class="row-odd"><td>NVDLA_PRIMARY_M
+EMIF_WIDTH</td>
+<td>Primary memory
+interface data
+width</td>
+<td>64B</td>
+<td>8B</td>
+</tr>
+<tr class="row-even"><td>NVDLA_PRIMARY_M
+EMIF_LATENCY</td>
+<td>Primary memory
+interface data
+return latency
+cycles for read
+access</td>
+<td>1200</td>
+<td>50</td>
+</tr>
+<tr class="row-odd"><td>NVDLA_SECONDARY
+_MEMIF_MAX_BURS
+T_LENGTH</td>
+<td>Secondary
+memory
+interface
+(SRAMIF)
+maximum burst
+length number</td>
+<td>4</td>
+<td><ul class="first last simple">
+<li></li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td>NVDLA_SECONDARY
+_MEMIF_WIDTH</td>
+<td>Secondary
+memory
+interface
+(SRAMIF) data
+width</td>
+<td>64B</td>
+<td><ul class="first last simple">
+<li></li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td>NVDLA_SECONDARY
+_MEMIF_LATENCY</td>
+<td>Secondary
+memory
+interface
+(SRAMIF) data
+return latency
+cycles for read
+access</td>
+<td>128</td>
+<td><ul class="first last simple">
+<li></li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td>NVDLA_MEMIF_ADD
+RESS_WIDTH</td>
+<td>Address bit
+width
+for external
+memory
+interface</td>
+<td>64</td>
+<td>32</td>
+</tr>
+</tbody>
+</table>
+<div class="section" id="more-details">
+<h3>More Details<a class="headerlink" href="#more-details" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="nvdla-mac-atomic-c-size-and-nvdla-mac-atomic-k-size">
+<h4>NVDLA_MAC_ATOMIC_C_SIZE and NVDLA_MAC_ATOMIC_K_SIZE<a class="headerlink" href="#nvdla-mac-atomic-c-size-and-nvdla-mac-atomic-k-size" title="Permalink to this headline">¶</a></h4>
+<p>These two parameters affect determine the number of mac cells and number of multipliers in each mac cell.
+The total number of multipliers is NVDLA_MAC_ATOMI C_C_SIZE * NVDLA_MAC_ATOMI C_K_SIZE.
+The number of kernels in one kernel group is NVDLA_MAC_ATOMI C_K_SIZE.</p>
+</div>
+<div class="section" id="nvdla-memory-atomic-size">
+<h4>NVDLA_MEMORY_ATOMIC_SIZE<a class="headerlink" href="#nvdla-memory-atomic-size" title="Permalink to this headline">¶</a></h4>
+<p>This parameter determines the size of one atomic cube which is 1x1xNVDLA_MEMORY_ATOMIC_SIZE.
+Feature, Weight, Bias, PReLU, Batch Normalization and Element-Wise data cubes are split into atomic cubes before loaded or stored into memory.
+In nvdlav1 and nv_large configurations, size of atomic cbue is 1x1x32. In nv_small configuration, it’s 1x1x8.
+Line stride and surface stride should also align to NVDLA_MEMORY_ATOMIC_SIZE.</p>
+</div>
+<div class="section" id="nvdla-cbuf-bank-number-nvdla-cbuf-bank-width-and-nvdla-cbuf-bank-depth">
+<h4>NVDLA_CBUF_BANK_NUMBER, NVDLA_CBUF_BANK_WIDTH and NVDLA_CBUF_BANK_DEPTH<a class="headerlink" href="#nvdla-cbuf-bank-number-nvdla-cbuf-bank-width-and-nvdla-cbuf-bank-depth" title="Permalink to this headline">¶</a></h4>
+<p>These parameters determine the size of cbuf. (NVDLA_CBUF_BANK_NUMBER * NVDLA_CBUF_BANK_WIDTH * NVDLA_CBUF_BANK_DEPTH)
+For nv_small, the size is 32*8*512 = 128KB.
+For nv_small_256, the size is 32*32*128 = 128KB.</p>
+</div>
+</div>
+<div class="section" id="config-nv-small-256">
+<h3>Config nv_small_256<a class="headerlink" href="#config-nv-small-256" title="Permalink to this headline">¶</a></h3>
+<p>This config is created for higher convolution performance than nv_small.
+Comparing with nv_small, the difference is that CMAC has 256 multipliers, not 64.
+In this configuration NVDLA_MAC_ATOMIC_C_SIZE is 32 and NVDLA_MAC_ATOMI C_K_SIZE is 8.
+Accordingly, NVDLA_CBUF_BANK _WIDTH is 32 and NVDLA_CBUF_BANK _DEPTH is 128.</p>
+</div>
+</div>
+<div class="section" id="sub-unit-identifier-table">
+<h2>Sub-unit identifier table<a class="headerlink" href="#sub-unit-identifier-table" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="docutils">
+<colgroup>
+<col width="57%" />
+<col width="43%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head"><strong>Sub-unit Identifier</strong></th>
+<th class="head"><strong>Sub-unit Name</strong></th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>0x0000</td>
+<td>End of list</td>
+</tr>
+<tr class="row-odd"><td>0x0001</td>
+<td>GLB</td>
+</tr>
+<tr class="row-even"><td>0x0002</td>
+<td>CIF</td>
+</tr>
+<tr class="row-odd"><td>0x0003</td>
+<td>CDMA</td>
+</tr>
+<tr class="row-even"><td>0x0004</td>
+<td>CBUF</td>
+</tr>
+<tr class="row-odd"><td>0x0005</td>
+<td>CSC</td>
+</tr>
+<tr class="row-even"><td>0x0006</td>
+<td>CMAC</td>
+</tr>
+<tr class="row-odd"><td>0x0007</td>
+<td>CACC</td>
+</tr>
+<tr class="row-even"><td>0x0008</td>
+<td>SDP_RDMA</td>
+</tr>
+<tr class="row-odd"><td>0x0009</td>
+<td>SDP</td>
+</tr>
+<tr class="row-even"><td>0x000a</td>
+<td>PDP_RDMA</td>
+</tr>
+<tr class="row-odd"><td>0x000b</td>
+<td>PDP</td>
+</tr>
+<tr class="row-even"><td>0x000c</td>
+<td>CDP_RDMA</td>
+</tr>
+<tr class="row-odd"><td>0x000d</td>
+<td>CDP</td>
+</tr>
+<tr class="row-even"><td>0x000e</td>
+<td>BDMA</td>
+</tr>
+<tr class="row-odd"><td>0x000f</td>
+<td>RUBIK</td>
+</tr>
+</tbody>
+</table>
+<p>Note:</p>
+<ol class="arabic simple">
+<li>CIF(ID=0x0002) can be configured to MCIF or SRAMIF.</li>
+<li>There are two CMACs in nv_small and nv_large. (CMAC_A and CMAC_B)</li>
+<li>CBUF doesn’t have registers.</li>
+</ol>
+</div>
+<div class="section" id="descriptors-and-payloads-of-sub-units-in-configrom">
+<h2>Descriptors and payloads of sub-units in ConfigROM<a class="headerlink" href="#descriptors-and-payloads-of-sub-units-in-configrom" title="Permalink to this headline">¶</a></h2>
+<p>The reg offset in bellow tables are the relative offset to the beginning
+of current descriptor.</p>
+<div class="section" id="glb">
+<h3>GLB<a class="headerlink" href="#glb" title="Permalink to this headline">¶</a></h3>
+<table border="1" class="docutils">
+<colgroup>
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Reg offset
+(in Byte)</th>
+<th class="head">Reg name</th>
+<th class="head">Reg fields</th>
+<th class="head">Value in
+nv_small
+config</th>
+<th class="head">Value in
+nv_large
+config</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>0x0</td>
+<td>GLB_DESC</td>
+<td><p class="first">Bits 0-15:
+unit id.</p>
+<p class="last">Bits 16-31:
+payload
+length.</p>
+</td>
+<td>0x00000001</td>
+<td>0x00000001</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="cif">
+<h3>CIF<a class="headerlink" href="#cif" title="Permalink to this headline">¶</a></h3>
+<table border="1" class="docutils">
+<colgroup>
+<col width="14%" />
+<col width="14%" />
+<col width="14%" />
+<col width="14%" />
+<col width="14%" />
+<col width="14%" />
+<col width="14%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">&#160;</th>
+<th class="head">Reg
+offset
+(in
+Byte)</th>
+<th class="head">Reg
+name</th>
+<th class="head">Reg
+fields</th>
+<th class="head">Value
+in
+nv_smal
+l
+config</th>
+<th class="head">Value
+in
+nv_larg
+e
+config
+(MCIF)</th>
+<th class="head">Value
+in
+nv_larg
+e
+config
+(SRAMIF
+)</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>&#160;</td>
+<td>0x0</td>
+<td>CIF_DES
+C</td>
+<td><p class="first">Bits
+0-15:
+unit
+id.</p>
+<p class="last">Bits
+16-31:
+payload
+length.</p>
+</td>
+<td>0x00180
+002</td>
+<td>0x00180
+002</td>
+<td>0x00180
+002</td>
+</tr>
+<tr class="row-odd"><td>Incompa
+tible
+capabil
+ities</td>
+<td>0x4</td>
+<td>CIF_CAP
+_INCOMP
+AT</td>
+<td>&#160;</td>
+<td>0x0</td>
+<td>0x0</td>
+<td>0x0</td>
+</tr>
+<tr class="row-even"><td>Compati
+ble
+capabil
+ities</td>
+<td>0x8</td>
+<td>CIF_CAP
+_COMPAT</td>
+<td>bit 0:
+CIF_IS
+_SRAM.
+Set to
+1 if
+this
+CIF is
+connect
+ed
+to a
+separat
+e
+SRAM
+block.</td>
+<td>0x0</td>
+<td>0x0</td>
+<td>0x1</td>
+</tr>
+<tr class="row-odd"><td>Baselin
+e
+paramet
+ers</td>
+<td>0xc</td>
+<td>CIF_BAS
+E_WIDTH</td>
+<td>bits
+0-7:
+width
+(max
+256B)</td>
+<td>0x8</td>
+<td>0x40</td>
+<td>0x40</td>
+</tr>
+<tr class="row-even"><td>&#160;</td>
+<td>0x10</td>
+<td>CIF_BAS
+E_LATEN
+CY</td>
+<td>bits
+0-15:
+latency
+(max
+65535
+cycles)</td>
+<td>0x32</td>
+<td>0x4b0</td>
+<td>0x80</td>
+</tr>
+<tr class="row-odd"><td>&#160;</td>
+<td>0x14</td>
+<td>CIF_BAS
+E_
+BURST_L
+ENGTH_M
+AX</td>
+<td>bits
+0-7:
+max_bur
+st_leng
+th
+(max
+256B)</td>
+<td>0x4</td>
+<td>0x4</td>
+<td>0x4</td>
+</tr>
+<tr class="row-even"><td>&#160;</td>
+<td>0x18</td>
+<td>CIF_BAS
+E_MEM_A
+DDR_WID
+TH</td>
+<td>memory
+interfa
+ce
+address
+width</td>
+<td>0x20</td>
+<td>0x40</td>
+<td>0x40</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="cdma">
+<h3>CDMA<a class="headerlink" href="#cdma" title="Permalink to this headline">¶</a></h3>
+<table border="1" class="docutils">
+<colgroup>
+<col width="17%" />
+<col width="17%" />
+<col width="17%" />
+<col width="17%" />
+<col width="17%" />
+<col width="17%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">&#160;</th>
+<th class="head">Reg
+offset
+(in
+Byte)</th>
+<th class="head">Reg name</th>
+<th class="head">Reg
+fields</th>
+<th class="head">Value in
+nv_small
+config</th>
+<th class="head">Value in
+nv_large
+config</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>&#160;</td>
+<td>0x0</td>
+<td>CDMA_DES
+C</td>
+<td><p class="first">Bits
+0-15:
+unit id.</p>
+<p class="last">Bits
+16-31:
+payload
+length.</p>
+</td>
+<td>0x003400
+03</td>
+<td>0x003400
+03</td>
+</tr>
+<tr class="row-odd"><td>Incompat
+ible
+capabili
+ties</td>
+<td>0x4</td>
+<td>CDMA_CAP
+_INCOMPA
+T</td>
+<td>&#160;</td>
+<td>0x0</td>
+<td>0x0</td>
+</tr>
+<tr class="row-even"><td>Compatib
+le
+capabili
+ties</td>
+<td>0x8</td>
+<td>CDMA_CAP
+_COMPAT</td>
+<td><p class="first">bit 0:
+WINOGRAD</p>
+<p>bit 1:
+MULTI_BA
+TCH</p>
+<p>bit 2:
+FEATURE_
+COMPRESS
+ION</p>
+<p>bit 3:
+WEIGHT_C
+OMPRESSI
+ON</p>
+<p>bit 4:
+IMAGE_IN</p>
+<p class="last">bit 31:
+1’b0</p>
+</td>
+<td>0x10</td>
+<td>0x1b</td>
+</tr>
+<tr class="row-odd"><td>Baseline
+paramete
+rs</td>
+<td>0xc</td>
+<td>CDMA_BAS
+E_FEATUR
+E_TYPES</td>
+<td>Supporte
+d
+data
+types of
+input
+feature
+data</td>
+<td>0x10</td>
+<td>0x10</td>
+</tr>
+<tr class="row-even"><td>&#160;</td>
+<td>0x10</td>
+<td>CDMA_BAS
+E_WEIGHT
+_TYPES</td>
+<td>Supporte
+d
+data
+types of
+input
+weight
+data</td>
+<td>0x10</td>
+<td>0x10</td>
+</tr>
+<tr class="row-odd"><td>&#160;</td>
+<td>0x14</td>
+<td>CDMA_BAS
+E_ATOMIC
+_C</td>
+<td>atomic_c</td>
+<td>0x8</td>
+<td>0x40</td>
+</tr>
+<tr class="row-even"><td>&#160;</td>
+<td>0x18</td>
+<td>CDMA_BAS
+E_ATOMIC
+_K</td>
+<td>atomic_k</td>
+<td>0x8</td>
+<td>0x20</td>
+</tr>
+<tr class="row-odd"><td>&#160;</td>
+<td>0x1c</td>
+<td>CDMA_BAS
+E_ATOMIC
+_M</td>
+<td>atomic_m</td>
+<td>0x8</td>
+<td>0x20</td>
+</tr>
+<tr class="row-even"><td>&#160;</td>
+<td>0x20</td>
+<td>CDMA_BAS
+E_CBUF_B
+ANK_NUM</td>
+<td>cbuf_ban
+k_number</td>
+<td>0x20</td>
+<td>0x10</td>
+</tr>
+<tr class="row-odd"><td>&#160;</td>
+<td>0x24</td>
+<td>CDMA_BAS
+E_CBUF_B
+ANK_WIDT
+H</td>
+<td>cbuf_ban
+k_width</td>
+<td>0x8</td>
+<td>0x40</td>
+</tr>
+<tr class="row-even"><td>&#160;</td>
+<td>0x28</td>
+<td>CDMA_BAS
+E_CBUF_B
+ANK_DEPT
+H</td>
+<td>cbuf_ban
+k_depth</td>
+<td>0x200</td>
+<td>0x200</td>
+</tr>
+<tr class="row-odd"><td>Capabili
+ties’
+paramete
+rs</td>
+<td>0x2c</td>
+<td>CDMA_MUL
+TI_BATCH
+_MAX</td>
+<td>max_batc
+h</td>
+<td>0x0</td>
+<td>0x20</td>
+</tr>
+<tr class="row-even"><td>&#160;</td>
+<td>0x30</td>
+<td>CDMA_IMA
+GE_IN_FO
+RMATS_PA
+CKED</td>
+<td>Supporte
+d
+packed
+image
+formats</td>
+<td>0x0cfff0
+01</td>
+<td>0x0cfff0
+01</td>
+</tr>
+<tr class="row-odd"><td>&#160;</td>
+<td>0x34</td>
+<td>CDMA_IMA
+GE_IN_FO
+RMATS_SE
+MI</td>
+<td>Supporte
+d
+semi-pla
+nar
+image
+formats</td>
+<td>0x3</td>
+<td>0x3</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="cbuf">
+<h3>CBUF<a class="headerlink" href="#cbuf" title="Permalink to this headline">¶</a></h3>
+<table border="1" class="docutils">
+<colgroup>
+<col width="17%" />
+<col width="17%" />
+<col width="17%" />
+<col width="17%" />
+<col width="17%" />
+<col width="17%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">&#160;</th>
+<th class="head">Reg
+offset
+(in
+Byte)</th>
+<th class="head">Reg name</th>
+<th class="head">Reg
+fields</th>
+<th class="head">Value in
+nv_small
+config</th>
+<th class="head">Value in
+nv_large
+config</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>&#160;</td>
+<td>0x0</td>
+<td>CBUF_DES
+C</td>
+<td><p class="first">Bits
+0-15:
+unit id.</p>
+<p class="last">Bits
+16-31:
+payload
+length.</p>
+</td>
+<td>0x001800
+04</td>
+<td>0x001800
+04</td>
+</tr>
+<tr class="row-odd"><td>Incompat
+ible
+capabili
+ties</td>
+<td>0x4</td>
+<td>CBUF_CAP
+_INCOMPA
+T</td>
+<td>&#160;</td>
+<td>0x0</td>
+<td>0x0</td>
+</tr>
+<tr class="row-even"><td>Compatib
+le
+capabili
+ties</td>
+<td>0x8</td>
+<td>CBUF_CAP
+_COMPAT</td>
+<td>&#160;</td>
+<td>0x0</td>
+<td>0x0</td>
+</tr>
+<tr class="row-odd"><td>Baseline
+paramete
+rs</td>
+<td>0xc</td>
+<td>CBUF_BAS
+E_BANK_N
+UM</td>
+<td>cbuf_ban
+k_number</td>
+<td>0x20</td>
+<td>0x10</td>
+</tr>
+<tr class="row-even"><td>&#160;</td>
+<td>0x10</td>
+<td>CBUF_BAS
+E_BANK_W
+IDTH</td>
+<td>cbuf_ban
+k_width</td>
+<td>0x8</td>
+<td>0x40</td>
+</tr>
+<tr class="row-odd"><td>&#160;</td>
+<td>0x14</td>
+<td>CBUF_BAS
+E_BANK_D
+EPTH</td>
+<td>cbuf_ban
+k_depth</td>
+<td>0x200</td>
+<td>0x200</td>
+</tr>
+<tr class="row-even"><td>&#160;</td>
+<td>0x18</td>
+<td>CBUF_BAS
+E_CDMA_I
+D</td>
+<td>cdma_id</td>
+<td>0x3</td>
+<td>0x4</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="csc">
+<h3>CSC<a class="headerlink" href="#csc" title="Permalink to this headline">¶</a></h3>
+<table border="1" class="docutils">
+<colgroup>
+<col width="17%" />
+<col width="17%" />
+<col width="17%" />
+<col width="17%" />
+<col width="17%" />
+<col width="17%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">&#160;</th>
+<th class="head">Reg
+offset
+(in
+Byte)</th>
+<th class="head">Reg name</th>
+<th class="head">Reg
+fields</th>
+<th class="head">Value in
+nv_small
+config</th>
+<th class="head">Value in
+nv_large
+config</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>&#160;</td>
+<td>0x0</td>
+<td>CSC_DESC</td>
+<td><p class="first">Bits
+0-15:
+unit id.</p>
+<p class="last">Bits
+16-31:
+payload
+length.</p>
+</td>
+<td>0x003000
+05</td>
+<td>0x003000
+05</td>
+</tr>
+<tr class="row-odd"><td>Incompat
+ible
+capabili
+ties</td>
+<td>0x4</td>
+<td>CSC_CAP_
+INCOMPAT</td>
+<td>&#160;</td>
+<td>0x0</td>
+<td>0x0</td>
+</tr>
+<tr class="row-even"><td>Compatib
+le
+capabili
+ties</td>
+<td>0x8</td>
+<td>CSC_CAP_
+COMPAT</td>
+<td><p class="first">bit 0:
+WINOGRAD</p>
+<p>bit 1:
+MULTI_BA
+TCH</p>
+<p>bit 2:
+FEATURE_
+COMPRESS
+ION</p>
+<p>bit 3:
+WEIGHT_C
+OMPRESSI
+ON</p>
+<p>bit 4:
+IMAGE_IN</p>
+<p class="last">bit 31:
+1’b0</p>
+</td>
+<td>0x10</td>
+<td>0x1b</td>
+</tr>
+<tr class="row-odd"><td>Baseline
+paramete
+rs</td>
+<td>0xc</td>
+<td>CSC_BASE
+_FEATURE
+_TYPES</td>
+<td>Supporte
+d
+data
+types of
+input
+feature
+data</td>
+<td>0x10</td>
+<td>0x10</td>
+</tr>
+<tr class="row-even"><td>&#160;</td>
+<td>0x10</td>
+<td>CSC_BASE
+_WEIGHT_
+TYPES</td>
+<td>Supporte
+d
+data
+types of
+input
+weight
+data</td>
+<td>0x10</td>
+<td>0x10</td>
+</tr>
+<tr class="row-odd"><td>&#160;</td>
+<td>0x14</td>
+<td>CSC_BASE
+_ATOMIC_
+C</td>
+<td>atomic_c</td>
+<td>0x8</td>
+<td>0x40</td>
+</tr>
+<tr class="row-even"><td>&#160;</td>
+<td>0x18</td>
+<td>CSC_BASE
+_ATOMIC_
+K</td>
+<td>atomic_k</td>
+<td>0x8</td>
+<td>0x20</td>
+</tr>
+<tr class="row-odd"><td>&#160;</td>
+<td>0x1c</td>
+<td>CSC_BASE
+_ATOMIC_
+M</td>
+<td>atomic_m</td>
+<td>0x8</td>
+<td>0x20</td>
+</tr>
+<tr class="row-even"><td>&#160;</td>
+<td>0x20</td>
+<td>CSC_BASE
+_CBUF_BA
+NK_NUM</td>
+<td>cbuf_ban
+k_number</td>
+<td>0x20</td>
+<td>0x10</td>
+</tr>
+<tr class="row-odd"><td>&#160;</td>
+<td>0x24</td>
+<td>CSC_BASE
+_CBUF_BA
+NK_WIDTH</td>
+<td>cbuf_ban
+k_width</td>
+<td>0x8</td>
+<td>0x40</td>
+</tr>
+<tr class="row-even"><td>&#160;</td>
+<td>0x28</td>
+<td>CSC_BASE
+_CBUF_BA
+NK_DEPGT
+H</td>
+<td>cbuf_ban
+k_depth</td>
+<td>0x200</td>
+<td>0x200</td>
+</tr>
+<tr class="row-odd"><td>&#160;</td>
+<td>0x2c</td>
+<td>CSC_BASE
+_CDMA_ID</td>
+<td>cdma_id</td>
+<td>0x3</td>
+<td>0x4</td>
+</tr>
+<tr class="row-even"><td>Capabili
+ties’
+paramete
+rs</td>
+<td>0x30</td>
+<td>CSC_MULT
+I_BATCH_
+MAX</td>
+<td>max_batc
+h</td>
+<td>0x0</td>
+<td>0x20</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="cmac">
+<h3>CMAC<a class="headerlink" href="#cmac" title="Permalink to this headline">¶</a></h3>
+<p>There are two CMAC (CMAC_A and CMAC_B) in NVDLA nv_small and nv_large
+design. Their descriptors and payloads are same. They use different
+slots of address space.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="17%" />
+<col width="17%" />
+<col width="17%" />
+<col width="17%" />
+<col width="17%" />
+<col width="17%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">&#160;</th>
+<th class="head">Reg
+offset
+(in
+Byte)</th>
+<th class="head">Reg name</th>
+<th class="head">Reg
+fields</th>
+<th class="head">Value in
+nv_small
+config</th>
+<th class="head">Value in
+nv_large
+config</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>&#160;</td>
+<td>0x0</td>
+<td>CMAC_DES
+C</td>
+<td><p class="first">Bits
+0-15:
+unit id.</p>
+<p class="last">Bits
+16-31:
+payload
+length.</p>
+</td>
+<td>0x001c00
+06</td>
+<td>0x001c00
+06</td>
+</tr>
+<tr class="row-odd"><td>Incompat
+ible
+capabili
+ties</td>
+<td>0x4</td>
+<td>CMAC_CAP
+_INCOMPA
+T</td>
+<td>&#160;</td>
+<td>0x0</td>
+<td>0x0</td>
+</tr>
+<tr class="row-even"><td>Compatib
+le
+capabili
+ties</td>
+<td>0x8</td>
+<td>CMAC_CAP
+_COMPAT</td>
+<td><p class="first">bit 0:
+WINOGRAD</p>
+<p class="last">bit 31:
+1’b0</p>
+</td>
+<td>0x0</td>
+<td>0x0</td>
+</tr>
+<tr class="row-odd"><td>Baseline
+paramete
+rs</td>
+<td>0xc</td>
+<td>CMAC_BAS
+E_FEATUR
+E_TYPES</td>
+<td>Supporte
+d
+data
+types of
+input
+feature
+data</td>
+<td>0x10</td>
+<td>0x10</td>
+</tr>
+<tr class="row-even"><td>&#160;</td>
+<td>0x14</td>
+<td>CMAC_BAS
+E_ATOMIC
+_C</td>
+<td>atomic_c</td>
+<td>0x8</td>
+<td>0x40</td>
+</tr>
+<tr class="row-odd"><td>&#160;</td>
+<td>0x18</td>
+<td>CMAC_BAS
+E_ATOMIC
+_K</td>
+<td>atomic_k</td>
+<td>0x8</td>
+<td>0x20</td>
+</tr>
+<tr class="row-even"><td>&#160;</td>
+<td>0x1c</td>
+<td>CMAC_BAS
+E_CDMA_I
+D</td>
+<td>cdma_id</td>
+<td>0x3</td>
+<td>0x4</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="cacc">
+<h3>CACC<a class="headerlink" href="#cacc" title="Permalink to this headline">¶</a></h3>
+<table border="1" class="docutils">
+<colgroup>
+<col width="17%" />
+<col width="17%" />
+<col width="17%" />
+<col width="17%" />
+<col width="17%" />
+<col width="17%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">&#160;</th>
+<th class="head">Reg
+offset
+(in
+Byte)</th>
+<th class="head">Reg name</th>
+<th class="head">Reg
+fields</th>
+<th class="head">Value in
+nv_small
+config</th>
+<th class="head">Value in
+nv_large
+config</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>&#160;</td>
+<td>0x0</td>
+<td>CACC_DES
+C</td>
+<td><p class="first">Bits
+0-15:
+unit id.</p>
+<p class="last">Bits
+16-31:
+payload
+length.</p>
+</td>
+<td>0x002000
+07</td>
+<td>0x002000
+07</td>
+</tr>
+<tr class="row-odd"><td>Incompat
+ible
+capabili
+ties</td>
+<td>0x4</td>
+<td>CACC_CAP
+_INCOMPA
+T</td>
+<td>&#160;</td>
+<td>0x0</td>
+<td>0x0</td>
+</tr>
+<tr class="row-even"><td>Compatib
+le
+capabili
+ties</td>
+<td>0x8</td>
+<td>CACC_CAP
+_COMPAT</td>
+<td><p class="first">bit 0:
+WINOGRAD</p>
+<p>bit 1:
+MULTI_BA
+TCH</p>
+<p class="last">bit 31:
+1’b0</p>
+</td>
+<td>0x0</td>
+<td>0x3</td>
+</tr>
+<tr class="row-odd"><td>VBaselin
+e
+paramete
+rs</td>
+<td>0xc</td>
+<td>CACC_BAS
+E_FEATUR
+E_TYPES</td>
+<td>Supporte
+d
+data
+types of
+input
+feature
+data</td>
+<td>0x10</td>
+<td>0x10</td>
+</tr>
+<tr class="row-even"><td>&#160;</td>
+<td>0x10</td>
+<td>CACC_BAS
+E_WEIGHT
+_TYPES</td>
+<td>Supporte
+d
+data
+types of
+input
+weight
+data</td>
+<td>0x10</td>
+<td>0x10</td>
+</tr>
+<tr class="row-odd"><td>&#160;</td>
+<td>0x14</td>
+<td>CACC_BAS
+E_ATOMIC
+_C</td>
+<td>atomic_k</td>
+<td>0x8</td>
+<td>0x20</td>
+</tr>
+<tr class="row-even"><td>&#160;</td>
+<td>0x18</td>
+<td>CACC_BAS
+E_ATOMIC
+_K</td>
+<td>atomic_m</td>
+<td>0x8</td>
+<td>0x20</td>
+</tr>
+<tr class="row-odd"><td>&#160;</td>
+<td>0x1c</td>
+<td>CACC_BAS
+E_CDMA_I
+D</td>
+<td>cdma_id</td>
+<td>0x3</td>
+<td>0x4</td>
+</tr>
+<tr class="row-even"><td>Capabili
+ties’
+paramete
+rs</td>
+<td>0x20</td>
+<td>CACC_MUL
+TI_BATCH
+_MAX</td>
+<td>max_batc
+h</td>
+<td>0x0</td>
+<td>0x20</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="sdp-rdma">
+<h3>SDP_RDMA<a class="headerlink" href="#sdp-rdma" title="Permalink to this headline">¶</a></h3>
+<table border="1" class="docutils">
+<colgroup>
+<col width="17%" />
+<col width="17%" />
+<col width="17%" />
+<col width="17%" />
+<col width="17%" />
+<col width="17%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">&#160;</th>
+<th class="head">Reg
+offset
+(in
+Byte)</th>
+<th class="head">Reg name</th>
+<th class="head">Reg
+fields</th>
+<th class="head">Value in
+nv_small
+config</th>
+<th class="head">Value in
+nv_large
+config</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>&#160;</td>
+<td>0x0</td>
+<td>SDP_RDMA
+_DESC</td>
+<td><p class="first">Bits
+0-15:
+unit id.</p>
+<p class="last">Bits
+16-31:
+payload
+length.</p>
+</td>
+<td>0x000e00
+08</td>
+<td>0x000e00
+08</td>
+</tr>
+<tr class="row-odd"><td>Incompat
+ible
+capabili
+ties</td>
+<td>0x4</td>
+<td>SDP_RDMA
+_CAP_INC
+OMPAT</td>
+<td>&#160;</td>
+<td>0x0</td>
+<td>0x0</td>
+</tr>
+<tr class="row-even"><td>Compatib
+le
+capabili
+ties</td>
+<td>0x8</td>
+<td>SDP_RDMA
+_CAP_COM
+PAT</td>
+<td>&#160;</td>
+<td>0x0</td>
+<td>0x0</td>
+</tr>
+<tr class="row-odd"><td>Baseline
+paramete
+rs</td>
+<td>0xc</td>
+<td>SDP_RDMA
+_BASE_AT
+OMIC_M</td>
+<td>atomic_m</td>
+<td>0x8</td>
+<td>0x20</td>
+</tr>
+<tr class="row-even"><td>&#160;</td>
+<td>0xe</td>
+<td>SDP_RDMA
+_BASE_SD
+P_ID</td>
+<td>sdp_id
+(slot id
+of
+correspo
+nding
+sdp)</td>
+<td>0x9</td>
+<td>0xa</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="sdp">
+<h3>SDP<a class="headerlink" href="#sdp" title="Permalink to this headline">¶</a></h3>
+<table border="1" class="docutils">
+<colgroup>
+<col width="17%" />
+<col width="17%" />
+<col width="17%" />
+<col width="17%" />
+<col width="17%" />
+<col width="17%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">&#160;</th>
+<th class="head">Reg
+offset
+(in
+Byte)</th>
+<th class="head">Reg name</th>
+<th class="head">Reg
+fields</th>
+<th class="head">Value in
+nv_small
+config</th>
+<th class="head">Value in
+nv_large
+config</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>&#160;</td>
+<td>0x0</td>
+<td>SDP_DESC</td>
+<td><p class="first">Bits
+0-15:
+unit id.</p>
+<p class="last">Bits
+16-31:
+payload
+length.</p>
+</td>
+<td>0x002000
+09</td>
+<td>0x002000
+09</td>
+</tr>
+<tr class="row-odd"><td>Incompat
+ible
+capabili
+ties</td>
+<td>0x4</td>
+<td>SDP_CAP_
+INCOMPAT</td>
+<td>&#160;</td>
+<td>0x0</td>
+<td>0x0</td>
+</tr>
+<tr class="row-even"><td>Compatib
+le
+capabili
+ties</td>
+<td>0x8</td>
+<td>SDP_CAP_
+COMPAT</td>
+<td><p class="first">bit 0:
+WINOGRAD</p>
+<p>bit 1:
+MULTI_BA
+TCH</p>
+<p>bit 2:
+LUT</p>
+<p>bit 3:
+BS</p>
+<p>bit 4:
+BN</p>
+<p>bit 5:
+EW</p>
+<p class="last">bit 31:
+1’b0</p>
+</td>
+<td>0x18</td>
+<td>0x3f</td>
+</tr>
+<tr class="row-odd"><td>Baseline
+paramete
+rs</td>
+<td>0xc</td>
+<td>SDP_BASE
+_FEATURE
+_TYPES</td>
+<td>Supporte
+d
+data
+types of
+input
+feature
+data</td>
+<td>0x10</td>
+<td>0x10</td>
+</tr>
+<tr class="row-even"><td>&#160;</td>
+<td>0x10</td>
+<td>SDP_BASE
+_CDMA_ID</td>
+<td>cdma_id</td>
+<td>0x3</td>
+<td>0x4</td>
+</tr>
+<tr class="row-odd"><td>Capabili
+ties’
+paramete
+rs</td>
+<td>0x14</td>
+<td>SDP_MULT
+I_BATCH_
+MAX</td>
+<td>max_batc
+h</td>
+<td>0x0</td>
+<td>0x20</td>
+</tr>
+<tr class="row-even"><td>&#160;</td>
+<td>0x18</td>
+<td>SDP_
+BS_THROU
+GHPUT</td>
+<td>bs_throu
+ghput</td>
+<td>0x1</td>
+<td>0x10</td>
+</tr>
+<tr class="row-odd"><td>&#160;</td>
+<td>0x1c</td>
+<td>SDP_
+BN_THROU
+GHPUT</td>
+<td>bn_throu
+ghput</td>
+<td>0x1</td>
+<td>0x10</td>
+</tr>
+<tr class="row-even"><td>&#160;</td>
+<td>0x20</td>
+<td>SDP_
+EW_THROU
+GHPUT</td>
+<td>ew_throu
+ghput</td>
+<td>0x0</td>
+<td>0x4</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="pdp-rdma">
+<h3>PDP_RDMA<a class="headerlink" href="#pdp-rdma" title="Permalink to this headline">¶</a></h3>
+<table border="1" class="docutils">
+<colgroup>
+<col width="17%" />
+<col width="17%" />
+<col width="17%" />
+<col width="17%" />
+<col width="17%" />
+<col width="17%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">&#160;</th>
+<th class="head">Reg
+offset
+(in
+Byte)</th>
+<th class="head">Reg name</th>
+<th class="head">Reg
+fields</th>
+<th class="head">Value in
+nv_small
+config</th>
+<th class="head">Value in
+nv_large
+config</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>&#160;</td>
+<td>0x0</td>
+<td>PDP_
+RDMA_DES
+C</td>
+<td><p class="first">Bits
+0-15:
+unit id.</p>
+<p class="last">Bits
+16-31:
+payload
+length.</p>
+</td>
+<td>0x000e00
+0a</td>
+<td>0x000e00
+0a</td>
+</tr>
+<tr class="row-odd"><td>Incompat
+ible
+capabili
+ties</td>
+<td>0x4</td>
+<td>PDP_
+RDMA_CAP
+_INCOMPA
+T</td>
+<td>&#160;</td>
+<td>0x0</td>
+<td>0x0</td>
+</tr>
+<tr class="row-even"><td>Compatib
+le
+capabili
+ties</td>
+<td>0x8</td>
+<td>PDP_
+RDMA_CAP
+_COMPAT</td>
+<td>&#160;</td>
+<td>0x0</td>
+<td>0x0</td>
+</tr>
+<tr class="row-odd"><td>Baseline
+paramete
+rs</td>
+<td>0xc</td>
+<td>PDP_RDMA
+_BASE_AT
+OMIC_M</td>
+<td>atomic_m</td>
+<td>0x8</td>
+<td>0x20</td>
+</tr>
+<tr class="row-even"><td>&#160;</td>
+<td>0xe</td>
+<td>PDP_RDMA
+_BASE_PD
+P_ID</td>
+<td>pdp_id
+(slot id
+of
+correspo
+nding
+pdp)</td>
+<td>0xb</td>
+<td>0xc</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="pdp">
+<h3>PDP<a class="headerlink" href="#pdp" title="Permalink to this headline">¶</a></h3>
+<table border="1" class="docutils">
+<colgroup>
+<col width="17%" />
+<col width="17%" />
+<col width="17%" />
+<col width="17%" />
+<col width="17%" />
+<col width="17%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">&#160;</th>
+<th class="head">Reg
+offset
+(in
+Byte)</th>
+<th class="head">Reg name</th>
+<th class="head">Reg
+fields</th>
+<th class="head">Value in
+nv_small
+config</th>
+<th class="head">Value in
+nv_large
+config</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>&#160;</td>
+<td>0x0</td>
+<td>PDP_DESC</td>
+<td><p class="first">Bits
+0-15:
+unit id.</p>
+<p class="last">Bits
+16-31:
+payload
+length.</p>
+</td>
+<td>0x001000
+0b</td>
+<td>0x001000
+0b</td>
+</tr>
+<tr class="row-odd"><td>Incompat
+ible
+capabili
+ties</td>
+<td>0x4</td>
+<td>PDP_CAP_
+INCOMPAT</td>
+<td>&#160;</td>
+<td>0x0</td>
+<td>0x0</td>
+</tr>
+<tr class="row-even"><td>Compatib
+le
+capabili
+ties</td>
+<td>0x8</td>
+<td>PDP_CAP_
+COMPAT</td>
+<td>&#160;</td>
+<td>0x0</td>
+<td>0x0</td>
+</tr>
+<tr class="row-odd"><td>Baseline
+paramete
+rs</td>
+<td>0xc</td>
+<td>PDP_BASE
+_FEATURE
+_TYPES</td>
+<td>Supporte
+d
+data
+types of
+input
+feature
+data</td>
+<td>0x10</td>
+<td>0x10</td>
+</tr>
+<tr class="row-even"><td>&#160;</td>
+<td>0x10</td>
+<td>PDP_BASE
+_THROUGH
+PUT</td>
+<td>throughp
+ut</td>
+<td>0x1</td>
+<td>0x8</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="cdp-rdma">
+<h3>CDP_RDMA<a class="headerlink" href="#cdp-rdma" title="Permalink to this headline">¶</a></h3>
+<table border="1" class="docutils">
+<colgroup>
+<col width="17%" />
+<col width="17%" />
+<col width="17%" />
+<col width="17%" />
+<col width="17%" />
+<col width="17%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">&#160;</th>
+<th class="head">Reg
+offset
+(in
+Byte)</th>
+<th class="head">Reg name</th>
+<th class="head">Reg
+fields</th>
+<th class="head">Value in
+nv_small
+config</th>
+<th class="head">Value in
+nv_large
+config</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>&#160;</td>
+<td>0x0</td>
+<td>CDP_DESC</td>
+<td><p class="first">Bits
+0-15:
+unit id.</p>
+<p class="last">Bits
+16-31:
+payload
+length.</p>
+</td>
+<td>0x000e00
+0c</td>
+<td>0x000e00
+0c</td>
+</tr>
+<tr class="row-odd"><td>Incompat
+ible
+capabili
+ties</td>
+<td>0x4</td>
+<td>CDP_
+RDMA_CAP
+_INCOMPA
+T</td>
+<td>&#160;</td>
+<td>0x0</td>
+<td>0x0</td>
+</tr>
+<tr class="row-even"><td>Compatib
+le
+capabili
+ties</td>
+<td>0x8</td>
+<td>CDP_
+RDMA_CAP
+_COMPAT</td>
+<td>&#160;</td>
+<td>0x0</td>
+<td>0x0</td>
+</tr>
+<tr class="row-odd"><td>Baseline
+paramete
+rs</td>
+<td>0xc</td>
+<td>CDP_RDMA
+_BASE_AT
+OMIC_M</td>
+<td>atomic_m</td>
+<td>0x8</td>
+<td>0x20</td>
+</tr>
+<tr class="row-even"><td>&#160;</td>
+<td>0xe</td>
+<td>CDP_RDMA
+_BASE_PD
+P_ID</td>
+<td>cdp_id
+(slot id
+of
+correspo
+nding
+cdp)</td>
+<td>0xd</td>
+<td>0xe</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="cdp">
+<h3>CDP<a class="headerlink" href="#cdp" title="Permalink to this headline">¶</a></h3>
+<table border="1" class="docutils">
+<colgroup>
+<col width="17%" />
+<col width="17%" />
+<col width="17%" />
+<col width="17%" />
+<col width="17%" />
+<col width="17%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">&#160;</th>
+<th class="head">Reg
+offset
+(in
+Byte)</th>
+<th class="head">Reg name</th>
+<th class="head">Reg
+fields</th>
+<th class="head">Value in
+nv_small
+config</th>
+<th class="head">Value in
+nv_large
+config</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>&#160;</td>
+<td>0x0</td>
+<td>CDP_DESC</td>
+<td><p class="first">Bits
+0-15:
+unit id.</p>
+<p class="last">Bits
+16-31:
+payload
+length.</p>
+</td>
+<td>0x001000
+0d</td>
+<td>0x001000
+0d</td>
+</tr>
+<tr class="row-odd"><td>Incompat
+ible
+capabili
+ties</td>
+<td>0x4</td>
+<td>CDP_CAP_
+INCOMPAT</td>
+<td>&#160;</td>
+<td>0x0</td>
+<td>0x0</td>
+</tr>
+<tr class="row-even"><td>Compatib
+le
+capabili
+ties</td>
+<td>0x8</td>
+<td>CDP_CAP_
+COMPAT</td>
+<td>&#160;</td>
+<td>0x0</td>
+<td>0x0</td>
+</tr>
+<tr class="row-odd"><td>Baseline
+paramete
+rs</td>
+<td>0xc</td>
+<td>CDP_BASE
+_FEATURE
+_TYPES</td>
+<td>Supporte
+d
+data
+types of
+input
+feature
+data</td>
+<td>0x10</td>
+<td>0x10</td>
+</tr>
+<tr class="row-even"><td>&#160;</td>
+<td>0x10</td>
+<td>CDP_BASE
+_THROUGH
+PUT</td>
+<td>throughp
+ut</td>
+<td>0x1</td>
+<td>0x8</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="bdma">
+<h3>BDMA<a class="headerlink" href="#bdma" title="Permalink to this headline">¶</a></h3>
+<table border="1" class="docutils">
+<colgroup>
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Reg offset
+(in Byte)</th>
+<th class="head">Reg name</th>
+<th class="head">Reg fields</th>
+<th class="head">Value in
+nv_small
+config</th>
+<th class="head">Value in
+nv_large
+config</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>0x0</td>
+<td>BDMA_DESC</td>
+<td><p class="first">Bits 0-15:
+unit id.</p>
+<p class="last">Bits 16-31:
+payload
+length.</p>
+</td>
+<td>0x0004000e</td>
+<td>0x0004000e</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="rubik">
+<h3>RUBIK<a class="headerlink" href="#rubik" title="Permalink to this headline">¶</a></h3>
+<table border="1" class="docutils">
+<colgroup>
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Reg offset
+(in Byte)</th>
+<th class="head">Reg name</th>
+<th class="head">Reg fields</th>
+<th class="head">Value in
+nv_small
+config</th>
+<th class="head">Value in
+nv_large
+config</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>0x0</td>
+<td>RUBIK_DESC</td>
+<td><p class="first">Bits 0-15:
+unit id.</p>
+<p class="last">Bits 16-31:
+payload
+length.</p>
+</td>
+<td>0x0004000f</td>
+<td>0x0004000f</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="supported-data-types-or-weight-types">
+<h3>Supported data types or weight types<a class="headerlink" href="#supported-data-types-or-weight-types" title="Permalink to this headline">¶</a></h3>
+<p>Below table lists the fields of registers of supported data types or weight types in above sections</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="16%" />
+<col width="84%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Bit</th>
+<th class="head">Data type or Weight type</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>0</td>
+<td>Binary</td>
+</tr>
+<tr class="row-odd"><td>1</td>
+<td>INT4</td>
+</tr>
+<tr class="row-even"><td>2</td>
+<td>UINT4</td>
+</tr>
+<tr class="row-odd"><td>3</td>
+<td>INT8</td>
+</tr>
+<tr class="row-even"><td>4</td>
+<td>UINT8</td>
+</tr>
+<tr class="row-odd"><td>5</td>
+<td>INT16</td>
+</tr>
+<tr class="row-even"><td>6</td>
+<td>UINT16</td>
+</tr>
+<tr class="row-odd"><td>7</td>
+<td>INT32</td>
+</tr>
+<tr class="row-even"><td>8</td>
+<td>UINT32</td>
+</tr>
+<tr class="row-odd"><td>9</td>
+<td>FP16</td>
+</tr>
+<tr class="row-even"><td>10</td>
+<td>FP32</td>
+</tr>
+<tr class="row-odd"><td>11</td>
+<td>FP64</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="supported-packed-image-formats">
+<h3>Supported packed image formats<a class="headerlink" href="#supported-packed-image-formats" title="Permalink to this headline">¶</a></h3>
+<p>Below table lists the fields of registers of supported packed image formats in above sections</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="16%" />
+<col width="84%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Bit</th>
+<th class="head">Image format</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>0</td>
+<td>R8</td>
+</tr>
+<tr class="row-odd"><td>1</td>
+<td>R10</td>
+</tr>
+<tr class="row-even"><td>2</td>
+<td>R12</td>
+</tr>
+<tr class="row-odd"><td>3</td>
+<td>R16</td>
+</tr>
+<tr class="row-even"><td>4</td>
+<td>R16_I</td>
+</tr>
+<tr class="row-odd"><td>5</td>
+<td>R16_F</td>
+</tr>
+<tr class="row-even"><td>6</td>
+<td>A16B16G16R16</td>
+</tr>
+<tr class="row-odd"><td>7</td>
+<td>X16B16G16R16</td>
+</tr>
+<tr class="row-even"><td>8</td>
+<td>A16B16G16R16_F</td>
+</tr>
+<tr class="row-odd"><td>9</td>
+<td>A16Y16U16V16</td>
+</tr>
+<tr class="row-even"><td>10</td>
+<td>V16U16Y16A16</td>
+</tr>
+<tr class="row-odd"><td>11</td>
+<td>A16Y16U16V16_F</td>
+</tr>
+<tr class="row-even"><td>12</td>
+<td>A8B8G8R8</td>
+</tr>
+<tr class="row-odd"><td>13</td>
+<td>A8R8G8B8</td>
+</tr>
+<tr class="row-even"><td>14</td>
+<td>B8G8R8A8</td>
+</tr>
+<tr class="row-odd"><td>15</td>
+<td>R8G8B8A8</td>
+</tr>
+<tr class="row-even"><td>16</td>
+<td>X8B8G8R8</td>
+</tr>
+<tr class="row-odd"><td>17</td>
+<td>X8R8G8B8</td>
+</tr>
+<tr class="row-even"><td>18</td>
+<td>B8G8R8X8</td>
+</tr>
+<tr class="row-odd"><td>19</td>
+<td>R8G8B8X8</td>
+</tr>
+<tr class="row-even"><td>20</td>
+<td>A2B10G10R10</td>
+</tr>
+<tr class="row-odd"><td>21</td>
+<td>A2R10G10B10</td>
+</tr>
+<tr class="row-even"><td>22</td>
+<td>B10G10R10A2</td>
+</tr>
+<tr class="row-odd"><td>23</td>
+<td>R10G10B10A2</td>
+</tr>
+<tr class="row-even"><td>24</td>
+<td>A2Y10U10V10</td>
+</tr>
+<tr class="row-odd"><td>25</td>
+<td>V10U10Y10A2</td>
+</tr>
+<tr class="row-even"><td>26</td>
+<td>A8Y8U8V8</td>
+</tr>
+<tr class="row-odd"><td>27</td>
+<td>V8U8Y8A8</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="supported-semi-planar-image-formats">
+<h3>Supported semi-planar image formats<a class="headerlink" href="#supported-semi-planar-image-formats" title="Permalink to this headline">¶</a></h3>
+<p>Below table lists the fields of registers of supported semi-planar image formats in above sections</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="16%" />
+<col width="84%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Bit</th>
+<th class="head">Image format</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>0</td>
+<td>Y8___U8V8_N444</td>
+</tr>
+<tr class="row-odd"><td>1</td>
+<td>Y8___V8U8_N444</td>
+</tr>
+<tr class="row-even"><td>2</td>
+<td>Y10___U10V10_N444</td>
+</tr>
+<tr class="row-odd"><td>3</td>
+<td>Y10___V10U10_N444</td>
+</tr>
+<tr class="row-even"><td>4</td>
+<td>Y12___U12V12_N444</td>
+</tr>
+<tr class="row-odd"><td>5</td>
+<td>Y12___V12U12_N444</td>
+</tr>
+<tr class="row-even"><td>6</td>
+<td>Y16___U16V16_N444</td>
+</tr>
+<tr class="row-odd"><td>7</td>
+<td>Y16___V16U16_N444</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="address-space-layout">
+<h2>Address space layout<a class="headerlink" href="#address-space-layout" title="Permalink to this headline">¶</a></h2>
+<p>In the address space layout, the order of sub-units is same as the order
+of the descriptors in Configuration ROM. The size of one slot is 4KB.</p>
+<div class="section" id="nv-small">
+<h3>nv_small:<a class="headerlink" href="#nv-small" title="Permalink to this headline">¶</a></h3>
+<div class="figure align-center" id="fig-nv-small-address-space">
+<img alt="../../_images/scalability_nv_small.png" src="../../_images/scalability_nv_small.png" />
+</div>
+</div>
+<div class="section" id="nv-large">
+<h3>nv_large:<a class="headerlink" href="#nv-large" title="Permalink to this headline">¶</a></h3>
+<div class="figure align-center" id="fig-nv-large-address-space">
+<img alt="../../_images/scalability_nv_large.png" src="../../_images/scalability_nv_large.png" />
+</div>
+</div>
+</div>
+</div>
+
+
+        </div>
+        <div class="col-xs-12 col-md-3">
+          
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../contents.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Scalability parameters and ConfigROM</a><ul>
+<li><a class="reference internal" href="#scalability-parameters">Scalability parameters</a><ul>
+<li><a class="reference internal" href="#more-details">More Details</a><ul>
+<li><a class="reference internal" href="#nvdla-mac-atomic-c-size-and-nvdla-mac-atomic-k-size">NVDLA_MAC_ATOMIC_C_SIZE and NVDLA_MAC_ATOMIC_K_SIZE</a></li>
+<li><a class="reference internal" href="#nvdla-memory-atomic-size">NVDLA_MEMORY_ATOMIC_SIZE</a></li>
+<li><a class="reference internal" href="#nvdla-cbuf-bank-number-nvdla-cbuf-bank-width-and-nvdla-cbuf-bank-depth">NVDLA_CBUF_BANK_NUMBER, NVDLA_CBUF_BANK_WIDTH and NVDLA_CBUF_BANK_DEPTH</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#config-nv-small-256">Config nv_small_256</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#sub-unit-identifier-table">Sub-unit identifier table</a></li>
+<li><a class="reference internal" href="#descriptors-and-payloads-of-sub-units-in-configrom">Descriptors and payloads of sub-units in ConfigROM</a><ul>
+<li><a class="reference internal" href="#glb">GLB</a></li>
+<li><a class="reference internal" href="#cif">CIF</a></li>
+<li><a class="reference internal" href="#cdma">CDMA</a></li>
+<li><a class="reference internal" href="#cbuf">CBUF</a></li>
+<li><a class="reference internal" href="#csc">CSC</a></li>
+<li><a class="reference internal" href="#cmac">CMAC</a></li>
+<li><a class="reference internal" href="#cacc">CACC</a></li>
+<li><a class="reference internal" href="#sdp-rdma">SDP_RDMA</a></li>
+<li><a class="reference internal" href="#sdp">SDP</a></li>
+<li><a class="reference internal" href="#pdp-rdma">PDP_RDMA</a></li>
+<li><a class="reference internal" href="#pdp">PDP</a></li>
+<li><a class="reference internal" href="#cdp-rdma">CDP_RDMA</a></li>
+<li><a class="reference internal" href="#cdp">CDP</a></li>
+<li><a class="reference internal" href="#bdma">BDMA</a></li>
+<li><a class="reference internal" href="#rubik">RUBIK</a></li>
+<li><a class="reference internal" href="#supported-data-types-or-weight-types">Supported data types or weight types</a></li>
+<li><a class="reference internal" href="#supported-packed-image-formats">Supported packed image formats</a></li>
+<li><a class="reference internal" href="#supported-semi-planar-image-formats">Supported semi-planar image formats</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#address-space-layout">Address space layout</a><ul>
+<li><a class="reference internal" href="#nv-small">nv_small:</a></li>
+<li><a class="reference internal" href="#nv-large">nv_large:</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="integration_guide.html"
+                        title="previous chapter">Integrator’s Manual</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="verif_guide.html"
+                        title="next chapter">NVDLA Verification Suite User Guide</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/hw/v2/scalability.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+  </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <div class="container">
+      <div class="row">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right first">
+          <a href="verif_guide.html" title="NVDLA Verification Suite User Guide"
+             >next</a></li>
+        <li class="right">
+          <a href="integration_guide.html" title="Integrator’s Manual"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">NVDLA Open Source Project</a>&#187;</li>
+        <li class="nav-item nav-item-1"><a href="../../contents.html">Documentation</a>&#187;</li>
+          <li class="nav-item nav-item-2"><a href="../contents.html" >Hardware Manual</a>&#187;</li> 
+      </ul>
+      </div>
+      </div>
+    </div>
+<div class="footer" role="contentinfo">
+<div class="container">
+<div class="row">
+&#169; <a
+href="../../copyright.html">Copyright</a> 2017, NVIDIA Corporation.
+<a href="http://www.nvidia.com/object/legal_info.html">Legal Information.</a>
+<a href="http://www.nvidia.com/object/privacy_policy.html">Privacy Policy.</a>
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.2.
+</div>
+</div>
+</div>
+<script type="text/javascript">_satellite.pageBottom();</script>
+  </body>
+</html>
