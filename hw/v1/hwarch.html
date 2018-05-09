@@ -133,9 +133,9 @@ layers; 3x3 or larger filter-sized layers are always maths-limited, so
 match well to the winograd feature.</p>
 <p>The equation of Winograd convolution used
 in convolution core is:</p>
-<div class="math notranslate">
+<div class="math notranslate nohighlight">
 \[S = A^T \left[ \left( Gg G^T \right) \odot \left( C^T dC \right) \right] A\]</div>
-<p>Here symbol <span class="math notranslate">\(\odot\)</span> indicates element-wise multiplication. That means
+<p>Here symbol <span class="math notranslate nohighlight">\(\odot\)</span> indicates element-wise multiplication. That means
 the winograd function requires a pre-calculation of fixed matrix operation
 before normal direct convolutional MAC array and a post-calculation of
 another fixed matrix operation after normal direct convolutional MAC array.</p>
@@ -210,15 +210,15 @@ is required.</p>
 <h4>Non-Linear Functions<a class="headerlink" href="#non-linear-functions" title="Permalink to this headline">¶</a></h4>
 <p>There are several non-linear functions that are required to support Deep Learning algorithms. Some of these are supported using dedicated hardware logic while more complex functions incorporate the use of a dedicated Look-Up-Table.</p>
 <ul>
-<li><p class="first">ReLU, for an input <span class="math notranslate">\(x\)</span>, the output is <span class="math notranslate">\(\textrm{max}(x, 0)\)</span>.</p>
+<li><p class="first">ReLU, for an input <span class="math notranslate nohighlight">\(x\)</span>, the output is <span class="math notranslate nohighlight">\(\textrm{max}(x, 0)\)</span>.</p>
 </li>
 <li><p class="first">PReLU, different from ReLU, PReLU still keep a value small linear factor instead of cutting to zero:</p>
-<p><span class="math notranslate">\(y = \begin{cases} x &amp; x &gt; 0 \\ k * x &amp; x &lt; 0 \end{cases}\)</span></p>
+<p><span class="math notranslate nohighlight">\(y = \begin{cases} x &amp; x &gt; 0 \\ k * x &amp; x &lt; 0 \end{cases}\)</span></p>
 </li>
-<li><p class="first">Sigmoid, for an input <span class="math notranslate">\(x\)</span>, the output is <span class="math notranslate">\(\frac{1}{1+e^{-x}}\)</span></p>
+<li><p class="first">Sigmoid, for an input <span class="math notranslate nohighlight">\(x\)</span>, the output is <span class="math notranslate nohighlight">\(\frac{1}{1+e^{-x}}\)</span></p>
 </li>
-<li><p class="first">Hyperbolic tangent, for an input <span class="math notranslate">\(x\)</span>, the output is
-<span class="math notranslate">\(\frac{1-e^{-2x}}{1+e^{-2x}}\)</span></p>
+<li><p class="first">Hyperbolic tangent, for an input <span class="math notranslate nohighlight">\(x\)</span>, the output is
+<span class="math notranslate nohighlight">\(\frac{1-e^{-2x}}{1+e^{-2x}}\)</span></p>
 </li>
 <li><p class="first">And more…</p>
 </li>
@@ -242,7 +242,7 @@ is required.</p>
 <div class="section" id="multi-plane-operations">
 <h3>Multi-Plane Operations<a class="headerlink" href="#multi-plane-operations" title="Permalink to this headline">¶</a></h3>
 <p>The Cross-channel Data Processor (CDP) is a specialized unit built to apply the local response normalization (LRN) function - a special normalization function that operates on channel dimensions, as opposed to the spatial dimensions.</p>
-<div class="math notranslate">
+<div class="math notranslate nohighlight">
 \[Result_{w,h,c} =
   \frac
     {Source_{w,h,c}}
@@ -492,7 +492,7 @@ impact as more buffering is required at accumulator side.</p>
 <div class="section" id="precision-scaling-convertor">
 <h4>Precision Scaling Convertor<a class="headerlink" href="#precision-scaling-convertor" title="Permalink to this headline">¶</a></h4>
 <p>The precision scaling convertors are normally used before some very critical limited resources, like before writing data to memory or before entering MAC array.</p>
-<p>The formula for convertor is: <span class="math notranslate">\(y = \textrm{saturation} ((x -
+<p>The formula for convertor is: <span class="math notranslate nohighlight">\(y = \textrm{saturation} ((x -
 \textrm{offset}) * \textrm{scaling} &gt;&gt; \textrm{shifter})\)</span>.</p>
 </div>
 <div class="section" id="precision-shifter">
@@ -500,7 +500,7 @@ impact as more buffering is required at accumulator side.</p>
 <p>A shifter is mostly used at the bits adjustment in the middle of the pipeline.
 For example, the accumulator bit width is far more than the input data, so
 before data sent out to SDP, we need to chunk it by a shifter.</p>
-<p>Shifter is a simplified convertor, formula as: <span class="math notranslate">\(y = \textrm{saturate}(x &lt;&lt;
+<p>Shifter is a simplified convertor, formula as: <span class="math notranslate nohighlight">\(y = \textrm{saturate}(x &lt;&lt;
 \textrm{shifter})\)</span>.</p>
 </div>
 <div class="section" id="look-up-table">
@@ -3378,7 +3378,7 @@ their registers are not available either.  These registers are as noted below:</
 href="../../copyright.html">Copyright</a> 2017, NVIDIA Corporation.
 <a href="http://www.nvidia.com/object/legal_info.html">Legal Information.</a>
 <a href="http://www.nvidia.com/object/privacy_policy.html">Privacy Policy.</a>
-Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.2.
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.4.
 </div>
 </div>
 </div>

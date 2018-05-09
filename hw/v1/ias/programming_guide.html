@@ -198,9 +198,9 @@ be configured as:</p>
 </table>
 <p>Given the register definition above, the formula for buffer allocation
 are:</p>
-<div class="math notranslate">
+<div class="math notranslate nohighlight">
 \[src\_cube\_size = CFG\_SRC\_SURF * CFG\_SRC\_REPEAT\]</div>
-<div class="math notranslate">
+<div class="math notranslate nohighlight">
 \[dst\_cube\_size = CFG\_DST\_SURF * CFG\_DST\_REPEAT\]</div>
 <p>The formula for actual bytes transferred is:
 .. math:: actual_size = (CFG_LINE - 1) * 32 * CFG_LINE_REPEAT * CFG_SURF_REPEAT</p>
@@ -460,9 +460,9 @@ above cases are failed to match.</td>
 <p>In this mode, entire input/weight will be loaded to CONV_BUF which means
 CONV_BUF should be large enough to store W*H*C+R*S*C*K data elements
 thus:</p>
-<div class="math notranslate">
+<div class="math notranslate nohighlight">
 \[banks\_for\_data = ceil(\frac{entry\_per\_slice*H}{256})\]</div>
-<div class="math notranslate">
+<div class="math notranslate nohighlight">
 \[banks\_for\_weight = ceil(\frac{R * S * C * K * BPE}{256*128})\]</div>
 <ul class="simple">
 <li><strong>Full input, partial weight mode</strong></li>
@@ -477,9 +477,9 @@ thus:</p>
 the output sequence goes at K direction at last phase, it can be easily
 connected to pooling logic without big buffering requirement. Below
 formula should be satisfied when planning CONV_BUF layout:</p>
-<div class="math notranslate">
+<div class="math notranslate nohighlight">
 \[banks\_for\_data = ceil(\frac{entry\_per\_slice*H}{256})\]</div>
-<div class="math notranslate">
+<div class="math notranslate nohighlight">
 \[banks\_for\_weight &gt;= ceil(\frac{R * S * C * 2 * kernel_per_group * BPE}{256*128})\]</div>
 <p>The reason for 2*kernel_per_group is to keep CDMA and CMAC working at
 the same time to hide kernel loading latency, however,
@@ -510,7 +510,7 @@ ceil(S/stride_x) == 3</em> is true, winograd mode should be used;</p>
 <p>c) If this is inner product layer and CONV_BUF is big enough to maintain
 BATCH_NUMBER input cubes, multi-batch mode should be chosen. “Big
 enough” here means:</p>
-<div class="math notranslate">
+<div class="math notranslate nohighlight">
 \[ceil(BATCH\_NUMBER * entry\_per\_slice * H / 256) &lt;= BANKS\_FOR\_DATA\]</div>
 <p>d) If <em>(compressed_weight_size+wmb_size+wgs_size) &lt; weight_size</em> and
 there’s no conflict with <a class="reference internal" href="../../format.html#tab-weight-formats"><span class="std std-numref">Table 34</span></a>, weight compress should be used;</p>
@@ -1587,9 +1587,9 @@ time rls_slices should not more than 11.</p>
 <li>The right/bottom padding should be carefully configured to make sure
 all the data will be used for convolution, which means:</li>
 </ul>
-<div class="math notranslate">
+<div class="math notranslate nohighlight">
 \[(Output\_Width - 1) * stride\_x + S == PL + Input\_Width + PR\]</div>
-<div class="math notranslate">
+<div class="math notranslate nohighlight">
 \[(Output\_height - 1) * stride\_y + R == PT + Input\_Height + PB\]</div>
 <p>Where, PL/PT are the left/top padding which are get from network
 definition; PR/PB are the right/bottom padding which are configured by
@@ -2075,7 +2075,7 @@ aligned for planar data(output of split mode, input of merge mode)</li>
 href="../../../copyright.html">Copyright</a> 2017, NVIDIA Corporation.
 <a href="http://www.nvidia.com/object/legal_info.html">Legal Information.</a>
 <a href="http://www.nvidia.com/object/privacy_policy.html">Privacy Policy.</a>
-Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.2.
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.4.
 </div>
 </div>
 </div>

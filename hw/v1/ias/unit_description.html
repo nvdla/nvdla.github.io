@@ -146,19 +146,19 @@ input parameters:</p>
 <span id="fig-image6-convolution-stride-and-pad"></span><img alt="../../../_images/ias_image6_convolution_stride_and_pad.svg" src="../../../_images/ias_image6_convolution_stride_and_pad.svg" /><p class="caption"><span class="caption-number">Fig. 42 </span><span class="caption-text">Convolution stride and zero padding</span></p>
 </div>
 <p>Then the equations of these parameters are:</p>
-<div class="math notranslate">
+<div class="math notranslate nohighlight">
 \[S^{'} = \left( S - 1 \right) \times DX + 1\]</div>
-<div class="math notranslate">
+<div class="math notranslate nohighlight">
 \[R^{'} = \left( R - 1 \right) \times DY + 1\]</div>
-<div class="math notranslate">
+<div class="math notranslate nohighlight">
 \[W^{'} = \frac{LP + W + RP - S'}{\text{SX}} + 1\]</div>
-<div class="math notranslate">
+<div class="math notranslate nohighlight">
 \[H^{'} = \frac{TP + H + BP - R'}{\text{SY}} + 1\]</div>
-<div class="math notranslate">
+<div class="math notranslate nohighlight">
 \[C^{'} = K\]</div>
 <p>The relationship of each element <em>y</em> in output data cube, element <em>x</em> in
 input feature data cube and element <em>wt</em> in weight kernels is:</p>
-<div class="math notranslate">
+<div class="math notranslate nohighlight">
 \[y_{w,\ h,\ k} = \ \sum_{r = 0}^{R - 1}{\sum_{s = 0}^{S - 1}{\sum_{c = 0}^{C - 1}{x_{(w*SX - LP + r),(h*SY - TP + s),\ c}*\text{wt}_{r,s,\ c,k}}}}\]</div>
 <p>The coordinate <em>w,h,c,k</em> in above equations are all start from zero.</p>
 <p>To accomplish the convolution operation in the above equation, the
@@ -195,7 +195,7 @@ operation takes 1 cycle to complete, resulting in 16 partial
 sums per cycle. Partial sums are sent to the convolution accumulator module for
 further calculation.</p>
 <p>The equation for the partial sum is:</p>
-<div class="math notranslate">
+<div class="math notranslate nohighlight">
 \[\text{PS}_{w,\ h,k,r,s,\ c} = \ \sum_{i = c}^{min(c + 63,\ C - 1)}{x_{(w*SX - LP + r),(h*SY - TP + s),\ i}*\text{wt}_{r,\ s,\ i,k}}\]</div>
 <p>In the equation, <em>PS</em> refers to partial sum. Variable <em>c</em> is always
 divisible by 64.</p>
@@ -243,7 +243,7 @@ operation number. The partial sums from the same block operation are
 added together per stripe operation in the convolution accumulator.
 These results are called accumulative sum.</p>
 <p>The equation of accumulative sum is:</p>
-<div class="math notranslate">
+<div class="math notranslate nohighlight">
 \[\text{AS}_{w,\ h,k,c} = \ \sum_{r = 0}^{R - 1}{\sum_{s = 0}^{S - 1}{\sum_{i = c}^{min(c + 63,\ C - 1)}{x_{(w*SX - LP + r),(h*SY - TP + s),\ i}*\text{wt}_{r,\ s,\ i,k}}}}\]</div>
 <p>In the equation, <em>AS</em> refers to accumulative sum. Variable <em>c</em> is always
 divisible by 64.</p>
@@ -261,7 +261,7 @@ different, showing as below</p>
 stripe operation. After a channel operation, the result in convolution
 accumulator is exactly the convolution result.</p>
 <p>The equation for the result of a channel operation s:</p>
-<div class="math notranslate">
+<div class="math notranslate nohighlight">
 \[y_{w,\ h,k} = \ \sum_{i = 0}^{\left\lfloor C/64 \right\rfloor - 1}{\sum_{r = 0}^{R - 1}{\sum_{s = 0}^{S - 1}{\sum_{j = c}^{min(c + 63,\ C - 1)}{x_{(w*SX - LP + r),(h*SY - TP + s),\ (i*64 + j)}*\text{wt}_{r,\ s,\ (i*64 + j),k}}}}}\]</div>
 <p>This equation is identically equal to the original convolution equation
 for a stripe of 16-32 output points.  After one channel operation, the
@@ -355,18 +355,18 @@ a given number of MAC hardware elements.</p>
 on input and output activation data.</p>
 <p>The equation for the Winograd Convolution used in the Convolution
 Pipeline is:</p>
-<div class="math notranslate">
+<div class="math notranslate nohighlight">
 \[S = \ A^{T}\left\lbrack \left( \text{Gg}G^{T} \right) \odot \left( C^{T}\text{dC} \right) \right\rbrack A\]</div>
 <p>Here symbol ⊙ indicates element-wise multiplication. Symbol <em>g</em> is a 3x3
 kernel and <em>d</em> is a 4x4 tile of input data cube. Symbol <em>S</em> is the
 convolution result of <em>g</em> and <em>d.</em> It’s a 2x2 matrix.</p>
-<div class="math notranslate">
+<div class="math notranslate nohighlight">
 \[\begin{split}g = \begin{bmatrix}
 \text{wt}_{0,0} &amp; \text{wt}_{0,1} &amp; \text{wt}_{0,2} \\
 \text{wt}_{1,0} &amp; \text{wt}_{1,1} &amp; \text{wt}_{1,2} \\
 \text{wt}_{2,0} &amp; \text{wt}_{2,1} &amp; \text{wt}_{2,2} \\
 \end{bmatrix}\end{split}\]</div>
-<div class="math notranslate">
+<div class="math notranslate nohighlight">
 \[\begin{split}d = \begin{bmatrix}
 x_{0,0} &amp; x_{0,1} &amp; x_{0,2} &amp; x_{0,3} \\
 x_{1,0} &amp; x_{1,1} &amp; x_{1,2} &amp; x_{1,3} \\
@@ -375,35 +375,35 @@ x_{3,0} &amp; x_{3,1} &amp; x_{3,2} &amp; x_{3,3} \\
 \end{bmatrix}\end{split}\]</div>
 <p><em>A</em>, <em>G</em> and <em>C</em> are matrices to transform the weight and input feature
 data.</p>
-<div class="math notranslate">
+<div class="math notranslate nohighlight">
 \[\begin{split}C = \begin{bmatrix}
 1 &amp; 0 &amp; 0 &amp; 0 \\
 0 &amp; 1 &amp; - 1 &amp; 1 \\
  - 1 &amp; 1 &amp; 1 &amp; 0 \\
 0 &amp; 0 &amp; 0 &amp; - 1 \\
 \end{bmatrix}\end{split}\]</div>
-<div class="math notranslate">
+<div class="math notranslate nohighlight">
 \[\begin{split}G = \begin{bmatrix}
 1 &amp; 0 &amp; 0 \\
 0.5 &amp; 0.5 &amp; 0.5 \\
 0.5 &amp; - 0.5 &amp; 0.5 \\
 0 &amp; 0 &amp; 1 \\
 \end{bmatrix}\end{split}\]</div>
-<div class="math notranslate">
+<div class="math notranslate nohighlight">
 \[\begin{split}A^{T} = \begin{bmatrix}
 1 &amp; 1 &amp; 1 &amp; 0 \\
 0 &amp; 1 &amp; - 1 &amp; - 1 \\
 \end{bmatrix}\end{split}\]</div>
-<p>Suppose <span class="math notranslate">\(U=GgG^{T}\)</span> and <span class="math notranslate">\(V=C^{T}dC\)</span>, then the equation
+<p>Suppose <span class="math notranslate nohighlight">\(U=GgG^{T}\)</span> and <span class="math notranslate nohighlight">\(V=C^{T}dC\)</span>, then the equation
 is:</p>
-<div class="math notranslate">
+<div class="math notranslate nohighlight">
 \[S = \ A^{T}\left\lbrack U \odot V \right\rbrack A\]</div>
 <p>According to the equation, the multiplication with <em>A</em>, <em>G</em> and <em>C</em> can
 be implemented with adders. Only 16 multiplications are required to
 calculate 4 results for a 3x3 kernel, while in direct convolution mode
 36 multiplications are required. Winograd is therefore 2.25 times the
 performance of Direct Convolution.</p>
-<p>Step <span class="math notranslate">\(U=GgG^{T}\)</span> converts 3x3 kernel to 4x4 kernel used for a point-wise
+<p>Step <span class="math notranslate nohighlight">\(U=GgG^{T}\)</span> converts 3x3 kernel to 4x4 kernel used for a point-wise
 multiplication against a 4x4 patch of the input activation cube.
 Software should
 convert weight kernel before NVDLA engine is running. The Convolution
@@ -412,14 +412,14 @@ multiplications.</p>
 <p>Unlike in Direct Convolution, the Winograd Convolution Pipeline
 will divide kernels and input
 feature data into 4x4x4 element small data cubes. Before the MAC Cell,
-extra adders are used to convert these cubes with matrix <span class="math notranslate">\(C^{T}\)</span>
+extra adders are used to convert these cubes with matrix <span class="math notranslate nohighlight">\(C^{T}\)</span>
 and <em>C</em>. This step is called PRA.</p>
 <p>In one Winograd atomic operation, 64 products in one MAC cell are not
 simply added together as in Direct Convolution. The addition has three phases:</p>
 <ul class="simple">
 <li>Phase 1, each of 4 products in the channel direction are added together. The
 output of phase 1 is 16 partial sums, representing a 4x4 matrix.</li>
-<li>Phase 2, each 4x4 partial sum matrix is multiplied with matrix <span class="math notranslate">\(A^{T}\)</span>.
+<li>Phase 2, each 4x4 partial sum matrix is multiplied with matrix <span class="math notranslate nohighlight">\(A^{T}\)</span>.
 The output of phase 2 is 8 partial sums, or a 4x2 matrix.</li>
 <li>Phase 3, each 4x2 partial sum matrix from phase 2 is multiplied
 with matrix <em>A</em>. The output is 4 partial sums.</li>
@@ -527,12 +527,12 @@ layer and a contract layer supported by the RUBIK unit.</p>
 deconvolution layer. The Input data cube has dimensions W x 1 x 1 and
 kernel dimensions are 3 x 1 x 1. Though the
 calculation flow is different from convolution, the result formula is:</p>
-<div class="math notranslate">
+<div class="math notranslate nohighlight">
 \[DAOUT_{i} = \sum_{j = 0}^{2}{DAIN_{i + j - 2}*W_{2 - j}}\]</div>
 <p>The formula is very similar to convolution formula, except weight R/S
 order is reversed. More generally, the formula of a WxHxC input data
 cube with K SxRxC kernels is:</p>
-<div class="math notranslate">
+<div class="math notranslate nohighlight">
 \[DAOUT_{(w,\ h,\ k)} = \sum_{x = 0}^{S - 1}{\sum_{y = 0}^{R - 1}{\sum_{z = 0}^{C - 1}{DAIN_{(w + x + 1 - S,h + y + 1 - R,\ z)}*W_{(S - 1 - x,R - 1 - y,z,k)}}}}\]</div>
 <p>According to equation, the 3D deconvolution is equal to a convolution
 with (S-1) and (R-1) zero padding and reversed R/S weight order</p>
@@ -1247,7 +1247,7 @@ operations at the single data element level. In NVDLA version
 <p>For a convolutional layer, there’re always a bias addition after convolution.
 In NVDLA, we implement bias addition in SDP.</p>
 <p>The mathematic formula for bias addition is:</p>
-<div class="math notranslate">
+<div class="math notranslate nohighlight">
 \[y = x + bias\]</div>
 <p>x is the input data can either come from Convolution Pipeline or SDP
 M-RDMA;</p>
@@ -1267,17 +1267,17 @@ layer operations.</p>
 <p>Based on current network analysis, there are three activation functions
 are commonly used:</p>
 <ul class="simple">
-<li>ReLU, for an input <span class="math notranslate">\(x\)</span>, the output is <span class="math notranslate">\(max(x,0)\)</span>.</li>
-<li>Sigmoid, for an input <span class="math notranslate">\(x\)</span>, the output is
-<span class="math notranslate">\(\frac{1}{1 + e^{- x}}\)</span>.</li>
+<li>ReLU, for an input <span class="math notranslate nohighlight">\(x\)</span>, the output is <span class="math notranslate nohighlight">\(max(x,0)\)</span>.</li>
+<li>Sigmoid, for an input <span class="math notranslate nohighlight">\(x\)</span>, the output is
+<span class="math notranslate nohighlight">\(\frac{1}{1 + e^{- x}}\)</span>.</li>
 </ul>
 <div class="figure align-center" id="id44">
 <span id="fig-image26-sigmoid"></span><img alt="../../../_images/ias_image26_sigmoid.png" src="../../../_images/ias_image26_sigmoid.png" />
 <p class="caption"><span class="caption-number">Fig. 59 </span><span class="caption-text">Sigmoid Function</span></p>
 </div>
 <ul class="simple">
-<li>Hyperbolic tangent, for an input <span class="math notranslate">\(x\)</span>, the output is
-<span class="math notranslate">\(\frac{1 - e^{- 2x}}{1 + e^{- 2x}}\)</span>.</li>
+<li>Hyperbolic tangent, for an input <span class="math notranslate nohighlight">\(x\)</span>, the output is
+<span class="math notranslate nohighlight">\(\frac{1 - e^{- 2x}}{1 + e^{- 2x}}\)</span>.</li>
 </ul>
 <div class="figure align-center" id="id45">
 <span id="fig-image27-hyperbolic"></span><img alt="../../../_images/ias_image27_hyperbolic.png" src="../../../_images/ias_image27_hyperbolic.png" />
@@ -1293,9 +1293,9 @@ of Programming Guide document for details).</p>
 <h3>Batch Normalization<a class="headerlink" href="#batch-normalization" title="Permalink to this headline">¶</a></h3>
 <p>Batch normalization a is widely used layer. It can be descripted by
 formula below:</p>
-<div class="math notranslate">
+<div class="math notranslate nohighlight">
 \[x^{'} = \frac{x - \mu}{\theta}\]</div>
-<p>Where, <span class="math notranslate">\(\mu\)</span> is the mean and <span class="math notranslate">\(\theta\)</span> is the standard variance and x is element of
+<p>Where, <span class="math notranslate nohighlight">\(\mu\)</span> is the mean and <span class="math notranslate nohighlight">\(\theta\)</span> is the standard variance and x is element of
 feature data cubes.</p>
 <p>SDP support batch normalization with given mean/standard variance
 parameters. The parameters are obtained from training.</p>
@@ -1480,10 +1480,10 @@ applied on negative iputs.</li>
 <p>Bias addition/BatchNorm operations are linear operations. This means
 software can fuse those operation into one sub-module to optimize
 power/perf. Take BiasAddition + BatchNorm for example, if they’re
-working on separated submodule, the formula is: <span class="math notranslate">\(x^{'} = x + bias\)</span>,
-<span class="math notranslate">\(y = \frac{x^{'} - \mu}{\theta}\)</span>.</p>
-<p>If we fuse those 2 formulas as one: <span class="math notranslate">\(y = \frac{x + bias - \mu}{\theta} = \frac{x - (\mu - bias)}{\theta}\)</span>.</p>
-<p>As <span class="math notranslate">\(\mu, \theta, bias\)</span> are pre-trained parameters, software can fuse them into one cube
+working on separated submodule, the formula is: <span class="math notranslate nohighlight">\(x^{'} = x + bias\)</span>,
+<span class="math notranslate nohighlight">\(y = \frac{x^{'} - \mu}{\theta}\)</span>.</p>
+<p>If we fuse those 2 formulas as one: <span class="math notranslate nohighlight">\(y = \frac{x + bias - \mu}{\theta} = \frac{x - (\mu - bias)}{\theta}\)</span>.</p>
+<p>As <span class="math notranslate nohighlight">\(\mu, \theta, bias\)</span> are pre-trained parameters, software can fuse them into one cube
 thus it’s doable;</p>
 </li>
 </ol>
@@ -1566,7 +1566,7 @@ consider to determine its size. One is covering internal SRAM access latency.
 The latency is expected to be about 128 cycles. The other is access bandwidth.
 Each partial feature data element is 16 bits, and SDP needs to process
 16 elements per cycle, so the required bandwidth is 32 bytes. The read
-DMA buffer size is therefore<span class="math notranslate">\(128 \times 32 = 4\ KBytes\)</span>.</p>
+DMA buffer size is therefore<span class="math notranslate nohighlight">\(128 \times 32 = 4\ KBytes\)</span>.</p>
 <p>Unlinke feature data, if BS/BN/EW has to support BatchNorm mode
 which has 32bits per element.  Thus the read DMA buffer size for those 2
 modules are: 32(bits)*128(cycles)*16(elements)/8=8Kbytes.</p>
@@ -1638,32 +1638,32 @@ the final result.  This final result is sent out to SRAMIF or MCIF.</p>
 final result, no extra operation is needed.</li>
 <li>In case of mean pooling scheme, the final result could be calculated
 by
-<span class="math notranslate">\(pre\_ final\_ result \times \frac{1}{\text{Kerne}l_{\text{width}} \times Kernel_{\text{height}}} = pre\_ final\_ result \times scale\_ factor\_ width \times scale\_ factor\_ height\)</span>.
+<span class="math notranslate nohighlight">\(pre\_ final\_ result \times \frac{1}{\text{Kerne}l_{\text{width}} \times Kernel_{\text{height}}} = pre\_ final\_ result \times scale\_ factor\_ width \times scale\_ factor\_ height\)</span>.
 Division is expensive for a hardware implementation, so a pair of
-<span class="math notranslate">\(scale\_ factors\)</span> are used to transform division into
+<span class="math notranslate nohighlight">\(scale\_ factors\)</span> are used to transform division into
 multiplication.</li>
 </ol>
 <p>The greatest number of kernels which share the same line of data is
 determined by
-<span class="math notranslate">\(\text{ceiling}\left( \frac{Kernel\_ Height}{Stride\_ H} \right)\)</span>.
+<span class="math notranslate nohighlight">\(\text{ceiling}\left( \frac{Kernel\_ Height}{Stride\_ H} \right)\)</span>.
 The total buffer entry number needed within a plane
-is <span class="math notranslate">\(width\_ out \times ceiling\left( \frac{Kernel\_ Height}{Stride\_ H} \right)\)</span>
+is <span class="math notranslate nohighlight">\(width\_ out \times ceiling\left( \frac{Kernel\_ Height}{Stride\_ H} \right)\)</span>
 , and in the RTL design the assigned total buffer entry number
-<span class="math notranslate">\(total\_ buf\_ entry\)</span> within one plane is as below, and 112 bits
+<span class="math notranslate nohighlight">\(total\_ buf\_ entry\)</span> within one plane is as below, and 112 bits
 for each entry:</p>
 <ol class="loweralpha simple">
 <li>if
-<span class="math notranslate">\(\text{ceiling}\left( \frac{Kernel\_ Height}{Stride\_ H} \right)\)</span>
-= 1, <span class="math notranslate">\(total\_ buf\_ entry\)</span>=16*4*8=512;</li>
+<span class="math notranslate nohighlight">\(\text{ceiling}\left( \frac{Kernel\_ Height}{Stride\_ H} \right)\)</span>
+= 1, <span class="math notranslate nohighlight">\(total\_ buf\_ entry\)</span>=16*4*8=512;</li>
 <li>if
-<span class="math notranslate">\(\text{ceiling}\left( \frac{Kernel\_ Height}{Stride\_ H} \right)\)</span>
-= 2, <span class="math notranslate">\(total\_ buf\_ entry\)</span>=16*4*4=256;</li>
+<span class="math notranslate nohighlight">\(\text{ceiling}\left( \frac{Kernel\_ Height}{Stride\_ H} \right)\)</span>
+= 2, <span class="math notranslate nohighlight">\(total\_ buf\_ entry\)</span>=16*4*4=256;</li>
 <li>if
-<span class="math notranslate">\(\text{ceiling}\left( \frac{Kernel\_ Height}{Stride\_ H} \right)\)</span>
-= 3 or 4, <span class="math notranslate">\(total\_ buf\_ entry\)</span>=16*4*2=128;</li>
+<span class="math notranslate nohighlight">\(\text{ceiling}\left( \frac{Kernel\_ Height}{Stride\_ H} \right)\)</span>
+= 3 or 4, <span class="math notranslate nohighlight">\(total\_ buf\_ entry\)</span>=16*4*2=128;</li>
 <li>if
-<span class="math notranslate">\(\text{ceiling}\left( \frac{Kernel\_ Height}{Stride\_ H} \right)\)</span>
-&gt; 4, <span class="math notranslate">\(total\_ buf\_ entry\)</span>=16*4*1=64;</li>
+<span class="math notranslate nohighlight">\(\text{ceiling}\left( \frac{Kernel\_ Height}{Stride\_ H} \right)\)</span>
+&gt; 4, <span class="math notranslate nohighlight">\(total\_ buf\_ entry\)</span>=16*4*1=64;</li>
 </ol>
 <p>Since the pooling operation is a down sampling method, there is a
 significant amount of information are discarded.  Pooling in a large
@@ -1776,32 +1776,32 @@ common practice, a pooling layer is inserted after a convolutional
 layer. To save memory accessing consumptions, the planar data processing
 sub-unit shall directly receive data from point processing unit if
 following condition is met. Suppose output width is
-<span class="math notranslate">\(\text{Width}_{\text{output}}\)</span>, total buffer size in byte is
-<span class="math notranslate">\(\text{Size}_{\text{buffer}}\)</span>, overlapped line number
-<span class="math notranslate">\(\text{Num}_{overlapped\_ line}\)</span>, Data width in byte is
-<span class="math notranslate">\(\text{Data}_{\text{width}}\)</span>, the number of spatial plane is
-called ongoing channel number <span class="math notranslate">\(\text{Num}_{ongoing\_ channels}\)</span>,
-normally, <span class="math notranslate">\(\text{Num}_{ongoing\_ channels}\)</span> should be equals to
+<span class="math notranslate nohighlight">\(\text{Width}_{\text{output}}\)</span>, total buffer size in byte is
+<span class="math notranslate nohighlight">\(\text{Size}_{\text{buffer}}\)</span>, overlapped line number
+<span class="math notranslate nohighlight">\(\text{Num}_{overlapped\_ line}\)</span>, Data width in byte is
+<span class="math notranslate nohighlight">\(\text{Data}_{\text{width}}\)</span>, the number of spatial plane is
+called ongoing channel number <span class="math notranslate nohighlight">\(\text{Num}_{ongoing\_ channels}\)</span>,
+normally, <span class="math notranslate nohighlight">\(\text{Num}_{ongoing\_ channels}\)</span> should be equals to
 kernel_per_group (16 for INT16/FP16, 32 for INT8 pipe). Below is the
 planar processing on-fly operation condition.</p>
-<div class="math notranslate">
+<div class="math notranslate nohighlight">
 \[Width_{output} \leq \frac{{Size}_{{buffer}}}{{Data}_{{width}} \times {Num}_{ongoing\_ channels} \times {Num}_{overlapped\_ line}} = \frac{{Size}_{{buffer}}}{{Data}_{{width}} \times {Num}_{ongoing\_ channels} \times f(ceil\left( \frac{{Height}_{{poolin}g_{{kernel}}}}{{Strid}e_{h}} \right))}\]</div>
 <p>If
-<span class="math notranslate">\(\text{ceil}\left( \frac{\text{Height}_{\text{poolin}g_{\text{kernel}}}}{\text{Strid}e_{h}} \right) = 1\)</span>
+<span class="math notranslate nohighlight">\(\text{ceil}\left( \frac{\text{Height}_{\text{poolin}g_{\text{kernel}}}}{\text{Strid}e_{h}} \right) = 1\)</span>
 ,
-<span class="math notranslate">\(f\left( \text{ceil}\left( \frac{\text{Height}_{\text{poolin}g_{\text{kernel}}}}{\text{Strid}e_{h}} \right) \right) = 1\)</span></p>
+<span class="math notranslate nohighlight">\(f\left( \text{ceil}\left( \frac{\text{Height}_{\text{poolin}g_{\text{kernel}}}}{\text{Strid}e_{h}} \right) \right) = 1\)</span></p>
 <p>If
-<span class="math notranslate">\(\text{ceil}\left( \frac{\text{Height}_{\text{poolin}g_{\text{kernel}}}}{\text{Strid}e_{h}} \right) = 2\)</span>
+<span class="math notranslate nohighlight">\(\text{ceil}\left( \frac{\text{Height}_{\text{poolin}g_{\text{kernel}}}}{\text{Strid}e_{h}} \right) = 2\)</span>
 ,
-<span class="math notranslate">\(f\left( \text{ceil}\left( \frac{\text{Height}_{\text{poolin}g_{\text{kernel}}}}{\text{Strid}e_{h}} \right) \right) = 2\)</span></p>
+<span class="math notranslate nohighlight">\(f\left( \text{ceil}\left( \frac{\text{Height}_{\text{poolin}g_{\text{kernel}}}}{\text{Strid}e_{h}} \right) \right) = 2\)</span></p>
 <p>If
-<span class="math notranslate">\(\text{ceil}\left( \frac{\text{Height}_{\text{poolin}g_{\text{kernel}}}}{\text{Strid}e_{h}} \right) = 3\ or\ 4\)</span>
+<span class="math notranslate nohighlight">\(\text{ceil}\left( \frac{\text{Height}_{\text{poolin}g_{\text{kernel}}}}{\text{Strid}e_{h}} \right) = 3\ or\ 4\)</span>
 ,
-<span class="math notranslate">\(f\left( \text{ceil}\left( \frac{\text{Height}_{\text{poolin}g_{\text{kernel}}}}{\text{Strid}e_{h}} \right) \right) = 4\)</span></p>
+<span class="math notranslate nohighlight">\(f\left( \text{ceil}\left( \frac{\text{Height}_{\text{poolin}g_{\text{kernel}}}}{\text{Strid}e_{h}} \right) \right) = 4\)</span></p>
 <p>If
-<span class="math notranslate">\(\text{ceil}\left( \frac{\text{Height}_{\text{poolin}g_{\text{kernel}}}}{\text{Strid}e_{h}} \right) &gt; 4\)</span>
+<span class="math notranslate nohighlight">\(\text{ceil}\left( \frac{\text{Height}_{\text{poolin}g_{\text{kernel}}}}{\text{Strid}e_{h}} \right) &gt; 4\)</span>
 ,
-<span class="math notranslate">\(f\left( \text{ceil}\left( \frac{\text{Height}_{\text{poolin}g_{\text{kernel}}}}{\text{Strid}e_{h}} \right) \right) = 8\)</span></p>
+<span class="math notranslate nohighlight">\(f\left( \text{ceil}\left( \frac{\text{Height}_{\text{poolin}g_{\text{kernel}}}}{\text{Strid}e_{h}} \right) \right) = 8\)</span></p>
 <p>When input data is sourced from the point processing sub-unit, the input data sequence is the
 same as convolution output sequences which is shown in following
 diagram.</p>
@@ -1862,15 +1862,15 @@ line buffer, read DMA buffer, and write DMA buffer. For share line
 buffer, its size determines whether PDP could work directly on data from
 SDP or not.
 Based on input data cube
-height <span class="math notranslate">\(\text{Height}_{\text{input data cube}}\)</span>, pooling kernel
-height <span class="math notranslate">\(\text{Height}_{\text{pooling kernel}}\)</span>, pooling kernel
+height <span class="math notranslate nohighlight">\(\text{Height}_{\text{input data cube}}\)</span>, pooling kernel
+height <span class="math notranslate nohighlight">\(\text{Height}_{\text{pooling kernel}}\)</span>, pooling kernel
 stride in height
-direction <span class="math notranslate">\(\text{stride}_{\text{pooling kernel}}\)</span>, output data
-cube width <span class="math notranslate">\(\text{Width}_{\text{output data cube}}\)</span>, group size
+direction <span class="math notranslate nohighlight">\(\text{stride}_{\text{pooling kernel}}\)</span>, output data
+cube width <span class="math notranslate nohighlight">\(\text{Width}_{\text{output data cube}}\)</span>, group size
 (16 elements of int16/FP16 or 32 elements of int8, ~32
-byte) <span class="math notranslate">\(\ \text{Group}_{\text{size}}\)</span> and bytes_per_element(14/8
+byte) <span class="math notranslate nohighlight">\(\ \text{Group}_{\text{size}}\)</span> and bytes_per_element(14/8
 for INT8, 28/8 for INT16, 28/8 for FP16).</p>
-<div class="math notranslate">
+<div class="math notranslate nohighlight">
 \[Buffer\ Size = \text{Width}_{\text{output data cube}}*\frac{\text{Height}_{\text{pooling kernel}}}{\text{stride}_{\text{pooling kernel}}}*\text{Group}_{\text{size}}*bytes\_ per\_ element\]</div>
 <p>If the share line buffer capacity is less than the required  consumption size, PDP
 have to work in off-fly mode, so there will be a performance drop since
@@ -2198,7 +2198,7 @@ performance and the share line buffer size is set as 7Kbyte.</p>
 One is covering MC accessing latency, assumed to be 128
 cycles. The other is access bandwidth.  The peak performance case is 8
 Bytes per cycle (8 elements in int8, 4 elements in int16/fp16). So the read
-DMA buffer size is<span class="math notranslate">\(128 \times 8 = 1KBytes\)</span>.</p>
+DMA buffer size is<span class="math notranslate nohighlight">\(128 \times 8 = 1KBytes\)</span>.</p>
 </div>
 <div class="section" id="id18">
 <h3>Power Consideration<a class="headerlink" href="#id18" title="Permalink to this headline">¶</a></h3>
@@ -2261,24 +2261,24 @@ address local response normalization (LRN) layers. Local response
 normalization performs a kind of lateral inhibition by normalizing over
 local input region along the channel direction. The normalization function
 is shown as follow</p>
-<div class="math notranslate">
+<div class="math notranslate nohighlight">
 \[\text{Result}_{w,h,c} = \frac{\text{Source}_{w,h,c}}{{(j + \frac{\alpha}{n}\sum_{i = max(0,c - \frac{n}{2})}^{min(C - 1,\ c + \frac{n}{2})}\text{Source}_{w,h,i}^{2})}^{\beta}}\]</div>
-<p>Local region shape is always <span class="math notranslate">\(1 \times 1 \times n\)</span>. Number
-<span class="math notranslate">\(n\)</span> is configurable, and its range
-is <span class="math notranslate">\(\lbrack 3,5,7,9\rbrack\)</span>. Arithmetic functions such as division and
+<p>Local region shape is always <span class="math notranslate nohighlight">\(1 \times 1 \times n\)</span>. Number
+<span class="math notranslate nohighlight">\(n\)</span> is configurable, and its range
+is <span class="math notranslate nohighlight">\(\lbrack 3,5,7,9\rbrack\)</span>. Arithmetic functions such as division and
 fractional exponents are expensive to implement with hard-wired gates. The above equation
 could be decomposed into</p>
-<div class="math notranslate">
+<div class="math notranslate nohighlight">
 \[\text{Result}_{w,h,c} = \text{Source}_{w,h,c} \times f(\sum_{i = max(0,c - \frac{n}{2})}^{min(C - 1,\ c + \frac{n}{2})}\text{Source}_{w,h,i}^{2})\]</div>
-<div class="math notranslate">
+<div class="math notranslate nohighlight">
 \[f\left( x \right) = \frac{1}{{(j + \frac{\alpha}{n} \times x)}^{\beta}}\]</div>
 <p>Be noticed the
-<span class="math notranslate">\(\sum_{i = max(0,c - \frac{n}{2})}^{min(C - 1,\ c + \frac{n}{2})}\text{Source}_{w,h,i}^{2}\)</span>
-and <span class="math notranslate">\(\text{Source}_{w,h,c} \times f(x)\)</span> can be bypassed by
+<span class="math notranslate nohighlight">\(\sum_{i = max(0,c - \frac{n}{2})}^{min(C - 1,\ c + \frac{n}{2})}\text{Source}_{w,h,i}^{2}\)</span>
+and <span class="math notranslate nohighlight">\(\text{Source}_{w,h,c} \times f(x)\)</span> can be bypassed by
 programming corresponding registers so that CDP can be treated as a
 standalone lookup table (LUT) function.</p>
 <p>The Look-up table approach is adopted for the RESMO
-(reciprocation-exponent-sum-multi operation)<span class="math notranslate">\(f\left( x \right)\)</span>.</p>
+(reciprocation-exponent-sum-multi operation)<span class="math notranslate nohighlight">\(f\left( x \right)\)</span>.</p>
 <div class="figure align-center" id="id57">
 <span id="fig-image45-cdp-curve"></span><img alt="../../../_images/ias_image45_cdp_curve.svg" src="../../../_images/ias_image45_cdp_curve.svg" /><p class="caption"><span class="caption-number">Fig. 72 </span><span class="caption-text">Curve for reciprocation-exponent-sum-multi operation</span></p>
 </div>
@@ -2345,7 +2345,7 @@ diagram, and output sequence is the same as input sequence.</p>
 </table>
 <p>Data elements on stripe edge may be used by to neighboring stripes.
 Those data needs to be buffered, buffer entry number shall
-be <span class="math notranslate">\(\left\lbrack \text{Max}\left( \text{loca}l_{\text{regio}n_{\text{size}}} \right) - 1 \right\rbrack \times 8 = 7 \times 8 = 56\ byte\)</span>.</p>
+be <span class="math notranslate nohighlight">\(\left\lbrack \text{Max}\left( \text{loca}l_{\text{regio}n_{\text{size}}} \right) - 1 \right\rbrack \times 8 = 7 \times 8 = 56\ byte\)</span>.</p>
 </div>
 <div class="section" id="id20">
 <h3>Buffer Size Estimation<a class="headerlink" href="#id20" title="Permalink to this headline">¶</a></h3>
@@ -2356,7 +2356,7 @@ is the same as SDP (644Bytes).</p>
 The first is to cover memory system access latency.  The assumption is
 128 cycles. The other is access bandwidth.  The peak performance case is 8
 Bytes per cycle (8 elements in int8, 4 elements in int16/fp16), so the read
-DMA buffer size is <span class="math notranslate">\(128 \times 8 = 1KBytes\)</span>.</p>
+DMA buffer size is <span class="math notranslate nohighlight">\(128 \times 8 = 1KBytes\)</span>.</p>
 </div>
 <div class="section" id="id21">
 <h3>Power Consideration<a class="headerlink" href="#id21" title="Permalink to this headline">¶</a></h3>
@@ -2438,11 +2438,11 @@ remapping example where the x stride is 2 and the y stride is 3.</p>
 <span id="fig-image49-rubik-contract"></span><img alt="../../../_images/ias_image49_rubik_contract.svg" src="../../../_images/ias_image49_rubik_contract.svg" /><p class="caption"><span class="caption-number">Fig. 76 </span><span class="caption-text">Contract mode in RUBIK</span></p>
 </div>
 <p>The formula of input cube size and output size are:</p>
-<div class="math notranslate">
+<div class="math notranslate nohighlight">
 \[W^{'} = W*deconv\_ x\_ stride\]</div>
-<div class="math notranslate">
+<div class="math notranslate nohighlight">
 \[H^{'} = H*deconv\_ y\_ stride\]</div>
-<div class="math notranslate">
+<div class="math notranslate nohighlight">
 \[C^{'} = \frac{C}{deconv\_ x\_ stride*deconv\_ y\_ stride\ }\]</div>
 <p>The RUBIK engine does contract slice by slice. It takes one Wx1xC input slice
 and converts it to a W’xH’xC’ output sub cube. Then it continues to the next input slice.
@@ -2457,7 +2457,7 @@ the memory efficiency reaches 100%.</p>
 <li>The channel size shall be divisible by deconvolution x stride, y
 stride and 32 bytes. As formula below:</li>
 </ul>
-<div class="math notranslate">
+<div class="math notranslate nohighlight">
 \[C\ \%\ \left( \text{decon}v_{x_{\text{stride}}}*deconv_{y_{\text{stride}}}*32 \right) == 0\]</div>
 <ul class="simple">
 <li>Each dimension of input and output data cube, like input data width,
@@ -2854,7 +2854,7 @@ layers</td>
 href="../../../copyright.html">Copyright</a> 2017, NVIDIA Corporation.
 <a href="http://www.nvidia.com/object/legal_info.html">Legal Information.</a>
 <a href="http://www.nvidia.com/object/privacy_policy.html">Privacy Policy.</a>
-Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.2.
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.4.
 </div>
 </div>
 </div>

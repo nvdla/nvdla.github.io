@@ -67,7 +67,7 @@ precision-preservation architecture.</p>
 pipeline:</p>
 <ul>
 <li><p class="first">Convertor:</p>
-<p>The formula for a convertor in INT8 and INT16 is: <span class="math notranslate">\(y = saturation\_round{(x - offset_{int}) * scaling_{int} &gt;&gt; shifter_{uint}}\)</span></p>
+<p>The formula for a convertor in INT8 and INT16 is: <span class="math notranslate nohighlight">\(y = saturation\_round{(x - offset_{int}) * scaling_{int} &gt;&gt; shifter_{uint}}\)</span></p>
 <p><cite>offset</cite>, <cite>scaling</cite>, and <cite>shifter</cite> are programmable registers to allow
 software to control the output dynamic range. Saturation is dependent on the number of output bits.</p>
 <p>For INT8 and INT16, <cite>offset</cite> and <cite>scaling</cite> are treated as signed integers, and the exact
@@ -82,17 +82,17 @@ to convert internal precision (high) to external (low, typically
 INT8/INT16/FP16).</p>
 </li>
 <li><p class="first">Truncate:</p>
-<p>Truncation is enabled for INT8/INT16 only.  The formula for truncation is: <span class="math notranslate">\(y = saturate\_round (x[msb : lsb])\)</span></p>
+<p>Truncation is enabled for INT8/INT16 only.  The formula for truncation is: <span class="math notranslate nohighlight">\(y = saturate\_round (x[msb : lsb])\)</span></p>
 <p><cite>lsb</cite> is a programmable register; <cite>msb</cite> is defined as <cite>lsb</cite> + <cite>output_bits</cite>.</p>
 <p>Similarly to the convertor, the rounding method used in truncation is also “round
 half away from zero”.</p>
-<p>Truncation is used in NVDLA internal pipe where the <span class="math notranslate">\(y\)</span> has enough bits
+<p>Truncation is used in NVDLA internal pipe where the <span class="math notranslate nohighlight">\(y\)</span> has enough bits
 (compared to convertor case); it is the result of a trade-off
 between precision and area.</p>
 </li>
 <li><p class="first">Shifter:</p>
 <p>The shifter exists to make sure that the bias can be added to convolution
-results; it has the formula <span class="math notranslate">\(y = saturate ( x &lt;&lt; shifter )\)</span>.</p>
+results; it has the formula <span class="math notranslate nohighlight">\(y = saturate ( x &lt;&lt; shifter )\)</span>.</p>
 <p><cite>shifter</cite> is a programmable register. The saturate function depends on the number of output bits.</p>
 </li>
 <li><p class="first">LUT:</p>
@@ -119,31 +119,31 @@ comparing NVDLA’s output against reference.  Below is a summary of the thresho
 </thead>
 <tbody valign="top">
 <tr class="row-even"><td>CC DC</td>
-<td><span class="math notranslate">\(fabs(a-b) \leq 2^{max\_exp-20} * R * S * C * 2 * scale + 2^{exp(a)-10}\)</span></td>
+<td><span class="math notranslate nohighlight">\(fabs(a-b) \leq 2^{max\_exp-20} * R * S * C * 2 * scale + 2^{exp(a)-10}\)</span></td>
 </tr>
 <tr class="row-odd"><td>CC Winograd</td>
-<td><span class="math notranslate">\(fabs(a-b) \leq 2^{max\_exp-20} * 18 * C * 2 * scale + 2^{exp(a)-10}\)</span></td>
+<td><span class="math notranslate nohighlight">\(fabs(a-b) \leq 2^{max\_exp-20} * 18 * C * 2 * scale + 2^{exp(a)-10}\)</span></td>
 </tr>
 <tr class="row-even"><td>SDP</td>
 <td>Bit-by-bit identical</td>
 </tr>
 <tr class="row-odd"><td>CDP</td>
-<td><span class="math notranslate">\((fabs(a-b) \leq 0.0001) \&amp;\&amp; (\frac{fabs(a-b)}{max\_value} \leq 0.001)\)</span></td>
+<td><span class="math notranslate nohighlight">\((fabs(a-b) \leq 0.0001) \&amp;\&amp; (\frac{fabs(a-b)}{max\_value} \leq 0.001)\)</span></td>
 </tr>
 <tr class="row-even"><td>PDP</td>
-<td><span class="math notranslate">\((fabs(a-b) \leq 0.0001) \&amp;\&amp; (\frac{fabs(a-b)}{max\_value} \leq 0.001)\)</span></td>
+<td><span class="math notranslate nohighlight">\((fabs(a-b) \leq 0.0001) \&amp;\&amp; (\frac{fabs(a-b)}{max\_value} \leq 0.001)\)</span></td>
 </tr>
 </tbody>
 </table>
 <p>In the above table, note that:</p>
 <ul>
-<li><p class="first"><span class="math notranslate">\(exp(a)\)</span> in DC/Winograd is the operation to extract exponential
-field of an input: <span class="math notranslate">\(exp(a) = ((a&gt;&gt;10) \&amp; 0x1f) - 15\)</span> .</p>
+<li><p class="first"><span class="math notranslate nohighlight">\(exp(a)\)</span> in DC/Winograd is the operation to extract exponential
+field of an input: <span class="math notranslate nohighlight">\(exp(a) = ((a&gt;&gt;10) \&amp; 0x1f) - 15\)</span> .</p>
 </li>
-<li><p class="first"><span class="math notranslate">\(max\_exp: in DC/Winograd is the maximum exponential value of :math:`wt*data\)</span>
+<li><p class="first"><span class="math notranslate nohighlight">\(max\_exp: in DC/Winograd is the maximum exponential value of :math:`wt*data\)</span>
 inside a convolution kernel.  As data moves in a sliding window,
 max_exp is different element-by-element:</p>
-<div class="math notranslate">
+<div class="math notranslate nohighlight">
 \[\begin{split}max\_exp=\max_{s=0...S-1\\r=0...R-1\\c=0...C-1}(exp(data_{r,s,c})\&amp;(\sim\ 0x3)+exp(wt_{r,s,c})\&amp;(\sim\ 0x3))\end{split}\]</div>
 </li>
 <li><p class="first"><strong>max_value</strong> in CDP is the maximum value inside one square sum window.</p>
@@ -296,7 +296,7 @@ only</td>
 </tr>
 </tbody>
 </table>
-<div class="math notranslate">
+<div class="math notranslate nohighlight">
 \[\begin{split}\begin{equation}\begin{cases}
 SF_{bs}*2^{bs\_trunc}=\frac{SF_{in}*SF_{wt}}{2^{pra\_trunc+cc\_out\_trunc}},&amp;\text{conv=winograd}\\
 SF_{bs}*2^{bs\_trunc}=\frac{SF_{in}*SF_{wt}}{2^{cc\_out\_trunc}},&amp;\text{conv=DC}
@@ -318,7 +318,7 @@ PADDING_VALUE should be set as 0;</p>
 </ul>
 <p>As discussed above, activation such as ReLU is a piece wise
 function:</p>
-<div class="math notranslate">
+<div class="math notranslate nohighlight">
 \[\begin{split}\begin{equation}\begin{cases}
 y=x,&amp;\text{x&gt;0}\\
 y=0,&amp;\text{otherwise}
@@ -328,8 +328,8 @@ if “offset” is enabled on input convolution data, the “0” is no
 longer 0 in the encoded activation data:</p>
 <p>Let’s deduce the CC output (activation layer input) offset based on
 convolution definition:</p>
-<p>Given: <span class="math notranslate">\(In_{int}=SF_{in}*(In-Offset_{in}),\ Wt_{int}=SF_{wt}*Wt,\ CC_{FP}=\sum{In*Wt},\)</span></p>
-<div class="math notranslate">
+<p>Given: <span class="math notranslate nohighlight">\(In_{int}=SF_{in}*(In-Offset_{in}),\ Wt_{int}=SF_{wt}*Wt,\ CC_{FP}=\sum{In*Wt},\)</span></p>
+<div class="math notranslate nohighlight">
 \[\begin{split}\begin{align*}
 CC_{int} &amp; = \frac{\sum{In_{int}*Wt_{int}}}{2^{pra\_trunc+cc\_out\_trunc}} \\
 &amp; = \frac{\sum{SF_{in}*(In-offset_{in})*SF_{wt}*Wt}}{2^{pra\_trunc+cc\_out\_trunc}} \\
@@ -337,15 +337,15 @@ CC_{int} &amp; = \frac{\sum{In_{int}*Wt_{int}}}{2^{pra\_trunc+cc\_out\_trunc}} \
 &amp; = \frac{SF_{in}*SF_{wt}*(\sum{In*wt}-offset_{in}*\sum{Wt})}{2^{pra\_trunc+cc\_out\_trunc}} \\
 &amp; = \frac{SF_{in}*SF_{wt}*(CC_{FP}-offset_{in}*\sum{Wt})}{2^{pra\_trunc+cc\_out\_trunc}}
 \end{align*}\end{split}\]</div>
-<p>(The truncate for activation/weight are merged to <span class="math notranslate">\(SF_{in}\)</span>, <span class="math notranslate">\(SF_{wt}\)</span> in formula above
+<p>(The truncate for activation/weight are merged to <span class="math notranslate nohighlight">\(SF_{in}\)</span>, <span class="math notranslate nohighlight">\(SF_{wt}\)</span> in formula above
 to simplify deduction)</p>
-<p>So, the CC output offset is: <span class="math notranslate">\(\frac{SF_{in}*SF_{wt}*offset_{in}*\Sigma{W_t}}{2^{pra\_trunc+cc\_out\_trunc}}\)</span>.</p>
+<p>So, the CC output offset is: <span class="math notranslate nohighlight">\(\frac{SF_{in}*SF_{wt}*offset_{in}*\Sigma{W_t}}{2^{pra\_trunc+cc\_out\_trunc}}\)</span>.</p>
 <p>Please be noticed: The formula above is assuming no quantization
 error, in practice, there’ll be quantization error on weight thus
-actual offset is <span class="math notranslate">\(\frac{SF_{in}*SF_{wt}*offset_{in}*\Sigma{W^{'}_t}}{2^{pra\_trunc+cc\_out\_trunc}}\)</span>.</p>
-<p>Where <span class="math notranslate">\(W^{'}_t\)</span> is the low precision version of weight which takes weight
+actual offset is <span class="math notranslate nohighlight">\(\frac{SF_{in}*SF_{wt}*offset_{in}*\Sigma{W^{'}_t}}{2^{pra\_trunc+cc\_out\_trunc}}\)</span>.</p>
+<p>Where <span class="math notranslate nohighlight">\(W^{'}_t\)</span> is the low precision version of weight which takes weight
 quantization error into consideration.</p>
-<p><span class="math notranslate">\(\Sigma{W^{'}_t}\)</span> is different channel-by-channel which means <span class="math notranslate">\(\frac{SF_{in}*SF_{wt}*offset_{in}*\Sigma{W^{'}_t}}{2^{pra\_trunc+cc\_out\_trunc}}\)</span> also vary channel by
+<p><span class="math notranslate nohighlight">\(\Sigma{W^{'}_t}\)</span> is different channel-by-channel which means <span class="math notranslate nohighlight">\(\frac{SF_{in}*SF_{wt}*offset_{in}*\Sigma{W^{'}_t}}{2^{pra\_trunc+cc\_out\_trunc}}\)</span> also vary channel by
 channel thus per-channel operation has to be adopted to compensate
 the CC output offset. This compensation is done by ALU module in
 X1/X2/Y in SDP.</p>
@@ -450,10 +450,10 @@ allowed</td>
 </tbody>
 </table>
 <p>The input of batch normalization should be either from CONV/MC or
-previous pipeline stages thus we should assume <span class="math notranslate">\(O_{in}, SF_{in}\)</span> are applied on input.</p>
+previous pipeline stages thus we should assume <span class="math notranslate nohighlight">\(O_{in}, SF_{in}\)</span> are applied on input.</p>
 <p>In order to make mean addable with input data, formula below should be
 satisfied:</p>
-<div class="math notranslate">
+<div class="math notranslate nohighlight">
 \[SF_{in} = SF_{bs\_m\_cvt} * 2^{bn\_m\_shifter}\]</div>
 </div>
 <div class="section" id="element-wise">
@@ -518,34 +518,34 @@ only</td>
 </table>
 <p>Since there might be 2 convertors applied on E-RDMA stream, if original
 input is x, the output from ew_inv_cvt is:</p>
-<div class="math notranslate">
+<div class="math notranslate nohighlight">
 \[x'=\{(x-O_{ew\_cvt})*SF_{ew\_cvt}-O_{ew\_inv\_cvt}\}*SF_{ew\_inv\_cvt}=\{x-(O_{ew\_cvt}+\frac{O_{ew\_inv\_cvt}}{SF_{ew\_cvt}})\}*SF_{ew\_cvt}*SF_{ew\_inv\_cvt}\]</div>
 <p>In order to make element-wise acts as we supposed, the convertor
 parameter should be carefully configured based on different element-wise
-operation (Assume convertor parameter from BN module is: <span class="math notranslate">\(O_{in}, SF_{in}\)</span>):</p>
+operation (Assume convertor parameter from BN module is: <span class="math notranslate nohighlight">\(O_{in}, SF_{in}\)</span>):</p>
 <ul>
 <li><p class="first">MAX</p>
 <p>The offset/scaling applied on input stream and E-RDMA stream should
 be the same, which means:</p>
 </li>
 </ul>
-<div class="math notranslate">
+<div class="math notranslate nohighlight">
 \[O_{in}==O_{ew\_cvt}+\frac{O_{ew\_inv\_cvt}}{SF_{ew\_cvt}}\]</div>
-<div class="math notranslate">
+<div class="math notranslate nohighlight">
 \[SF_{in}==SF_{ew\_cvt}*SF_{ew\_inv\_cvt}\]</div>
 <ul>
 <li><p class="first">SUM</p>
 <p>The scaling factor applied on both stream should be the same:</p>
 </li>
 </ul>
-<div class="math notranslate">
+<div class="math notranslate nohighlight">
 \[SF_{in} == SF_{ew\_cvt} * SF_{ew\_inv\_cvt}\]</div>
 <ul>
 <li><p class="first">PROD</p>
 <p>The offset applied on E-RDMA stream should be 0:</p>
 </li>
 </ul>
-<div class="math notranslate">
+<div class="math notranslate nohighlight">
 \[O_{ew\_cvt} + \frac{O_{ew\_inv\_cvt}}{SF_{ew\_cvt}} == 0\]</div>
 </div>
 <div class="section" id="activation-relu-prelu">
@@ -568,7 +568,7 @@ parameter to make it acts as you want.</p>
 <p>…</p>
 <p>LUT[256]=f(300)</p>
 <p>This means, if you want to get the correct LUT output, the LUT input
-has to be <span class="math notranslate">\(x^{'} = (x - O) * SF\)</span>, where O=100, SF=200/256</p>
+has to be <span class="math notranslate nohighlight">\(x^{'} = (x - O) * SF\)</span>, where O=100, SF=200/256</p>
 <p>So, software has to carefully program the convertors before LUT to
 achieve this.</p>
 </div>
@@ -651,16 +651,16 @@ only</td>
 </table>
 <p>Suppose the CDP input has, in order to make LUT input has the form of
 x*2<sup>M</sup>, cdp_in_cvt has to be programmed as:</p>
-<div class="math notranslate">
+<div class="math notranslate nohighlight">
 \[O_{cdp\_in\_cvt} = -O_{in} * SF_{in}\]</div>
-<div class="math notranslate">
+<div class="math notranslate nohighlight">
 \[SF_{cdp\_in\_cvt} = \frac{2^M}{SF_{in}}\]</div>
 <p>Value M should be selected by precision study.</p>
-<p>Suppose CDP output is encoded as <span class="math notranslate">\(O_{out}, SF_{out}\)</span>, cdp_lut_cvt and cdp_out_cvt has to be
+<p>Suppose CDP output is encoded as <span class="math notranslate nohighlight">\(O_{out}, SF_{out}\)</span>, cdp_lut_cvt and cdp_out_cvt has to be
 programmed as:</p>
-<div class="math notranslate">
+<div class="math notranslate nohighlight">
 \[O_{out} == \frac{O_{cdp\_out\_cvt}}{SF_{cdp\_lut\_cvt} * 2^M}\]</div>
-<div class="math notranslate">
+<div class="math notranslate nohighlight">
 \[SF_{out} == SF_{cdp\_lut\_cvt} * SDP_{cdp\_out\_cvt} * 2^M\]</div>
 </div>
 <div class="section" id="pdp-convertors">
@@ -673,13 +673,13 @@ they’re ignored as we assume there’s no offset for FP16 pipe;</p>
 <span id="id2"></span><h3>Convertor statistics<a class="headerlink" href="#convertor-statistics" title="Permalink to this headline">¶</a></h3>
 <p>NVDLA implemented counters to evaluate number of samples overflowed
 during convertor. The overflow is defined as:</p>
-<div class="math notranslate">
+<div class="math notranslate nohighlight">
 \[INT32: x &lt; -2147483648 || x &gt; 2147483647\]</div>
-<div class="math notranslate">
+<div class="math notranslate nohighlight">
 \[INT16: x &lt; -32768 || x &gt; 32767\]</div>
-<div class="math notranslate">
+<div class="math notranslate nohighlight">
 \[INT8: x &lt; -128 || x &gt; 127\]</div>
-<div class="math notranslate">
+<div class="math notranslate nohighlight">
 \[FP16: fabs(x) &gt;= 65504\]</div>
 <p>Here’s a list of saturation counters in NVDLA pipeline:</p>
 <table border="1" class="docutils">
@@ -797,7 +797,7 @@ during convertor. The overflow is defined as:</p>
 href="../../../copyright.html">Copyright</a> 2017, NVIDIA Corporation.
 <a href="http://www.nvidia.com/object/legal_info.html">Legal Information.</a>
 <a href="http://www.nvidia.com/object/privacy_policy.html">Privacy Policy.</a>
-Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.2.
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.4.
 </div>
 </div>
 </div>

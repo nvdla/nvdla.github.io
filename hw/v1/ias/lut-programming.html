@@ -113,7 +113,7 @@ very high sample rate on low range values and low sample rate on high
 range values (it’s fair since they have low frequency in histogram).
 This is the idea of “exponential” mode. Currently, only X table is able
 to work on exponential mode and when this mode is enabled, the coverage
-is fixed as <span class="math notranslate">\(2^{exp\_start} ~ 2^{exp\_start + tlb\_entry}\)</span></p>
+is fixed as <span class="math notranslate nohighlight">\(2^{exp\_start} ~ 2^{exp\_start + tlb\_entry}\)</span></p>
 <p>Table below summarized the LUT attributes of NVDLA (The X/Y are used to
 denote different table, when mapping to hardware, X corresponding to
 LE(Linear/Exponent) while Y corresponding to LO(Linear only)):</p>
@@ -204,8 +204,8 @@ discuss how to configure them based on different modes.</p>
 </tr>
 </tbody>
 </table>
-<p>Suppose LUT input is: <span class="math notranslate">\(x' = (x - O_{in}) * SF_{in}\)</span>, per LUT storage, the index should be:</p>
-<div class="math notranslate">
+<p>Suppose LUT input is: <span class="math notranslate nohighlight">\(x' = (x - O_{in}) * SF_{in}\)</span>, per LUT storage, the index should be:</p>
+<div class="math notranslate nohighlight">
 \[index = (log_2(x - linear\_start)) - exp\_start = log_2 (\frac{x'}{SF_{in}} + O_{in} - linear\_start) - exp\_start\]</div>
 <p>SF<sub>in</sub> must be 2<sup>M</sup>, then, formula above changed as:
 .. math:: index = log_2 (frac{x’}{SF_{in}} + O_{in} - linear_start) - exp_start = log_2 (x’ - SF_{in}(linear_start - O_{in})) - (M + exp_start)</p>
@@ -231,7 +231,7 @@ table supports exponential mode):</p>
 <td>Not used</td>
 </tr>
 <tr class="row-even"><td>S_LUT_LE_START_LOW/HIGH</td>
-<td><span class="math notranslate">\(SF_{in}(linear\_start - O_{in})\)</span></td>
+<td><span class="math notranslate nohighlight">\(SF_{in}(linear\_start - O_{in})\)</span></td>
 </tr>
 </tbody>
 </table>
@@ -254,18 +254,18 @@ then, LUT entry storage should be (suppose entry_num=257):</p>
 </tr>
 </tbody>
 </table>
-<p>Suppose LUT input is: <span class="math notranslate">\(x' = (x - O_{in}) * SF_{in}\)</span>, per LUT storage, the index should be:</p>
-<div class="math notranslate">
+<p>Suppose LUT input is: <span class="math notranslate nohighlight">\(x' = (x - O_{in}) * SF_{in}\)</span>, per LUT storage, the index should be:</p>
+<div class="math notranslate nohighlight">
 \[index=\frac{x-min}{step}=\frac{\frac{x'}{SF_{in}}+O_{in}-min}{step}=\frac{x'+O{in}*SF_{in}-min*SF_{in}}{(max-min)*SF_{in}}*(entry\_num-1)\]</div>
 <p>Denote:</p>
-<div class="math notranslate">
+<div class="math notranslate nohighlight">
 \[SF_{lut}=\frac{entry_num-1}{(max-min)*SF_{in}},\ O_{lut}=min*SF_{in}-O_{in}*SF_{in},\ index=(x'-O_{lut})*SF_{lut}\]</div>
 <p>This requires multiplier, in order to make hardware simpler, we require:</p>
-<div class="math notranslate">
+<div class="math notranslate nohighlight">
 \[SF_{lut} = 2^M\]</div>
 <p>Then, hardware just need to right/left shifter to get correct index,
 however, this implies:</p>
-<div class="math notranslate">
+<div class="math notranslate nohighlight">
 \[(max - min) * SF_{in} = 2^{C-M}, where\ C=log_2(entry\_num - 1)\]</div>
 <p>This can be guaranteed by the convertor before LUT (cdp_in_cvt in CDP;
 X/X/Y multiplier in SDP).</p>
@@ -286,7 +286,7 @@ be LE/LO):</p>
 <td>-M</td>
 </tr>
 <tr class="row-odd"><td>X_START_LOW/HIGH</td>
-<td><span class="math notranslate">\(O_{lut}\)</span></td>
+<td><span class="math notranslate nohighlight">\(O_{lut}\)</span></td>
 </tr>
 <tr class="row-even"><td>LE_INDEX_OFFSET</td>
 <td>Not used</td>
@@ -301,33 +301,33 @@ bigger than max or smaller than min, we call it out-of-range sample.</p>
 <p>NVDLA supports linear interpolation of those out-of-range samples. The
 mathematic formula for the interpolation is (x is the input sample
 value):</p>
-<div class="math notranslate">
+<div class="math notranslate nohighlight">
 \[\begin{split}\begin{equation}\begin{cases}
 y_0+(x-min)*k_{underflow},&amp;\text{x&lt;min}\\
 y_n+(x-max)*k_{overflow},&amp;\text{x&gt;max}\\
 \end{cases}\end{equation}\end{split}\]</div>
 <p>From hardware perspective, the interpolation is:</p>
-<div class="math notranslate">
+<div class="math notranslate nohighlight">
 \[\begin{split}\begin{equation}\begin{cases}
 LUT[0]+(X-START)*UFLOW_{SCALE}/UFLOW_{SHIFT},&amp;\text{X&lt;START}\\
 LUT[N]+(X-END)*OFLOW_{SCALE}/OFLOW_{SHIFT},&amp;\text{X&gt;END}\\
 \end{cases}\end{equation}\end{split}\]</div>
-<p>Take underflow as an example, given (<span class="math notranslate">\(2^M\)</span> is the scaling applied on LUT
+<p>Take underflow as an example, given (<span class="math notranslate nohighlight">\(2^M\)</span> is the scaling applied on LUT
 input, SF is the scaling applied on LUT entries):</p>
-<div class="math notranslate">
+<div class="math notranslate nohighlight">
 \[X = x * 2^M\]</div>
-<div class="math notranslate">
+<div class="math notranslate nohighlight">
 \[START = min * 2^M\]</div>
-<div class="math notranslate">
+<div class="math notranslate nohighlight">
 \[LUT[0] = y_0 * SF\]</div>
 <p>Hardware output:</p>
-<div class="math notranslate">
+<div class="math notranslate nohighlight">
 \[\begin{split}\begin{align*}
 LUT[0] + (X-START)*UFLOW\_SCALE/UFLOW\_SHIFT &amp; = y_0 * SF + (x-min) * 2^M * UFLOW\_SCALE/UFLOW\_SHIFT \\
 &amp; = SF*(y_0 + \frac{(x-min) * 2^M * UFLOW\_SCALE/UFLOW\_SHIFT}{SF})
 \end{align*}\end{split}\]</div>
 <p>Thus:</p>
-<div class="math notranslate">
+<div class="math notranslate nohighlight">
 \[\frac{2^M * UFLOW\_SCALE/UFLOW\_SHIFT}{SF} = k_{underflow}\]</div>
 <p>The mapping between the symbols in above formula and registers are:</p>
 <table border="1" class="docutils">
@@ -344,7 +344,7 @@ LUT[0] + (X-START)*UFLOW\_SCALE/UFLOW\_SHIFT &amp; = y_0 * SF + (x-min) * 2^M * 
 </thead>
 <tbody valign="top">
 <tr class="row-even"><td>LUT[0]</td>
-<td><span class="math notranslate">\(y_0\)</span></td>
+<td><span class="math notranslate nohighlight">\(y_0\)</span></td>
 <td>No register,
 directly use LUT
 content</td>
@@ -352,7 +352,7 @@ content</td>
 <tr class="row-odd"><td>LUT[N], (N is the
 last entry of the
 LUT)</td>
-<td><span class="math notranslate">\(y_n\)</span></td>
+<td><span class="math notranslate nohighlight">\(y_n\)</span></td>
 <td>No register,
 directly use LUT
 content</td>
@@ -377,7 +377,7 @@ E</p>
 <p class="last">SLOPE_UNDERFLOW_SHIF
 T</p>
 </td>
-<td><span class="math notranslate">\(SF*k_{underflow}*2^{-M}\)</span></td>
+<td><span class="math notranslate nohighlight">\(SF*k_{underflow}*2^{-M}\)</span></td>
 <td><p class="first">16bits for SCALE
 will be treated as
 INT/FP16 for
@@ -395,7 +395,7 @@ k=SCALE&lt;&lt;SHIFT)</p>
 <tr class="row-odd"><td><p class="first">SLOPE_OVERFLOW_SCALE</p>
 <p class="last">SLOPE_OVERFLOW_SHIFT</p>
 </td>
-<td><span class="math notranslate">\(SF*k_{overflow}*2^{-M}\)</span></td>
+<td><span class="math notranslate nohighlight">\(SF*k_{overflow}*2^{-M}\)</span></td>
 <td>Same as UNDERFLOW</td>
 </tr>
 </tbody>
@@ -626,7 +626,7 @@ be set)</p>
 href="../../../copyright.html">Copyright</a> 2017, NVIDIA Corporation.
 <a href="http://www.nvidia.com/object/legal_info.html">Legal Information.</a>
 <a href="http://www.nvidia.com/object/privacy_policy.html">Privacy Policy.</a>
-Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.2.
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.4.
 </div>
 </div>
 </div>

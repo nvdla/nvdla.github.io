@@ -420,19 +420,19 @@ input format</th>
 </table>
 <p>For pixel formats, the conversion to int8/int16/fp16 follows the
 equation below.</p>
-<div class="math notranslate">
+<div class="math notranslate nohighlight">
 \[d_{int8} = truncate2int8\left( \left( d_{\text{pixel}} - offset \right)*SF \right)\]</div>
-<div class="math notranslate">
+<div class="math notranslate nohighlight">
 \[d_{int16} = truncate2int16\left( \left( d_{\text{pixel}} - offset \right)*SF \right)\]</div>
-<div class="math notranslate">
+<div class="math notranslate nohighlight">
 \[d_{fp16} = int2fp\left( \left( d_{\text{pixel}} - offset \right)*SF \right)\]</div>
 <p>Equation 1 pixel precision conversion</p>
 <p>Here <em>SF</em> refers to scaling factor, <em>offset</em> refers to offset value.
 They are both given by programmable register fields.</p>
 <p>For conversion between int16 and int8, the equations are:</p>
-<div class="math notranslate">
+<div class="math notranslate nohighlight">
 \[d_{int8} = truncate2int8\left( \left( d_{int16} - offset \right)*SF \right)\]</div>
-<div class="math notranslate">
+<div class="math notranslate nohighlight">
 \[d_{int16} = truncate2int16\left( \left( d_{int8} - offest \right)*SF \right)\]</div>
 <p>Equation 3 precision conversion between int8 and int16</p>
 <p><strong>The CDMA and SDP convert precision individually.</strong> When working in
@@ -981,7 +981,7 @@ is transpose matrix.</li>
 convolution documentation for reference.</li>
 <li>The width and height of a kernel should be 4 after conversion.</li>
 </ul>
-<div class="math notranslate">
+<div class="math notranslate nohighlight">
 \[\begin{split}G = \begin{bmatrix}
 1 &amp; 0 &amp; 0 \\
 0.5 &amp; 0.5 &amp; 0.5 \\
@@ -1553,7 +1553,7 @@ wise</td>
 href="../copyright.html">Copyright</a> 2017, NVIDIA Corporation.
 <a href="http://www.nvidia.com/object/legal_info.html">Legal Information.</a>
 <a href="http://www.nvidia.com/object/privacy_policy.html">Privacy Policy.</a>
-Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.2.
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.4.
 </div>
 </div>
 </div>
