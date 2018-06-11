@@ -4,6 +4,7 @@ Virtual Platform On AWS FPGA
 Overview
 ========
 
+
 Virtual Platform (:ref:`overview`) can run on Amazon Web Services (AWS) FPGA platform. :numref:`fig_vp_fpga` below shows the top level diagram of the NVDLA virtual simulator on AWS FPGA platform.
 
 .. _fig_vp_fpga:
@@ -90,18 +91,19 @@ Load AWS FPGA image
 .. code-block:: console
 
    $ sudo fpga-clear-local-image -S 0
-   $ sudo fpga-load-local-image -S 0 -I agfi-09c2a21805a8b9257    # Load MSI-X interrupt fixed AFI
+   $ sudo fpga-load-local-image -S 0 -I agfi-09c2a21805a8b9257     # Load MSI-X interrupt fixed AFI
    $ sudo fpga-clear-local-image -S 0
    $ sudo fpga-describe-local-image -S 0 -H
-   $ sudo fpga-load-local-image -S 0 -I <your-image-afi-global-id>                                      # Load the image
+   $ sudo fpga-load-local-image -S 0 -I <your-image-afi-global-id> # Load the image
    $ sudo fpga-describe-local-image -S 0 -R -H
-   $ sudo rmmod edma-drv && sudo insmod $SDK_DIR/linux_kernel_drivers/edma/edma-drv.ko    # Re-install the edma driver to make sure the MSI is registered to /dev/fpga0_event0
+   $ sudo rmmod edma-drv                                           # Only needed if edma driver has been installed
+   $ sudo insmod $SDK_DIR/linux_kernel_drivers/edma/edma-drv.ko    # Re-install the edma driver to make sure the MSI is registered to /dev/fpga0_event0
 
-AFI *agfi-09c2a21805a8b9257* is necessary for MSI-X interrupts issue, more details please refer to `MSI-X issue`_
+AFI *agfi-09c2a21805a8b9257* is necessary for MSI-X interrupts issue.
 
-.. _`MSI-X issue`: https://forums.aws.amazon.com/ann.jspa?annID=4917
+You can generate your own AWS FPGA Image (AFI) by `Generating the AFI on AWS FPGA AMI`_ Or can use NVIDIA Sample AFI (refer to `VP AWS FPGA README`_) if just want to run tests on AWS FPGA platform.
 
-You can generate your own AWS FPGA Image (AFI) by `Generating the AFI on AWS FPGA AMI`_ Or can use *agfi-0c0d3238889376d22* if just want to run tests on AWS FPGA platform.
+.. _`VP AWS FPGA README`: https://github.com/nvdla/vp_awsfpga/blob/master/README.md
 
 More details please refer to `AWS Getting Started`_.
 
@@ -146,7 +148,17 @@ Please refer to `Setup AWS EC2 instance machine`_ and the AMI we recommend to ch
 Download the Virtual Simulator
 ------------------------------
 
-Please refer to :ref:`Download_the_Virtual_Simulator`.
+1. Download Virtual Simulator
++++++++++++++++++++++++++++++
+
+Please refer to :ref:`Download_the_Virtual_Simulator`
+
+2. Download NVDLA AWS FPGA Custom Logic (CL)
+++++++++++++++++++++++++++++++++++++++++++++
+
+.. code-block:: console
+
+   $ git clone https://github.com/nvdla/vp_awsfpga.git
 
 Install Dependencies
 --------------------
@@ -204,11 +216,15 @@ Please refer to :ref:`tree_build` for details on building the NVDLA hardware tre
 
    $ git clone https://github.com/nvdla/hw.git
    $ cd hw
-   $ git reset --hard c2e15a548032e5e9bbdc8a8f0b9ec4ade57a9f18    # HW versison must be matched with virtual simulator
+   $ git reset --hard <HW verion index>    # HW versison must be matched with virtual simulator
    $ make
    $ tools/bin/tmake -build cmod_top -build vmod
  
 The header files and library will be generated in *hw/outdir/<project>/cmod/release* and *hw/outdir/<project>/vmod/release*.
+
+<HW verion index> must be matched with virtual simulator, refer to `VP README`_ for details.
+
+.. _`VP README`: https://github.com/nvdla/vp/blob/master/README.md
 
 If you need to run the random HW regression tests on FPGA, please run the below commands to build tests for random HW regression.
 
@@ -229,14 +245,14 @@ Build and Install the Virtual Simulator with NVDLA FPGA
 
    $ git clone https://github.com/aws/aws-fpga.git
 
-.. note:: Always sync latest version for AWS EC2 FPGA Hardware and Software Development Kits. Please sync to *"be3d41cb1b6b5db6bc24b577ab1af8d2eb4de102"* which was verified with any issue.
+.. note:: Always sync latest version for AWS EC2 FPGA Hardware and Software Development Kits. Please sync aws repository to specified version (refer to `VP AWS FPGA README`_) which was verified with any issue.
 
 2. Setup AWS SDK and edma driver
 ++++++++++++++++++++++++++++++++
 
 .. code-block:: console
    
-   $ cd [aws-fpga prefix] && source sdk_setup.sh    # Setup AWS SDK
+   $ cd [aws-fpga prefix] && source sdk_setup.sh              # Setup AWS SDK
    $ lsmod | grep edma                                        # Check if the edma driver is intalled
    $ cd $SDK_DIR/linux_kernel_drivers/edma                    # If nothing shows up, following the instructions below to install it
    $ make
@@ -255,6 +271,14 @@ Please refer to `Load AWS FPGA image`_.
 4. Cmake build under the vp repository directory
 ++++++++++++++++++++++++++++++++++++++++++++++++
 
+For CentOS:
+
+.. code-block:: console
+
+   $ cmake -DCMAKE_INSTALL_PREFIX=[install dir] -DSYSTEMC_PREFIX=[systemc prefix] -DNVDLA_HW_PREFIX=[nvdla_hw prefix] -DNVDLA_HW_PROJECT=[nvdla_hw project name] -DAWS_FPGA_PRESENT=1 -DAWS_SDK_PREFIX=[aws sdk prefix] -DLUA_INCLUDE_DIR=/usr/local/include -DLUA_LIBRARIES=/usr/local/lib/liblua.a
+
+For Ubuntu:
+
 .. code-block:: console
 
    $ cmake -DCMAKE_INSTALL_PREFIX=[install dir] -DSYSTEMC_PREFIX=[systemc prefix] -DNVDLA_HW_PREFIX=[nvdla_hw prefix] -DNVDLA_HW_PROJECT=[nvdla_hw project name] -DAWS_FPGA_PRESENT=1 -DAWS_SDK_PREFIX=[aws sdk prefix]
@@ -262,6 +286,14 @@ Please refer to `Load AWS FPGA image`_.
 *install dir* is where you would like to install the virtual simulator, *systemc prefix* is the SystemC installation directory, *nvdla_hw prefix* is the local NVDLA HW repository, *nvdla_hw project name* is the NVDLA HW project name and *aws sdk prefix* is the AWS sdk directory
 
 Example:
+
+For CentOS:
+
+.. code-block:: console
+
+   $ cmake -DCMAKE_INSTALL_PREFIX=build -DSYSTEMC_PREFIX=/usr/local/systemc-2.3.0/ -DNVDLA_HW_PREFIX=/usr/local/nvdla/hw -DNVDLA_HW_PROJECT=nv_small -DAWS_FPGA_PRESENT=1 -DAWS_SDK_PREFIX=/usr/local/aws-fpga/sdk -DLUA_INCLUDE_DIR=/usr/local/include -DLUA_LIBRARIES=/usr/local/lib/liblua.a
+
+For Ubuntu:
 
 .. code-block:: console
 
@@ -283,11 +315,11 @@ Running HW regression tests on FPGA
 
 .. code-block:: console
 
-   $ cd [vp prefix]/fpga/aws-fpga/cl_nvdla/verif/regression
+   $ cd [vp_awsfpga prefix]/cl_nvdla/verif/regression
    $ make AWS_FPGA=1 NVDLA_HW_ROOT=[nvdla_hw prefix]
    $ make check    # Check last regression status
 
-*nvdla_hw prefix* is the local NVDLA HW repository, *vp prefix* is the local virtual simulator repository.
+*nvdla_hw prefix* is the local NVDLA HW repository, *vp_awsfpga prefix* is the local nvdla aws fpga CL repository.
 
 2. Run NVDLA random regression tests
 ++++++++++++++++++++++++++++++++++++
@@ -296,11 +328,11 @@ You can run NVDLA random regression tests which has HW full coverage with below 
 
 .. code-block:: console
 
-   $ cd [vp prefix]/fpga/aws-fpga/cl_nvdla/verif/regression
+   $ cd [vp_awsfpga prefix]/cl_nvdla/verif/regression
    $ make AWS_FPGA=1 NVDLA_HW_ROOT=[nvdla_hw prefix] NVDLA_HW_TRACE_LIST=nv_small_random NVDLA_HW_TRACE_ROOT=[nvdla_hw prefix]/nv_small_XXXX/nvdla_utb RANDOM_TEST=1
    $ make check NVDLA_HW_TRACE_LIST=nv_small_random # Check last regression status
 
-*nvdla_hw prefix* is the local NVDLA HW repository, *vp prefix* is the local virtual simulator repository.
+*nvdla_hw prefix* is the local NVDLA HW repository, *vp prefix* is the local nvdla aws fpga CL repository.
 
 Running the Virtual Simulator
 -----------------------------
@@ -326,7 +358,6 @@ Start the virtual simulator:
 
 .. code-block:: console
 
-   $ export SC_SIGNAL_WRITE_CHECK=DISABLE
    $ sudo ./build/bin/aarch64_toplevel -c conf/aarch64_nvdla.lua --fpga
    Login the kernel. The demo image uses account 'root' and password 'nvdla'.
 
@@ -359,12 +390,13 @@ Setup AWS EC2 instance machine on FPGA AMI
 
 Download source code
 --------------------
-* :ref:`Download_the_Virtual_Simulator`
+* `Download NVDLA AWS FPGA Custom Logic (CL)`_
 * `Download and build NVDLA`_
 * `AWS EC2 FPGA Hardware and Software Development Kits`_ 
 
 .. _`AWS EC2 FPGA Hardware and Software Development Kits`: `1. Download AWS EC2 FPGA Hardware and Software Development Kit`_
 .. _`Download and build NVDLA`: `4. Download and build NVDLA CMOD and VMOD`_
+.. _`Download NVDLA AWS FPGA Custom Logic (CL)`: `2. Download NVDLA AWS FPGA Custom Logic (CL)`_
 
 Build NVDLA RTL
 ---------------
@@ -376,6 +408,127 @@ Build NVDLA RTL
    $ ./tools/bin/tmake -build vmod
 
 Please refer to :ref:`tree_build` for details on building the NVDLA hardware tree, and make sure the required tools listed in :ref:`env_setup` are installed first.
+
+Generate Vivado IP
+--------------------------
+
+Before generate NVDLA AFI, users need to generate some necessary Xilinx
+Vivado IP in AWS EC2 instance.  The generated IP is not distributed with the
+NVDLA source distribution because of licensing restrictions.
+
+.. note:: 
+   * You need to access the AWS EC2 instance from GUI machine to use Xilinx tool.
+   * Vivado veresion is /opt/Xilinx/SDx/2017.1.op/Vivado/bin/vivado
+   * For IP location, we recommend to use [vp_awsfpga prefix]/common/design/xilinx_ip/ 
+
+1. Start Xilinx tool in AWS EC2 instance
++++++++++++++++++++++++++++++++++++++++++
+
+.. code-block:: console
+
+   $ vivado
+
+2. Configure IP setting
++++++++++++++++++++++++
+
+* Click "Manage IP"
+* Click "New IP Location"
+* Click "Next"
+* Configure the Manage IP Settings page, set "part" to "xcvu9p-flgb2104-2-i"
+* Click "Finish"
+
+3. Generate IP axi2apb
+++++++++++++++++++++++
+
+* In the IP catalog, search axi_apb
+* Double click "AXI APB Bridge" 
+* Set "Component Name" to "axi_apb_bridge_0"
+* Set "Number Of Slaves" to "1"
+* Click "OK"
+* Click "Generate"
+* Click "OK" and wait the task in "Design Runs" panel to finish
+
+4. Generate IP axi_interconnect_nvdla_64b
++++++++++++++++++++++++++++++++++++++++++
+
+* In the IP catalog, expand "AXI_Infrastructure", double click "AXI Interconnect RTL"
+* Set "Component Name" to "axi_interconnect_nvdla_64b"
+* Click the tab "Global"
+* Set "Number of Slave Interface" to "2" 
+* Set "Slave Interface Thread ID Width" to "8" 
+* Set "Address Width" to "64"
+* Set "Interconnect Internal Data Width" to "512"
+* Click the tab "Interfaces"
+* Set "Master Interface Data Width" to "512"
+* Set "Slave Interface 0 data width" to "512"
+* Set "Slave Interface 1 data width" to "64"
+* Click the tab "Read Write Channels"
+* Set all the "Acceptance" to "32"
+* Set all the "FIFO Depth" to "512"
+* Click "OK"
+* Click "Generate"
+* Click "OK" and wait the task in "Design Runs" panel to finish
+
+5. Generate IP axi_interconnect_nvdla_512b
+++++++++++++++++++++++++++++++++++++++++++
+
+* In the IP catalog, expand "AXI_Infrastructure", double click "AXI Interconnect RTL"
+* Set "Component Name" to "axi_interconnect_nvdla_512b"
+* Click the tab "Global"
+* Set "Number of Slave Interface" to "3" 
+* Set "Slave Interface Thread ID Width" to "8" 
+* Set "Address Width" to "64"
+* Set "Interconnect Internal Data Width" to "512"
+* Click the tab "Interfaces"
+* Set all the "Data Width" to "512"
+* Click the tab "Read Write Channels"
+* Set all the "Acceptance" to "32"
+* Set all the "FIFO Depth" to "512"
+* Click "OK"
+* Click "Generate"
+* Click "OK" and wait the task in "Design Runs" panel to finish
+
+6. Generate IP axi_interconnect_nvdla_256b
+++++++++++++++++++++++++++++++++++++++++++
+
+* In the IP catalog, expand "AXI_Infrastructure", double click "AXI Interconnect RTL"
+* Set "Component Name" to "axi_interconnect_nvdla_256b"
+* Click the tab "Global"
+* Set "Number of Slave Interface" to "3" 
+* Set "Slave Interface Thread ID Width" to "8" 
+* Set "Address Width" to "64"
+* Set "Interconnect Internal Data Width" to "512"
+* Click the tab "Interfaces"
+* Set all the "Data Width" to "256"
+* Click the tab "Read Write Channels"
+* Set all the "Acceptance" to "32"
+* Set all the "FIFO Depth" to "512"
+* Click "OK"
+* Click "Generate"
+* Click "OK" and wait the task in "Design Runs" panel to finish
+
+7. Generate IP axi_protocol_converter_axi_to_axil
++++++++++++++++++++++++++++++++++++++++++++++++++
+
+* In the IP catalog, expand "AXI_Infrastructure", double click "AXI Protocol Converter"
+* Set "Component Name" to "axi_protocol_converter_axi_to_axil"
+* Set "Address Width" to "64"
+* Set "Data Width" to "64"
+* Click "OK"
+* Click "Generate"
+* Click "OK" and wait the task in "Design Runs" panel to finish
+
+8. Generate IP axi_dwidth_converter_512b_to_64b
++++++++++++++++++++++++++++++++++++++++++++++++
+
+* In the IP catalog, expand "AXI_Infrastructure", double click "AXI Data Width Converter"
+* Set "Component Name" to "axi_dwidth_converter_512b_to_64b"
+* Set "Address Width" to "64"
+* Set "SI Data Width" to "512"
+* Set "SI ID Width" to "16"
+* Click "OK"
+* Click "Generate"
+* Click "OK" and wait the task in "Design Runs" panel to finish
 
 Install AWS CLI
 ---------------
@@ -394,13 +547,13 @@ Generate design checkpoint (DCP)
 .. code-block:: console
 
    $ cd [aws fpga prefix] && source hdk_setup.sh
-   $ export CL_DIR=[vp prefix]/fpga/aws-fpga/cl_nvdla
+   $ export CL_DIR=[vp_awsfpga prefix]/cl_nvdla
    $ export NV_HW_ROOT=[nvdla_hw prefix]
    $ cd $CL_DIR/build/scripts
    $ ./filelist.sh
    $ $HDK_DIR/common/shell_stable/build/scripts/aws_build_dcp_from_cl.sh -foreground -clock_recipe_a A2    # Create DCP with 15.625M
 
-The DCP generation process could take hours to finish, you should not stop the EC2 instance during this process. After the DCP is generated successfully, a tarball file should be generated under [vp prefix]/fpga/aws-fpga/cl_nvdla/build/checkpoints/to_aws.
+The DCP generation process could take hours to finish, you should not stop the EC2 instance during this process. After the DCP is generated successfully, a tarball file should be generated under [vp_awsfpga prefix]/cl_nvdla/build/checkpoints/to_aws.
 
 Generate AFI
 ------------
