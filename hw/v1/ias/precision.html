@@ -9,12 +9,12 @@
     <title>Precision Preservation &#8212; NVDLA Documentation</title>
     <link rel="stylesheet" href="../../../_static/nvdla.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../../../_static/styles.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles.css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../../_static/doctools.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="search" title="Search" href="../../../search.html" />
     <link rel="next" title="LUT programming" href="lut-programming.html" />
     <link rel="prev" title="Integrator’s Manual" href="../integration_guide.html" />
@@ -140,7 +140,7 @@ comparing NVDLA’s output against reference.  Below is a summary of the thresho
 <li><p class="first"><span class="math notranslate nohighlight">\(exp(a)\)</span> in DC/Winograd is the operation to extract exponential
 field of an input: <span class="math notranslate nohighlight">\(exp(a) = ((a&gt;&gt;10) \&amp; 0x1f) - 15\)</span> .</p>
 </li>
-<li><p class="first"><span class="math notranslate nohighlight">\(max\_exp: in DC/Winograd is the maximum exponential value of :math:`wt*data\)</span>
+<li><p class="first"><span class="math notranslate nohighlight">\(max\_exp: in DC/Winograd is the maximum exponential value of :math:\)</span>
 inside a convolution kernel.  As data moves in a sliding window,
 max_exp is different element-by-element:</p>
 <div class="math notranslate nohighlight">
@@ -716,7 +716,7 @@ during convertor. The overflow is defined as:</p>
           
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="../../../contents.html">Table Of Contents</a></h3>
+  <h3><a href="../../../contents.html">Table of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">Precision Preservation</a><ul>
 <li><a class="reference internal" href="#fp16-error-threshold">FP16 error threshold</a></li>
@@ -797,7 +797,7 @@ during convertor. The overflow is defined as:</p>
 href="../../../copyright.html">Copyright</a> 2018, NVIDIA Corporation.
 <a href="http://www.nvidia.com/object/legal_info.html">Legal Information.</a>
 <a href="http://www.nvidia.com/object/privacy_policy.html">Privacy Policy.</a>
-Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.5.
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.1.
 </div>
 </div>
 </div>

@@ -9,12 +9,12 @@
     <title>Hardware Architectural Specification &#8212; NVDLA Documentation</title>
     <link rel="stylesheet" href="../../_static/nvdla.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../../_static/styles.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles.css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="In-memory data formats" href="../format.html" />
     <link rel="prev" title="Hardware Manual" href="../contents.html" />
@@ -825,6 +825,8 @@ assumptions to simplify the interface protocol.</p>
 <li>Writes must always be acknowledged, reads must always get return data</li>
 <li>Writes must be committed to memory when NVDLA gets a write acknowledge</li>
 <li>Reads must always get the actual value from memory</li>
+<li>Write acknowledge must be returned in write request order</li>
+<li>Read data must be returned in read request order</li>
 </ul>
 <div class="section" id="id4">
 <h4>Clock and reset<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h4>
@@ -1075,7 +1077,10 @@ of <code class="docutils literal notranslate"><span class="pre">nvdla_core2dbb_r
 the benefit of lower latency and higher throughput.  The SRAM interface
 protocol is exactly the same as DBBIF interface, but signals have been
 renamed to the prefixes <code class="docutils literal notranslate"><span class="pre">nvdla_core2sram_{aw,ar,w,b,r}_</span></code>, for the aw, ar,
-w, b and r channels respectively.</p>
+w, b and r channels respectively.
+The return order between write acknowledges from SRAMIF and DBBIF is not restricted.
+For example, there are two BDMA layers, layer0 and alyer1. Layer0 writes to DBBIF and layer1 writes to SRAMIF.
+Layer1 may receive write acknowledge from SRAMIF before layer0 which receive write acknowledge from DBBIF.</p>
 </div>
 </div>
 <div class="section" id="register-interface">
@@ -3208,7 +3213,7 @@ their registers are not available either.  These registers are as noted below:</
           
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="../../contents.html">Table Of Contents</a></h3>
+  <h3><a href="../../contents.html">Table of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">Hardware Architectural Specification</a><ul>
 <li><a class="reference internal" href="#introduction">Introduction</a></li>
@@ -3378,7 +3383,7 @@ their registers are not available either.  These registers are as noted below:</
 href="../../copyright.html">Copyright</a> 2018, NVIDIA Corporation.
 <a href="http://www.nvidia.com/object/legal_info.html">Legal Information.</a>
 <a href="http://www.nvidia.com/object/privacy_policy.html">Privacy Policy.</a>
-Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.5.
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.1.
 </div>
 </div>
 </div>

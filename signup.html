@@ -12,7 +12,7 @@
     <title>NVIDIA Deep Learning Accelerator</title>
     <link rel="stylesheet" href="_static/nvdla.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="_static/styles.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/styles.css" />
     <link rel="search" title="Search" href="search.html" />
  
 <script src="//assets.adobedtm.com/b92787824f2e0e9b68dc2e993f9bd995339fe417/satelliteLib-30c8ffcc8ece089156fd5590fbcf390ffc296f51.js"></script>
@@ -54,6 +54,18 @@
     <script>MktoForms2.loadForm("https://app-sj14.marketo.com", "156-OFN-742", 5381);</script>
     
     <p></p>
+    
+    <script src="//app-sj14.marketo.com/js/forms2/js/forms2.min.js"></script>
+    <script>MktoForms2.whenReady(function (form){
+		form.onSuccess(function(values, followUpUrl){
+			form.getFormElem().hide();
+			document.getelementById('confirmform').style.visibility = 'visible';
+			return false;		
+		});    
+    });
+    </script>
+    
+    <div id="confirmform" style="visibility:hidden;"><p><strong>Thank you!</strong></p></div>
 </div>
 
         </div>
@@ -78,7 +90,7 @@
 href="copyright.html">Copyright</a> 2018, NVIDIA Corporation.
 <a href="http://www.nvidia.com/object/legal_info.html">Legal Information.</a>
 <a href="http://www.nvidia.com/object/privacy_policy.html">Privacy Policy.</a>
-Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.5.
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.1.
 </div>
 </div>
 </div>
