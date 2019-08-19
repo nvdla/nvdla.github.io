@@ -1,11 +1,9 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
     <title>In-memory data formats &#8212; NVDLA Documentation</title>
     <link rel="stylesheet" href="../_static/nvdla.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -14,7 +12,8 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Integrator’s Manual" href="v1/integration_guide.html" />
     <link rel="prev" title="Hardware Architectural Specification" href="v1/hwarch.html" />
@@ -64,38 +63,38 @@ data formats.</p>
 <p>There are two main types of input formats. They are weight data and
 activation data. The weight formats include below branches:</p>
 <ul class="simple">
-<li>weight for direct convolution</li>
-<li>weight for image input</li>
-<li>weight for Winograd convolution</li>
+<li><p>weight for direct convolution</p></li>
+<li><p>weight for image input</p></li>
+<li><p>weight for Winograd convolution</p></li>
 </ul>
 <p>Two options for weight formats:</p>
 <ul class="simple">
-<li>channel post-extension for image input mode</li>
-<li>sparse compression</li>
+<li><p>channel post-extension for image input mode</p></li>
+<li><p>sparse compression</p></li>
 </ul>
 <p>The activation formats supported by DLA engine includes:</p>
 <ul class="simple">
-<li>feature data format</li>
-<li>pixel format (ROI input)</li>
+<li><p>feature data format</p></li>
+<li><p>pixel format (ROI input)</p></li>
 </ul>
 <p>The output formats supported by DLA engine includes:</p>
 <ul class="simple">
-<li>feature data format</li>
+<li><p>feature data format</p></li>
 </ul>
 <p>Besides, DLA engine will fetch below auxiliary formats from external
 memory</p>
 <ul class="simple">
-<li>bias data</li>
-<li>PReLU data</li>
-<li>batch-normalization data</li>
-<li>element-wise data</li>
+<li><p>bias data</p></li>
+<li><p>PReLU data</p></li>
+<li><p>batch-normalization data</p></li>
+<li><p>element-wise data</p></li>
 </ul>
 <p>Channel extension refers to a set of mapping rule for both weight data
 and activation data to fit with accelerator. It includes:</p>
 <ul class="simple">
-<li>Channel extension for Winograd convolution</li>
-<li>Channel pre-extension for image input mode</li>
-<li>Channel post-extension for image input mode</li>
+<li><p>Channel extension for Winograd convolution</p></li>
+<li><p>Channel pre-extension for image input mode</p></li>
+<li><p>Channel post-extension for image input mode</p></li>
 </ul>
 <p>The channel post-extension for image input mode is an option for
 performance. Other two are mandatory for their working mode. HW handles
@@ -119,302 +118,302 @@ fp16.</p>
 <p>NVDLA engine supports dynamical precision conversion. There are some
 rules:</p>
 <ul class="simple">
-<li>NVDLA convolution pipeline supports precision conversion for image
-input mode only.</li>
-<li>Direct convolution (DC) mode and Winograd convolution mode do not
-support precision conversion</li>
-<li>For image input mode (please see section 6.1.1.4), pipeline allows
+<li><p>NVDLA convolution pipeline supports precision conversion for image
+input mode only.</p></li>
+<li><p>Direct convolution (DC) mode and Winograd convolution mode do not
+support precision conversion</p></li>
+<li><p>For image input mode (please see section 6.1.1.4), pipeline allows
 conversion from integer to all 3 types. Floating point images can
-only be converted to fp16.</li>
-<li>Batch-normalization and element-wise layer (implemented in SDP)
+only be converted to fp16.</p></li>
+<li><p>Batch-normalization and element-wise layer (implemented in SDP)
 support free conversion of int16 &lt;-&gt; fp16 and int8 &lt;-&gt; int16 for DC
-mode only.</li>
-<li>LRN layer (implemented in CDP) does not support any precision
-conversion</li>
-<li>Pooling layer (implemented in PDP) does not support any precision
-conversion.</li>
+mode only.</p></li>
+<li><p>LRN layer (implemented in CDP) does not support any precision
+conversion</p></li>
+<li><p>Pooling layer (implemented in PDP) does not support any precision
+conversion.</p></li>
 </ul>
 <p>Here is the summary:</p>
-<table border="1" class="docutils" id="tab-precision-conversion-conv">
+<table class="docutils align-default" id="tab-precision-conversion-conv">
 <caption><span class="caption-number">Table 29 </span><span class="caption-text">Precision conversion for convolutional layer</span><a class="headerlink" href="#tab-precision-conversion-conv" title="Permalink to this table">¶</a></caption>
 <colgroup>
-<col width="25%" />
-<col width="25%" />
-<col width="25%" />
-<col width="25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
 </colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">Configured
-input format</th>
-<th class="head">Configured
+<thead>
+<tr class="row-odd"><th class="head"><p>Configured
+input format</p></th>
+<th class="head"><p>Configured
 output
-precision</th>
-<th class="head">Real precision
-in pipeline</th>
-<th class="head">Corresponding
+precision</p></th>
+<th class="head"><p>Real precision
+in pipeline</p></th>
+<th class="head"><p>Corresponding
 weight
-precision</th>
+precision</p></th>
 </tr>
 </thead>
-<tbody valign="top">
-<tr class="row-even"><td><p class="first">image input</p>
+<tbody>
+<tr class="row-even"><td><p>image input</p>
 <p>(uint8/</p>
-<p class="last">int16/uint16)</p>
+<p>int16/uint16)</p>
 </td>
-<td>int8</td>
-<td>int8</td>
-<td>int8</td>
+<td><p>int8</p></td>
+<td><p>int8</p></td>
+<td><p>int8</p></td>
 </tr>
-<tr class="row-odd"><td>&#160;</td>
-<td>int16</td>
-<td>int16</td>
-<td>int16</td>
+<tr class="row-odd"><td></td>
+<td><p>int16</p></td>
+<td><p>int16</p></td>
+<td><p>int16</p></td>
 </tr>
-<tr class="row-even"><td>&#160;</td>
-<td>fp16</td>
-<td>fp16</td>
-<td>fp16</td>
+<tr class="row-even"><td></td>
+<td><p>fp16</p></td>
+<td><p>fp16</p></td>
+<td><p>fp16</p></td>
 </tr>
-<tr class="row-odd"><td><p class="first">image input</p>
-<p class="last">(fp16)</p>
+<tr class="row-odd"><td><p>image input</p>
+<p>(fp16)</p>
 </td>
-<td>int8</td>
-<td><strong>Invalid
-case</strong></td>
-<td><strong>Invalid
-case</strong></td>
+<td><p>int8</p></td>
+<td><p><strong>Invalid
+case</strong></p></td>
+<td><p><strong>Invalid
+case</strong></p></td>
 </tr>
-<tr class="row-even"><td>&#160;</td>
-<td>int16</td>
-<td><strong>Invalid
-case</strong></td>
-<td><strong>Invalid
-case</strong></td>
+<tr class="row-even"><td></td>
+<td><p>int16</p></td>
+<td><p><strong>Invalid
+case</strong></p></td>
+<td><p><strong>Invalid
+case</strong></p></td>
 </tr>
-<tr class="row-odd"><td>&#160;</td>
-<td>fp16</td>
-<td>fp16</td>
-<td>fp16</td>
+<tr class="row-odd"><td></td>
+<td><p>fp16</p></td>
+<td><p>fp16</p></td>
+<td><p>fp16</p></td>
 </tr>
-<tr class="row-even"><td>int8 feature
-data</td>
-<td>int8</td>
-<td>int8</td>
-<td>int8</td>
+<tr class="row-even"><td><p>int8 feature
+data</p></td>
+<td><p>int8</p></td>
+<td><p>int8</p></td>
+<td><p>int8</p></td>
 </tr>
-<tr class="row-odd"><td>&#160;</td>
-<td>int16</td>
-<td><strong>Invalid
-case</strong></td>
-<td><strong>Invalid
-case</strong></td>
+<tr class="row-odd"><td></td>
+<td><p>int16</p></td>
+<td><p><strong>Invalid
+case</strong></p></td>
+<td><p><strong>Invalid
+case</strong></p></td>
 </tr>
-<tr class="row-even"><td>&#160;</td>
-<td>fp16</td>
-<td><strong>Invalid
-case</strong></td>
-<td><strong>Invalid
-case</strong></td>
+<tr class="row-even"><td></td>
+<td><p>fp16</p></td>
+<td><p><strong>Invalid
+case</strong></p></td>
+<td><p><strong>Invalid
+case</strong></p></td>
 </tr>
-<tr class="row-odd"><td>int16 feature
-data</td>
-<td>int8</td>
-<td><strong>Invalid
-case</strong></td>
-<td><strong>Invalid
-case</strong></td>
+<tr class="row-odd"><td><p>int16 feature
+data</p></td>
+<td><p>int8</p></td>
+<td><p><strong>Invalid
+case</strong></p></td>
+<td><p><strong>Invalid
+case</strong></p></td>
 </tr>
-<tr class="row-even"><td>&#160;</td>
-<td>int16</td>
-<td>int16</td>
-<td>int16</td>
+<tr class="row-even"><td></td>
+<td><p>int16</p></td>
+<td><p>int16</p></td>
+<td><p>int16</p></td>
 </tr>
-<tr class="row-odd"><td>&#160;</td>
-<td>fp16</td>
-<td><strong>Invalid
-case</strong></td>
-<td><strong>Invalid
-case</strong></td>
+<tr class="row-odd"><td></td>
+<td><p>fp16</p></td>
+<td><p><strong>Invalid
+case</strong></p></td>
+<td><p><strong>Invalid
+case</strong></p></td>
 </tr>
-<tr class="row-even"><td>fp16 feature
-data</td>
-<td>int8</td>
-<td><strong>Invalid
-case</strong></td>
-<td><strong>Invalid
-case</strong></td>
+<tr class="row-even"><td><p>fp16 feature
+data</p></td>
+<td><p>int8</p></td>
+<td><p><strong>Invalid
+case</strong></p></td>
+<td><p><strong>Invalid
+case</strong></p></td>
 </tr>
-<tr class="row-odd"><td>&#160;</td>
-<td>int16</td>
-<td><strong>Invalid
-case</strong></td>
-<td><strong>Invalid
-case</strong></td>
+<tr class="row-odd"><td></td>
+<td><p>int16</p></td>
+<td><p><strong>Invalid
+case</strong></p></td>
+<td><p><strong>Invalid
+case</strong></p></td>
 </tr>
-<tr class="row-even"><td>&#160;</td>
-<td>fp16</td>
-<td>fp16</td>
-<td>fp16</td>
+<tr class="row-even"><td></td>
+<td><p>fp16</p></td>
+<td><p>fp16</p></td>
+<td><p>fp16</p></td>
 </tr>
 </tbody>
 </table>
-<table border="1" class="docutils" id="tab-precision-conversion-sdp">
+<table class="docutils align-default" id="tab-precision-conversion-sdp">
 <caption><span class="caption-number">Table 30 </span><span class="caption-text">Precision conversion for SDP layer (offline mode)</span><a class="headerlink" href="#tab-precision-conversion-sdp" title="Permalink to this table">¶</a></caption>
 <colgroup>
-<col width="26%" />
-<col width="38%" />
-<col width="36%" />
+<col style="width: 26%" />
+<col style="width: 38%" />
+<col style="width: 36%" />
 </colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">Configured
-input format</th>
-<th class="head">Configured output precision</th>
-<th class="head">Real precision in pipeline</th>
+<thead>
+<tr class="row-odd"><th class="head"><p>Configured
+input format</p></th>
+<th class="head"><p>Configured output precision</p></th>
+<th class="head"><p>Real precision in pipeline</p></th>
 </tr>
 </thead>
-<tbody valign="top">
-<tr class="row-even"><td>int8 feature data</td>
-<td>int8</td>
-<td>int32</td>
+<tbody>
+<tr class="row-even"><td><p>int8 feature data</p></td>
+<td><p>int8</p></td>
+<td><p>int32</p></td>
 </tr>
-<tr class="row-odd"><td>&#160;</td>
-<td>int16</td>
-<td>int32</td>
+<tr class="row-odd"><td></td>
+<td><p>int16</p></td>
+<td><p>int32</p></td>
 </tr>
-<tr class="row-even"><td>&#160;</td>
-<td>fp16</td>
-<td><strong>Invalid case</strong></td>
+<tr class="row-even"><td></td>
+<td><p>fp16</p></td>
+<td><p><strong>Invalid case</strong></p></td>
 </tr>
-<tr class="row-odd"><td>int16 feature data</td>
-<td>int8</td>
-<td>int32</td>
+<tr class="row-odd"><td><p>int16 feature data</p></td>
+<td><p>int8</p></td>
+<td><p>int32</p></td>
 </tr>
-<tr class="row-even"><td>&#160;</td>
-<td>int16</td>
-<td>int32</td>
+<tr class="row-even"><td></td>
+<td><p>int16</p></td>
+<td><p>int32</p></td>
 </tr>
-<tr class="row-odd"><td>&#160;</td>
-<td>fp16</td>
-<td>int32</td>
+<tr class="row-odd"><td></td>
+<td><p>fp16</p></td>
+<td><p>int32</p></td>
 </tr>
-<tr class="row-even"><td>fp16 feature data</td>
-<td>int8</td>
-<td><strong>Invalid case</strong></td>
+<tr class="row-even"><td><p>fp16 feature data</p></td>
+<td><p>int8</p></td>
+<td><p><strong>Invalid case</strong></p></td>
 </tr>
-<tr class="row-odd"><td>&#160;</td>
-<td>int16</td>
-<td>fp32</td>
+<tr class="row-odd"><td></td>
+<td><p>int16</p></td>
+<td><p>fp32</p></td>
 </tr>
-<tr class="row-even"><td>&#160;</td>
-<td>fp16</td>
-<td>fp32</td>
+<tr class="row-even"><td></td>
+<td><p>fp16</p></td>
+<td><p>fp32</p></td>
 </tr>
 </tbody>
 </table>
 <p>Table 6‑3 precision conversion for LRN layer</p>
-<table border="1" class="docutils" id="tab-precision-conversion-lrn">
+<table class="docutils align-default" id="tab-precision-conversion-lrn">
 <caption><span class="caption-number">Table 31 </span><span class="caption-text">Precision conversion for LRN layer</span><a class="headerlink" href="#tab-precision-conversion-lrn" title="Permalink to this table">¶</a></caption>
 <colgroup>
-<col width="26%" />
-<col width="38%" />
-<col width="36%" />
+<col style="width: 26%" />
+<col style="width: 38%" />
+<col style="width: 36%" />
 </colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">Configured
-input format</th>
-<th class="head">Configured output precision</th>
-<th class="head">Real precision in pipeline</th>
+<thead>
+<tr class="row-odd"><th class="head"><p>Configured
+input format</p></th>
+<th class="head"><p>Configured output precision</p></th>
+<th class="head"><p>Real precision in pipeline</p></th>
 </tr>
 </thead>
-<tbody valign="top">
-<tr class="row-even"><td>int8 feature data</td>
-<td>int8</td>
-<td>int8</td>
+<tbody>
+<tr class="row-even"><td><p>int8 feature data</p></td>
+<td><p>int8</p></td>
+<td><p>int8</p></td>
 </tr>
-<tr class="row-odd"><td>&#160;</td>
-<td>int16</td>
-<td><strong>Invalid case</strong></td>
+<tr class="row-odd"><td></td>
+<td><p>int16</p></td>
+<td><p><strong>Invalid case</strong></p></td>
 </tr>
-<tr class="row-even"><td>&#160;</td>
-<td>fp16</td>
-<td><strong>Invalid case</strong></td>
+<tr class="row-even"><td></td>
+<td><p>fp16</p></td>
+<td><p><strong>Invalid case</strong></p></td>
 </tr>
-<tr class="row-odd"><td>int16 feature data</td>
-<td>int8</td>
-<td><strong>Invalid case</strong></td>
+<tr class="row-odd"><td><p>int16 feature data</p></td>
+<td><p>int8</p></td>
+<td><p><strong>Invalid case</strong></p></td>
 </tr>
-<tr class="row-even"><td>&#160;</td>
-<td>int16</td>
-<td>int16</td>
+<tr class="row-even"><td></td>
+<td><p>int16</p></td>
+<td><p>int16</p></td>
 </tr>
-<tr class="row-odd"><td>&#160;</td>
-<td>fp16</td>
-<td><strong>Invalid case</strong></td>
+<tr class="row-odd"><td></td>
+<td><p>fp16</p></td>
+<td><p><strong>Invalid case</strong></p></td>
 </tr>
-<tr class="row-even"><td>fp16 feature data</td>
-<td>int8</td>
-<td><strong>Invalid case</strong></td>
+<tr class="row-even"><td><p>fp16 feature data</p></td>
+<td><p>int8</p></td>
+<td><p><strong>Invalid case</strong></p></td>
 </tr>
-<tr class="row-odd"><td>&#160;</td>
-<td>int16</td>
-<td><strong>Invalid case</strong></td>
+<tr class="row-odd"><td></td>
+<td><p>int16</p></td>
+<td><p><strong>Invalid case</strong></p></td>
 </tr>
-<tr class="row-even"><td>&#160;</td>
-<td>fp16</td>
-<td>fp16</td>
+<tr class="row-even"><td></td>
+<td><p>fp16</p></td>
+<td><p>fp16</p></td>
 </tr>
 </tbody>
 </table>
-<table border="1" class="docutils" id="tab-precision-conversion-poolong">
+<table class="docutils align-default" id="tab-precision-conversion-poolong">
 <caption><span class="caption-number">Table 32 </span><span class="caption-text">Precision conversion for pooling layer</span><a class="headerlink" href="#tab-precision-conversion-poolong" title="Permalink to this table">¶</a></caption>
 <colgroup>
-<col width="26%" />
-<col width="38%" />
-<col width="36%" />
+<col style="width: 26%" />
+<col style="width: 38%" />
+<col style="width: 36%" />
 </colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">Configured
-input format</th>
-<th class="head">Configured output precision</th>
-<th class="head">Real precision in pipeline</th>
+<thead>
+<tr class="row-odd"><th class="head"><p>Configured
+input format</p></th>
+<th class="head"><p>Configured output precision</p></th>
+<th class="head"><p>Real precision in pipeline</p></th>
 </tr>
 </thead>
-<tbody valign="top">
-<tr class="row-even"><td>int8 feature data</td>
-<td>int8</td>
-<td>int8</td>
+<tbody>
+<tr class="row-even"><td><p>int8 feature data</p></td>
+<td><p>int8</p></td>
+<td><p>int8</p></td>
 </tr>
-<tr class="row-odd"><td>&#160;</td>
-<td>int16</td>
-<td><strong>Invalid case</strong></td>
+<tr class="row-odd"><td></td>
+<td><p>int16</p></td>
+<td><p><strong>Invalid case</strong></p></td>
 </tr>
-<tr class="row-even"><td>&#160;</td>
-<td>int16</td>
-<td><strong>Invalid case</strong></td>
+<tr class="row-even"><td></td>
+<td><p>int16</p></td>
+<td><p><strong>Invalid case</strong></p></td>
 </tr>
-<tr class="row-odd"><td>int16 feature data</td>
-<td>int8</td>
-<td><strong>Invalid case</strong></td>
+<tr class="row-odd"><td><p>int16 feature data</p></td>
+<td><p>int8</p></td>
+<td><p><strong>Invalid case</strong></p></td>
 </tr>
-<tr class="row-even"><td>&#160;</td>
-<td>int16</td>
-<td>int16</td>
+<tr class="row-even"><td></td>
+<td><p>int16</p></td>
+<td><p>int16</p></td>
 </tr>
-<tr class="row-odd"><td>&#160;</td>
-<td>fp16</td>
-<td><strong>Invalid case</strong></td>
+<tr class="row-odd"><td></td>
+<td><p>fp16</p></td>
+<td><p><strong>Invalid case</strong></p></td>
 </tr>
-<tr class="row-even"><td>fp16 feature data</td>
-<td>int8</td>
-<td><strong>Invalid case</strong></td>
+<tr class="row-even"><td><p>fp16 feature data</p></td>
+<td><p>int8</p></td>
+<td><p><strong>Invalid case</strong></p></td>
 </tr>
-<tr class="row-odd"><td>&#160;</td>
-<td>int16</td>
-<td><strong>Invalid case</strong></td>
+<tr class="row-odd"><td></td>
+<td><p>int16</p></td>
+<td><p><strong>Invalid case</strong></p></td>
 </tr>
-<tr class="row-even"><td>&#160;</td>
-<td>fp16</td>
-<td>fp16</td>
+<tr class="row-even"><td></td>
+<td><p>fp16</p></td>
+<td><p>fp16</p></td>
 </tr>
 </tbody>
 </table>
@@ -444,35 +443,35 @@ precision and output precision should have the same bit-depth.</p>
 <h4>FP16 Supporting<a class="headerlink" href="#fp16-supporting" title="Permalink to this headline">¶</a></h4>
 <p>This section describes NVDLA how to support fp16 in data-path.</p>
 <ul class="simple">
-<li>Infinity</li>
+<li><p>Infinity</p></li>
 </ul>
 <p>NVDLA treats infinity value as different normalized value module by
 module:</p>
-<table border="1" class="docutils">
+<table class="docutils align-default">
 <colgroup>
-<col width="47%" />
-<col width="53%" />
+<col style="width: 47%" />
+<col style="width: 53%" />
 </colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">Sub-module</th>
-<th class="head">INF converted values</th>
+<thead>
+<tr class="row-odd"><th class="head"><p>Sub-module</p></th>
+<th class="head"><p>INF converted values</p></th>
 </tr>
 </thead>
-<tbody valign="top">
-<tr class="row-even"><td>Convolution pipeline</td>
-<td><p class="first">+/-65536 (DC/IMG)</p>
-<p class="last">+/-65504 (Winograd)</p>
+<tbody>
+<tr class="row-even"><td><p>Convolution pipeline</p></td>
+<td><p>+/-65536 (DC/IMG)</p>
+<p>+/-65504 (Winograd)</p>
 </td>
 </tr>
-<tr class="row-odd"><td>SDP</td>
-<td>+/-3.40282e+38</td>
+<tr class="row-odd"><td><p>SDP</p></td>
+<td><p>+/-3.40282e+38</p></td>
 </tr>
-<tr class="row-even"><td>CDP</td>
-<td>+/-4292870144</td>
+<tr class="row-even"><td><p>CDP</p></td>
+<td><p>+/-4292870144</p></td>
 </tr>
-<tr class="row-odd"><td>PDP</td>
-<td><p class="first">+/-4292870144 (For AVE)</p>
-<p class="last">INF (For Max/Min)</p>
+<tr class="row-odd"><td><p>PDP</p></td>
+<td><p>+/-4292870144 (For AVE)</p>
+<p>INF (For Max/Min)</p>
 </td>
 </tr>
 </tbody>
@@ -481,7 +480,7 @@ module:</p>
 happens, NVDLA will output the maximum representable (+/-65504 for FP16,
 32767/-32768 for INT16, 127/-128 for INT8).</p>
 <ul class="simple">
-<li>NaN</li>
+<li><p>NaN</p></li>
 </ul>
 <p>NVDLA won’t generate NaN since no infinity value involves in any
 operation. But it supports NaN propagation. If input data have NaN, any
@@ -497,7 +496,7 @@ updated when layer is done. When done interrupts arrives, FW can poll
 NaN counting registers to figure out whether input/output data cubes
 have any NaN value.</p>
 <ul class="simple">
-<li>Denormalized value</li>
+<li><p>Denormalized value</p></li>
 </ul>
 <p>NVDLA supports denormalized value for both input and output. The dealing
 of denormalized value is completely following the requirement of IEEE754
@@ -508,7 +507,7 @@ denormalized value during calculation. Even though these formats have
 better precision than fp16 with denormalized value. Before writing back
 to memory, fp17/fp32 will convert to fp16 with denormalized value.</p>
 <ul class="simple">
-<li>Rounding</li>
+<li><p>Rounding</p></li>
 </ul>
 <p>NVDLA supports Rounding to Nearest (or RN) in calculation except
 overflow case. If the result is exceeding maximal normal value, it will
@@ -525,35 +524,35 @@ generated by DLA engine itself.</p>
 cube. Three dimensions are width (W), height (H) and channel size (C).
 The memory mapping rules are:</p>
 <ul class="simple">
-<li>Adding data into end of channel if the original data is not 32byte
-aligned in C direction.</li>
-<li>The attached data can be any value except NaN when it’s fp16.</li>
-<li>Split the data cube into 1x1x32byte small atom cubes.</li>
-<li>Reordering atom cubes in by progressively scanning the data cube.
-Scanning order: W (line) -&gt; H (height) -&gt; C (channel).</li>
-<li>Map all atom cubes into memory by scanning sequence.</li>
-<li>All atom cubes in the same line are mapped compactly.</li>
-<li>Atom cube mapping at line boundary and/or surface boundary can be
+<li><p>Adding data into end of channel if the original data is not 32byte
+aligned in C direction.</p></li>
+<li><p>The attached data can be any value except NaN when it’s fp16.</p></li>
+<li><p>Split the data cube into 1x1x32byte small atom cubes.</p></li>
+<li><p>Reordering atom cubes in by progressively scanning the data cube.
+Scanning order: W (line) -&gt; H (height) -&gt; C (channel).</p></li>
+<li><p>Map all atom cubes into memory by scanning sequence.</p></li>
+<li><p>All atom cubes in the same line are mapped compactly.</p></li>
+<li><p>Atom cube mapping at line boundary and/or surface boundary can be
 either adjacently or incompactly. But they are always 32-byte
-aligned.</li>
-<li>In conclusion, mapping in memory follows pitch linear format. The
+aligned.</p></li>
+<li><p>In conclusion, mapping in memory follows pitch linear format. The
 order is C’ (32byte) -&gt; W -&gt; H -&gt; C (surfaces). Here C’ changes
-fastest and C changes slowest.</li>
+fastest and C changes slowest.</p></li>
 </ul>
 <p><a class="reference internal" href="#fig-packed-feature-diagram"><span class="std std-numref">Fig. 10</span></a> is a case of feature data that all small cubes are mapped
 compactly. This is called packed feature data. If the line or surface of
 small cubes is not mapped compactly, it is called unpacked. See <a class="reference internal" href="#fig-unpacked-feature-diagram"><span class="std std-numref">Fig. 11</span></a>.</p>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">Line stride and surface stride of feature data shall always align to
+<p class="admonition-title">Note</p>
+<p>Line stride and surface stride of feature data shall always align to
 32bytes. Start address has same alignment as well. This is mandatory
 requirement.</p>
 </div>
 <div class="figure align-center" id="id3">
-<span id="fig-packed-feature-diagram"></span><img alt="../_images/format_packed_feature_diagram.svg" src="../_images/format_packed_feature_diagram.svg" /><p class="caption"><span class="caption-number">Fig. 10 </span><span class="caption-text">Packed feature data</span></p>
+<span id="fig-packed-feature-diagram"></span><img alt="../_images/format_packed_feature_diagram.svg" src="../_images/format_packed_feature_diagram.svg" /><p class="caption"><span class="caption-number">Fig. 10 </span><span class="caption-text">Packed feature data</span><a class="headerlink" href="#id3" title="Permalink to this image">¶</a></p>
 </div>
 <div class="figure align-center" id="id4">
-<span id="fig-unpacked-feature-diagram"></span><img alt="../_images/format_unpacked_feature_diagram.svg" src="../_images/format_unpacked_feature_diagram.svg" /><p class="caption"><span class="caption-number">Fig. 11 </span><span class="caption-text">Unpacked feature data</span></p>
+<span id="fig-unpacked-feature-diagram"></span><img alt="../_images/format_unpacked_feature_diagram.svg" src="../_images/format_unpacked_feature_diagram.svg" /><p class="caption"><span class="caption-number">Fig. 11 </span><span class="caption-text">Unpacked feature data</span><a class="headerlink" href="#id4" title="Permalink to this image">¶</a></p>
 </div>
 <p>If a 1x1xC feature data cube maps as surface-packed, NVDLA can treat it
 like (C/32) x1x 32 cube to save bandwidth.</p>
@@ -567,277 +566,277 @@ or a whole image. The pixel formats are listed in table <a class="reference inte
 <p>When NVDLA takes image as input data, there are some limits of
 configuration.</p>
 <ul class="simple">
-<li>Channel size. The valid channel size highly depends on each format.
-Please see table <a class="reference internal" href="#tab-pixel-formats"><span class="std std-numref">Table 33</span></a>.</li>
-<li>Input precision. The input precision highly depends on pixel each
+<li><p>Channel size. The valid channel size highly depends on each format.
+Please see table <a class="reference internal" href="#tab-pixel-formats"><span class="std std-numref">Table 33</span></a>.</p></li>
+<li><p>Input precision. The input precision highly depends on pixel each
 format. Please see table <a class="reference internal" href="#tab-pixel-formats"><span class="std std-numref">Table 33</span></a>. DMA logic will turn unsigned integer
-value to signed integer value automatically.</li>
-<li><strong>Both start address and line stride of pitch linear shall aligned to
-32 bytes. This is mandatory requirement.</strong></li>
-<li>It may have redundant data between 32-byte aligned address and first
+value to signed integer value automatically.</p></li>
+<li><p><strong>Both start address and line stride of pitch linear shall aligned to
+32 bytes. This is mandatory requirement.</strong></p></li>
+<li><p>It may have redundant data between 32-byte aligned address and first
 element. NVDLA use x offset to indicate how many redundant data are.
-The unit of offset is pixel.</li>
+The unit of offset is pixel.</p></li>
 </ul>
-<table border="1" class="docutils" id="tab-pixel-formats">
+<table class="docutils align-default" id="tab-pixel-formats">
 <caption><span class="caption-number">Table 33 </span><span class="caption-text">Pixel formats and valid setting</span><a class="headerlink" href="#tab-pixel-formats" title="Permalink to this table">¶</a></caption>
 <colgroup>
-<col width="20%" />
-<col width="20%" />
-<col width="20%" />
-<col width="20%" />
-<col width="20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
 </colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">Format Name</th>
-<th class="head"># of planar</th>
-<th class="head">Valid
+<thead>
+<tr class="row-odd"><th class="head"><p>Format Name</p></th>
+<th class="head"><p># of planar</p></th>
+<th class="head"><p>Valid
 channel
 size
-setting</th>
-<th class="head">Valid input
+setting</p></th>
+<th class="head"><p>Valid input
 precision
-setting</th>
-<th class="head">Valid X
+setting</p></th>
+<th class="head"><p>Valid X
 offset
-range</th>
+range</p></th>
 </tr>
 </thead>
-<tbody valign="top">
-<tr class="row-even"><td>T_R8</td>
-<td>1</td>
-<td>1</td>
-<td>int8</td>
-<td>0~31</td>
+<tbody>
+<tr class="row-even"><td><p>T_R8</p></td>
+<td><p>1</p></td>
+<td><p>1</p></td>
+<td><p>int8</p></td>
+<td><p>0~31</p></td>
 </tr>
-<tr class="row-odd"><td>T_R10</td>
-<td>1</td>
-<td>1</td>
-<td>int16</td>
-<td>0~15</td>
+<tr class="row-odd"><td><p>T_R10</p></td>
+<td><p>1</p></td>
+<td><p>1</p></td>
+<td><p>int16</p></td>
+<td><p>0~15</p></td>
 </tr>
-<tr class="row-even"><td>T_R12</td>
-<td>1</td>
-<td>1</td>
-<td>int16</td>
-<td>0~15</td>
+<tr class="row-even"><td><p>T_R12</p></td>
+<td><p>1</p></td>
+<td><p>1</p></td>
+<td><p>int16</p></td>
+<td><p>0~15</p></td>
 </tr>
-<tr class="row-odd"><td>T_R16</td>
-<td>1</td>
-<td>1</td>
-<td>int16</td>
-<td>0~15</td>
+<tr class="row-odd"><td><p>T_R16</p></td>
+<td><p>1</p></td>
+<td><p>1</p></td>
+<td><p>int16</p></td>
+<td><p>0~15</p></td>
 </tr>
-<tr class="row-even"><td>T_R16_I</td>
-<td>1</td>
-<td>1</td>
-<td>int16</td>
-<td>0~15</td>
+<tr class="row-even"><td><p>T_R16_I</p></td>
+<td><p>1</p></td>
+<td><p>1</p></td>
+<td><p>int16</p></td>
+<td><p>0~15</p></td>
 </tr>
-<tr class="row-odd"><td>T_R16_F</td>
-<td>1</td>
-<td>1</td>
-<td>int16</td>
-<td>0~15</td>
+<tr class="row-odd"><td><p>T_R16_F</p></td>
+<td><p>1</p></td>
+<td><p>1</p></td>
+<td><p>int16</p></td>
+<td><p>0~15</p></td>
 </tr>
-<tr class="row-even"><td>T_A16B16G16
-R16</td>
-<td>1</td>
-<td>4</td>
-<td>int16</td>
-<td>0~3</td>
+<tr class="row-even"><td><p>T_A16B16G16
+R16</p></td>
+<td><p>1</p></td>
+<td><p>4</p></td>
+<td><p>int16</p></td>
+<td><p>0~3</p></td>
 </tr>
-<tr class="row-odd"><td>T_X16B16G16
-R16</td>
-<td>1</td>
-<td>4</td>
-<td>int16</td>
-<td>0~3</td>
+<tr class="row-odd"><td><p>T_X16B16G16
+R16</p></td>
+<td><p>1</p></td>
+<td><p>4</p></td>
+<td><p>int16</p></td>
+<td><p>0~3</p></td>
 </tr>
-<tr class="row-even"><td>T_A16B16G16
-R16_F</td>
-<td>1</td>
-<td>4</td>
-<td>fp16</td>
-<td>0~3</td>
+<tr class="row-even"><td><p>T_A16B16G16
+R16_F</p></td>
+<td><p>1</p></td>
+<td><p>4</p></td>
+<td><p>fp16</p></td>
+<td><p>0~3</p></td>
 </tr>
-<tr class="row-odd"><td>T_A16Y16U16
-V16</td>
-<td>1</td>
-<td>4</td>
-<td>int16</td>
-<td>0~3</td>
+<tr class="row-odd"><td><p>T_A16Y16U16
+V16</p></td>
+<td><p>1</p></td>
+<td><p>4</p></td>
+<td><p>int16</p></td>
+<td><p>0~3</p></td>
 </tr>
-<tr class="row-even"><td>T_V16U16Y16
-A16</td>
-<td>1</td>
-<td>4</td>
-<td>int16</td>
-<td>0~3</td>
+<tr class="row-even"><td><p>T_V16U16Y16
+A16</p></td>
+<td><p>1</p></td>
+<td><p>4</p></td>
+<td><p>int16</p></td>
+<td><p>0~3</p></td>
 </tr>
-<tr class="row-odd"><td>T_A16Y16U16
-V16_F</td>
-<td>1</td>
-<td>4</td>
-<td>fp16</td>
-<td>0~3</td>
+<tr class="row-odd"><td><p>T_A16Y16U16
+V16_F</p></td>
+<td><p>1</p></td>
+<td><p>4</p></td>
+<td><p>fp16</p></td>
+<td><p>0~3</p></td>
 </tr>
-<tr class="row-even"><td>T_A8B8G8R8</td>
-<td>1</td>
-<td>4</td>
-<td>int8</td>
-<td>0~7</td>
+<tr class="row-even"><td><p>T_A8B8G8R8</p></td>
+<td><p>1</p></td>
+<td><p>4</p></td>
+<td><p>int8</p></td>
+<td><p>0~7</p></td>
 </tr>
-<tr class="row-odd"><td>T_A8R8G8B8</td>
-<td>1</td>
-<td>4</td>
-<td>int8</td>
-<td>0~7</td>
+<tr class="row-odd"><td><p>T_A8R8G8B8</p></td>
+<td><p>1</p></td>
+<td><p>4</p></td>
+<td><p>int8</p></td>
+<td><p>0~7</p></td>
 </tr>
-<tr class="row-even"><td>T_B8G8R8A8</td>
-<td>1</td>
-<td>4</td>
-<td>int8</td>
-<td>0~7</td>
+<tr class="row-even"><td><p>T_B8G8R8A8</p></td>
+<td><p>1</p></td>
+<td><p>4</p></td>
+<td><p>int8</p></td>
+<td><p>0~7</p></td>
 </tr>
-<tr class="row-odd"><td>T_R8G8B8A8</td>
-<td>1</td>
-<td>4</td>
-<td>int8</td>
-<td>0~7</td>
+<tr class="row-odd"><td><p>T_R8G8B8A8</p></td>
+<td><p>1</p></td>
+<td><p>4</p></td>
+<td><p>int8</p></td>
+<td><p>0~7</p></td>
 </tr>
-<tr class="row-even"><td>T_X8B8G8R8</td>
-<td>1</td>
-<td>4</td>
-<td>int8</td>
-<td>0~7</td>
+<tr class="row-even"><td><p>T_X8B8G8R8</p></td>
+<td><p>1</p></td>
+<td><p>4</p></td>
+<td><p>int8</p></td>
+<td><p>0~7</p></td>
 </tr>
-<tr class="row-odd"><td>T_X8R8G8B8</td>
-<td>1</td>
-<td>4</td>
-<td>int8</td>
-<td>0~7</td>
+<tr class="row-odd"><td><p>T_X8R8G8B8</p></td>
+<td><p>1</p></td>
+<td><p>4</p></td>
+<td><p>int8</p></td>
+<td><p>0~7</p></td>
 </tr>
-<tr class="row-even"><td>T_B8G8R8X8</td>
-<td>1</td>
-<td>4</td>
-<td>int8</td>
-<td>0~7</td>
+<tr class="row-even"><td><p>T_B8G8R8X8</p></td>
+<td><p>1</p></td>
+<td><p>4</p></td>
+<td><p>int8</p></td>
+<td><p>0~7</p></td>
 </tr>
-<tr class="row-odd"><td>T_R8G8B8X8</td>
-<td>1</td>
-<td>4</td>
-<td>int8</td>
-<td>0~7</td>
+<tr class="row-odd"><td><p>T_R8G8B8X8</p></td>
+<td><p>1</p></td>
+<td><p>4</p></td>
+<td><p>int8</p></td>
+<td><p>0~7</p></td>
 </tr>
-<tr class="row-even"><td>T_A2B10G10R
-10</td>
-<td>1</td>
-<td>4</td>
-<td>int16</td>
-<td>0~7</td>
+<tr class="row-even"><td><p>T_A2B10G10R
+10</p></td>
+<td><p>1</p></td>
+<td><p>4</p></td>
+<td><p>int16</p></td>
+<td><p>0~7</p></td>
 </tr>
-<tr class="row-odd"><td>T_A2R10G10B
-10</td>
-<td>1</td>
-<td>4</td>
-<td>int16</td>
-<td>0~7</td>
+<tr class="row-odd"><td><p>T_A2R10G10B
+10</p></td>
+<td><p>1</p></td>
+<td><p>4</p></td>
+<td><p>int16</p></td>
+<td><p>0~7</p></td>
 </tr>
-<tr class="row-even"><td>T_B10G10R10
-A2</td>
-<td>1</td>
-<td>4</td>
-<td>int16</td>
-<td>0~7</td>
+<tr class="row-even"><td><p>T_B10G10R10
+A2</p></td>
+<td><p>1</p></td>
+<td><p>4</p></td>
+<td><p>int16</p></td>
+<td><p>0~7</p></td>
 </tr>
-<tr class="row-odd"><td>T_R10G10B10
-A2</td>
-<td>1</td>
-<td>4</td>
-<td>int16</td>
-<td>0~7</td>
+<tr class="row-odd"><td><p>T_R10G10B10
+A2</p></td>
+<td><p>1</p></td>
+<td><p>4</p></td>
+<td><p>int16</p></td>
+<td><p>0~7</p></td>
 </tr>
-<tr class="row-even"><td>T_A2Y10U10V
-10</td>
-<td>1</td>
-<td>4</td>
-<td>int16</td>
-<td>0~7</td>
+<tr class="row-even"><td><p>T_A2Y10U10V
+10</p></td>
+<td><p>1</p></td>
+<td><p>4</p></td>
+<td><p>int16</p></td>
+<td><p>0~7</p></td>
 </tr>
-<tr class="row-odd"><td>T_V10U10Y10
-A2</td>
-<td>1</td>
-<td>4</td>
-<td>int16</td>
-<td>0~7</td>
+<tr class="row-odd"><td><p>T_V10U10Y10
+A2</p></td>
+<td><p>1</p></td>
+<td><p>4</p></td>
+<td><p>int16</p></td>
+<td><p>0~7</p></td>
 </tr>
-<tr class="row-even"><td>T_A8Y8U8V8</td>
-<td>1</td>
-<td>4</td>
-<td>int8</td>
-<td>0~7</td>
+<tr class="row-even"><td><p>T_A8Y8U8V8</p></td>
+<td><p>1</p></td>
+<td><p>4</p></td>
+<td><p>int8</p></td>
+<td><p>0~7</p></td>
 </tr>
-<tr class="row-odd"><td>T_V8U8Y8A8</td>
-<td>1</td>
-<td>4</td>
-<td>int8</td>
-<td>0~7</td>
+<tr class="row-odd"><td><p>T_V8U8Y8A8</p></td>
+<td><p>1</p></td>
+<td><p>4</p></td>
+<td><p>int8</p></td>
+<td><p>0~7</p></td>
 </tr>
-<tr class="row-even"><td>T_Y8___U8V8
-_N444</td>
-<td>2</td>
-<td>3</td>
-<td>int8</td>
-<td>0~31</td>
+<tr class="row-even"><td><p>T_Y8___U8V8
+_N444</p></td>
+<td><p>2</p></td>
+<td><p>3</p></td>
+<td><p>int8</p></td>
+<td><p>0~31</p></td>
 </tr>
-<tr class="row-odd"><td>T_Y8___V8U8
-_N444</td>
-<td>2</td>
-<td>3</td>
-<td>int8</td>
-<td>0~31</td>
+<tr class="row-odd"><td><p>T_Y8___V8U8
+_N444</p></td>
+<td><p>2</p></td>
+<td><p>3</p></td>
+<td><p>int8</p></td>
+<td><p>0~31</p></td>
 </tr>
-<tr class="row-even"><td>T_Y10___U10
-V10_N444</td>
-<td>2</td>
-<td>3</td>
-<td>int16</td>
-<td>0~15</td>
+<tr class="row-even"><td><p>T_Y10___U10
+V10_N444</p></td>
+<td><p>2</p></td>
+<td><p>3</p></td>
+<td><p>int16</p></td>
+<td><p>0~15</p></td>
 </tr>
-<tr class="row-odd"><td>T_Y10___V10
-U10_N444</td>
-<td>2</td>
-<td>3</td>
-<td>int16</td>
-<td>0~15</td>
+<tr class="row-odd"><td><p>T_Y10___V10
+U10_N444</p></td>
+<td><p>2</p></td>
+<td><p>3</p></td>
+<td><p>int16</p></td>
+<td><p>0~15</p></td>
 </tr>
-<tr class="row-even"><td>T_Y12___U12
-V12_N444</td>
-<td>2</td>
-<td>3</td>
-<td>int16</td>
-<td>0~15</td>
+<tr class="row-even"><td><p>T_Y12___U12
+V12_N444</p></td>
+<td><p>2</p></td>
+<td><p>3</p></td>
+<td><p>int16</p></td>
+<td><p>0~15</p></td>
 </tr>
-<tr class="row-odd"><td>T_Y12___V12
-U12_N444</td>
-<td>2</td>
-<td>3</td>
-<td>int16</td>
-<td>0~15</td>
+<tr class="row-odd"><td><p>T_Y12___V12
+U12_N444</p></td>
+<td><p>2</p></td>
+<td><p>3</p></td>
+<td><p>int16</p></td>
+<td><p>0~15</p></td>
 </tr>
-<tr class="row-even"><td>T_Y16___U16
-V16_N444</td>
-<td>2</td>
-<td>3</td>
-<td>int16</td>
-<td>0~15</td>
+<tr class="row-even"><td><p>T_Y16___U16
+V16_N444</p></td>
+<td><p>2</p></td>
+<td><p>3</p></td>
+<td><p>int16</p></td>
+<td><p>0~15</p></td>
 </tr>
-<tr class="row-odd"><td>T_Y16___V16
-U16_N444</td>
-<td>2</td>
-<td>3</td>
-<td>int16</td>
-<td>0~15</td>
+<tr class="row-odd"><td><p>T_Y16___V16
+U16_N444</p></td>
+<td><p>2</p></td>
+<td><p>3</p></td>
+<td><p>int16</p></td>
+<td><p>0~15</p></td>
 </tr>
 </tbody>
 </table>
@@ -858,57 +857,57 @@ DLA performance: sparse compression and channel post-extension.</p>
 <p>DLA engine support 4 basic formats of weight data for different
 operation mode:</p>
 <ul class="simple">
-<li>weight for direct convolution</li>
-<li>weight for image input</li>
-<li>weight for deconvolution</li>
-<li>weight for Winograd convolution</li>
+<li><p>weight for direct convolution</p></li>
+<li><p>weight for image input</p></li>
+<li><p>weight for deconvolution</p></li>
+<li><p>weight for Winograd convolution</p></li>
 </ul>
 <p>There are some mandatory requirements for some formats:</p>
 <ul class="simple">
-<li>channel pre-extension for image input</li>
-<li>channel extension for Winograd</li>
-<li>Set split for deconvolution</li>
+<li><p>channel pre-extension for image input</p></li>
+<li><p>channel extension for Winograd</p></li>
+<li><p>Set split for deconvolution</p></li>
 </ul>
 <p>And two options for weight formats:</p>
 <ul class="simple">
-<li>channel post-extension</li>
-<li>sparse compressing</li>
+<li><p>channel post-extension</p></li>
+<li><p>sparse compressing</p></li>
 </ul>
-<table border="1" class="docutils" id="tab-weight-formats">
+<table class="docutils align-default" id="tab-weight-formats">
 <caption><span class="caption-number">Table 34 </span><span class="caption-text">Weight formats and options</span><a class="headerlink" href="#tab-weight-formats" title="Permalink to this table">¶</a></caption>
 <colgroup>
-<col width="34%" />
-<col width="36%" />
-<col width="30%" />
+<col style="width: 34%" />
+<col style="width: 36%" />
+<col style="width: 30%" />
 </colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">Weight types</th>
-<th class="head">Sparse compression option</th>
-<th class="head">Post-extension option</th>
+<thead>
+<tr class="row-odd"><th class="head"><p>Weight types</p></th>
+<th class="head"><p>Sparse compression option</p></th>
+<th class="head"><p>Post-extension option</p></th>
 </tr>
 </thead>
-<tbody valign="top">
-<tr class="row-even"><td>Weight for DC</td>
-<td>Support</td>
-<td><strong>NOT support</strong></td>
+<tbody>
+<tr class="row-even"><td><p>Weight for DC</p></td>
+<td><p>Support</p></td>
+<td><p><strong>NOT support</strong></p></td>
 </tr>
-<tr class="row-odd"><td>Weight for Winograd</td>
-<td>Support</td>
-<td><strong>NOT support</strong></td>
+<tr class="row-odd"><td><p>Weight for Winograd</p></td>
+<td><p>Support</p></td>
+<td><p><strong>NOT support</strong></p></td>
 </tr>
-<tr class="row-even"><td>Weight for image input</td>
-<td>Support</td>
-<td>Support</td>
+<tr class="row-even"><td><p>Weight for image input</p></td>
+<td><p>Support</p></td>
+<td><p>Support</p></td>
 </tr>
-<tr class="row-odd"><td>Weight for deconvolution</td>
-<td>Support</td>
-<td><strong>NOT support</strong></td>
+<tr class="row-odd"><td><p>Weight for deconvolution</p></td>
+<td><p>Support</p></td>
+<td><p><strong>NOT support</strong></p></td>
 </tr>
 </tbody>
 </table>
 <div class="figure align-center" id="id5">
 <span id="fig-original-weight-data"></span><a class="reference internal image-reference" href="../_images/format_original_weight_data.svg"><img alt="../_images/format_original_weight_data.svg" src="../_images/format_original_weight_data.svg" /></a>
-<p class="caption"><span class="caption-number">Fig. 12 </span><span class="caption-text">Original weight data</span></p>
+<p class="caption"><span class="caption-number">Fig. 12 </span><span class="caption-text">Original weight data</span><a class="headerlink" href="#id5" title="Permalink to this image">¶</a></p>
 </div>
 <div class="section" id="basic-weight-for-direct-convolution">
 <h3>Basic Weight for Direct Convolution<a class="headerlink" href="#basic-weight-for-direct-convolution" title="Permalink to this headline">¶</a></h3>
@@ -916,26 +915,26 @@ operation mode:</p>
 format. Other weight formats are all extended from this format.</p>
 <p>The mapping rules of uncompressed weight for direct convolution are:</p>
 <ul class="simple">
-<li>Distribute the kernels into groups. For int16 and fp16 weight, one
+<li><p>Distribute the kernels into groups. For int16 and fp16 weight, one
 group has 16 kernels. For int8, one group has 32 kernels. Last group
-can have fewer kernels.</li>
-<li>Divide each kernel to 1x1x64-element small cubes. For int16/fp16 the
+can have fewer kernels.</p></li>
+<li><p>Divide each kernel to 1x1x64-element small cubes. For int16/fp16 the
 small cube is 128 bytes each; and for int8 the small cube is 64 bytes
-each. Do not append 0 if channel size is not divisible by 128/64.</li>
-<li>After division, all weights are stored in 1x1xC’ small cubes, where
-C’ is no more than 128 bytes.</li>
-<li>Scan the 1x1xC’ small cubes in a group with C’-&gt;K-&gt;W-&gt;H-&gt;C sequence.
+each. Do not append 0 if channel size is not divisible by 128/64.</p></li>
+<li><p>After division, all weights are stored in 1x1xC’ small cubes, where
+C’ is no more than 128 bytes.</p></li>
+<li><p>Scan the 1x1xC’ small cubes in a group with C’-&gt;K-&gt;W-&gt;H-&gt;C sequence.
 Here C’ changes fastest and C changes slowest. And map them compactly
-as scanning sequence.</li>
-<li>Map the weight groups compactly. Do not append any 0s between group
-boundaries.</li>
-<li>Append 0s at end of all mapped weight for 128-byte alignment.</li>
+as scanning sequence.</p></li>
+<li><p>Map the weight groups compactly. Do not append any 0s between group
+boundaries.</p></li>
+<li><p>Append 0s at end of all mapped weight for 128-byte alignment.</p></li>
 </ul>
 <p>Diagram below shows how a group of 3x3x192Byte kernel maps for direct
 convolution.</p>
 <div class="figure align-center" id="id6">
 <span id="fig-dc-weight-mapping"></span><a class="reference internal image-reference" href="../_images/format_dc_weight_mapping.svg"><img alt="../_images/format_dc_weight_mapping.svg" src="../_images/format_dc_weight_mapping.svg" /></a>
-<p class="caption"><span class="caption-number">Fig. 13 </span><span class="caption-text">Weight mapping for direct convolution inside one group</span></p>
+<p class="caption"><span class="caption-number">Fig. 13 </span><span class="caption-text">Weight mapping for direct convolution inside one group</span><a class="headerlink" href="#id6" title="Permalink to this image">¶</a></p>
 </div>
 </div>
 <div class="section" id="basic-weight-for-image-input">
@@ -946,8 +945,8 @@ extension step ahead of mapping steps for direct convolution weight.</p>
 <p>The channel pre-extension for image weight is a mandatory requirement,
 while channel post-extension is an option to improve performance.</p>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">Channel pre-extension for image weight is different from
+<p class="admonition-title">Note</p>
+<p>Channel pre-extension for image weight is different from
 channel extension for Winograd convolution.</p>
 </div>
 <p>The key idea of per-extension is to turn all weights in same line to a
@@ -955,7 +954,7 @@ single channel. <a class="reference internal" href="#fig-dc-channel-extension-fo
 is a case for an int16 image input whose channel size is 3.</p>
 <div class="figure align-center" id="id7">
 <span id="fig-dc-channel-extension-for-image-for-weight"></span><a class="reference internal image-reference" href="../_images/format_dc_channel_extension_for_image_for_weight.svg"><img alt="../_images/format_dc_channel_extension_for_image_for_weight.svg" src="../_images/format_dc_channel_extension_for_image_for_weight.svg" /></a>
-<p class="caption"><span class="caption-number">Fig. 14 </span><span class="caption-text">Channel extension for image weight</span></p>
+<p class="caption"><span class="caption-number">Fig. 14 </span><span class="caption-text">Channel extension for image weight</span><a class="headerlink" href="#id7" title="Permalink to this image">¶</a></p>
 </div>
 <p>Channel pre-extension is the first step for image weight. Then all
 extended kernels follow the same steps of weight for direct convolution.
@@ -970,16 +969,16 @@ do channel extension and conversion for each kernel. Phase 2 is to group
 the kernels and map small cubes in memory.</p>
 <p>Steps of phase 1:</p>
 <ul class="simple">
-<li>Divide kernels to 1x1x32Byte small cubes. If the channel size is not
-divisible by 32, append 0s.</li>
-<li>Do channel extension in if convolution stride is not 1. The new width
-and height of a kernel should be 3 after extension.</li>
-<li>Convert the kernel from 3x3xC cube to a 4x4xC cube. The equation is
+<li><p>Divide kernels to 1x1x32Byte small cubes. If the channel size is not
+divisible by 32, append 0s.</p></li>
+<li><p>Do channel extension in if convolution stride is not 1. The new width
+and height of a kernel should be 3 after extension.</p></li>
+<li><p>Convert the kernel from 3x3xC cube to a 4x4xC cube. The equation is
 GWGT. Here W is each 4x4x1 of weight cube, G is a 4 x 3 matrix and GT
-is transpose matrix.</li>
-<li>During conversion, a scaling factor may involve. Please see the Winograd
-convolution documentation for reference.</li>
-<li>The width and height of a kernel should be 4 after conversion.</li>
+is transpose matrix.</p></li>
+<li><p>During conversion, a scaling factor may involve. Please see the Winograd
+convolution documentation for reference.</p></li>
+<li><p>The width and height of a kernel should be 4 after conversion.</p></li>
 </ul>
 <div class="math notranslate nohighlight">
 \[\begin{split}G = \begin{bmatrix}
@@ -991,25 +990,25 @@ convolution documentation for reference.</li>
 <p>Matrix for weight transfer for Winograd</p>
 <p>Steps of phase 2:</p>
 <ul class="simple">
-<li>Distribute the converted kernels into groups. For int16 and fp16
-weight, one group has 16 kernels. For int8, one group has 32 kernels.</li>
-<li>Divide converted kernels to 4x4x4 elements small cubes. For
+<li><p>Distribute the converted kernels into groups. For int16 and fp16
+weight, one group has 16 kernels. For int8, one group has 32 kernels.</p></li>
+<li><p>Divide converted kernels to 4x4x4 elements small cubes. For
 int16/fp16 small cube is 128 bytes each. For int8 small cube is 64
-bytes each. The channel size should always divisible by 4.</li>
-<li>Scan the 4x4x4 elements small cubes in a group with K-&gt;C sequence.
+bytes each. The channel size should always divisible by 4.</p></li>
+<li><p>Scan the 4x4x4 elements small cubes in a group with K-&gt;C sequence.
 Take int16 for example, the scan order is small cube 0 of K0, small
 cube 0 of K1, small cube 0 of K2, …, small cube 0 of K15, small cube
 1 of K0, small cube 1 of K1, …, small cube 1 of K15, …, small cube N
-of K15.</li>
-<li>Maps the 4x4x4 elements small cubes closely with scanning order</li>
-<li>Maps the weight groups one by one closely</li>
+of K15.</p></li>
+<li><p>Maps the 4x4x4 elements small cubes closely with scanning order</p></li>
+<li><p>Maps the weight groups one by one closely</p></li>
 </ul>
 <p>The phase 2 is similar to weight for direct convolution except the small
 cube size is 4x4x4 elements.</p>
 <p>Figure below shows how to do channel extension to one kernel and map the
 data.</p>
 <div class="figure align-center" id="id8">
-<span id="fig-channel-extension-and-conversion-for-wingorad"></span><img alt="../_images/format_channel_extension_and_conversion_for_wingorad.svg" src="../_images/format_channel_extension_and_conversion_for_wingorad.svg" /><p class="caption"><span class="caption-number">Fig. 15 </span><span class="caption-text">Channel extension and conversion for Winograd</span></p>
+<span id="fig-channel-extension-and-conversion-for-wingorad"></span><img alt="../_images/format_channel_extension_and_conversion_for_wingorad.svg" src="../_images/format_channel_extension_and_conversion_for_wingorad.svg" /><p class="caption"><span class="caption-number">Fig. 15 </span><span class="caption-text">Channel extension and conversion for Winograd</span><a class="headerlink" href="#id8" title="Permalink to this image">¶</a></p>
 </div>
 </div>
 <div class="section" id="weight-channel-post-extension-for-image-input">
@@ -1026,22 +1025,22 @@ order.</p>
 <p>The channel post-extension is done after pre-extension. Figure below
 shows one case which parameter is 2.</p>
 <div class="figure align-center" id="id9">
-<span id="fig-weight-channel-post-extension-2"></span><img alt="../_images/format_weight_channel_post_extension_2.svg" src="../_images/format_weight_channel_post_extension_2.svg" /><p class="caption"><span class="caption-number">Fig. 16 </span><span class="caption-text">Weight channel post-extension, parameter = 2</span></p>
+<span id="fig-weight-channel-post-extension-2"></span><img alt="../_images/format_weight_channel_post_extension_2.svg" src="../_images/format_weight_channel_post_extension_2.svg" /><p class="caption"><span class="caption-number">Fig. 16 </span><span class="caption-text">Weight channel post-extension, parameter = 2</span><a class="headerlink" href="#id9" title="Permalink to this image">¶</a></p>
 </div>
 <p>Flow of pre-extension, post-extension, mapping and compression option
 for image weight:</p>
 <ul class="simple">
-<li>Do pre-extension</li>
-<li>Do post-extension</li>
-<li>Remap weight data</li>
-<li>Do weight compression.</li>
+<li><p>Do pre-extension</p></li>
+<li><p>Do post-extension</p></li>
+<li><p>Remap weight data</p></li>
+<li><p>Do weight compression.</p></li>
 </ul>
 <p>Some tips for post-extension:</p>
 <ul class="simple">
-<li>Channel post-extension cannot be used in Winograd convolution</li>
-<li>Channel post-extension only support 2-line and 4-line.</li>
-<li>If weight height is not divisible by 2 (2-lines) or 4 (4-lines), do
-NOT append 0s. This is unlike channel extension for Winograd.</li>
+<li><p>Channel post-extension cannot be used in Winograd convolution</p></li>
+<li><p>Channel post-extension only support 2-line and 4-line.</p></li>
+<li><p>If weight height is not divisible by 2 (2-lines) or 4 (4-lines), do
+NOT append 0s. This is unlike channel extension for Winograd.</p></li>
 </ul>
 </div>
 <div class="section" id="sparse-compression-option">
@@ -1058,23 +1057,23 @@ original weight memory surface. A third memory surface recodes remaining
 byte number of each kernel group (WGS).</p>
 <p>The steps of weight compression are:</p>
 <ul class="simple">
-<li>Always use 1 bit to indicate 1 element of weight. For int16 and fp16,
+<li><p>Always use 1 bit to indicate 1 element of weight. For int16 and fp16,
 1 bit represents 2 bytes of weight data; for int8, 1 bit represents 1
-byte of weight data.</li>
-<li>Compress weight group by group. Assembly of bits for one weight group
-is called WMB. The bits in WMB are stored as little-endian.</li>
-<li>Align WMB surface to 128-byte by adding 0 bits in the end</li>
-<li>Remove all 0 weights in original surface and pack them compactly.</li>
-<li>Align compressed weight surface to 128-byte by adding 0s in the end.</li>
-<li>Calculate the byte number of each compressed group. The remaining
+byte of weight data.</p></li>
+<li><p>Compress weight group by group. Assembly of bits for one weight group
+is called WMB. The bits in WMB are stored as little-endian.</p></li>
+<li><p>Align WMB surface to 128-byte by adding 0 bits in the end</p></li>
+<li><p>Remove all 0 weights in original surface and pack them compactly.</p></li>
+<li><p>Align compressed weight surface to 128-byte by adding 0s in the end.</p></li>
+<li><p>Calculate the byte number of each compressed group. The remaining
 byte number of each group is called weight group size or WGS. One WGS
-is of 32-bit wise.</li>
-<li>Store WGS, WMB and compressed weight into three separated memory
-surfaces.</li>
+is of 32-bit wise.</p></li>
+<li><p>Store WGS, WMB and compressed weight into three separated memory
+surfaces.</p></li>
 </ul>
 <p>The diagram below shows the memory mapping of compressed weight format.</p>
 <div class="figure align-center" id="id10">
-<span id="fig-memory-mapping-of-compressed-weight"></span><img alt="../_images/format_memory_mapping_of_compressed_weight.svg" src="../_images/format_memory_mapping_of_compressed_weight.svg" /><p class="caption"><span class="caption-number">Fig. 17 </span><span class="caption-text">Memory mapping of compressed weight</span></p>
+<span id="fig-memory-mapping-of-compressed-weight"></span><img alt="../_images/format_memory_mapping_of_compressed_weight.svg" src="../_images/format_memory_mapping_of_compressed_weight.svg" /><p class="caption"><span class="caption-number">Fig. 17 </span><span class="caption-text">Memory mapping of compressed weight</span><a class="headerlink" href="#id10" title="Permalink to this image">¶</a></p>
 </div>
 </div>
 </div>
@@ -1085,29 +1084,29 @@ this option is enabled, DLA engine will add the bias data to result of
 convolution before writing back to memory.</p>
 <p>There are three types of bias data,</p>
 <ul class="simple">
-<li>Per layer bias data</li>
-<li>Per channel bias data</li>
-<li>Per element bias data</li>
+<li><p>Per layer bias data</p></li>
+<li><p>Per channel bias data</p></li>
+<li><p>Per element bias data</p></li>
 </ul>
 <p>They both store in memory for DLA engine to fetch.</p>
 <p>If the output feature data cube is WxHxC, check below table for the
 corresponding bias cube size:</p>
-<table border="1" class="docutils">
+<table class="docutils align-default">
 <colgroup>
-<col width="42%" />
-<col width="58%" />
+<col style="width: 42%" />
+<col style="width: 58%" />
 </colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">Per Layer</th>
-<th class="head">1x1x1 (Register)</th>
+<thead>
+<tr class="row-odd"><th class="head"><p>Per Layer</p></th>
+<th class="head"><p>1x1x1 (Register)</p></th>
 </tr>
 </thead>
-<tbody valign="top">
-<tr class="row-even"><td>Per Channel</td>
-<td>1x1xC</td>
+<tbody>
+<tr class="row-even"><td><p>Per Channel</p></td>
+<td><p>1x1xC</p></td>
 </tr>
-<tr class="row-odd"><td>Per Element</td>
-<td>WxHxC</td>
+<tr class="row-odd"><td><p>Per Element</p></td>
+<td><p>WxHxC</p></td>
 </tr>
 </tbody>
 </table>
@@ -1117,32 +1116,32 @@ network.</p>
 <p>The memory mapping of bias data is described as below:</p>
 <p><strong>Per Channel:</strong></p>
 <ul class="simple">
-<li>Two bytes per element with INT16/FP16 or 1 byte per element with INT8</li>
+<li><p>Two bytes per element with INT16/FP16 or 1 byte per element with INT8</p></li>
 </ul>
 <div class="figure align-center" id="id11">
-<span id="fig-memory-mapping-of-per-channel-bias-data-case1"></span><img alt="../_images/format_memory_mapping_of_per_channel_bias_data_case1.svg" src="../_images/format_memory_mapping_of_per_channel_bias_data_case1.svg" /><p class="caption"><span class="caption-number">Fig. 18 </span><span class="caption-text">Memory Mapping of Per Channel Bias Data (Case 1)</span></p>
+<span id="fig-memory-mapping-of-per-channel-bias-data-case1"></span><img alt="../_images/format_memory_mapping_of_per_channel_bias_data_case1.svg" src="../_images/format_memory_mapping_of_per_channel_bias_data_case1.svg" /><p class="caption"><span class="caption-number">Fig. 18 </span><span class="caption-text">Memory Mapping of Per Channel Bias Data (Case 1)</span><a class="headerlink" href="#id11" title="Permalink to this image">¶</a></p>
 </div>
 <ul class="simple">
-<li>2 bytes per element with INT8:</li>
+<li><p>2 bytes per element with INT8:</p></li>
 </ul>
 <div class="figure align-center" id="id12">
-<span id="fig-memory-mapping-of-per-channel-bias-data-case2"></span><img alt="../_images/format_memory_mapping_of_per_channel_bias_data_case2.svg" src="../_images/format_memory_mapping_of_per_channel_bias_data_case2.svg" /><p class="caption"><span class="caption-number">Fig. 19 </span><span class="caption-text">Memory Mapping of Per Channel Bias Data (Case 2)</span></p>
+<span id="fig-memory-mapping-of-per-channel-bias-data-case2"></span><img alt="../_images/format_memory_mapping_of_per_channel_bias_data_case2.svg" src="../_images/format_memory_mapping_of_per_channel_bias_data_case2.svg" /><p class="caption"><span class="caption-number">Fig. 19 </span><span class="caption-text">Memory Mapping of Per Channel Bias Data (Case 2)</span><a class="headerlink" href="#id12" title="Permalink to this image">¶</a></p>
 </div>
 <ul class="simple">
-<li>2 bytes per element with INT8:</li>
+<li><p>2 bytes per element with INT8:</p></li>
 </ul>
 <p><strong>Per Element:</strong></p>
 <ul class="simple">
-<li>Two bytes per element with INT16/FP16 or 1 byte per element with INT8</li>
+<li><p>Two bytes per element with INT16/FP16 or 1 byte per element with INT8</p></li>
 </ul>
 <div class="figure align-center" id="id13">
-<span id="fig-memory-mapping-of-per-element-bias-data-case1"></span><img alt="../_images/format_memory_mapping_of_per_element_bias_data_case1.svg" src="../_images/format_memory_mapping_of_per_element_bias_data_case1.svg" /><p class="caption"><span class="caption-number">Fig. 20 </span><span class="caption-text">Memory Mapping of Per Element Bias Data (Case 1)</span></p>
+<span id="fig-memory-mapping-of-per-element-bias-data-case1"></span><img alt="../_images/format_memory_mapping_of_per_element_bias_data_case1.svg" src="../_images/format_memory_mapping_of_per_element_bias_data_case1.svg" /><p class="caption"><span class="caption-number">Fig. 20 </span><span class="caption-text">Memory Mapping of Per Element Bias Data (Case 1)</span><a class="headerlink" href="#id13" title="Permalink to this image">¶</a></p>
 </div>
 <ul class="simple">
-<li>2 bytes per element with INT8:</li>
+<li><p>2 bytes per element with INT8:</p></li>
 </ul>
 <div class="figure align-center" id="id14">
-<span id="fig-memory-mapping-of-per-element-bias-data-case2"></span><img alt="../_images/format_memory_mapping_of_per_element_bias_data_case2.svg" src="../_images/format_memory_mapping_of_per_element_bias_data_case2.svg" /><p class="caption"><span class="caption-number">Fig. 21 </span><span class="caption-text">Memory Mapping of Per Element Bias Data (Case 2)</span></p>
+<span id="fig-memory-mapping-of-per-element-bias-data-case2"></span><img alt="../_images/format_memory_mapping_of_per_element_bias_data_case2.svg" src="../_images/format_memory_mapping_of_per_element_bias_data_case2.svg" /><p class="caption"><span class="caption-number">Fig. 21 </span><span class="caption-text">Memory Mapping of Per Element Bias Data (Case 2)</span><a class="headerlink" href="#id14" title="Permalink to this image">¶</a></p>
 </div>
 </div>
 <div class="section" id="prelu-data-format">
@@ -1152,27 +1151,27 @@ multiplier of SDP.</p>
 <p>PReLU always operated per-channel thus there is only one type of PReLU
 data:</p>
 <ul class="simple">
-<li>Per channel PReLU data</li>
+<li><p>Per channel PReLU data</p></li>
 </ul>
 <p>Per channel PReLU data is stored in memory in a continuous 1x1xC space.
 Be noted that C is in unit of channel.</p>
 <ul class="simple">
-<li>For INT8/16, each channel can occupy 1 or 2 bytes depending on B/N/E
-RDMA_DATA_SIZE</li>
-<li>In FP16 types, each channel need 2 bytes data</li>
+<li><p>For INT8/16, each channel can occupy 1 or 2 bytes depending on B/N/E
+RDMA_DATA_SIZE</p></li>
+<li><p>In FP16 types, each channel need 2 bytes data</p></li>
 </ul>
 <p>The memory mapping of PRelu data is described as below:</p>
 <ul class="simple">
-<li>Two bytes per element with INT16/FP16 or 1 byte per element with INT8</li>
+<li><p>Two bytes per element with INT16/FP16 or 1 byte per element with INT8</p></li>
 </ul>
 <div class="figure align-center" id="id15">
-<span id="fig-memory-mapping-of-per-channel-prelu-data-case1"></span><img alt="../_images/format_memory_mapping_of_per_channel_prelu_data_case1.svg" src="../_images/format_memory_mapping_of_per_channel_prelu_data_case1.svg" /><p class="caption"><span class="caption-number">Fig. 22 </span><span class="caption-text">Memory Mapping of Per Channel PReLU Data (Case 1)</span></p>
+<span id="fig-memory-mapping-of-per-channel-prelu-data-case1"></span><img alt="../_images/format_memory_mapping_of_per_channel_prelu_data_case1.svg" src="../_images/format_memory_mapping_of_per_channel_prelu_data_case1.svg" /><p class="caption"><span class="caption-number">Fig. 22 </span><span class="caption-text">Memory Mapping of Per Channel PReLU Data (Case 1)</span><a class="headerlink" href="#id15" title="Permalink to this image">¶</a></p>
 </div>
 <ul class="simple">
-<li>2 bytes per element with INT8:</li>
+<li><p>2 bytes per element with INT8:</p></li>
 </ul>
 <div class="figure align-center" id="id16">
-<span id="fig-memory-mapping-of-per-channel-prelu-data-case2"></span><img alt="../_images/format_memory_mapping_of_per_channel_prelu_data_case2.svg" src="../_images/format_memory_mapping_of_per_channel_prelu_data_case2.svg" /><p class="caption"><span class="caption-number">Fig. 23 </span><span class="caption-text">Memory Mapping of Per Channel PReLU Data (Case 2)</span></p>
+<span id="fig-memory-mapping-of-per-channel-prelu-data-case2"></span><img alt="../_images/format_memory_mapping_of_per_channel_prelu_data_case2.svg" src="../_images/format_memory_mapping_of_per_channel_prelu_data_case2.svg" /><p class="caption"><span class="caption-number">Fig. 23 </span><span class="caption-text">Memory Mapping of Per Channel PReLU Data (Case 2)</span><a class="headerlink" href="#id16" title="Permalink to this image">¶</a></p>
 </div>
 </div>
 <div class="section" id="batch-normalization-data-format">
@@ -1184,30 +1183,30 @@ feature data and the other is to multiple with the result after
 addition.</p>
 <p>There are two types of batch normalization data</p>
 <ul class="simple">
-<li>Per channel batch normalization data</li>
-<li>Per layer batch normalization data</li>
+<li><p>Per channel batch normalization data</p></li>
+<li><p>Per layer batch normalization data</p></li>
 </ul>
 <p>Per channel batch normalization data is stored in memory in a continuous
 1x1xC space. Be noted that C is in unit of channel.</p>
 <ul class="simple">
-<li>In INT8/16 types, each of the two parts of normalization data can be
-either 1 byte or 2 bytes, so each channel need 2*1 or 2*2 bytes data</li>
-<li>In FP16 types, each of the two parts of normalization data is 2 byte,
-so each channel need 4 bytes data</li>
+<li><p>In INT8/16 types, each of the two parts of normalization data can be
+either 1 byte or 2 bytes, so each channel need 2*1 or 2*2 bytes data</p></li>
+<li><p>In FP16 types, each of the two parts of normalization data is 2 byte,
+so each channel need 4 bytes data</p></li>
 </ul>
 <p>The pair data of each element are always packed together in memory. The
 memory mapping of data is described as below:</p>
 <ul class="simple">
-<li>Two bytes per element with INT16/FP16 or 1 byte per element with INT8</li>
+<li><p>Two bytes per element with INT16/FP16 or 1 byte per element with INT8</p></li>
 </ul>
 <div class="figure align-center" id="id17">
-<span id="fig-memory-mapping-of-batch-normalization-data-case1"></span><img alt="../_images/format_memory_mapping_of_batch_normalization_data_case1.svg" src="../_images/format_memory_mapping_of_batch_normalization_data_case1.svg" /><p class="caption"><span class="caption-number">Fig. 24 </span><span class="caption-text">Memory Mapping of Batch Normalization Data (Case 1)</span></p>
+<span id="fig-memory-mapping-of-batch-normalization-data-case1"></span><img alt="../_images/format_memory_mapping_of_batch_normalization_data_case1.svg" src="../_images/format_memory_mapping_of_batch_normalization_data_case1.svg" /><p class="caption"><span class="caption-number">Fig. 24 </span><span class="caption-text">Memory Mapping of Batch Normalization Data (Case 1)</span><a class="headerlink" href="#id17" title="Permalink to this image">¶</a></p>
 </div>
 <ul class="simple">
-<li>2 bytes per element with INT8:</li>
+<li><p>2 bytes per element with INT8:</p></li>
 </ul>
 <div class="figure align-center" id="id18">
-<span id="fig-memory-mapping-of-batch-normalization-data-case2"></span><img alt="../_images/format_memory_mapping_of_batch_normalization_data_case2.svg" src="../_images/format_memory_mapping_of_batch_normalization_data_case2.svg" /><p class="caption"><span class="caption-number">Fig. 25 </span><span class="caption-text">Memory Mapping of Batch Normalization Data (Case 2)</span></p>
+<span id="fig-memory-mapping-of-batch-normalization-data-case2"></span><img alt="../_images/format_memory_mapping_of_batch_normalization_data_case2.svg" src="../_images/format_memory_mapping_of_batch_normalization_data_case2.svg" /><p class="caption"><span class="caption-number">Fig. 25 </span><span class="caption-text">Memory Mapping of Batch Normalization Data (Case 2)</span><a class="headerlink" href="#id18" title="Permalink to this image">¶</a></p>
 </div>
 <p>Per layer batch normalization data is stored in register.</p>
 <p>Be noted that INT8 and INT16 here means the processing precision, so
@@ -1223,15 +1222,15 @@ layers.</p>
 multiplier.</p>
 <p>There are one type of element-wise data</p>
 <ul class="simple">
-<li>Per element Element-Wise data</li>
+<li><p>Per element Element-Wise data</p></li>
 </ul>
 <p>Per element Element-Wise data is stored in memory with size of W x H x
 C.</p>
 <ul class="simple">
-<li>In INT8 /16types, each of the two parts of element-wise data can be
-either 1 byte or 2 bytes, so each element need 1/2 bytes data</li>
-<li>In FP16 types, each of the two parts of element-wise data is 2 bytes,
-so each element need 2 bytes data</li>
+<li><p>In INT8 /16types, each of the two parts of element-wise data can be
+either 1 byte or 2 bytes, so each element need 1/2 bytes data</p></li>
+<li><p>In FP16 types, each of the two parts of element-wise data is 2 bytes,
+so each element need 2 bytes data</p></li>
 </ul>
 <p>From algorithm perspective, element-wise employs ALU or MUL only but
 never both, however, DLA hardware support employ both operations for
@@ -1239,16 +1238,16 @@ per-element operation, in this case, each element size should be x2 of
 description above;</p>
 <p>The memory mapping of data is described as below:</p>
 <ul class="simple">
-<li>Two bytes per element with INT16/FP16 or 1 byte per element with INT8</li>
+<li><p>Two bytes per element with INT16/FP16 or 1 byte per element with INT8</p></li>
 </ul>
 <div class="figure align-center" id="id19">
-<span id="fig-memory-mapping-of-element-wise-data-case1"></span><img alt="../_images/format_memory_mapping_of_element_wise_data_case1.svg" src="../_images/format_memory_mapping_of_element_wise_data_case1.svg" /><p class="caption"><span class="caption-number">Fig. 26 </span><span class="caption-text">Memory Mapping of Element Wise Data (Case 1)</span></p>
+<span id="fig-memory-mapping-of-element-wise-data-case1"></span><img alt="../_images/format_memory_mapping_of_element_wise_data_case1.svg" src="../_images/format_memory_mapping_of_element_wise_data_case1.svg" /><p class="caption"><span class="caption-number">Fig. 26 </span><span class="caption-text">Memory Mapping of Element Wise Data (Case 1)</span><a class="headerlink" href="#id19" title="Permalink to this image">¶</a></p>
 </div>
 <ul class="simple">
-<li>2 bytes per element with INT8:</li>
+<li><p>2 bytes per element with INT8:</p></li>
 </ul>
 <div class="figure align-center" id="id20">
-<span id="fig-memory-mapping-of-element-wise-data-case2"></span><img alt="../_images/format_memory_mapping_of_element_wise_data_case2.svg" src="../_images/format_memory_mapping_of_element_wise_data_case2.svg" /><p class="caption"><span class="caption-number">Fig. 27 </span><span class="caption-text">Memory Mapping of Element Wise Data (Case 2)</span></p>
+<span id="fig-memory-mapping-of-element-wise-data-case2"></span><img alt="../_images/format_memory_mapping_of_element_wise_data_case2.svg" src="../_images/format_memory_mapping_of_element_wise_data_case2.svg" /><p class="caption"><span class="caption-number">Fig. 27 </span><span class="caption-text">Memory Mapping of Element Wise Data (Case 2)</span><a class="headerlink" href="#id20" title="Permalink to this image">¶</a></p>
 </div>
 <p>Be noted that INT8 and INT16 here means the processing precision, so
 when the layer is running from INT16 to INT8 or INT8 to INT16 precision
@@ -1257,79 +1256,79 @@ always INT8.</p>
 <p>Normally, one atom contains 1x1x32Bytes data, but it’s no longer true
 for:</p>
 <ul class="simple">
-<li>Bias data format;</li>
-<li>PReLU data format;</li>
-<li>Batch normalization data format;</li>
-<li>Element-wise data format</li>
+<li><p>Bias data format;</p></li>
+<li><p>PReLU data format;</p></li>
+<li><p>Batch normalization data format;</p></li>
+<li><p>Element-wise data format</p></li>
 </ul>
 <p>The bytes-per-atom for those formats should be computed by:</p>
 <p>BytesPerAtom=ElementPerAtom * ComponentsPerElement * BytesPerComponent</p>
 <p>Where ElementPerAtom is decided by PROC_PRECISION of SDP data pipeline:</p>
-<table border="1" class="docutils">
+<table class="docutils align-default">
 <colgroup>
-<col width="50%" />
-<col width="50%" />
+<col style="width: 50%" />
+<col style="width: 50%" />
 </colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">PROC_PRECISION</th>
-<th class="head">ElementPerAtom</th>
+<thead>
+<tr class="row-odd"><th class="head"><p>PROC_PRECISION</p></th>
+<th class="head"><p>ElementPerAtom</p></th>
 </tr>
 </thead>
-<tbody valign="top">
-<tr class="row-even"><td>INT8</td>
-<td>32</td>
+<tbody>
+<tr class="row-even"><td><p>INT8</p></td>
+<td><p>32</p></td>
 </tr>
-<tr class="row-odd"><td>INT16/FP16</td>
-<td>16</td>
+<tr class="row-odd"><td><p>INT16/FP16</p></td>
+<td><p>16</p></td>
 </tr>
 </tbody>
 </table>
 <p>ComponentsPerElement is decided by use case (or DATA_USE register):</p>
-<table border="1" class="docutils">
+<table class="docutils align-default">
 <colgroup>
-<col width="65%" />
-<col width="35%" />
+<col style="width: 65%" />
+<col style="width: 35%" />
 </colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">Use case</th>
-<th class="head">ComponentsPerElement</th>
+<thead>
+<tr class="row-odd"><th class="head"><p>Use case</p></th>
+<th class="head"><p>ComponentsPerElement</p></th>
 </tr>
 </thead>
-<tbody valign="top">
-<tr class="row-even"><td>Bias</td>
-<td>1</td>
+<tbody>
+<tr class="row-even"><td><p>Bias</p></td>
+<td><p>1</p></td>
 </tr>
-<tr class="row-odd"><td>PReLU</td>
-<td>1</td>
+<tr class="row-odd"><td><p>PReLU</p></td>
+<td><p>1</p></td>
 </tr>
-<tr class="row-even"><td>BatchNormalization</td>
-<td>2</td>
+<tr class="row-even"><td><p>BatchNormalization</p></td>
+<td><p>2</p></td>
 </tr>
-<tr class="row-odd"><td>Element-wise (Only ALU or MUL enabled)</td>
-<td>1</td>
+<tr class="row-odd"><td><p>Element-wise (Only ALU or MUL enabled)</p></td>
+<td><p>1</p></td>
 </tr>
-<tr class="row-even"><td>Element-wise (Both ALU/MUL are enabled)</td>
-<td>2</td>
+<tr class="row-even"><td><p>Element-wise (Both ALU/MUL are enabled)</p></td>
+<td><p>2</p></td>
 </tr>
 </tbody>
 </table>
 <p>BytesPerComponent is decided by precision (or DATA_SIZE register)</p>
-<table border="1" class="docutils">
+<table class="docutils align-default">
 <colgroup>
-<col width="37%" />
-<col width="63%" />
+<col style="width: 37%" />
+<col style="width: 63%" />
 </colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">DATA_SIZE</th>
-<th class="head">BytesPerComponent</th>
+<thead>
+<tr class="row-odd"><th class="head"><p>DATA_SIZE</p></th>
+<th class="head"><p>BytesPerComponent</p></th>
 </tr>
 </thead>
-<tbody valign="top">
-<tr class="row-even"><td>ONE_BYTE</td>
-<td>1</td>
+<tbody>
+<tr class="row-even"><td><p>ONE_BYTE</p></td>
+<td><p>1</p></td>
 </tr>
-<tr class="row-odd"><td>TWO_BYTE</td>
-<td>2</td>
+<tr class="row-odd"><td><p>TWO_BYTE</p></td>
+<td><p>2</p></td>
 </tr>
 </tbody>
 </table>
@@ -1337,124 +1336,124 @@ for:</p>
 <div class="section" id="alignment-of-start-address-and-stride">
 <h2>Alignment of Start Address and Stride<a class="headerlink" href="#alignment-of-start-address-and-stride" title="Permalink to this headline">¶</a></h2>
 <p>Here is the conclusion of requirements of alignment:</p>
-<table border="1" class="docutils" id="tab-requirements-of-alignment">
+<table class="docutils align-default" id="tab-requirements-of-alignment">
 <caption><span class="caption-number">Table 35 </span><span class="caption-text">Requirements of alignment</span><a class="headerlink" href="#tab-requirements-of-alignment" title="Permalink to this table">¶</a></caption>
 <colgroup>
-<col width="17%" />
-<col width="17%" />
-<col width="17%" />
-<col width="17%" />
-<col width="17%" />
-<col width="17%" />
+<col style="width: 17%" />
+<col style="width: 17%" />
+<col style="width: 17%" />
+<col style="width: 17%" />
+<col style="width: 17%" />
+<col style="width: 17%" />
 </colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">Data
-format</th>
-<th class="head">Alignmen
+<thead>
+<tr class="row-odd"><th class="head"><p>Data
+format</p></th>
+<th class="head"><p>Alignmen
 t
 of start
-address</th>
-<th class="head">Alignmen
+address</p></th>
+<th class="head"><p>Alignmen
 t
 of line
-stride</th>
-<th class="head">Alignmen
+stride</p></th>
+<th class="head"><p>Alignmen
 t
 of
 surface
-stride</th>
-<th class="head">Alignmen
+stride</p></th>
+<th class="head"><p>Alignmen
 t
 of
 planar/
 cube
-stride</th>
-<th class="head">Alignmen
+stride</p></th>
+<th class="head"><p>Alignmen
 t
 of data
-size</th>
+size</p></th>
 </tr>
 </thead>
-<tbody valign="top">
-<tr class="row-even"><td>Feature
+<tbody>
+<tr class="row-even"><td><p>Feature
 data
-cube</td>
-<td>32 bytes</td>
-<td>32 bytes</td>
-<td>32 bytes</td>
-<td>32 bytes</td>
-<td>NA</td>
+cube</p></td>
+<td><p>32 bytes</p></td>
+<td><p>32 bytes</p></td>
+<td><p>32 bytes</p></td>
+<td><p>32 bytes</p></td>
+<td><p>NA</p></td>
 </tr>
-<tr class="row-odd"><td>uncompre
+<tr class="row-odd"><td><p>uncompre
 ssed/
 compress
 ed
-weight</td>
-<td>256
-bytes</td>
-<td>NA</td>
-<td>NA</td>
-<td>NA</td>
-<td>128
-bytes</td>
+weight</p></td>
+<td><p>256
+bytes</p></td>
+<td><p>NA</p></td>
+<td><p>NA</p></td>
+<td><p>NA</p></td>
+<td><p>128
+bytes</p></td>
 </tr>
-<tr class="row-even"><td>WMB</td>
-<td>256
-bytes</td>
-<td>NA</td>
-<td>NA</td>
-<td>NA</td>
-<td>128
-bytes</td>
+<tr class="row-even"><td><p>WMB</p></td>
+<td><p>256
+bytes</p></td>
+<td><p>NA</p></td>
+<td><p>NA</p></td>
+<td><p>NA</p></td>
+<td><p>128
+bytes</p></td>
 </tr>
-<tr class="row-odd"><td>WGS</td>
-<td>256
-bytes</td>
-<td>NA</td>
-<td>NA</td>
-<td>NA</td>
-<td>128
-bytes</td>
+<tr class="row-odd"><td><p>WGS</p></td>
+<td><p>256
+bytes</p></td>
+<td><p>NA</p></td>
+<td><p>NA</p></td>
+<td><p>NA</p></td>
+<td><p>128
+bytes</p></td>
 </tr>
-<tr class="row-even"><td>Pitch
+<tr class="row-even"><td><p>Pitch
 linear
-pixel</td>
-<td>32 bytes</td>
-<td>32 bytes</td>
-<td>&#160;</td>
-<td>NA</td>
-<td>NA</td>
+pixel</p></td>
+<td><p>32 bytes</p></td>
+<td><p>32 bytes</p></td>
+<td></td>
+<td><p>NA</p></td>
+<td><p>NA</p></td>
 </tr>
-<tr class="row-odd"><td>Bias</td>
-<td>32 bytes</td>
-<td>32 bytes</td>
-<td>32 bytes</td>
-<td>NA</td>
-<td>NA</td>
+<tr class="row-odd"><td><p>Bias</p></td>
+<td><p>32 bytes</p></td>
+<td><p>32 bytes</p></td>
+<td><p>32 bytes</p></td>
+<td><p>NA</p></td>
+<td><p>NA</p></td>
 </tr>
-<tr class="row-even"><td>PReLU</td>
-<td>32 bytes</td>
-<td>N/A</td>
-<td>N/A</td>
-<td>NA</td>
-<td>NA</td>
+<tr class="row-even"><td><p>PReLU</p></td>
+<td><p>32 bytes</p></td>
+<td><p>N/A</p></td>
+<td><p>N/A</p></td>
+<td><p>NA</p></td>
+<td><p>NA</p></td>
 </tr>
-<tr class="row-odd"><td>Batch
+<tr class="row-odd"><td><p>Batch
 Normaliz
-ation</td>
-<td>32 bytes</td>
-<td>NA</td>
-<td>NA</td>
-<td>NA</td>
-<td>NA</td>
+ation</p></td>
+<td><p>32 bytes</p></td>
+<td><p>NA</p></td>
+<td><p>NA</p></td>
+<td><p>NA</p></td>
+<td><p>NA</p></td>
 </tr>
-<tr class="row-even"><td>Element-
-wise</td>
-<td>32 bytes</td>
-<td>32 bytes</td>
-<td>NA</td>
-<td>NA</td>
-<td>32bytes</td>
+<tr class="row-even"><td><p>Element-
+wise</p></td>
+<td><p>32 bytes</p></td>
+<td><p>32 bytes</p></td>
+<td><p>NA</p></td>
+<td><p>NA</p></td>
+<td><p>32bytes</p></td>
 </tr>
 </tbody>
 </table>
@@ -1511,13 +1510,11 @@ wise</td>
     </ul>
    </div>
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" />
+      <input type="text" name="q" aria-labelledby="searchlabel" />
       <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
@@ -1553,7 +1550,7 @@ wise</td>
 href="../copyright.html">Copyright</a> 2018, NVIDIA Corporation.
 <a href="http://www.nvidia.com/object/legal_info.html">Legal Information.</a>
 <a href="http://www.nvidia.com/object/privacy_policy.html">Privacy Policy.</a>
-Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.1.
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.2.0.
 </div>
 </div>
 </div>

@@ -1,11 +1,9 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
     <title>Precision Preservation &#8212; NVDLA Documentation</title>
     <link rel="stylesheet" href="../../../_static/nvdla.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
@@ -14,7 +12,8 @@
     <script type="text/javascript" src="../../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../../_static/doctools.js"></script>
-    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../../../_static/language_data.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="search" title="Search" href="../../../search.html" />
     <link rel="next" title="LUT programming" href="lut-programming.html" />
     <link rel="prev" title="Integrator’s Manual" href="../integration_guide.html" />
@@ -61,12 +60,12 @@ performance/area.  At the same time, NVDLA adopts technologies to
 keep the precision loss under control.  Below, we give a diagram with an overview of NVDLA’s
 precision-preservation architecture.</p>
 <div class="figure align-center" id="id3">
-<span id="fig-image53-nvdla-precision"></span><img alt="../../../_images/ias_image53_nvdla_precision.svg" src="../../../_images/ias_image53_nvdla_precision.svg" /><p class="caption"><span class="caption-number">Fig. 32 </span><span class="caption-text">NVDLA precision-preservation architecture</span></p>
+<span id="fig-image53-nvdla-precision"></span><img alt="../../../_images/ias_image53_nvdla_precision.svg" src="../../../_images/ias_image53_nvdla_precision.svg" /><p class="caption"><span class="caption-number">Fig. 32 </span><span class="caption-text">NVDLA precision-preservation architecture</span><a class="headerlink" href="#id3" title="Permalink to this image">¶</a></p>
 </div>
 <p>In total, there are four types of approaches to precision control in the NVDLA
 pipeline:</p>
 <ul>
-<li><p class="first">Convertor:</p>
+<li><p>Convertor:</p>
 <p>The formula for a convertor in INT8 and INT16 is: <span class="math notranslate nohighlight">\(y = saturation\_round{(x - offset_{int}) * scaling_{int} &gt;&gt; shifter_{uint}}\)</span></p>
 <p><cite>offset</cite>, <cite>scaling</cite>, and <cite>shifter</cite> are programmable registers to allow
 software to control the output dynamic range. Saturation is dependent on the number of output bits.</p>
@@ -81,7 +80,7 @@ symmetric to 0, or dynamic range is not 2<sup>N</sup>; NVDLA uses it
 to convert internal precision (high) to external (low, typically
 INT8/INT16/FP16).</p>
 </li>
-<li><p class="first">Truncate:</p>
+<li><p>Truncate:</p>
 <p>Truncation is enabled for INT8/INT16 only.  The formula for truncation is: <span class="math notranslate nohighlight">\(y = saturate\_round (x[msb : lsb])\)</span></p>
 <p><cite>lsb</cite> is a programmable register; <cite>msb</cite> is defined as <cite>lsb</cite> + <cite>output_bits</cite>.</p>
 <p>Similarly to the convertor, the rounding method used in truncation is also “round
@@ -90,12 +89,12 @@ half away from zero”.</p>
 (compared to convertor case); it is the result of a trade-off
 between precision and area.</p>
 </li>
-<li><p class="first">Shifter:</p>
+<li><p>Shifter:</p>
 <p>The shifter exists to make sure that the bias can be added to convolution
 results; it has the formula <span class="math notranslate nohighlight">\(y = saturate ( x &lt;&lt; shifter )\)</span>.</p>
 <p><cite>shifter</cite> is a programmable register. The saturate function depends on the number of output bits.</p>
 </li>
-<li><p class="first">LUT:</p>
+<li><p>LUT:</p>
 <p>Look-up tables are used to deal with non-linear function in networks; these functions include
 sigmoid/tanh activation, or local response normalization as mentioned
 in <a class="reference external" href="http://nvdla.org/hw/format.html">Data Formats</a>.  We use an innovative 2 level hybrid LUT to mimic those
@@ -107,49 +106,46 @@ non-linear functions; for more detail, see <a class="reference internal" href="l
 <p>We know that the output of computations on floating-point data are highly depending on computation order.
 As a result, when comparing the results of tests that are computed in FP16 space, we should allow some certain threshold of error when
 comparing NVDLA’s output against reference.  Below is a summary of the thresholds that are applied for each module.</p>
-<table border="1" class="docutils">
+<table class="docutils align-default">
 <colgroup>
-<col width="14%" />
-<col width="86%" />
+<col style="width: 14%" />
+<col style="width: 86%" />
 </colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">Sub-module</th>
-<th class="head">Threshold</th>
+<thead>
+<tr class="row-odd"><th class="head"><p>Sub-module</p></th>
+<th class="head"><p>Threshold</p></th>
 </tr>
 </thead>
-<tbody valign="top">
-<tr class="row-even"><td>CC DC</td>
-<td><span class="math notranslate nohighlight">\(fabs(a-b) \leq 2^{max\_exp-20} * R * S * C * 2 * scale + 2^{exp(a)-10}\)</span></td>
+<tbody>
+<tr class="row-even"><td><p>CC DC</p></td>
+<td><p><span class="math notranslate nohighlight">\(fabs(a-b) \leq 2^{max\_exp-20} * R * S * C * 2 * scale + 2^{exp(a)-10}\)</span></p></td>
 </tr>
-<tr class="row-odd"><td>CC Winograd</td>
-<td><span class="math notranslate nohighlight">\(fabs(a-b) \leq 2^{max\_exp-20} * 18 * C * 2 * scale + 2^{exp(a)-10}\)</span></td>
+<tr class="row-odd"><td><p>CC Winograd</p></td>
+<td><p><span class="math notranslate nohighlight">\(fabs(a-b) \leq 2^{max\_exp-20} * 18 * C * 2 * scale + 2^{exp(a)-10}\)</span></p></td>
 </tr>
-<tr class="row-even"><td>SDP</td>
-<td>Bit-by-bit identical</td>
+<tr class="row-even"><td><p>SDP</p></td>
+<td><p>Bit-by-bit identical</p></td>
 </tr>
-<tr class="row-odd"><td>CDP</td>
-<td><span class="math notranslate nohighlight">\((fabs(a-b) \leq 0.0001) \&amp;\&amp; (\frac{fabs(a-b)}{max\_value} \leq 0.001)\)</span></td>
+<tr class="row-odd"><td><p>CDP</p></td>
+<td><p><span class="math notranslate nohighlight">\((fabs(a-b) \leq 0.0001) \&amp;\&amp; (\frac{fabs(a-b)}{max\_value} \leq 0.001)\)</span></p></td>
 </tr>
-<tr class="row-even"><td>PDP</td>
-<td><span class="math notranslate nohighlight">\((fabs(a-b) \leq 0.0001) \&amp;\&amp; (\frac{fabs(a-b)}{max\_value} \leq 0.001)\)</span></td>
+<tr class="row-even"><td><p>PDP</p></td>
+<td><p><span class="math notranslate nohighlight">\((fabs(a-b) \leq 0.0001) \&amp;\&amp; (\frac{fabs(a-b)}{max\_value} \leq 0.001)\)</span></p></td>
 </tr>
 </tbody>
 </table>
 <p>In the above table, note that:</p>
 <ul>
-<li><p class="first"><span class="math notranslate nohighlight">\(exp(a)\)</span> in DC/Winograd is the operation to extract exponential
-field of an input: <span class="math notranslate nohighlight">\(exp(a) = ((a&gt;&gt;10) \&amp; 0x1f) - 15\)</span> .</p>
-</li>
-<li><p class="first"><span class="math notranslate nohighlight">\(max\_exp: in DC/Winograd is the maximum exponential value of :math:\)</span>
+<li><p><span class="math notranslate nohighlight">\(exp(a)\)</span> in DC/Winograd is the operation to extract exponential
+field of an input: <span class="math notranslate nohighlight">\(exp(a) = ((a&gt;&gt;10) \&amp; 0x1f) - 15\)</span> .</p></li>
+<li><p><span class="math notranslate nohighlight">\(max\_exp: in DC/Winograd is the maximum exponential value of :math:\)</span>
 inside a convolution kernel.  As data moves in a sliding window,
 max_exp is different element-by-element:</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}max\_exp=\max_{s=0...S-1\\r=0...R-1\\c=0...C-1}(exp(data_{r,s,c})\&amp;(\sim\ 0x3)+exp(wt_{r,s,c})\&amp;(\sim\ 0x3))\end{split}\]</div>
 </li>
-<li><p class="first"><strong>max_value</strong> in CDP is the maximum value inside one square sum window.</p>
-</li>
-<li><p class="first"><strong>max_value</strong> in PDP is the maximum value inside one pooling window.</p>
-</li>
+<li><p><strong>max_value</strong> in CDP is the maximum value inside one square sum window.</p></li>
+<li><p><strong>max_value</strong> in PDP is the maximum value inside one pooling window.</p></li>
 </ul>
 </div>
 <div class="section" id="convertor-programming">
@@ -159,40 +155,40 @@ max_exp is different element-by-element:</p>
 <p>As mentioned above, for a given convertor, there are 3 parameters:
 <cite>offset</cite>, <cite>scaling</cite> and <cite>shifter</cite>.  Depending on the use cases, those
 parameters have different encodings:</p>
-<table border="1" class="docutils">
+<table class="docutils align-default">
 <colgroup>
-<col width="18%" />
-<col width="16%" />
-<col width="18%" />
-<col width="24%" />
-<col width="24%" />
+<col style="width: 18%" />
+<col style="width: 16%" />
+<col style="width: 18%" />
+<col style="width: 24%" />
+<col style="width: 24%" />
 </colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">Parameter</th>
-<th class="head">INT-&gt;INT</th>
-<th class="head">INT-&gt;FP16</th>
-<th class="head">FP16-&gt;INT</th>
-<th class="head">FP16-&gt;FP16</th>
+<thead>
+<tr class="row-odd"><th class="head"><p>Parameter</p></th>
+<th class="head"><p>INT-&gt;INT</p></th>
+<th class="head"><p>INT-&gt;FP16</p></th>
+<th class="head"><p>FP16-&gt;INT</p></th>
+<th class="head"><p>FP16-&gt;FP16</p></th>
 </tr>
 </thead>
-<tbody valign="top">
-<tr class="row-even"><td>Offset</td>
-<td>INT32</td>
-<td>INT32</td>
-<td>Not supported</td>
-<td>Not supported</td>
+<tbody>
+<tr class="row-even"><td><p>Offset</p></td>
+<td><p>INT32</p></td>
+<td><p>INT32</p></td>
+<td><p>Not supported</p></td>
+<td><p>Not supported</p></td>
 </tr>
-<tr class="row-odd"><td>Scaling</td>
-<td>INT16</td>
-<td>INT16</td>
-<td>Not supported</td>
-<td>Not supported</td>
+<tr class="row-odd"><td><p>Scaling</p></td>
+<td><p>INT16</p></td>
+<td><p>INT16</p></td>
+<td><p>Not supported</p></td>
+<td><p>Not supported</p></td>
 </tr>
-<tr class="row-even"><td>Shifter</td>
-<td>UINT5</td>
-<td>UINT5</td>
-<td>Not supported</td>
-<td>Not supported</td>
+<tr class="row-even"><td><p>Shifter</p></td>
+<td><p>UINT5</p></td>
+<td><p>UINT5</p></td>
+<td><p>Not supported</p></td>
+<td><p>Not supported</p></td>
 </tr>
 </tbody>
 </table>
@@ -202,23 +198,23 @@ parameters have different encodings:</p>
 <p>The following is a list of place where convertors or truncation might be used for a convolution
 layer (please refer to <a class="reference internal" href="#fig-image53-nvdla-precision"><span class="std std-numref">Fig. 32</span></a> about
 where’re the convertors in system):</p>
-<table border="1" class="docutils">
+<table class="docutils align-default">
 <colgroup>
-<col width="25%" />
-<col width="25%" />
-<col width="25%" />
-<col width="25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
 </colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">Convertor</th>
-<th class="head">Functionality</th>
-<th class="head">Limitation</th>
-<th class="head">Owner</th>
+<thead>
+<tr class="row-odd"><th class="head"><p>Convertor</p></th>
+<th class="head"><p>Functionality</p></th>
+<th class="head"><p>Limitation</p></th>
+<th class="head"><p>Owner</p></th>
 </tr>
 </thead>
-<tbody valign="top">
-<tr class="row-even"><td>cc_cvt</td>
-<td><p class="first">For image
+<tbody>
+<tr class="row-even"><td><p>cc_cvt</p></td>
+<td><p>For image
 input, this
 convertor
 responsible for
@@ -226,73 +222,73 @@ mean
 subtraction and
 8 bit
 conversion;</p>
-<p class="last">For feature
+<p>For feature
 input, this
 convertor won’t
 be used</p>
 </td>
-<td><p class="first">INT8/INT16 only</p>
-<p class="last">For FP16,
+<td><p>INT8/INT16 only</p>
+<p>For FP16,
 subtract mean
 data only</p>
 </td>
-<td>HW</td>
+<td><p>HW</p></td>
 </tr>
-<tr class="row-odd"><td>wt_cvt</td>
-<td>Convert weight
+<tr class="row-odd"><td><p>wt_cvt</p></td>
+<td><p>Convert weight
 data to
 INT8/16/FP16
-representable</td>
-<td>Offset is not
-allowed</td>
-<td>SW</td>
+representable</p></td>
+<td><p>Offset is not
+allowed</p></td>
+<td><p>SW</p></td>
 </tr>
-<tr class="row-even"><td>pra_trunc</td>
-<td>Truncate the
+<tr class="row-even"><td><p>pra_trunc</p></td>
+<td><p>Truncate the
 winograd
 pre-transformed
 results to
 INT8/16/FP16
-representable</td>
-<td>Used for
+representable</p></td>
+<td><p>Used for
 winograd mode
 and
 CSC.PROC_PRECIS
 ION=INT8/INT16
-only</td>
-<td>HW</td>
+only</p></td>
+<td><p>HW</p></td>
 </tr>
-<tr class="row-odd"><td>cc_out_trunc</td>
-<td>Truncate the
+<tr class="row-odd"><td><p>cc_out_trunc</p></td>
+<td><p>Truncate the
 data to
 INT32/FP32
 before sending
-to SDP</td>
-<td>CACC.PROC_PRECI
+to SDP</p></td>
+<td><p>CACC.PROC_PRECI
 SION=INT8/INT16
-only</td>
-<td>HW</td>
+only</p></td>
+<td><p>HW</p></td>
 </tr>
-<tr class="row-even"><td>bs_cvt</td>
-<td>Convert bias
+<tr class="row-even"><td><p>bs_cvt</p></td>
+<td><p>Convert bias
 data to
 INT8/16/FP16
-representable</td>
-<td>N/A</td>
-<td>SW</td>
+representable</p></td>
+<td><p>N/A</p></td>
+<td><p>SW</p></td>
 </tr>
-<tr class="row-odd"><td>bs_shifter</td>
-<td>Shifter the
+<tr class="row-odd"><td><p>bs_shifter</p></td>
+<td><p>Shifter the
 input bias to
 make it addable
 with
 convolution
 pipeline
-results</td>
-<td>SDP.PROC_PRECIS
+results</p></td>
+<td><p>SDP.PROC_PRECIS
 ION=INT8/INT16
-only</td>
-<td>HW</td>
+only</p></td>
+<td><p>HW</p></td>
 </tr>
 </tbody>
 </table>
@@ -304,7 +300,7 @@ SF_{bs}*2^{bs\_trunc}=\frac{SF_{in}*SF_{wt}}{2^{cc\_out\_trunc}},&amp;\text{conv
 <p>In case of input data encoded with offset (<em>x’=(x-offset)*SF</em>), this
 offset should be carefully considered for cases below:</p>
 <ul class="simple">
-<li>Padding:</li>
+<li><p>Padding:</p></li>
 </ul>
 <p>Convolution supports zero-padding, however, if the input encoded with
 “offset”, it means x=0 becomes x’=(0-offset)*SF=-offset*SF thus
@@ -314,7 +310,7 @@ Convolution has a register named as:</p>
 pipeline. However, for FP16, we assume there’s no offset thus
 PADDING_VALUE should be set as 0;</p>
 <ul class="simple">
-<li>Activation:</li>
+<li><p>Activation:</p></li>
 </ul>
 <p>As discussed above, activation such as ReLU is a piece wise
 function:</p>
@@ -355,34 +351,34 @@ X1/X2/Y in SDP.</p>
 <p>SDP has kinds of use scenarios, table below lists how those use
 scenarios maps to SDP sub-modules (For the meaning of X/Y, please refer
 to <a class="reference internal" href="#fig-image53-nvdla-precision"><span class="std std-numref">Fig. 32</span></a>)</p>
-<table border="1" class="docutils">
+<table class="docutils align-default">
 <colgroup>
-<col width="72%" />
-<col width="28%" />
+<col style="width: 72%" />
+<col style="width: 28%" />
 </colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">Use scenario</th>
-<th class="head">Sub-module</th>
+<thead>
+<tr class="row-odd"><th class="head"><p>Use scenario</p></th>
+<th class="head"><p>Sub-module</p></th>
 </tr>
 </thead>
-<tbody valign="top">
-<tr class="row-even"><td>Bias addition</td>
-<td>X or Y</td>
+<tbody>
+<tr class="row-even"><td><p>Bias addition</p></td>
+<td><p>X or Y</p></td>
 </tr>
-<tr class="row-odd"><td>Batch Normalization</td>
-<td>X or Y</td>
+<tr class="row-odd"><td><p>Batch Normalization</p></td>
+<td><p>X or Y</p></td>
 </tr>
-<tr class="row-even"><td>Element-wise</td>
-<td>X or Y</td>
+<tr class="row-even"><td><p>Element-wise</p></td>
+<td><p>X or Y</p></td>
 </tr>
-<tr class="row-odd"><td>Activation(ReLU/PReLU)</td>
-<td>X or Y</td>
+<tr class="row-odd"><td><p>Activation(ReLU/PReLU)</p></td>
+<td><p>X or Y</p></td>
 </tr>
-<tr class="row-even"><td>Activation(Sigmoid/TanH, etc)</td>
-<td>Y</td>
+<tr class="row-even"><td><p>Activation(Sigmoid/TanH, etc)</p></td>
+<td><p>Y</p></td>
 </tr>
-<tr class="row-odd"><td>Precision conversion</td>
-<td>X or Y</td>
+<tr class="row-odd"><td><p>Precision conversion</p></td>
+<td><p>X or Y</p></td>
 </tr>
 </tbody>
 </table>
@@ -395,57 +391,57 @@ to <a class="reference internal" href="#fig-image53-nvdla-precision"><span class
 <h4>Batch normalization<a class="headerlink" href="#batch-normalization" title="Permalink to this headline">¶</a></h4>
 <p>Here’s a list of convertor/shifters needed to realize batch
 normalization function in SDP:</p>
-<table border="1" class="docutils">
+<table class="docutils align-default">
 <colgroup>
-<col width="25%" />
-<col width="25%" />
-<col width="25%" />
-<col width="25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
 </colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">Convertor</th>
-<th class="head">Functionality</th>
-<th class="head">Limitation</th>
-<th class="head">Owner</th>
+<thead>
+<tr class="row-odd"><th class="head"><p>Convertor</p></th>
+<th class="head"><p>Functionality</p></th>
+<th class="head"><p>Limitation</p></th>
+<th class="head"><p>Owner</p></th>
 </tr>
 </thead>
-<tbody valign="top">
-<tr class="row-even"><td>bn_m_cvt</td>
-<td>Convert the
+<tbody>
+<tr class="row-even"><td><p>bn_m_cvt</p></td>
+<td><p>Convert the
 offline trained
 batch
 normalization
 mean data to
 INT8/16/FP16
-representable</td>
-<td>N/A</td>
-<td>SW</td>
+representable</p></td>
+<td><p>N/A</p></td>
+<td><p>SW</p></td>
 </tr>
-<tr class="row-odd"><td>bn_m_shifter</td>
-<td>Shift the
+<tr class="row-odd"><td><p>bn_m_shifter</p></td>
+<td><p>Shift the
 bn_m_cvt
 converted
 values to have
 the same
 scaling factor
-as input</td>
-<td>For
+as input</p></td>
+<td><p>For
 SDP.PROC_PRECIS
 ION=INT8/INT16
-only</td>
-<td>HW</td>
+only</p></td>
+<td><p>HW</p></td>
 </tr>
-<tr class="row-even"><td>bn_v_cvt</td>
-<td>Convert the
+<tr class="row-even"><td><p>bn_v_cvt</p></td>
+<td><p>Convert the
 offline trained
 batch
 normalization
 1/variance to
 INT8/16/FP16
-representable</td>
-<td>Offset is not
-allowed</td>
-<td>SW</td>
+representable</p></td>
+<td><p>Offset is not
+allowed</p></td>
+<td><p>SW</p></td>
 </tr>
 </tbody>
 </table>
@@ -460,23 +456,23 @@ satisfied:</p>
 <h4>Element wise<a class="headerlink" href="#element-wise" title="Permalink to this headline">¶</a></h4>
 <p>Here’s a list of convertor/shifters needed to related to element wise
 operation in SDP:</p>
-<table border="1" class="docutils">
+<table class="docutils align-default">
 <colgroup>
-<col width="25%" />
-<col width="25%" />
-<col width="25%" />
-<col width="25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
 </colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">Convertor</th>
-<th class="head">Functionality</th>
-<th class="head">Limitation</th>
-<th class="head">Owner</th>
+<thead>
+<tr class="row-odd"><th class="head"><p>Convertor</p></th>
+<th class="head"><p>Functionality</p></th>
+<th class="head"><p>Limitation</p></th>
+<th class="head"><p>Owner</p></th>
 </tr>
 </thead>
-<tbody valign="top">
-<tr class="row-even"><td>ew_cvt</td>
-<td>The convertor
+<tbody>
+<tr class="row-even"><td><p>ew_cvt</p></td>
+<td><p>The convertor
 applied on
 element-wise
 input, as
@@ -487,15 +483,15 @@ element-wise
 hardware layer
 are the output
 of upstream
-hardware layers</td>
-<td>For
+hardware layers</p></td>
+<td><p>For
 SDP.PROC_PRECIS
 ION=INT8/INT16
-only</td>
-<td>HW</td>
+only</p></td>
+<td><p>HW</p></td>
 </tr>
-<tr class="row-odd"><td>ew_inv_cvt</td>
-<td>Align the
+<tr class="row-odd"><td><p>ew_inv_cvt</p></td>
+<td><p>Align the
 offset/scaling
 factors to meet
 the requirement
@@ -507,12 +503,12 @@ requirement
 already
 satisfied, this
 convertor can
-be bypassed.</td>
-<td>For
+be bypassed.</p></td>
+<td><p>For
 SDP.PROC_PRECIS
 ION=INT8/INT16
-only</td>
-<td>HW</td>
+only</p></td>
+<td><p>HW</p></td>
 </tr>
 </tbody>
 </table>
@@ -524,7 +520,7 @@ input is x, the output from ew_inv_cvt is:</p>
 parameter should be carefully configured based on different element-wise
 operation (Assume convertor parameter from BN module is: <span class="math notranslate nohighlight">\(O_{in}, SF_{in}\)</span>):</p>
 <ul>
-<li><p class="first">MAX</p>
+<li><p>MAX</p>
 <p>The offset/scaling applied on input stream and E-RDMA stream should
 be the same, which means:</p>
 </li>
@@ -534,14 +530,14 @@ be the same, which means:</p>
 <div class="math notranslate nohighlight">
 \[SF_{in}==SF_{ew\_cvt}*SF_{ew\_inv\_cvt}\]</div>
 <ul>
-<li><p class="first">SUM</p>
+<li><p>SUM</p>
 <p>The scaling factor applied on both stream should be the same:</p>
 </li>
 </ul>
 <div class="math notranslate nohighlight">
 \[SF_{in} == SF_{ew\_cvt} * SF_{ew\_inv\_cvt}\]</div>
 <ul>
-<li><p class="first">PROD</p>
+<li><p>PROD</p>
 <p>The offset applied on E-RDMA stream should be 0:</p>
 </li>
 </ul>
@@ -585,23 +581,23 @@ data range be rounding/saturated.</p>
 <div class="section" id="cdp-convertors">
 <h3>CDP convertors<a class="headerlink" href="#cdp-convertors" title="Permalink to this headline">¶</a></h3>
 <p>CDP has convertors listed below:</p>
-<table border="1" class="docutils">
+<table class="docutils align-default">
 <colgroup>
-<col width="25%" />
-<col width="25%" />
-<col width="26%" />
-<col width="25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 26%" />
+<col style="width: 25%" />
 </colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">Convertor</th>
-<th class="head">Functionality</th>
-<th class="head">Limitation</th>
-<th class="head">Owner</th>
+<thead>
+<tr class="row-odd"><th class="head"><p>Convertor</p></th>
+<th class="head"><p>Functionality</p></th>
+<th class="head"><p>Limitation</p></th>
+<th class="head"><p>Owner</p></th>
 </tr>
 </thead>
-<tbody valign="top">
-<tr class="row-even"><td>cdp_in_cvt</td>
-<td>Convert the
+<tbody>
+<tr class="row-even"><td><p>cdp_in_cvt</p></td>
+<td><p>Convert the
 input data
 compatible with
 LUT
@@ -610,15 +606,15 @@ which means,
 the output of
 this convertor
 should be:
-x*2<sup>N</sup></td>
-<td>For
+x*2<sup>N</sup></p></td>
+<td><p>For
 CDP.INPUT_DATA_T
 YPE=INT8/INT16
-only</td>
-<td>HW</td>
+only</p></td>
+<td><p>HW</p></td>
 </tr>
-<tr class="row-odd"><td>cdp_lut_cvt</td>
-<td>Each LUT entry
+<tr class="row-odd"><td><p>cdp_lut_cvt</p></td>
+<td><p>Each LUT entry
 has 16bits (can
 be interpreted
 as INT16 or
@@ -630,22 +626,22 @@ converted to
 specified
 format to keep
 a high
-precision</td>
-<td>No offset
-allowed</td>
-<td>SW</td>
+precision</p></td>
+<td><p>No offset
+allowed</p></td>
+<td><p>SW</p></td>
 </tr>
-<tr class="row-even"><td>cdp_out_cvt</td>
-<td>Convert the
+<tr class="row-even"><td><p>cdp_out_cvt</p></td>
+<td><p>Convert the
 results to
 INT8/16/FP16
 before output
-to external</td>
-<td>For
+to external</p></td>
+<td><p>For
 CDP.INPUT_DATA_T
 YPE=INT8/INT16
-only</td>
-<td>HW</td>
+only</p></td>
+<td><p>HW</p></td>
 </tr>
 </tbody>
 </table>
@@ -682,27 +678,27 @@ during convertor. The overflow is defined as:</p>
 <div class="math notranslate nohighlight">
 \[FP16: fabs(x) &gt;= 65504\]</div>
 <p>Here’s a list of saturation counters in NVDLA pipeline:</p>
-<table border="1" class="docutils">
+<table class="docutils align-default">
 <colgroup>
-<col width="42%" />
-<col width="58%" />
+<col style="width: 42%" />
+<col style="width: 58%" />
 </colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">Register</th>
-<th class="head">Valid condition</th>
+<thead>
+<tr class="row-odd"><th class="head"><p>Register</p></th>
+<th class="head"><p>Valid condition</p></th>
 </tr>
 </thead>
-<tbody valign="top">
-<tr class="row-even"><td>CACC. D_OUT_SATURATION</td>
-<td>Always enabled</td>
+<tbody>
+<tr class="row-even"><td><p>CACC. D_OUT_SATURATION</p></td>
+<td><p>Always enabled</p></td>
 </tr>
-<tr class="row-odd"><td>SDP.D_PERF_OUT_SATURATION</td>
-<td><p class="first">PERF_SAT_EN=YES &amp;&amp;</p>
-<p class="last">PROC_PRECISION== OUT_PRECISION==FP16</p>
+<tr class="row-odd"><td><p>SDP.D_PERF_OUT_SATURATION</p></td>
+<td><p>PERF_SAT_EN=YES &amp;&amp;</p>
+<p>PROC_PRECISION== OUT_PRECISION==FP16</p>
 </td>
 </tr>
-<tr class="row-even"><td>CDP.D_OUT_SATURATION</td>
-<td>Always enabled</td>
+<tr class="row-even"><td><p>CDP.D_OUT_SATURATION</p></td>
+<td><p>Always enabled</p></td>
 </tr>
 </tbody>
 </table>
@@ -755,13 +751,11 @@ during convertor. The overflow is defined as:</p>
     </ul>
    </div>
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="../../../search.html" method="get">
-      <input type="text" name="q" />
+      <input type="text" name="q" aria-labelledby="searchlabel" />
       <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
@@ -797,7 +791,7 @@ during convertor. The overflow is defined as:</p>
 href="../../../copyright.html">Copyright</a> 2018, NVIDIA Corporation.
 <a href="http://www.nvidia.com/object/legal_info.html">Legal Information.</a>
 <a href="http://www.nvidia.com/object/privacy_policy.html">Privacy Policy.</a>
-Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.1.
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.2.0.
 </div>
 </div>
 </div>

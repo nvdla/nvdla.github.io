@@ -1,11 +1,9 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
     <title>Virtual Platform &#8212; NVDLA Documentation</title>
     <link rel="stylesheet" href="_static/nvdla.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -14,7 +12,8 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Virtual Platform On AWS FPGA" href="vp_fpga.html" />
     <link rel="prev" title="Test applications" href="sw/test_application.html" />
@@ -57,7 +56,7 @@
 <span id="id1"></span><h2>1. Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
 <p>The NVDLA virtual platform provides a register-accurate system on which software can be quickly developed and debugged. The virtual platform is based on GreenSocs <a class="reference external" href="https://git.greensocs.com/qemu/qbox">QBOX</a>, a solution for co-simulation with QEMU and SystemC. <a class="reference internal" href="#fig-vp-top"><span class="std std-numref">Fig. 89</span></a> below shows the top level diagram of the NVDLA virtual simulator. A QEMU emulator of ARMv8 ‘virt’ SoC board is included to provide high performance CPU emulation and generic devices. The emulator is wrapped inside a standard SystemC module with a set of TLM-2.0 interfaces to interact with other SystemC modules.</p>
 <div class="figure align-center" id="id8">
-<span id="fig-vp-top"></span><img alt="NVDLA Virtual Platform Top Level Diagram." src="_images/nvdla-vp-top.svg" /><p class="caption"><span class="caption-number">Fig. 89 </span><span class="caption-text">NVDLA Virtual Platform.</span></p>
+<span id="fig-vp-top"></span><img alt="NVDLA Virtual Platform Top Level Diagram." src="_images/nvdla-vp-top.svg" /><p class="caption"><span class="caption-number">Fig. 89 </span><span class="caption-text">NVDLA Virtual Platform.</span><a class="headerlink" href="#id8" title="Permalink to this image">¶</a></p>
 </div>
 </div>
 <div class="section" id="using-the-virtual-simulator">
@@ -67,23 +66,23 @@
 <span id="id2"></span><h3>2.1 System Requirements<a class="headerlink" href="#system-requirements" title="Permalink to this headline">¶</a></h3>
 <p>It is recommended to build the virtual simulator in a system that meets the following requirements:</p>
 <ul class="simple">
-<li>OS: Ubuntu 14.04</li>
-<li>g++ 4.8.4</li>
-<li>git &gt; 1.8.2</li>
-<li>systemc 2.3.0</li>
-<li>cmake &gt; 2.8</li>
-<li>libboost &gt; 1.34</li>
-<li>python dev</li>
-<li>glib2 dev</li>
-<li>pixman dev</li>
-<li>lua 5.2 dev</li>
-<li>swig</li>
-<li>libcap dev</li>
-<li>libattr1 dev</li>
+<li><p>OS: Ubuntu 14.04</p></li>
+<li><p>g++ 4.8.4</p></li>
+<li><p>git &gt; 1.8.2</p></li>
+<li><p>systemc 2.3.0</p></li>
+<li><p>cmake &gt; 2.8</p></li>
+<li><p>libboost &gt; 1.34</p></li>
+<li><p>python dev</p></li>
+<li><p>glib2 dev</p></li>
+<li><p>pixman dev</p></li>
+<li><p>lua 5.2 dev</p></li>
+<li><p>swig</p></li>
+<li><p>libcap dev</p></li>
+<li><p>libattr1 dev</p></li>
 </ul>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">virtual simulator also can run with CentOS 7, details refer to <a class="reference internal" href="vp_fpga.html"><span class="doc">Virtual Platform On AWS FPGA</span></a></p>
+<p class="admonition-title">Note</p>
+<p>virtual simulator also can run with CentOS 7, details refer to <a class="reference internal" href="vp_fpga.html"><span class="doc">Virtual Platform On AWS FPGA</span></a></p>
 </div>
 <p>Several tools like Java and Perl are also required to build the NVDLA hardware tree. Please refer to <a class="reference internal" href="hw/v1/integration_guide.html#env-setup"><span class="std std-ref">Environment Setup</span></a> for details.</p>
 </div>
@@ -224,8 +223,8 @@
 <h4>2.7.1 Log Output Control<a class="headerlink" href="#log-output-control" title="Permalink to this headline">¶</a></h4>
 <p>The log output of SystemC simulator is controled by a configuration string that can be set in two ways:</p>
 <ul class="simple">
-<li>The command line option ‘-s <em>control_string</em>’ or ‘–sc_log <em>control_string</em>’</li>
-<li>The environment variable ‘export SC_LOG=<em>control_string</em>’</li>
+<li><p>The command line option ‘-s <em>control_string</em>’ or ‘–sc_log <em>control_string</em>’</p></li>
+<li><p>The environment variable ‘export SC_LOG=<em>control_string</em>’</p></li>
 </ul>
 <p>If both control strings are set, the simulator will pick the one set by environment variable <em>SC_LOG</em>.</p>
 <p>The format of the control string is:</p>
@@ -357,13 +356,11 @@
     </ul>
    </div>
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" />
+      <input type="text" name="q" aria-labelledby="searchlabel" />
       <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
@@ -398,7 +395,7 @@
 href="copyright.html">Copyright</a> 2018, NVIDIA Corporation.
 <a href="http://www.nvidia.com/object/legal_info.html">Legal Information.</a>
 <a href="http://www.nvidia.com/object/privacy_policy.html">Privacy Policy.</a>
-Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.1.
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.2.0.
 </div>
 </div>
 </div>

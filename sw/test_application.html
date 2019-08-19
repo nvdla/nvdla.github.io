@@ -1,11 +1,9 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
     <title>Test applications &#8212; NVDLA Documentation</title>
     <link rel="stylesheet" href="../_static/nvdla.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -14,7 +12,8 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Virtual Platform" href="../vp.html" />
     <link rel="prev" title="Runtime environment" href="runtime_environment.html" />
@@ -59,13 +58,12 @@
 <span id="runtime-test-app"></span><h2>Runtime test application<a class="headerlink" href="#runtime-test-application" title="Permalink to this headline">¶</a></h2>
 <p>Runtime test application provides options to run neural network loadable generated using NVDLA compiler. Along with network execution it also provides options for pre and post processing. This application can be launched in server mode too which allows sending test commands and files over network.</p>
 <p>It demonstrates usage of IRuntime interface to execute a network on NVDLA.</p>
-<dl class="docutils">
-<dt>Usage:</dt>
-<dd><p class="first">For sanity tests which has input embedded in it.
+<dl>
+<dt>Usage:</dt><dd><p>For sanity tests which has input embedded in it.
 ./nvdla_runtime –loadable &lt;loadable_file&gt;</p>
 <p>For network tests which need image input
 ./nvdla_runtime –loadable &lt;loadable_file&gt; –image &lt;image_file&gt;</p>
-<p class="last">Run in server mode
+<p>Run in server mode
 ./nvdla_runtime -s</p>
 </dd>
 </dl>
@@ -73,9 +71,9 @@
 <div class="section" id="compiler-test-application">
 <span id="compiler-test-app"></span><h2>Compiler test application<a class="headerlink" href="#compiler-test-application" title="Permalink to this headline">¶</a></h2>
 <p>Compiler test application also called as compiler tool gives option to convert caffe model to NVDLA format. It stores compiled network in loadable which can be loaded by runtime test application for execution.</p>
-<dl class="docutils">
-<dt>Usage:</dt>
-<dd>./nvdla_compiler [-options] –prototxt &lt;prototxt_file&gt; –caffemodel &lt;caffemodel_file&gt; -o &lt;outputpath&gt;</dd>
+<dl class="simple">
+<dt>Usage:</dt><dd><p>./nvdla_compiler [-options] –prototxt &lt;prototxt_file&gt; –caffemodel &lt;caffemodel_file&gt; -o &lt;outputpath&gt;</p>
+</dd>
 </dl>
 </div>
 </div>
@@ -109,13 +107,11 @@
     </ul>
    </div>
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" />
+      <input type="text" name="q" aria-labelledby="searchlabel" />
       <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
@@ -151,7 +147,7 @@
 href="../copyright.html">Copyright</a> 2018, NVIDIA Corporation.
 <a href="http://www.nvidia.com/object/legal_info.html">Legal Information.</a>
 <a href="http://www.nvidia.com/object/privacy_policy.html">Privacy Policy.</a>
-Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.1.
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.2.0.
 </div>
 </div>
 </div>

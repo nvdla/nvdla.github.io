@@ -1,11 +1,9 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
     <title>Integrator’s Manual &#8212; NVDLA Documentation</title>
     <link rel="stylesheet" href="../../_static/nvdla.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -14,7 +12,8 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../../_static/language_data.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="Precision Preservation" href="ias/precision.html" />
     <link rel="prev" title="In-memory data formats" href="../format.html" />
@@ -67,20 +66,20 @@ synthesis scripts.</p>
 <h2>Quick-Start<a class="headerlink" href="#quick-start" title="Permalink to this headline">¶</a></h2>
 <p>After downloading, to understand more about the NVDLA design, you can try out the following:</p>
 <ol class="arabic simple">
-<li>Set up the Linux environment with required tools.  Review <a class="reference internal" href="#env-setup"><span class="std std-ref">Environment Setup</span></a></li>
-<li>Select a configuration and build the hardware tree.  Review <a class="reference internal" href="#tree-build"><span class="std std-ref">Tree Build</span></a></li>
-<li>Run a simulation using the included testbench.  A number of sanity
-tests are included in the repository.  See <a class="reference internal" href="#simulation-testbench"><span class="std std-ref">Reference Simulation Testbench</span></a></li>
-<li>Synthesize the design to review area and timing in your
+<li><p>Set up the Linux environment with required tools.  Review <a class="reference internal" href="#env-setup"><span class="std std-ref">Environment Setup</span></a></p></li>
+<li><p>Select a configuration and build the hardware tree.  Review <a class="reference internal" href="#tree-build"><span class="std std-ref">Tree Build</span></a></p></li>
+<li><p>Run a simulation using the included testbench.  A number of sanity
+tests are included in the repository.  See <a class="reference internal" href="#simulation-testbench"><span class="std std-ref">Reference Simulation Testbench</span></a></p></li>
+<li><p>Synthesize the design to review area and timing in your
 library.  See <a class="reference internal" href="#synthesis"><span class="std std-ref">Synthesis</span></a>.  You will need to map RAM’s
 to your RAM library.  See <a class="reference internal" href="#memories-sram"><span class="std std-ref">Memories (SRAM)</span></a>.  And update timing contraints
-as appropriate for your technology.</li>
-<li>Open up the <a class="reference internal" href="#performance-model"><span class="std std-ref">Performance Model</span></a> spreadsheet to look at
+as appropriate for your technology.</p></li>
+<li><p>Open up the <a class="reference internal" href="#performance-model"><span class="std std-ref">Performance Model</span></a> spreadsheet to look at
 performance with different NVDLA configurations.  Configurable RTL
-is on the <a class="reference internal" href="../../roadmap.html"><span class="doc">Open Source Roadmap</span></a>.</li>
-<li>Integrate the NVDLA RTL into your SoC.  The sanity tests that are run in the stand-alone NVDLA
+is on the <a class="reference internal" href="../../roadmap.html"><span class="doc">Open Source Roadmap</span></a>.</p></li>
+<li><p>Integrate the NVDLA RTL into your SoC.  The sanity tests that are run in the stand-alone NVDLA
 testbench can also be run at the SoC level and used to validate the integration.
-See <a class="reference internal" href="#test-format"><span class="std std-ref">Test Format</span></a>.</li>
+See <a class="reference internal" href="#test-format"><span class="std std-ref">Test Format</span></a>.</p></li>
 </ol>
 </div>
 <div class="section" id="hardware-system-interface">
@@ -106,12 +105,12 @@ to a controlling CPU that NVDLA has completed a task.</p>
 <h3>Interfaces<a class="headerlink" href="#interfaces" title="Permalink to this headline">¶</a></h3>
 <p>NVDLA’s external pins are grouped into the following interfaces:</p>
 <ol class="arabic simple">
-<li>Clock and Reset interface</li>
-<li>System Data interface</li>
-<li>Configure interface</li>
-<li>Interrupt interface</li>
-<li>Power control</li>
-<li>DFT interface</li>
+<li><p>Clock and Reset interface</p></li>
+<li><p>System Data interface</p></li>
+<li><p>Configure interface</p></li>
+<li><p>Interrupt interface</p></li>
+<li><p>Power control</p></li>
+<li><p>DFT interface</p></li>
 </ol>
 <div class="section" id="clock-and-reset-interface">
 <h4>Clock and reset interface<a class="headerlink" href="#clock-and-reset-interface" title="Permalink to this headline">¶</a></h4>
@@ -127,44 +126,44 @@ flops, so only the deassertion edge of the dla_reset_rstn signal is synchronized
 assertion edge is passed through.
 The other reset signal, direct_reset_, is
 useful for ATPG testing since it bypasses the internal synchronization.</p>
-<table border="1" class="colwidths-given docutils" id="id8">
+<table class="colwidths-given docutils align-default" id="id8">
 <caption><span class="caption-number">Table 36 </span><span class="caption-text">Clock and Reset Signals</span><a class="headerlink" href="#id8" title="Permalink to this table">¶</a></caption>
 <colgroup>
-<col width="20%" />
-<col width="40%" />
-<col width="40%" />
+<col style="width: 20%" />
+<col style="width: 40%" />
+<col style="width: 40%" />
 </colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">Signal Name</th>
-<th class="head">Description</th>
-<th class="head">Recommended Connection</th>
+<thead>
+<tr class="row-odd"><th class="head"><p>Signal Name</p></th>
+<th class="head"><p>Description</p></th>
+<th class="head"><p>Recommended Connection</p></th>
 </tr>
 </thead>
-<tbody valign="top">
-<tr class="row-even"><td>dla_core_clk</td>
-<td>Functional clock for NVDLA</td>
-<td>Always ticking clock</td>
+<tbody>
+<tr class="row-even"><td><p>dla_core_clk</p></td>
+<td><p>Functional clock for NVDLA</p></td>
+<td><p>Always ticking clock</p></td>
 </tr>
-<tr class="row-odd"><td>dla_csb_clk</td>
-<td>CSB bus clock for NVDLA configuration, same clock domain as host</td>
-<td>Clock of the configurable interface</td>
+<tr class="row-odd"><td><p>dla_csb_clk</p></td>
+<td><p>CSB bus clock for NVDLA configuration, same clock domain as host</p></td>
+<td><p>Clock of the configurable interface</p></td>
 </tr>
-<tr class="row-even"><td>global_clk_ovr_on</td>
-<td>Can be used to disable all non-inferred clock gates.  Typically not used.</td>
-<td>Connect to a register in system controller which is reset to 0.
-You can also tie to low.</td>
+<tr class="row-even"><td><p>global_clk_ovr_on</p></td>
+<td><p>Can be used to disable all non-inferred clock gates.  Typically not used.</p></td>
+<td><p>Connect to a register in system controller which is reset to 0.
+You can also tie to low.</p></td>
 </tr>
-<tr class="row-odd"><td>tmc2slcg_disable_clock_gating</td>
-<td>Disable clock gating during DFT operations.</td>
-<td>Connect system DFT controller, should be 0 in normal function mode.</td>
+<tr class="row-odd"><td><p>tmc2slcg_disable_clock_gating</p></td>
+<td><p>Disable clock gating during DFT operations.</p></td>
+<td><p>Connect system DFT controller, should be 0 in normal function mode.</p></td>
 </tr>
-<tr class="row-even"><td>direct_reset_</td>
-<td>DFT reset to allow for direct reset controllability during ATPG testing.</td>
-<td>Typically routed to a chip level port.</td>
+<tr class="row-even"><td><p>direct_reset_</p></td>
+<td><p>DFT reset to allow for direct reset controllability during ATPG testing.</p></td>
+<td><p>Typically routed to a chip level port.</p></td>
 </tr>
-<tr class="row-odd"><td>dla_reset_rstn</td>
-<td>Main functional reset for DLA block.</td>
-<td>System reset controller, can be hard-wired control logic or connect to register if SW reset is desired.</td>
+<tr class="row-odd"><td><p>dla_reset_rstn</p></td>
+<td><p>Main functional reset for DLA block.</p></td>
+<td><p>System reset controller, can be hard-wired control logic or connect to register if SW reset is desired.</p></td>
 </tr>
 </tbody>
 </table>
@@ -197,33 +196,33 @@ is independent from any other packet.</p>
 consumption when NVDLA is inactive. Each layout partition has one ram power control bus, allowing
 power to be ramped up/down one or more partitions at a time.  If a user is using RAM cells
 without power controls, those signals can be tied to 0.</p>
-<table border="1" class="colwidths-given docutils" id="id9">
+<table class="colwidths-given docutils align-default" id="id9">
 <caption><span class="caption-number">Table 37 </span><span class="caption-text">Power Control Signals</span><a class="headerlink" href="#id9" title="Permalink to this table">¶</a></caption>
 <colgroup>
-<col width="20%" />
-<col width="40%" />
-<col width="40%" />
+<col style="width: 20%" />
+<col style="width: 40%" />
+<col style="width: 40%" />
 </colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">Signal Name</th>
-<th class="head">Description</th>
-<th class="head">Recommended Connection</th>
+<thead>
+<tr class="row-odd"><th class="head"><p>Signal Name</p></th>
+<th class="head"><p>Description</p></th>
+<th class="head"><p>Recommended Connection</p></th>
 </tr>
 </thead>
-<tbody valign="top">
-<tr class="row-even"><td>nvdla_pwrbus_ram_*_pd[7:0]</td>
-<td>RAM power gate.  These signals are routed to the SLEEP_EN bus on the RAM macro wrappers.
-They can be used for controlling low power modes of the target RAMs.</td>
-<td>SoC power management unit or tie to 0</td>
+<tbody>
+<tr class="row-even"><td><p>nvdla_pwrbus_ram_*_pd[7:0]</p></td>
+<td><p>RAM power gate.  These signals are routed to the SLEEP_EN bus on the RAM macro wrappers.
+They can be used for controlling low power modes of the target RAMs.</p></td>
+<td><p>SoC power management unit or tie to 0</p></td>
 </tr>
-<tr class="row-odd"><td>nvdla_pwrbus_ram_*_pd[8]</td>
-<td>RAM retention control.  This signal is routed to the RET_EN signal on the RAM macro wrappers.
-It can be used for controlling retention control, or any other semi-static RAM configuration bit.</td>
-<td>SoC power management unit or tie to 0</td>
+<tr class="row-odd"><td><p>nvdla_pwrbus_ram_*_pd[8]</p></td>
+<td><p>RAM retention control.  This signal is routed to the RET_EN signal on the RAM macro wrappers.
+It can be used for controlling retention control, or any other semi-static RAM configuration bit.</p></td>
+<td><p>SoC power management unit or tie to 0</p></td>
 </tr>
-<tr class="row-even"><td>nvdla_pwrbus_ram_*_pd[31:9]</td>
-<td>Not used</td>
-<td>Tie to 0</td>
+<tr class="row-even"><td><p>nvdla_pwrbus_ram_*_pd[31:9]</p></td>
+<td><p>Not used</p></td>
+<td><p>Tie to 0</p></td>
 </tr>
 </tbody>
 </table>
@@ -231,24 +230,24 @@ It can be used for controlling retention control, or any other semi-static RAM c
 <div class="section" id="dft">
 <h4>DFT<a class="headerlink" href="#dft" title="Permalink to this headline">¶</a></h4>
 <p>In current release, NVDLA has implemented one signal named test_mode to enable DFT.</p>
-<table border="1" class="colwidths-given docutils" id="id10">
+<table class="colwidths-given docutils align-default" id="id10">
 <caption><span class="caption-number">Table 38 </span><span class="caption-text">DFT Signals</span><a class="headerlink" href="#id10" title="Permalink to this table">¶</a></caption>
 <colgroup>
-<col width="20%" />
-<col width="40%" />
-<col width="40%" />
+<col style="width: 20%" />
+<col style="width: 40%" />
+<col style="width: 40%" />
 </colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">Signal Name</th>
-<th class="head">Description</th>
-<th class="head">Recommended Connection</th>
+<thead>
+<tr class="row-odd"><th class="head"><p>Signal Name</p></th>
+<th class="head"><p>Description</p></th>
+<th class="head"><p>Recommended Connection</p></th>
 </tr>
 </thead>
-<tbody valign="top">
-<tr class="row-even"><td>test_mode</td>
-<td>Enable test mode.  The only use of this signal currently is to select between
-the functional and DFT reset signals.</td>
-<td>Should connect to the system DFT controller as needed.  Otherwise, tie to 0.</td>
+<tbody>
+<tr class="row-even"><td><p>test_mode</p></td>
+<td><p>Enable test mode.  The only use of this signal currently is to select between
+the functional and DFT reset signals.</p></td>
+<td><p>Should connect to the system DFT controller as needed.  Otherwise, tie to 0.</p></td>
 </tr>
 </tbody>
 </table>
@@ -262,25 +261,24 @@ can be generated from a single source.  A hardware tree build is needed to gener
 Verilog RTL code for a given configuration.  The tools required for this build are outlined
 below.  The versions listed are used for testing.</p>
 <ul class="simple">
-<li>Java - jdk1.7</li>
-<li><dl class="first docutils">
-<dt>Perl - perl-5.10</dt>
-<dd><ul class="first last">
-<li>XML::Simple</li>
-<li>Capture::Tiny</li>
+<li><p>Java - jdk1.7</p></li>
+<li><dl class="simple">
+<dt>Perl - perl-5.10</dt><dd><ul>
+<li><p>XML::Simple</p></li>
+<li><p>Capture::Tiny</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li>CPP - gcc-4.9.3</li>
-<li>Python - python2.6</li>
-<li>SystemC - systemc-2.3.0</li>
-<li>(for Verilator builds) Verilator - Verilator 3.912</li>
-<li>(for Verilator builds) clang - clang 3.4</li>
+<li><p>CPP - gcc-4.9.3</p></li>
+<li><p>Python - python2.6</p></li>
+<li><p>SystemC - systemc-2.3.0</p></li>
+<li><p>(for Verilator builds) Verilator - Verilator 3.912</p></li>
+<li><p>(for Verilator builds) clang - clang 3.4</p></li>
 </ul>
 <div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p class="last">NVDLA requires the exact SystemC version specified (2.3.0).  Despite the
+<p class="admonition-title">Warning</p>
+<p>NVDLA requires the exact SystemC version specified (2.3.0).  Despite the
 subminor version change, 2.3.1 and 2.3.2 have compatibility issues with
 NVDLA, including issues with hierarchical binding, and the NVDLA Cmodel
 will fail at runtime when compiled with those versions.</p>
@@ -321,27 +319,28 @@ in the <code class="docutils literal notranslate"><span class="pre">cmod/</span>
 application that uses the NVDLA Cmodel, the following command will build it
 and install it into <code class="docutils literal notranslate"><span class="pre">outdir/nv_full/cmod/release</span></code>:</p>
 <blockquote>
-<div>./tools/bin/tmake -build cmod_top</div></blockquote>
+<div><p>./tools/bin/tmake -build cmod_top</p>
+</div></blockquote>
 <div class="section" id="version-control-usage">
 <h3>Version control usage<a class="headerlink" href="#version-control-usage" title="Permalink to this headline">¶</a></h3>
 <p>NVDLA is developed in Git, on multiple branches.  It is important to use the
 correct branch to track the development work that is desired.  Currently,
 the following two branches exist:</p>
 <ul class="simple">
-<li><code class="docutils literal notranslate"><span class="pre">nvdlav1</span></code>: This is the default branch for any new clones of the NVDLA
+<li><p><code class="docutils literal notranslate"><span class="pre">nvdlav1</span></code>: This is the default branch for any new clones of the NVDLA
 repository from November 21st, 2017, on.  The <code class="docutils literal notranslate"><span class="pre">nvdlav1</span></code> branch contains
 sustaining support work around the non-configurable, full-precision
 version of NVDLAv1 (“nv_full”).  New RTL features will not be added to the
 <code class="docutils literal notranslate"><span class="pre">nvdlav1</span></code> branch, though bug fixes may appear, as may new verification
 features.  Users who desire a stable version of NVDLA may prefer to choose
-the <code class="docutils literal notranslate"><span class="pre">nvdlav1</span></code> branch.</li>
-<li><code class="docutils literal notranslate"><span class="pre">master</span></code>: This branch contains ongoing development work on the NVDLA
+the <code class="docutils literal notranslate"><span class="pre">nvdlav1</span></code> branch.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">master</span></code>: This branch contains ongoing development work on the NVDLA
 RTL, including work towards multiple configurations and additional feature
 development.  This branch is expected to pass “sanity” tests, but may not
 always be tapeout-quality.  Infrastructure in this branch may change
 rapidly.  Users who desire the most up-to-date view of NVDLA development
 may prefer to choose the <code class="docutils literal notranslate"><span class="pre">master</span></code> branch.  The <code class="docutils literal notranslate"><span class="pre">master</span></code> branch was the
-default for clones made before November 21st, 2017.</li>
+default for clones made before November 21st, 2017.</p></li>
 </ul>
 <p>Note that the <code class="docutils literal notranslate"><span class="pre">nvdlav1</span></code> branch’s history will diverge from the <code class="docutils literal notranslate"><span class="pre">master</span></code>
 branch; the <code class="docutils literal notranslate"><span class="pre">master</span></code> branch will not be a strict superset of the
@@ -357,10 +356,10 @@ is ideal performance as it doesn’t account for some software overhead.  The sp
 in the repository at hw/perf/DLA_OpenSource_Performance.xlsx.  The first tab in the spreadsheet, named
 “Readme”, describes how the model works.  It calculates the following metrics.</p>
 <ul class="simple">
-<li>Average run time for a frame</li>
-<li>Frames per second</li>
-<li>Hardware MAC utilization</li>
-<li>Network MAC utilization</li>
+<li><p>Average run time for a frame</p></li>
+<li><p>Frames per second</p></li>
+<li><p>Hardware MAC utilization</p></li>
+<li><p>Network MAC utilization</p></li>
 </ul>
 <p>The tool can be used to look at the affect of different hardware configurations on network performance.</p>
 </div>
@@ -368,9 +367,9 @@ in the repository at hw/perf/DLA_OpenSource_Performance.xlsx.  The first tab in 
 <h2>Designware Components<a class="headerlink" href="#designware-components" title="Permalink to this headline">¶</a></h2>
 <p>The NVDLA design utilize the following Designware components.</p>
 <ul class="simple">
-<li>DW02_tree</li>
-<li>DW_lsd</li>
-<li>DW_minmax</li>
+<li><p>DW02_tree</p></li>
+<li><p>DW_lsd</p></li>
+<li><p>DW_minmax</p></li>
 </ul>
 <p>For best QOR, the EDA vendor supplied versions should be used for both synthesis
 and simulation if possible.  They can be obtained directly from the EDA vendors.</p>
@@ -382,8 +381,8 @@ DESIGNWARE_NOEXIST to 1; similarly, the environment variable
 DESIGNWARE_NOEXIST will enable this in the simulation build environment.
 However, these NV_ versions should not be used currently for any tapeout.</p>
 <div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p class="last">Be careful to set the DESIGNWARE_NOEXIST variable the same way for
+<p class="admonition-title">Warning</p>
+<p>Be careful to set the DESIGNWARE_NOEXIST variable the same way for
 simulation as for synthesis.  The NV_ variations are believed to be
 correct, but are not verified to the same degree as DesignWare components
 are; simulating different RTL than is synthesized can result in unexpected
@@ -405,16 +404,16 @@ they should be replaced with a standard cell designed to reduce MTBF.  To replac
 RTL impelemtnation of the cells below can be removed (keeping the port list), and replaced
 with an instantiation of a standard cell synchronizer as appropriate.</p>
 <ul>
-<li><p class="first">p_SSYNC2DO_C_PP</p>
+<li><p>p_SSYNC2DO_C_PP</p>
 <p>Two flop stage deep synchronizer with an active low asynchronous reset/clear pin.</p>
 </li>
-<li><p class="first">p_SSYNC3DO</p>
+<li><p>p_SSYNC3DO</p>
 <p>Three flop stage deep synchronizer.</p>
 </li>
-<li><p class="first">p_SSYNC3DO_C_PPP</p>
+<li><p>p_SSYNC3DO_C_PPP</p>
 <p>Three flop stage deep synchronizer with an active low asynchronous reset/clear pin.</p>
 </li>
-<li><p class="first">p_SSYNC3DO_S_PPP</p>
+<li><p>p_SSYNC3DO_S_PPP</p>
 <p>Three flop stage deep synchronizer with an active low asynchronous set pin.</p>
 </li>
 </ul>
@@ -445,93 +444,93 @@ a Verilog wrapper which maps to RAM cells from a local library.</p>
 <h4>RAMDP: Dual-Port SRAM<a class="headerlink" href="#ramdp-dual-port-sram" title="Permalink to this headline">¶</a></h4>
 <p>This section describes a dual-port SRAM design. The macro is designed to perform
 read and write operations independently.</p>
-<table border="1" class="docutils">
+<table class="docutils align-default">
 <colgroup>
-<col width="25%" />
-<col width="23%" />
-<col width="15%" />
-<col width="38%" />
+<col style="width: 25%" />
+<col style="width: 23%" />
+<col style="width: 15%" />
+<col style="width: 38%" />
 </colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">Pin</th>
-<th class="head">Type</th>
-<th class="head">Presence</th>
-<th class="head">Description</th>
+<thead>
+<tr class="row-odd"><th class="head"><p>Pin</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Presence</p></th>
+<th class="head"><p>Description</p></th>
 </tr>
 </thead>
-<tbody valign="top">
-<tr class="row-even"><td colspan="4">Read/Write Pins</td>
+<tbody>
+<tr class="row-even"><td colspan="4"><p>Read/Write Pins</p></td>
 </tr>
-<tr class="row-odd"><td>CLK_R</td>
-<td>Input; Clock</td>
-<td>Default</td>
-<td>Memory read clock</td>
+<tr class="row-odd"><td><p>CLK_R</p></td>
+<td><p>Input; Clock</p></td>
+<td><p>Default</p></td>
+<td><p>Memory read clock</p></td>
 </tr>
-<tr class="row-even"><td>CLK_W</td>
-<td>Input; Clock</td>
-<td>Default</td>
-<td>Memory write clock</td>
+<tr class="row-even"><td><p>CLK_W</p></td>
+<td><p>Input; Clock</p></td>
+<td><p>Default</p></td>
+<td><p>Memory write clock</p></td>
 </tr>
-<tr class="row-odd"><td>RADR_[msb:0]</td>
-<td>Input</td>
-<td>Default</td>
-<td>Synchronous read
-address input</td>
+<tr class="row-odd"><td><p>RADR_[msb:0]</p></td>
+<td><p>Input</p></td>
+<td><p>Default</p></td>
+<td><p>Synchronous read
+address input</p></td>
 </tr>
-<tr class="row-even"><td>RD_[msb:0]</td>
-<td>Output</td>
-<td>Default</td>
-<td>Memory read data
-output</td>
+<tr class="row-even"><td><p>RD_[msb:0]</p></td>
+<td><p>Output</p></td>
+<td><p>Default</p></td>
+<td><p>Memory read data
+output</p></td>
 </tr>
-<tr class="row-odd"><td>RE</td>
-<td>Input</td>
-<td>Default</td>
-<td>Synchronous read
-enable</td>
+<tr class="row-odd"><td><p>RE</p></td>
+<td><p>Input</p></td>
+<td><p>Default</p></td>
+<td><p>Synchronous read
+enable</p></td>
 </tr>
-<tr class="row-even"><td>WADR_[msb:0]</td>
-<td>Input</td>
-<td>Default</td>
-<td>Synchronous write
-address input</td>
+<tr class="row-even"><td><p>WADR_[msb:0]</p></td>
+<td><p>Input</p></td>
+<td><p>Default</p></td>
+<td><p>Synchronous write
+address input</p></td>
 </tr>
-<tr class="row-odd"><td>WD_[msb:0]</td>
-<td>Input</td>
-<td>Default</td>
-<td>Synchronous write
-data input</td>
+<tr class="row-odd"><td><p>WD_[msb:0]</p></td>
+<td><p>Input</p></td>
+<td><p>Default</p></td>
+<td><p>Synchronous write
+data input</p></td>
 </tr>
-<tr class="row-even"><td>WE</td>
-<td>Input</td>
-<td>Default</td>
-<td>Synchronous write
-enable</td>
+<tr class="row-even"><td><p>WE</p></td>
+<td><p>Input</p></td>
+<td><p>Default</p></td>
+<td><p>Synchronous write
+enable</p></td>
 </tr>
-<tr class="row-odd"><td colspan="4">Misc. Pins.  These will depend on the target RAM library for
-whether they’re necessary.</td>
+<tr class="row-odd"><td colspan="4"><p>Misc. Pins.  These will depend on the target RAM library for
+whether they’re necessary.</p></td>
 </tr>
-<tr class="row-even"><td>IDDQ</td>
-<td>Input</td>
-<td>Default</td>
-<td>Asynchronous stand-by
-mode enable pin</td>
+<tr class="row-even"><td><p>IDDQ</p></td>
+<td><p>Input</p></td>
+<td><p>Default</p></td>
+<td><p>Asynchronous stand-by
+mode enable pin</p></td>
 </tr>
-<tr class="row-odd"><td>SLEEP_EN_[7:0]</td>
-<td>Input</td>
-<td>Default</td>
-<td>Power gating controls</td>
+<tr class="row-odd"><td><p>SLEEP_EN_[7:0]</p></td>
+<td><p>Input</p></td>
+<td><p>Default</p></td>
+<td><p>Power gating controls</p></td>
 </tr>
-<tr class="row-even"><td>RET_EN</td>
-<td>Input</td>
-<td>Default</td>
-<td>Retention enable</td>
+<tr class="row-even"><td><p>RET_EN</p></td>
+<td><p>Input</p></td>
+<td><p>Default</p></td>
+<td><p>Retention enable</p></td>
 </tr>
-<tr class="row-odd"><td>RET_SVOP[1:0]</td>
-<td>Input</td>
-<td>Default</td>
-<td>Timing margin control
-pins</td>
+<tr class="row-odd"><td><p>RET_SVOP[1:0]</p></td>
+<td><p>Input</p></td>
+<td><p>Default</p></td>
+<td><p>Timing margin control
+pins</p></td>
 </tr>
 </tbody>
 </table>
@@ -545,11 +544,11 @@ A latch holds the read data whenever RE = ‘0’. There is no write through cap
 If the read address matches the write address, read out data may be corrupted.</p>
 <div class="figure align-center" id="id11">
 <span id="fig-ram-dp-read-timing"></span><a class="reference internal image-reference" href="../../_images/ig_sram_dp_read_timing.png"><img alt="Dual Port RAM Read Timing" src="../../_images/ig_sram_dp_read_timing.png" style="width: 706.0px; height: 354.0px;" /></a>
-<p class="caption"><span class="caption-number">Fig. 29 </span><span class="caption-text">Dual Port RAM Read Timing</span></p>
+<p class="caption"><span class="caption-number">Fig. 29 </span><span class="caption-text">Dual Port RAM Read Timing</span><a class="headerlink" href="#id11" title="Permalink to this image">¶</a></p>
 </div>
 <div class="figure align-center" id="id12">
 <span id="fig-ram-dp-write-timing"></span><a class="reference internal image-reference" href="../../_images/ig_sram_dp_write_timing.png"><img alt="Dual Port RAM Write Timing" src="../../_images/ig_sram_dp_write_timing.png" style="width: 671.0px; height: 372.5px;" /></a>
-<p class="caption"><span class="caption-number">Fig. 30 </span><span class="caption-text">Dual Port RAM Write Timing</span></p>
+<p class="caption"><span class="caption-number">Fig. 30 </span><span class="caption-text">Dual Port RAM Write Timing</span><a class="headerlink" href="#id12" title="Permalink to this image">¶</a></p>
 </div>
 <div class="line-block">
 <div class="line"><br /></div>
@@ -565,94 +564,94 @@ port RAM, but is created by double clocking a single port RAM.</p>
 <p>Note that:
 * All pin power is referenced to VDD.
 * All enables are active high.</p>
-<table border="1" class="docutils">
+<table class="docutils align-default">
 <colgroup>
-<col width="25%" />
-<col width="23%" />
-<col width="15%" />
-<col width="38%" />
+<col style="width: 25%" />
+<col style="width: 23%" />
+<col style="width: 15%" />
+<col style="width: 38%" />
 </colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">Pin</th>
-<th class="head">Type</th>
-<th class="head">Presence</th>
-<th class="head">Description</th>
+<thead>
+<tr class="row-odd"><th class="head"><p>Pin</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Presence</p></th>
+<th class="head"><p>Description</p></th>
 </tr>
 </thead>
-<tbody valign="top">
-<tr class="row-even"><td colspan="4">Read/Write Pins</td>
+<tbody>
+<tr class="row-even"><td colspan="4"><p>Read/Write Pins</p></td>
 </tr>
-<tr class="row-odd"><td>CLK</td>
-<td>Input; Clock</td>
-<td>Default</td>
-<td>Memory clock</td>
+<tr class="row-odd"><td><p>CLK</p></td>
+<td><p>Input; Clock</p></td>
+<td><p>Default</p></td>
+<td><p>Memory clock</p></td>
 </tr>
-<tr class="row-even"><td>RADR_[msb:0]</td>
-<td>Input</td>
-<td>Default</td>
-<td>Synchronous read
-address input</td>
+<tr class="row-even"><td><p>RADR_[msb:0]</p></td>
+<td><p>Input</p></td>
+<td><p>Default</p></td>
+<td><p>Synchronous read
+address input</p></td>
 </tr>
-<tr class="row-odd"><td>RD_[msb:0]</td>
-<td>Output</td>
-<td>Default</td>
-<td>Memory read data
-output</td>
+<tr class="row-odd"><td><p>RD_[msb:0]</p></td>
+<td><p>Output</p></td>
+<td><p>Default</p></td>
+<td><p>Memory read data
+output</p></td>
 </tr>
-<tr class="row-even"><td>RE</td>
-<td>Input</td>
-<td>Default</td>
-<td>Synchronous read
-enable</td>
+<tr class="row-even"><td><p>RE</p></td>
+<td><p>Input</p></td>
+<td><p>Default</p></td>
+<td><p>Synchronous read
+enable</p></td>
 </tr>
-<tr class="row-odd"><td>WADR_[msb:0]</td>
-<td>Input</td>
-<td>Default</td>
-<td>Synchronous write
-address input</td>
+<tr class="row-odd"><td><p>WADR_[msb:0]</p></td>
+<td><p>Input</p></td>
+<td><p>Default</p></td>
+<td><p>Synchronous write
+address input</p></td>
 </tr>
-<tr class="row-even"><td>WD_[msb:0]</td>
-<td>Input</td>
-<td>Default</td>
-<td>Synchronous write
-data input</td>
+<tr class="row-even"><td><p>WD_[msb:0]</p></td>
+<td><p>Input</p></td>
+<td><p>Default</p></td>
+<td><p>Synchronous write
+data input</p></td>
 </tr>
-<tr class="row-odd"><td>WE</td>
-<td>Input</td>
-<td>Default</td>
-<td>Synchronous write
-enable</td>
+<tr class="row-odd"><td><p>WE</p></td>
+<td><p>Input</p></td>
+<td><p>Default</p></td>
+<td><p>Synchronous write
+enable</p></td>
 </tr>
-<tr class="row-even"><td colspan="4">Misc. Pins.  These will depend on the target RAM library for
-whether they are necessary.</td>
+<tr class="row-even"><td colspan="4"><p>Misc. Pins.  These will depend on the target RAM library for
+whether they are necessary.</p></td>
 </tr>
-<tr class="row-odd"><td>IDDQ</td>
-<td>Input</td>
-<td>Default</td>
-<td>Asynchronous stand-by
-mode enable pin</td>
+<tr class="row-odd"><td><p>IDDQ</p></td>
+<td><p>Input</p></td>
+<td><p>Default</p></td>
+<td><p>Asynchronous stand-by
+mode enable pin</p></td>
 </tr>
-<tr class="row-even"><td>SLEEP_EN_[7:0]</td>
-<td>Input</td>
-<td>Default</td>
-<td>Power gating controls</td>
+<tr class="row-even"><td><p>SLEEP_EN_[7:0]</p></td>
+<td><p>Input</p></td>
+<td><p>Default</p></td>
+<td><p>Power gating controls</p></td>
 </tr>
-<tr class="row-odd"><td>RET_EN</td>
-<td>Input</td>
-<td>Default</td>
-<td>Retention enable</td>
+<tr class="row-odd"><td><p>RET_EN</p></td>
+<td><p>Input</p></td>
+<td><p>Default</p></td>
+<td><p>Retention enable</p></td>
 </tr>
-<tr class="row-even"><td>RET_SVOP[1:0]</td>
-<td>Input</td>
-<td>Default</td>
-<td>Timing margin control
-pins</td>
+<tr class="row-even"><td><p>RET_SVOP[1:0]</p></td>
+<td><p>Input</p></td>
+<td><p>Default</p></td>
+<td><p>Timing margin control
+pins</p></td>
 </tr>
 </tbody>
 </table>
 <div class="figure align-center" id="id13">
 <span id="fig-ram-pdp-timing"></span><a class="reference internal image-reference" href="../../_images/ig_sram_pdp_timing.png"><img alt="Pseudo Dual Port RAM Timing" src="../../_images/ig_sram_pdp_timing.png" style="width: 748.0px; height: 473.0px;" /></a>
-<p class="caption"><span class="caption-number">Fig. 31 </span><span class="caption-text">Pseudo Dual Port RAM Timing</span></p>
+<p class="caption"><span class="caption-number">Fig. 31 </span><span class="caption-text">Pseudo Dual Port RAM Timing</span><a class="headerlink" href="#id13" title="Permalink to this image">¶</a></p>
 </div>
 <p>The RAMPDP behaves like a dual port RAM, but is created by double clocking a single port RAM.
 It can perform a ‘single read’ (1R), a ‘single write’ (1W) or a ‘read followed by write’ (1R+1W)
@@ -714,59 +713,59 @@ variables, meanings and defaults.</p>
 <div class="line"><br /></div>
 <div class="line"><br /></div>
 </div>
-<table border="1" class="colwidths-given docutils" id="id14">
+<table class="colwidths-given docutils align-default" id="id14">
 <caption><span class="caption-number">Table 39 </span><span class="caption-text">Design Related Options</span><a class="headerlink" href="#id14" title="Permalink to this table">¶</a></caption>
 <colgroup>
-<col width="25%" />
-<col width="75%" />
+<col style="width: 25%" />
+<col style="width: 75%" />
 </colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">Variable</th>
-<th class="head">Comments</th>
+<thead>
+<tr class="row-odd"><th class="head"><p>Variable</p></th>
+<th class="head"><p>Comments</p></th>
 </tr>
 </thead>
-<tbody valign="top">
-<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">NVDLA_ROOT</span></code></td>
-<td>Location on disk for the NVDLA source “hw” directory.</td>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">NVDLA_ROOT</span></code></p></td>
+<td><p>Location on disk for the NVDLA source “hw” directory.</p></td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">TOP_NAMES</span></code></td>
-<td>Space separated list of TOP_NAMES to synthesize. You may choose to synthesize all or a subset of TOP_NAMES.
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">TOP_NAMES</span></code></p></td>
+<td><p>Space separated list of TOP_NAMES to synthesize. You may choose to synthesize all or a subset of TOP_NAMES.
 Defaults to
-“NV_NVDLA_partition_a NV_NVDLA_partition_c NV_NVDLA_partition_o NV_NVDLA_partition_m NV_NVDLA_partition_p”</td>
+“NV_NVDLA_partition_a NV_NVDLA_partition_c NV_NVDLA_partition_o NV_NVDLA_partition_m NV_NVDLA_partition_p”</p></td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">RTL_SEARCH_PATH</span></code></td>
-<td>Space separated list of search paths (directories) for locating all the pieces of RTL.
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">RTL_SEARCH_PATH</span></code></p></td>
+<td><p>Space separated list of search paths (directories) for locating all the pieces of RTL.
 Defaults to an empty string.
-Please do not include paths to non synthesizable (behavioral) RAM models, like the ones in <code class="docutils literal notranslate"><span class="pre">${NVDLA_ROOT}/vmod/rams/model</span></code></td>
+Please do not include paths to non synthesizable (behavioral) RAM models, like the ones in <code class="docutils literal notranslate"><span class="pre">${NVDLA_ROOT}/vmod/rams/model</span></code></p></td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">RTL_INCLUDE_SEARCH_PATH</span></code></td>
-<td>Space separated list of search paths (directories) for locating all the supplementary Verilog include files.
-Defaults to an empty string.</td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">RTL_INCLUDE_SEARCH_PATH</span></code></p></td>
+<td><p>Space separated list of search paths (directories) for locating all the supplementary Verilog include files.
+Defaults to an empty string.</p></td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">EXTRA_RTL</span></code></td>
-<td>List of files to read in, apart from the modules that can be found in the search paths.
-Defaults to an empty string.</td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">EXTRA_RTL</span></code></p></td>
+<td><p>List of files to read in, apart from the modules that can be found in the search paths.
+Defaults to an empty string.</p></td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">RTL_EXTENSIONS</span></code></td>
-<td>List of extensions for the source RTL files.
-Defaults to “.v .sv .gv”</td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">RTL_EXTENSIONS</span></code></p></td>
+<td><p>List of extensions for the source RTL files.
+Defaults to “.v .sv .gv”</p></td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">RTL_INCLUDE_EXTENSIONS</span></code></td>
-<td>List of extensions for supplementary Verilog include files. Defaults to “.vh .svh”</td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">RTL_INCLUDE_EXTENSIONS</span></code></p></td>
+<td><p>List of extensions for supplementary Verilog include files. Defaults to “.vh .svh”</p></td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">DEF</span></code></td>
-<td><p class="first">Path to directory containing floorplans in the “DEF” format. Files should be named by the TOP_NAMES, with the extension “.def”
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">DEF</span></code></p></td>
+<td><p>Path to directory containing floorplans in the “DEF” format. Files should be named by the TOP_NAMES, with the extension “.def”
 This variable defaults to a directory called  “def” in the current directory</p>
-<p class="last">We do not provide templates, because it depends on the process node, and the memory compiler being used.</p>
+<p>We do not provide templates, because it depends on the process node, and the memory compiler being used.</p>
 </td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">CONS</span></code></td>
-<td><p class="first">Path to directory containing constraints in the “SDC” format.
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">CONS</span></code></p></td>
+<td><p>Path to directory containing constraints in the “SDC” format.
 Files should be named by the TOP_NAMES, with the extension “.sdc”
 This directory may also contain “&lt;TOP_NAME&gt;.tcl” to specify any non-SDC constraints to guide synthesis.
 All of these constraints are sourced before compiling the design.
 This variable defaults to a directory called “cons” in the current directory.</p>
-<p class="last">We provide template SDCs for all logical partitions in the <cite>${NVDLA_ROOT}/syn/cons</cite> directory including
+<p>We provide template SDCs for all logical partitions in the <cite>${NVDLA_ROOT}/syn/cons</cite> directory including
 clock constraints etc. You may provide your own constraints, based on the process node you are targeting.</p>
 </td>
 </tr>
@@ -777,21 +776,21 @@ clock constraints etc. You may provide your own constraints, based on the proces
 <div class="line"><br /></div>
 <div class="line"><br /></div>
 </div>
-<table border="1" class="colwidths-given docutils" id="id15">
+<table class="colwidths-given docutils align-default" id="id15">
 <caption><span class="caption-number">Table 40 </span><span class="caption-text">Tool Related Options</span><a class="headerlink" href="#id15" title="Permalink to this table">¶</a></caption>
 <colgroup>
-<col width="25%" />
-<col width="75%" />
+<col style="width: 25%" />
+<col style="width: 75%" />
 </colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">Variable</th>
-<th class="head">Comments</th>
+<thead>
+<tr class="row-odd"><th class="head"><p>Variable</p></th>
+<th class="head"><p>Comments</p></th>
 </tr>
 </thead>
-<tbody valign="top">
-<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">DC_PATH</span></code></td>
-<td>Location of the Design Compiler installation.
-Defaults to an empty string</td>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">DC_PATH</span></code></p></td>
+<td><p>Location of the Design Compiler installation.
+Defaults to an empty string</p></td>
 </tr>
 </tbody>
 </table>
@@ -800,83 +799,83 @@ Defaults to an empty string</td>
 <div class="line"><br /></div>
 <div class="line"><br /></div>
 </div>
-<table border="1" class="colwidths-given docutils" id="id16">
+<table class="colwidths-given docutils align-default" id="id16">
 <caption><span class="caption-number">Table 41 </span><span class="caption-text">Library Related Options</span><a class="headerlink" href="#id16" title="Permalink to this table">¶</a></caption>
 <colgroup>
-<col width="25%" />
-<col width="75%" />
+<col style="width: 25%" />
+<col style="width: 75%" />
 </colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">Variable</th>
-<th class="head">Comments</th>
+<thead>
+<tr class="row-odd"><th class="head"><p>Variable</p></th>
+<th class="head"><p>Comments</p></th>
 </tr>
 </thead>
-<tbody valign="top">
-<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">TARGET_LIB</span></code></td>
-<td>Path to a single standard cell library that will be used to map the design to (the “target” library).
-Defaults to an empty string.</td>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">TARGET_LIB</span></code></p></td>
+<td><p>Path to a single standard cell library that will be used to map the design to (the “target” library).
+Defaults to an empty string.</p></td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">LINK_LIB</span></code></td>
-<td>Path to all the libraries that are required to link the design.
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">LINK_LIB</span></code></p></td>
+<td><p>Path to all the libraries that are required to link the design.
 This should include the target library as well.
 Include any RAM compiler timing libraries here.
-Defaults to an empty string.</td>
+Defaults to an empty string.</p></td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">TF_FILE</span></code></td>
-<td>Path to the “Milkyway Technology File” that is used to create the Milkyway models for the physical library.
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">TF_FILE</span></code></p></td>
+<td><p>Path to the “Milkyway Technology File” that is used to create the Milkyway models for the physical library.
 Please check with your standard cell library vendor for the right file to use.
 Defaults to an empty string.
-Required for DC-Topographical</td>
+Required for DC-Topographical</p></td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">TLUPLUS_FILE</span></code></td>
-<td>Path to the “TLUPlus” files that will be used for RC extraction
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">TLUPLUS_FILE</span></code></p></td>
+<td><p>Path to the “TLUPlus” files that will be used for RC extraction
 Please check with your standard cell library vendor for the right file to use.
 Defaults to an empty string.
-Required for DC-Topographical</td>
+Required for DC-Topographical</p></td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">TLUPLUS_MAPPING_FILE</span></code></td>
-<td>Path to the “Tech2ITF” mapping file, that maps layer names from between the Milkyway Tech file and the interconnect technology format file.
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">TLUPLUS_MAPPING_FILE</span></code></p></td>
+<td><p>Path to the “Tech2ITF” mapping file, that maps layer names from between the Milkyway Tech file and the interconnect technology format file.
 Please check with your standard cell library vendor for the right file to use.
 Defaults to an empty string.
-Required for DC-Topographical</td>
+Required for DC-Topographical</p></td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">MIN_ROUTING_LAYER</span></code></td>
-<td>Bottom routing layer for signal nets.
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">MIN_ROUTING_LAYER</span></code></p></td>
+<td><p>Bottom routing layer for signal nets.
 Please check with place-and-route methodology for the right value.
 Defaults to an empty string.
-Required for DC-Topographical</td>
+Required for DC-Topographical</p></td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">MAX_ROUTING_LAYER</span></code></td>
-<td>Top routing layer for signal nets.
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">MAX_ROUTING_LAYER</span></code></p></td>
+<td><p>Top routing layer for signal nets.
 Please check with place-and-route methodology for the right value.
 Defaults to an empty string.
-Required for DC-Topographical</td>
+Required for DC-Topographical</p></td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">HORIZONTAL_LAYERS</span></code></td>
-<td>Space separated list of layers with preferred horizontal routing.
-Defaults to an empty string.</td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">HORIZONTAL_LAYERS</span></code></p></td>
+<td><p>Space separated list of layers with preferred horizontal routing.
+Defaults to an empty string.</p></td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">VERTICAL_LAYERS</span></code></td>
-<td>Space separated list of layers with preferred vertical routing.
-Defaults to an empty string.</td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">VERTICAL_LAYERS</span></code></p></td>
+<td><p>Space separated list of layers with preferred vertical routing.
+Defaults to an empty string.</p></td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">DONT_USE_LIST</span></code></td>
-<td>Space separated list of regular expressions for cells that you do not wish to map your design to.
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">DONT_USE_LIST</span></code></p></td>
+<td><p>Space separated list of regular expressions for cells that you do not wish to map your design to.
 A “dont_use” will be applied on these cells in Design Compiler.
-Defaults to an empty string.</td>
+Defaults to an empty string.</p></td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">WIRELOAD_MODEL_FILE</span></code></td>
-<td>A file containing a “wireload model” - a lookup table for resistance and capacitance calculation based on fanout.
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">WIRELOAD_MODEL_FILE</span></code></p></td>
+<td><p>A file containing a “wireload model” - a lookup table for resistance and capacitance calculation based on fanout.
 Refer to the lcug16_Defining_Wire_Load_Groups.htm on the Synopsys Solvnet site
 for more information regarding wire load modeling.
 Not required if your standard cell library contains the wireload models built in.
 Not required for DC-Topographical.
-Defaults to an empty string.</td>
+Defaults to an empty string.</p></td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">WIRELOAD_MODEL_NAME</span></code></td>
-<td>Name of the wireload model lookup table (if you have multiple tables)
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">WIRELOAD_MODEL_NAME</span></code></p></td>
+<td><p>Name of the wireload model lookup table (if you have multiple tables)
 Not required for DC-Topographical.
-Defaults to an empty string.</td>
+Defaults to an empty string.</p></td>
 </tr>
 </tbody>
 </table>
@@ -886,48 +885,48 @@ Defaults to an empty string.</td>
 <div class="line"><br /></div>
 </div>
 <div class="admonition warning">
-<p class="first admonition-title">Warning</p>
+<p class="admonition-title">Warning</p>
 <p>We do not supply timing models or synthesizable RTL for the RAMs in the design.
 These need to be provided by the user for the process node/ memory compiler being used.</p>
-<p class="last">Please DO NOT include <code class="docutils literal notranslate"><span class="pre">${NVDLA_ROOT}/vmod/rams/model</span></code> in the RTL_SEARCH_PATH - They are simulation models, not synthesizable.</p>
+<p>Please DO NOT include <code class="docutils literal notranslate"><span class="pre">${NVDLA_ROOT}/vmod/rams/model</span></code> in the RTL_SEARCH_PATH - They are simulation models, not synthesizable.</p>
 </div>
-<table border="1" class="colwidths-given docutils" id="id17">
+<table class="colwidths-given docutils align-default" id="id17">
 <caption><span class="caption-number">Table 42 </span><span class="caption-text">Miscellaneous Options</span><a class="headerlink" href="#id17" title="Permalink to this table">¶</a></caption>
 <colgroup>
-<col width="25%" />
-<col width="75%" />
+<col style="width: 25%" />
+<col style="width: 75%" />
 </colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">Variable</th>
-<th class="head">Comments</th>
+<thead>
+<tr class="row-odd"><th class="head"><p>Variable</p></th>
+<th class="head"><p>Comments</p></th>
 </tr>
 </thead>
-<tbody valign="top">
-<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">TIGHTEN_CGE</span></code></td>
-<td>Boolean, “1” to enable over constraining the CG-Enable paths. See section 5.5.2 below
-Default is set to “0”</td>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">TIGHTEN_CGE</span></code></p></td>
+<td><p>Boolean, “1” to enable over constraining the CG-Enable paths. See section 5.5.2 below
+Default is set to “0”</p></td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">CGLUT_FILE</span></code></td>
-<td>File containing the fanout-based CG over constraint lookup table to pessimize the CG enable paths. See section 5.5.2 below.
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">CGLUT_FILE</span></code></p></td>
+<td><p>File containing the fanout-based CG over constraint lookup table to pessimize the CG enable paths. See section 5.5.2 below.
 Please see “${NVDLA_ROOT}/syn/templates/cg_latency_lut.tcl” for an example.
-Defaults to an empty string.</td>
+Defaults to an empty string.</p></td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">DC_NUM_CORES</span></code></td>
-<td>The number of CPU cores available for Design Compiler.
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">DC_NUM_CORES</span></code></p></td>
+<td><p>The number of CPU cores available for Design Compiler.
 Defaults to ‘1’
-Note: Single CPU core synthesis may see a long overall runtime.</td>
+Note: Single CPU core synthesis may see a long overall runtime.</p></td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">AREA_RECOVERY</span></code></td>
-<td>Boolean, “1” to Run quick area optimization by undoing some optimizations on paths with positive slack.
-Defaults to “1”.</td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">AREA_RECOVERY</span></code></p></td>
+<td><p>Boolean, “1” to Run quick area optimization by undoing some optimizations on paths with positive slack.
+Defaults to “1”.</p></td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">INCREMENTAL_RECOMPILE_COUNT</span></code></td>
-<td>Number of rounds of incremental compiles  to run in Design Compiler.
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">INCREMENTAL_RECOMPILE_COUNT</span></code></p></td>
+<td><p>Number of rounds of incremental compiles  to run in Design Compiler.
 Defaults to “1” - This amounts to 2 rounds of compile, one for mapping - the “main” compile
-and one for incremental optimization - the “incremental” compile.</td>
+and one for incremental optimization - the “incremental” compile.</p></td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">COMMAND_PREFIX</span></code></td>
-<td><p class="first">String.
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">COMMAND_PREFIX</span></code></p></td>
+<td><p>String.
 Defaults to an empty string.
 This will be pre-fixed to the dc_shell command .
 Use this to manage job submission  on LSF farm or grid, as appropriate.
@@ -936,7 +935,7 @@ In the absence of a command prefix, the synthesis  jobs for each TOP_NAMES will 
 If you do provide a command prefix, make sure that it is non-blocking, so that all synthesis jobs
 can be parallelized. Otherwise, the jobs are run serially.
 Example:</p>
-<div class="last highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">export</span> <span class="n">COMMAND_PREFIX</span><span class="o">=</span><span class="s2">&quot;bsub -q some_queue -o &lt;LOG&gt;/&lt;MODULE&gt;.lsf.log&quot;</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">export</span> <span class="n">COMMAND_PREFIX</span><span class="o">=</span><span class="s2">&quot;bsub -q some_queue -o &lt;LOG&gt;/&lt;MODULE&gt;.lsf.log&quot;</span>
 </pre></div>
 </div>
 </td>
@@ -980,25 +979,25 @@ The supported arguments to the scripts are in table below.</p>
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
-<table border="1" class="colwidths-given docutils" id="id18">
+<table class="colwidths-given docutils align-default" id="id18">
 <caption><span class="caption-number">Table 43 </span><span class="caption-text">Miscellaneous Options</span><a class="headerlink" href="#id18" title="Permalink to this table">¶</a></caption>
 <colgroup>
-<col width="25%" />
-<col width="75%" />
+<col style="width: 25%" />
+<col style="width: 75%" />
 </colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">Argument</th>
-<th class="head">Explanation</th>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Explanation</p></th>
 </tr>
 </thead>
-<tbody valign="top">
-<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">-config</span></code></td>
-<td>Path to the synthesis configuration file (see section 5.4)
-If not provided, the flow will look for a file called “config.sh” in the current directory.</td>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">-config</span></code></p></td>
+<td><p>Path to the synthesis configuration file (see section 5.4)
+If not provided, the flow will look for a file called “config.sh” in the current directory.</p></td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">-mode</span></code></td>
-<td><p class="first">Specifies which tool to use for synthesis. Use one of the following:</p>
-<div class="last highlight-default notranslate"><div class="highlight"><pre><span></span>“wlm” =&gt; Use Design Compiler (non-topographical) for wireload model based synthesis (non-physical)
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">-mode</span></code></p></td>
+<td><p>Specifies which tool to use for synthesis. Use one of the following:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>“wlm” =&gt; Use Design Compiler (non-topographical) for wireload model based synthesis (non-physical)
 “dct” =&gt; Use DC-Topographical
 “dcg” =&gt; Use DC-Graphical along with “-spg” in the compile command.
 “de”  =&gt; Use DC Explorer for synthesis.
@@ -1006,16 +1005,16 @@ If not provided, the flow will look for a file called “config.sh” in the cur
 </div>
 </td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">-build</span></code></td>
-<td>Sandbox of synthesis. Optional.
-Defaults to “<code class="docutils literal notranslate"><span class="pre">nvdla_syn_&lt;timestamp&gt;</span></code>”</td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">-build</span></code></p></td>
+<td><p>Sandbox of synthesis. Optional.
+Defaults to “<code class="docutils literal notranslate"><span class="pre">nvdla_syn_&lt;timestamp&gt;</span></code>”</p></td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">-modules</span></code></td>
-<td>Space separated list of modules to run synthesis on / restore database for.
-If not specified, the TOP_NAMES must be populated in the configuration file.</td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">-modules</span></code></p></td>
+<td><p>Space separated list of modules to run synthesis on / restore database for.
+If not specified, the TOP_NAMES must be populated in the configuration file.</p></td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">-restore</span></code></td>
-<td>Path to design database (in DDC format) to restore.</td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">-restore</span></code></p></td>
+<td><p>Path to design database (in DDC format) to restore.</p></td>
 </tr>
 </tbody>
 </table>
@@ -1116,31 +1115,31 @@ playing back the trace and responding to NVDLA interrupts.  The trace format is 
 <div class="section" id="basic-sanity-tests">
 <h3>Basic sanity tests<a class="headerlink" href="#basic-sanity-tests" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
-<li>sanity0 - basic register write and compare read-back value</li>
-<li>sanity1 - memory copy test using bdma (dbb to dbb), test ends using register polling</li>
-<li>sanity2 - sanity1 waiting on interrupts instead of register polling</li>
-<li>sanity3 - convolution test, test ends using register polling and compares output mem region to determine passing</li>
-<li>sanity3_cvsram - convolution test, uses cvsram path instead of dbb, test ends using register polling and compares output mem region to determine passing</li>
+<li><p>sanity0 - basic register write and compare read-back value</p></li>
+<li><p>sanity1 - memory copy test using bdma (dbb to dbb), test ends using register polling</p></li>
+<li><p>sanity2 - sanity1 waiting on interrupts instead of register polling</p></li>
+<li><p>sanity3 - convolution test, test ends using register polling and compares output mem region to determine passing</p></li>
+<li><p>sanity3_cvsram - convolution test, uses cvsram path instead of dbb, test ends using register polling and compares output mem region to determine passing</p></li>
 </ul>
 </div>
 <div class="section" id="short-single-function-tests-using-dbb">
 <h3>Short single function tests using dbb<a class="headerlink" href="#short-single-function-tests-using-dbb" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
-<li>conv_8x8_fc_int16</li>
-<li>pdp_max_pooling_int16</li>
-<li>sdp_relu_int16</li>
+<li><p>conv_8x8_fc_int16</p></li>
+<li><p>pdp_max_pooling_int16</p></li>
+<li><p>sdp_relu_int16</p></li>
 </ul>
 </div>
 <div class="section" id="long-layer-tests">
 <h3>Long layer tests<a class="headerlink" href="#long-layer-tests" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
-<li>googlenet_conv2_3x3_int16 - uses cvsram, 30 min runtime</li>
-<li>cc_alexnet_conv5_relu5_int16_dtest_cvsram - uses cvsram, 156 min runtime</li>
+<li><p>googlenet_conv2_3x3_int16 - uses cvsram, 30 min runtime</p></li>
+<li><p>cc_alexnet_conv5_relu5_int16_dtest_cvsram - uses cvsram, 156 min runtime</p></li>
 </ul>
 <p>The long layer tests are not in the regress target. Run using</p>
 <ul class="simple">
-<li>make run TESTDIR=../traces/traceplayer/googlenet_conv2_3x3_int16</li>
-<li>make run TESTDIR=../traces/traceplayer/cc_alexnet_conv5_relu5_int16_dtest_cvsram</li>
+<li><p>make run TESTDIR=../traces/traceplayer/googlenet_conv2_3x3_int16</p></li>
+<li><p>make run TESTDIR=../traces/traceplayer/cc_alexnet_conv5_relu5_int16_dtest_cvsram</p></li>
 </ul>
 </div>
 <div class="section" id="test-format">
@@ -1154,19 +1153,19 @@ register and memory accesses that will be used by the test before finishing the 
 <p>The main test trace performs register reads/writes to the NVDLA IP.  These commands
 will cause reads and write commands to the CSB programming bus.</p>
 <p>Reg read and write Commands are listed in the following table.</p>
-<table border="1" class="colwidths-given docutils">
+<table class="colwidths-given docutils align-default">
 <colgroup>
-<col width="40%" />
-<col width="60%" />
+<col style="width: 40%" />
+<col style="width: 60%" />
 </colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">Command</th>
-<th class="head">Description</th>
+<thead>
+<tr class="row-odd"><th class="head"><p>Command</p></th>
+<th class="head"><p>Description</p></th>
 </tr>
 </thead>
-<tbody valign="top">
-<tr class="row-even"><td>write_reg &lt;misc:16&gt;&lt;addr:16&gt; &lt;data:32&gt;</td>
-<td><p class="first">Execute a 32b data write to a 16b addr.</p>
+<tbody>
+<tr class="row-even"><td><p>write_reg &lt;misc:16&gt;&lt;addr:16&gt; &lt;data:32&gt;</p></td>
+<td><p>Execute a 32b data write to a 16b addr.</p>
 <p>addr is calculated from
 (documented register address - NVDLA_GLB.S_NVDLA_HW_VERSION_0.offset) &gt;&gt; 2.
 Left shift by 2 because hardware expects the word address.</p>
@@ -1175,17 +1174,17 @@ before sending next read or write.
 Bit 0 of misc (bit 16 of 32b field) is 1 for writes and 0 for reads.</p>
 <p>inp_txn_to_hexdump.pl will correct the rd/wr bit based on read_reg/write_reg cmd.
 Examples:</p>
-<div class="last highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">write_reg</span> <span class="mh">0x00030200</span> <span class="mh">0x1234c0de</span> <span class="o">//</span><span class="n">Wait</span> <span class="k">for</span> <span class="n">wr_complete</span> <span class="ow">or</span> <span class="n">error</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">write_reg</span> <span class="mh">0x00030200</span> <span class="mh">0x1234c0de</span> <span class="o">//</span><span class="n">Wait</span> <span class="k">for</span> <span class="n">wr_complete</span> <span class="ow">or</span> <span class="n">error</span>
 <span class="n">write_reg</span> <span class="mh">0x00010200</span> <span class="mh">0x1234da7a</span> <span class="o">//</span><span class="n">Don</span><span class="s1">&#39;t wait for wr_complete or error</span>
 </pre></div>
 </div>
 </td>
 </tr>
-<tr class="row-odd"><td>read_reg &lt;misc:16&gt;&lt;addr:16&gt; &lt;bitmask:32&gt; &lt;expectedData:32&gt;</td>
-<td><p class="first">Execute a polling read to 16b addr and poll until (returnData &amp; bitmask) == expectedData.
+<tr class="row-odd"><td><p>read_reg &lt;misc:16&gt;&lt;addr:16&gt; &lt;bitmask:32&gt; &lt;expectedData:32&gt;</p></td>
+<td><p>Execute a polling read to 16b addr and poll until (returnData &amp; bitmask) == expectedData.
 Number of polls will be equal to  +read_reg_poll_retries (default 50).
 Examples:</p>
-<div class="last highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">read_reg</span>  <span class="mh">0x00000200</span> <span class="mh">0xffffffff</span> <span class="mh">0x1234da7a</span> <span class="o">//</span><span class="mh">0x0020</span> <span class="n">read</span> <span class="n">back</span> <span class="n">should</span> <span class="n">be</span> <span class="mh">0x1234da7a</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">read_reg</span>  <span class="mh">0x00000200</span> <span class="mh">0xffffffff</span> <span class="mh">0x1234da7a</span> <span class="o">//</span><span class="mh">0x0020</span> <span class="n">read</span> <span class="n">back</span> <span class="n">should</span> <span class="n">be</span> <span class="mh">0x1234da7a</span>
 </pre></div>
 </div>
 </td>
@@ -1197,25 +1196,25 @@ Examples:</p>
 <h4>Memory Read/Write Commands<a class="headerlink" href="#memory-read-write-commands" title="Permalink to this headline">¶</a></h4>
 <p>To accelerate simulation these trace commands perform reads/writes directly to the memory model.</p>
 <p>Memory read and write Commands are listed in the following table.</p>
-<table border="1" class="colwidths-given docutils">
+<table class="colwidths-given docutils align-default">
 <colgroup>
-<col width="40%" />
-<col width="60%" />
+<col style="width: 40%" />
+<col style="width: 60%" />
 </colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">Command</th>
-<th class="head">Description</th>
+<thead>
+<tr class="row-odd"><th class="head"><p>Command</p></th>
+<th class="head"><p>Description</p></th>
 </tr>
 </thead>
-<tbody valign="top">
-<tr class="row-even"><td>write_mem &lt;addr:64&gt; &lt;bytemask:16&gt; &lt;wdata:128&gt;</td>
-<td>Execute a 128b data write with corresponding 16 byte mask to 64b addr.</td>
+<tbody>
+<tr class="row-even"><td><p>write_mem &lt;addr:64&gt; &lt;bytemask:16&gt; &lt;wdata:128&gt;</p></td>
+<td><p>Execute a 128b data write with corresponding 16 byte mask to 64b addr.</p></td>
 </tr>
-<tr class="row-odd"><td>read_mem &lt;addr:64&gt; &lt;bitmask:128&gt; &lt;expectedData:128&gt;</td>
-<td><p class="first">Execute a polling read to 64b addr and poll until 128b expectedData is met.
+<tr class="row-odd"><td><p>read_mem &lt;addr:64&gt; &lt;bitmask:128&gt; &lt;expectedData:128&gt;</p></td>
+<td><p>Execute a polling read to 64b addr and poll until 128b expectedData is met.
 Number of polls will be equal to  +read_mem_poll_retries (default 50).
 Example:</p>
-<div class="last highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">read_mem</span> <span class="mh">0x41000000</span> <span class="mh">0xffffffffffffffffffffffffffffffffffffffffffffffff</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">read_mem</span> <span class="mh">0x41000000</span> <span class="mh">0xffffffffffffffffffffffffffffffffffffffffffffffff</span>
                     <span class="mh">0x00000000000000000000000000080000</span>
 </pre></div>
 </div>
@@ -1227,22 +1226,22 @@ Example:</p>
 <div class="section" id="memory-load-dump-command">
 <h4>Memory Load/Dump Command<a class="headerlink" href="#memory-load-dump-command" title="Permalink to this headline">¶</a></h4>
 <p>To further accelerate simulation, the trace supports loading and dumping of memory directly to/from a file.</p>
-<table border="1" class="colwidths-given docutils">
+<table class="colwidths-given docutils align-default">
 <colgroup>
-<col width="40%" />
-<col width="60%" />
+<col style="width: 40%" />
+<col style="width: 60%" />
 </colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">Command</th>
-<th class="head">Description</th>
+<thead>
+<tr class="row-odd"><th class="head"><p>Command</p></th>
+<th class="head"><p>Description</p></th>
 </tr>
 </thead>
-<tbody valign="top">
-<tr class="row-even"><td>load_mem &lt;addr:64&gt; &lt;num_bytes:32&gt; &lt;string&gt;</td>
-<td>Use Verilog $readmemh() to load memory with 32b num_bytes at 64b addr from file, “string”.</td>
+<tbody>
+<tr class="row-even"><td><p>load_mem &lt;addr:64&gt; &lt;num_bytes:32&gt; &lt;string&gt;</p></td>
+<td><p>Use Verilog $readmemh() to load memory with 32b num_bytes at 64b addr from file, “string”.</p></td>
 </tr>
-<tr class="row-odd"><td>dump_mem &lt;addr:64&gt; &lt;num_bytes:32&gt; &lt;string&gt;</td>
-<td>Use Verilog $writememh() to dump 32b num_bytes at 64b addr of memory to file, “string”.</td>
+<tr class="row-odd"><td><p>dump_mem &lt;addr:64&gt; &lt;num_bytes:32&gt; &lt;string&gt;</p></td>
+<td><p>Use Verilog $writememh() to dump 32b num_bytes at 64b addr of memory to file, “string”.</p></td>
 </tr>
 </tbody>
 </table>
@@ -1251,20 +1250,20 @@ Example:</p>
 <h4>Interrupt Wait Command<a class="headerlink" href="#interrupt-wait-command" title="Permalink to this headline">¶</a></h4>
 <p>This command allows for trace replay to pause while NVDLA completes a task.  An interrupt from NVDLA
 will resume trace execution.</p>
-<table border="1" class="colwidths-given docutils">
+<table class="colwidths-given docutils align-default">
 <colgroup>
-<col width="40%" />
-<col width="60%" />
+<col style="width: 40%" />
+<col style="width: 60%" />
 </colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">Command</th>
-<th class="head">Description</th>
+<thead>
+<tr class="row-odd"><th class="head"><p>Command</p></th>
+<th class="head"><p>Description</p></th>
 </tr>
 </thead>
-<tbody valign="top">
-<tr class="row-even"><td>wait &lt;level/edge&gt; &lt;irq#&gt;</td>
-<td><p class="first">Block the current trace until either an interrupt level or edge is detected:</p>
-<div class="last highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">wait</span> <span class="n">high</span> <span class="n">dla_intr</span>     <span class="o">//</span> <span class="n">Wait</span> <span class="k">for</span> <span class="n">high</span> <span class="n">level</span> <span class="n">on</span> <span class="n">dla_intr</span>
+<tbody>
+<tr class="row-even"><td><p>wait &lt;level/edge&gt; &lt;irq#&gt;</p></td>
+<td><p>Block the current trace until either an interrupt level or edge is detected:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">wait</span> <span class="n">high</span> <span class="n">dla_intr</span>     <span class="o">//</span> <span class="n">Wait</span> <span class="k">for</span> <span class="n">high</span> <span class="n">level</span> <span class="n">on</span> <span class="n">dla_intr</span>
 <span class="n">wait</span> <span class="n">low</span> <span class="n">dla_intr</span>      <span class="o">//</span> <span class="n">Wait</span> <span class="k">for</span> <span class="n">low</span> <span class="n">level</span> <span class="n">on</span> <span class="n">dla_intr</span>
 <span class="n">wait</span> <span class="n">posedge</span> <span class="n">dla_intr</span>  <span class="o">//</span> <span class="n">Wait</span> <span class="k">for</span> <span class="n">posedge</span> <span class="n">on</span> <span class="n">dla_intr</span>
 <span class="n">wait</span> <span class="n">negedge</span> <span class="n">dla_intr</span>  <span class="o">//</span> <span class="n">Wait</span> <span class="k">for</span> <span class="n">negedge</span> <span class="n">on</span> <span class="n">dla_intr</span>
@@ -1312,16 +1311,16 @@ variable to this string in the Makefile:</p>
 <p>Now when the user runs a multi-test regression, the tests will run in parallel via LSF.</p>
 <p>The make targets are described below.</p>
 <ul>
-<li><p class="first">make sanity</p>
+<li><p>make sanity</p>
 <p>This target will build everything that is needed for any simulation.  It is the first thing that should be done. This make target will also run one test.  With this target, the user can determine if there are any compile or runtime issues with the installation and/or environment in a reasonably short period of time.</p>
 </li>
-<li><p class="first">make all</p>
+<li><p>make all</p>
 <p>This target will build everything that is needed for any simulation.  This make target will also run the regression set of tests.  See make regress for more details.</p>
 </li>
-<li><p class="first">make build</p>
+<li><p>make build</p>
 <p>This target will just generate and execute the VCS compile command line.  If test bench code is changed, this target is used to recompile and generated the VCS based simulation executable.</p>
 </li>
-<li><p class="first">make run</p>
+<li><p>make run</p>
 <p>This target will run a test. Default is the same test that was run with the make all target.  Additional arguments for this target are:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">DUMP</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="o">|</span><span class="mi">1</span><span class="p">]</span>  <span class="p">(</span><span class="n">specifies</span> <span class="k">if</span> <span class="n">waves</span> <span class="n">are</span> <span class="n">to</span> <span class="n">be</span> <span class="n">dumped</span> <span class="ow">or</span> <span class="ow">not</span><span class="o">.</span>  <span class="mi">0</span> <span class="ow">is</span> <span class="n">default</span><span class="p">,</span> <span class="n">which</span>
              <span class="n">indicates</span> <span class="n">that</span> <span class="n">waves</span> <span class="n">will</span> <span class="ow">not</span> <span class="n">be</span> <span class="n">dumped</span> <span class="n">out</span><span class="p">)</span><span class="o">.</span>
@@ -1329,9 +1328,8 @@ variable to this string in the Makefile:</p>
                           <span class="ow">is</span> <span class="o">../</span><span class="n">traces</span><span class="o">/</span><span class="n">traceplayer</span><span class="o">/</span><span class="n">sanity0</span><span class="p">)</span>
 </pre></div>
 </div>
-<dl class="docutils">
-<dt>Examples command lines::</dt>
-<dd><p class="first last">make run DUMP=1 TESTDIR=../traces/traceplayer/sanity0
+<dl class="simple">
+<dt>Examples command lines::</dt><dd><p>make run DUMP=1 TESTDIR=../traces/traceplayer/sanity0
 make run DUMP=0 TESTDIR=../traces/traceplayer/conv_8x8_fc_int16</p>
 </dd>
 </dl>
@@ -1342,7 +1340,7 @@ generated to help debug or view what is happening during the simulation. These l
 simulation in the same directory as the location of the test input file.  The VCS log will be
 named &lt;TESTDIR&gt;/test.log.</p>
 </li>
-<li><p class="first">make regress</p>
+<li><p>make regress</p>
 <p>This will run the entire regression serially. At the end of the regression a message will be displayed
 to user to check the results of the regression by issuing make check_regress.
 The make check_regress will display the results of each test run.
@@ -1357,32 +1355,32 @@ regression where 3 tests are running simultaneously, but only from the functiona
 </pre></div>
 </div>
 </li>
-<li><p class="first">make show_plusargs</p>
+<li><p>make show_plusargs</p>
 <p>This target will display test plus args to be used at run time as well as vcs build args to be used at compile time.</p>
 </li>
-<li><p class="first">make check</p>
+<li><p>make check</p>
 <p>This target runs the ‘export_top/verif/sim/checktest[_synthtb].pl’ script that reports status for a specified test.
 For a performance test with a local perf_regs file, it will report the performance score of the test.
 For tests with backdoor data, it will also compare the final test memory image with the expected
 image and report results of the comparison.</p>
 </li>
-<li><p class="first">make check_regress</p>
+<li><p>make check_regress</p>
 <p>This target is similar to make check but operates on the entire regression.</p>
 </li>
-<li><p class="first">make dve</p>
+<li><p>make dve</p>
 <p>This target will bring up the synopsys Discovery Visual Environment  (DVE) waveform viewer so that
 input and output signals to the NVDLA can be observed.</p>
 </li>
-<li><p class="first">make dumper</p>
+<li><p>make dumper</p>
 <p>This target will build the necessary targets if you want to generate verdi or siloti waveform formats.
 This target can be kicked off in parallel with the make build target.  It is not added to the
 make all target, since not all users have the verdi environment.</p>
 </li>
-<li><p class="first">make verdi</p>
+<li><p>make verdi</p>
 <p>This target will bring up the verdi design browser and waveform viewer, so that the input and output
 signals and transactions can be graphically viewed over time.</p>
 </li>
-<li><p class="first">make siloti</p>
+<li><p>make siloti</p>
 <p>This target will bring up the siloti design browser and waveform viewer , so that the input and
 output signals and transactions can be graphically viewed over time.  This dumping format
 is smaller/faster and more efficient.</p>
@@ -1392,50 +1390,50 @@ is smaller/faster and more efficient.</p>
 <div class="section" id="makefile-run-options">
 <h4>Makefile Run Options<a class="headerlink" href="#makefile-run-options" title="Permalink to this headline">¶</a></h4>
 <p>The user can specify one or more of the following options during the execution of the make targets.</p>
-<table border="1" class="colwidths-given docutils">
+<table class="colwidths-given docutils align-default">
 <colgroup>
-<col width="31%" />
-<col width="23%" />
-<col width="46%" />
+<col style="width: 31%" />
+<col style="width: 23%" />
+<col style="width: 46%" />
 </colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">Macro Option</th>
-<th class="head">Default</th>
-<th class="head">Description</th>
+<thead>
+<tr class="row-odd"><th class="head"><p>Macro Option</p></th>
+<th class="head"><p>Default</p></th>
+<th class="head"><p>Description</p></th>
 </tr>
 </thead>
-<tbody valign="top">
-<tr class="row-even"><td>DUMP=[0|1]</td>
-<td>0</td>
-<td>Controls whether or not waveforms are dumped during the simulation.  1=Dump waveforms.
-0=no waveforms dumped.</td>
+<tbody>
+<tr class="row-even"><td><p>DUMP=[0|1]</p></td>
+<td><p>0</p></td>
+<td><p>Controls whether or not waveforms are dumped during the simulation.  1=Dump waveforms.
+0=no waveforms dumped.</p></td>
 </tr>
-<tr class="row-odd"><td>MINIREGRESS=[0|1]</td>
-<td>0</td>
-<td><p class="first">Control whether to run a mini sanity regression with make regress:</p>
-<div class="last highlight-default notranslate"><div class="highlight"><pre><span></span>1=Run mini-sanity regression.
+<tr class="row-odd"><td><p>MINIREGRESS=[0|1]</p></td>
+<td><p>0</p></td>
+<td><p>Control whether to run a mini sanity regression with make regress:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>1=Run mini-sanity regression.
 0=Don’t run mini-sanity regression.
 </pre></div>
 </div>
 </td>
 </tr>
-<tr class="row-even"><td>PLUSARGS=[“listOfUserPlusOptions”]</td>
-<td>“”</td>
-<td><p class="first">See options described in the runtime configuration options section later in this document.
+<tr class="row-even"><td><p>PLUSARGS=[“listOfUserPlusOptions”]</p></td>
+<td><p>“”</p></td>
+<td><p>See options described in the runtime configuration options section later in this document.
 The user can supply one or more arguments for run time control of the tests.  This option can
 be used with the following make targets:  sanity, all, run, and regress.  For example:</p>
-<div class="last highlight-default notranslate"><div class="highlight"><pre><span></span>PLUSARGS=”+mem_read_latency=80 +read_reg_poll_retries=10000”
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>PLUSARGS=”+mem_read_latency=80 +read_reg_poll_retries=10000”
 </pre></div>
 </div>
 </td>
 </tr>
-<tr class="row-odd"><td>REGRESSTYPE=[FUNC|PERF|APP|ALL]</td>
-<td>ALL</td>
-<td>Guides make regress to run FUNCtional, PERFormance, APPlication, or ALL tests.</td>
+<tr class="row-odd"><td><p>REGRESSTYPE=[FUNC|PERF|APP|ALL]</p></td>
+<td><p>ALL</p></td>
+<td><p>Guides make regress to run FUNCtional, PERFormance, APPlication, or ALL tests.</p></td>
 </tr>
-<tr class="row-even"><td>TESTDIR=[pathToTestDirectory]</td>
-<td>../traces/traceplayer/sanity0</td>
-<td>Specify the test to run.</td>
+<tr class="row-even"><td><p>TESTDIR=[pathToTestDirectory]</p></td>
+<td><p>../traces/traceplayer/sanity0</p></td>
+<td><p>Specify the test to run.</p></td>
 </tr>
 </tbody>
 </table>
@@ -1443,136 +1441,136 @@ be used with the following make targets:  sanity, all, run, and regress.  For ex
 <div class="section" id="makefile-config">
 <h4>Makefile Config<a class="headerlink" href="#makefile-config" title="Permalink to this headline">¶</a></h4>
 <p>The Makefile uses the following major variables to for tool setup.  They should set appropriately based on the environment.</p>
-<table border="1" class="colwidths-given docutils">
+<table class="colwidths-given docutils align-default">
 <colgroup>
-<col width="33%" />
-<col width="33%" />
-<col width="33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
 </colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">Macro</th>
-<th class="head">Default</th>
-<th class="head">Description</th>
+<thead>
+<tr class="row-odd"><th class="head"><p>Macro</p></th>
+<th class="head"><p>Default</p></th>
+<th class="head"><p>Description</p></th>
 </tr>
 </thead>
-<tbody valign="top">
-<tr class="row-even"><td>VCS_HOME</td>
-<td>/home/tools/vcs/mx-2015.09-SP2-9-T0426</td>
-<td>Path to VCS, including version.</td>
+<tbody>
+<tr class="row-even"><td><p>VCS_HOME</p></td>
+<td><p>/home/tools/vcs/mx-2015.09-SP2-9-T0426</p></td>
+<td><p>Path to VCS, including version.</p></td>
 </tr>
-<tr class="row-odd"><td>VCS_CC</td>
-<td>/home/utils/gcc-4.7.2/bin/g++</td>
-<td>C compiler used by VCS.</td>
+<tr class="row-odd"><td><p>VCS_CC</p></td>
+<td><p>/home/utils/gcc-4.7.2/bin/g++</p></td>
+<td><p>C compiler used by VCS.</p></td>
 </tr>
-<tr class="row-even"><td>LM_LICENSE_FILE</td>
-<td>/home/tools/admin/license_files</td>
-<td>License file for VCS.</td>
+<tr class="row-even"><td><p>LM_LICENSE_FILE</p></td>
+<td><p>/home/tools/admin/license_files</p></td>
+<td><p>License file for VCS.</p></td>
 </tr>
-<tr class="row-odd"><td>VERDI_HOME</td>
-<td>/home/tools/debussy/verdi3_2015.09-SP2-11</td>
-<td>Path to verdi waveform viewer.</td>
+<tr class="row-odd"><td><p>VERDI_HOME</p></td>
+<td><p>/home/tools/debussy/verdi3_2015.09-SP2-11</p></td>
+<td><p>Path to verdi waveform viewer.</p></td>
 </tr>
-<tr class="row-even"><td>NOVAS_HOME</td>
-<td>/home/tools/debussy/verdi3_2015.09-SP2-11</td>
-<td>Path to verdi waveform viewer.</td>
+<tr class="row-even"><td><p>NOVAS_HOME</p></td>
+<td><p>/home/tools/debussy/verdi3_2015.09-SP2-11</p></td>
+<td><p>Path to verdi waveform viewer.</p></td>
 </tr>
-<tr class="row-odd"><td>DUMP</td>
-<td>0</td>
-<td>Control whether or not waveforms are dumped during the simulation.  1=Dump waveforms. 0=No waveforms dumped.</td>
+<tr class="row-odd"><td><p>DUMP</p></td>
+<td><p>0</p></td>
+<td><p>Control whether or not waveforms are dumped during the simulation.  1=Dump waveforms. 0=No waveforms dumped.</p></td>
 </tr>
-<tr class="row-even"><td>DUMPER</td>
-<td>DVE</td>
-<td>Format of the waveform file will by default be in dve format.  To put in Novas’ verdi format use
-DUMPER=VERDI . To use Novas essential signal list format use DUMPER=SILOTI</td>
+<tr class="row-even"><td><p>DUMPER</p></td>
+<td><p>DVE</p></td>
+<td><p>Format of the waveform file will by default be in dve format.  To put in Novas’ verdi format use
+DUMPER=VERDI . To use Novas essential signal list format use DUMPER=SILOTI</p></td>
 </tr>
-<tr class="row-odd"><td>IMAGEVIEWER</td>
-<td>gimp</td>
-<td>Path to bit map image viewing tool.</td>
+<tr class="row-odd"><td><p>IMAGEVIEWER</p></td>
+<td><p>gimp</p></td>
+<td><p>Path to bit map image viewing tool.</p></td>
 </tr>
-<tr class="row-even"><td>VERDI_DUMP_NAME</td>
-<td>debussy</td>
-<td>Name of the verdi dump files</td>
+<tr class="row-even"><td><p>VERDI_DUMP_NAME</p></td>
+<td><p>debussy</p></td>
+<td><p>Name of the verdi dump files</p></td>
 </tr>
-<tr class="row-odd"><td>SILOTI_DUMP_NAME</td>
-<td>siloti</td>
-<td>Name of the siloti (esa enhanced) dump files</td>
+<tr class="row-odd"><td><p>SILOTI_DUMP_NAME</p></td>
+<td><p>siloti</p></td>
+<td><p>Name of the siloti (esa enhanced) dump files</p></td>
 </tr>
-<tr class="row-even"><td>VCS_EXECUTABLE</td>
-<td>simv</td>
-<td>Used to specify the name of the generated simulation executable.</td>
+<tr class="row-even"><td><p>VCS_EXECUTABLE</p></td>
+<td><p>simv</p></td>
+<td><p>Used to specify the name of the generated simulation executable.</p></td>
 </tr>
-<tr class="row-odd"><td>TESTDIR</td>
-<td>../traces/traceplayer/sanity0</td>
-<td>Used to specify the test that user wants to run.</td>
+<tr class="row-odd"><td><p>TESTDIR</p></td>
+<td><p>../traces/traceplayer/sanity0</p></td>
+<td><p>Used to specify the test that user wants to run.</p></td>
 </tr>
-<tr class="row-even"><td>REGRESS_LIST</td>
-<td>see Makefile</td>
-<td>Used to specify the list of tests via directory names that should be run in a regression</td>
+<tr class="row-even"><td><p>REGRESS_LIST</p></td>
+<td><p>see Makefile</p></td>
+<td><p>Used to specify the list of tests via directory names that should be run in a regression</p></td>
 </tr>
-<tr class="row-odd"><td>DEFAULT_PLUSARGS</td>
-<td>+continue_on_fail +read_reg_poll_retries=100 +read_reg_poll_interval_clocks=100 +read_reg_timeout_clocks=100000</td>
-<td>Default simulator run time arguments.  See simulator runtime options described later in this document.</td>
+<tr class="row-odd"><td><p>DEFAULT_PLUSARGS</p></td>
+<td><p>+continue_on_fail +read_reg_poll_retries=100 +read_reg_poll_interval_clocks=100 +read_reg_timeout_clocks=100000</p></td>
+<td><p>Default simulator run time arguments.  See simulator runtime options described later in this document.</p></td>
 </tr>
 </tbody>
 </table>
 <p>There are other tools that the Makefile uses and these may need to be adjusted to the customer
 Linux environment.  The following table lists these variables.</p>
-<table border="1" class="colwidths-given docutils">
+<table class="colwidths-given docutils align-default">
 <colgroup>
-<col width="33%" />
-<col width="33%" />
-<col width="33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
 </colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">Macro</th>
-<th class="head">Default</th>
-<th class="head">Description</th>
+<thead>
+<tr class="row-odd"><th class="head"><p>Macro</p></th>
+<th class="head"><p>Default</p></th>
+<th class="head"><p>Description</p></th>
 </tr>
 </thead>
-<tbody valign="top">
-<tr class="row-even"><td>AWK</td>
-<td>/usr/bin/awk</td>
-<td>Standard awk. Used as a  pattern scanning and processing language</td>
+<tbody>
+<tr class="row-even"><td><p>AWK</p></td>
+<td><p>/usr/bin/awk</p></td>
+<td><p>Standard awk. Used as a  pattern scanning and processing language</p></td>
 </tr>
-<tr class="row-odd"><td>CAT</td>
-<td>/bin/cat</td>
-<td>Path to default cat for concatenating files and printing to standard output.</td>
+<tr class="row-odd"><td><p>CAT</p></td>
+<td><p>/bin/cat</p></td>
+<td><p>Path to default cat for concatenating files and printing to standard output.</p></td>
 </tr>
-<tr class="row-even"><td>CSH</td>
-<td>/bin/csh</td>
-<td>Path to the environment C shell executable.</td>
+<tr class="row-even"><td><p>CSH</p></td>
+<td><p>/bin/csh</p></td>
+<td><p>Path to the environment C shell executable.</p></td>
 </tr>
-<tr class="row-odd"><td>EGREP</td>
-<td>/bin/egrep</td>
-<td>Standard egrep. Used to print lines matching a pattern when passed regexpressions.</td>
+<tr class="row-odd"><td><p>EGREP</p></td>
+<td><p>/bin/egrep</p></td>
+<td><p>Standard egrep. Used to print lines matching a pattern when passed regexpressions.</p></td>
 </tr>
-<tr class="row-even"><td>GREP</td>
-<td>/bin/grep</td>
-<td>Standard grep. Used to print lines matching a pattern.</td>
+<tr class="row-even"><td><p>GREP</p></td>
+<td><p>/bin/grep</p></td>
+<td><p>Standard grep. Used to print lines matching a pattern.</p></td>
 </tr>
-<tr class="row-odd"><td>LS</td>
-<td>/bin/ls</td>
-<td>Standard ls for listing what is in a direcotory.</td>
+<tr class="row-odd"><td><p>LS</p></td>
+<td><p>/bin/ls</p></td>
+<td><p>Standard ls for listing what is in a direcotory.</p></td>
 </tr>
-<tr class="row-even"><td>MD5SUM</td>
-<td>/usr/bin/md5sum</td>
-<td>compute and check MD5 message digest</td>
+<tr class="row-even"><td><p>MD5SUM</p></td>
+<td><p>/usr/bin/md5sum</p></td>
+<td><p>compute and check MD5 message digest</p></td>
 </tr>
-<tr class="row-odd"><td>PERL</td>
-<td>/home/utils/perl-5.14/5.14.1-nothreads-64/bin/perl</td>
-<td>Standard perl installation, for executing perl scripts.</td>
+<tr class="row-odd"><td><p>PERL</p></td>
+<td><p>/home/utils/perl-5.14/5.14.1-nothreads-64/bin/perl</p></td>
+<td><p>Standard perl installation, for executing perl scripts.</p></td>
 </tr>
-<tr class="row-even"><td>RM</td>
-<td>/bin/rm</td>
-<td>Path to the environment rm executable. Used to remove files and directories.</td>
+<tr class="row-even"><td><p>RM</p></td>
+<td><p>/bin/rm</p></td>
+<td><p>Path to the environment rm executable. Used to remove files and directories.</p></td>
 </tr>
-<tr class="row-odd"><td>TAR</td>
-<td>/bin/tar</td>
-<td>The GNU version of the tar archiving utility</td>
+<tr class="row-odd"><td><p>TAR</p></td>
+<td><p>/bin/tar</p></td>
+<td><p>The GNU version of the tar archiving utility</p></td>
 </tr>
-<tr class="row-even"><td>TEE</td>
-<td>/bin/cp</td>
-<td>Standard tee for reading from standard input and writing to standard output and files.</td>
+<tr class="row-even"><td><p>TEE</p></td>
+<td><p>/bin/cp</p></td>
+<td><p>Standard tee for reading from standard input and writing to standard output and files.</p></td>
 </tr>
 </tbody>
 </table>
@@ -1618,78 +1616,78 @@ $finish called.
 <div class="section" id="runtime-configuration">
 <h4>Runtime Configuration<a class="headerlink" href="#runtime-configuration" title="Permalink to this headline">¶</a></h4>
 <ul>
-<li><p class="first">CSB Master Trace Player</p>
+<li><p>CSB Master Trace Player</p>
 <p>At runtime, the user can specify various run time control and debug options in the trace player.   By default, no change is required to pass provided tests.</p>
-<table border="1" class="colwidths-given docutils">
+<table class="colwidths-given docutils align-default">
 <colgroup>
-<col width="50%" />
-<col width="50%" />
+<col style="width: 50%" />
+<col style="width: 50%" />
 </colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">Plusarg</th>
-<th class="head">Description</th>
+<thead>
+<tr class="row-odd"><th class="head"><p>Plusarg</p></th>
+<th class="head"><p>Description</p></th>
 </tr>
 </thead>
-<tbody valign="top">
-<tr class="row-even"><td>+ignore_poll</td>
-<td>Don’t retry if poll mismatches.  Just continue running.</td>
+<tbody>
+<tr class="row-even"><td><p>+ignore_poll</p></td>
+<td><p>Don’t retry if poll mismatches.  Just continue running.</p></td>
 </tr>
-<tr class="row-odd"><td>+continue_on_fail</td>
-<td>Retry polls if they mismatch but continue running instead of dying if the limit is hit.</td>
+<tr class="row-odd"><td><p>+continue_on_fail</p></td>
+<td><p>Retry polls if they mismatch but continue running instead of dying if the limit is hit.</p></td>
 </tr>
-<tr class="row-even"><td>+ignore_badf</td>
-<td>If a register read returns badf, continue instead of polling.  (Used to ignore bad registers in the trace.)</td>
+<tr class="row-even"><td><p>+ignore_badf</p></td>
+<td><p>If a register read returns badf, continue instead of polling.  (Used to ignore bad registers in the trace.)</p></td>
 </tr>
-<tr class="row-odd"><td>+read_reg_poll_retries=&lt;cnt&gt;</td>
-<td>Number of retries on reg read.</td>
+<tr class="row-odd"><td><p>+read_reg_poll_retries=&lt;cnt&gt;</p></td>
+<td><p>Number of retries on reg read.</p></td>
 </tr>
-<tr class="row-even"><td>+read_mem_poll_retries=&lt;cnt&gt;</td>
-<td>Number of retries on mem read.</td>
+<tr class="row-even"><td><p>+read_mem_poll_retries=&lt;cnt&gt;</p></td>
+<td><p>Number of retries on mem read.</p></td>
 </tr>
-<tr class="row-odd"><td>+read_reg_poll_interval_clocks=&lt;clks&gt;</td>
-<td>Number of clocks to wait after a bad reg match, before retrying</td>
+<tr class="row-odd"><td><p>+read_reg_poll_interval_clocks=&lt;clks&gt;</p></td>
+<td><p>Number of clocks to wait after a bad reg match, before retrying</p></td>
 </tr>
-<tr class="row-even"><td>+read_mem_poll_interval_clocks=&lt;clks&gt;</td>
-<td>Number of clocks to wait after a bad mem match, before retrying</td>
+<tr class="row-even"><td><p>+read_mem_poll_interval_clocks=&lt;clks&gt;</p></td>
+<td><p>Number of clocks to wait after a bad mem match, before retrying</p></td>
 </tr>
-<tr class="row-odd"><td>+intr_timeout_clocks=&lt;clks&gt;</td>
-<td>Number of clocks to wait after a bad interrupt wait, before fatal error.</td>
+<tr class="row-odd"><td><p>+intr_timeout_clocks=&lt;clks&gt;</p></td>
+<td><p>Number of clocks to wait after a bad interrupt wait, before fatal error.</p></td>
 </tr>
 </tbody>
 </table>
 </li>
-<li><p class="first">DBBIF Interface To Memory Subsystem</p>
+<li><p>DBBIF Interface To Memory Subsystem</p>
 <p>At runtime, the behavior of the DBBIF interface to the memory subsystem can be altered with Verilog plusargs. The user can specify the following.</p>
-<table border="1" class="colwidths-given docutils">
+<table class="colwidths-given docutils align-default">
 <colgroup>
-<col width="20%" />
-<col width="80%" />
+<col style="width: 20%" />
+<col style="width: 80%" />
 </colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">Plusarg</th>
-<th class="head">Description</th>
+<thead>
+<tr class="row-odd"><th class="head"><p>Plusarg</p></th>
+<th class="head"><p>Description</p></th>
 </tr>
 </thead>
-<tbody valign="top">
-<tr class="row-even"><td>+mem_bandwidth_pct=&lt;pct&gt; and +mem_bandwidth_window=&lt;clks&gt;</td>
-<td>Bandwidth: Memory bandwidth can be configured with the plusargs +mem_bandwidth_pct, and +mem_bandwidth_window.  mem_bandwidth_pct (default 50) is a percentage which says how often a data beat can be transferred across the interface.  mem_bandwidth_window is the number of clocks to use as the averaging window for computing the utilization percentage (default 100). This percentage reflects the combined read/write bandwidth of both memory interfaces. As an example, 100% bandwidth utilization would imply that for every clock cycle, write data was being written on both mem0/mem1, and read data was being returned on both mem0/mem1. At 400MHz * 16 bytes * 4 lanes. 100% utilization implies a combined bandwidth of 25.6GB/sec. To limit bandwidth to 12.8GB/sec, a mem_bandwidth_pct of 50 would be used (at most 2 of 4 bidirectional lanes active per clock, on average).</td>
+<tbody>
+<tr class="row-even"><td><p>+mem_bandwidth_pct=&lt;pct&gt; and +mem_bandwidth_window=&lt;clks&gt;</p></td>
+<td><p>Bandwidth: Memory bandwidth can be configured with the plusargs +mem_bandwidth_pct, and +mem_bandwidth_window.  mem_bandwidth_pct (default 50) is a percentage which says how often a data beat can be transferred across the interface.  mem_bandwidth_window is the number of clocks to use as the averaging window for computing the utilization percentage (default 100). This percentage reflects the combined read/write bandwidth of both memory interfaces. As an example, 100% bandwidth utilization would imply that for every clock cycle, write data was being written on both mem0/mem1, and read data was being returned on both mem0/mem1. At 400MHz * 16 bytes * 4 lanes. 100% utilization implies a combined bandwidth of 25.6GB/sec. To limit bandwidth to 12.8GB/sec, a mem_bandwidth_pct of 50 would be used (at most 2 of 4 bidirectional lanes active per clock, on average).</p></td>
 </tr>
-<tr class="row-odd"><td>+mem_read_latency=&lt;clks&gt;</td>
-<td>Read latency:  The read latency of the memory can be configured with the plusarg +mem_read_latency. The value of the parameter determines the number of clock cycles between when the read is accepted and when the read return valid signal is asserted. The default value is 180 (450ns &#64; 400MHz), and the maximum value is 1000.</td>
+<tr class="row-odd"><td><p>+mem_read_latency=&lt;clks&gt;</p></td>
+<td><p>Read latency:  The read latency of the memory can be configured with the plusarg +mem_read_latency. The value of the parameter determines the number of clock cycles between when the read is accepted and when the read return valid signal is asserted. The default value is 180 (450ns &#64; 400MHz), and the maximum value is 1000.</p></td>
 </tr>
-<tr class="row-even"><td>+mem_write_latency=&lt;clks&gt;</td>
-<td>Write to write ack latency: The write latency of the memory can be configured with the plusarg +mem_write_latency. The value of the parameter determines the number of clock cycles between when the last beat of write data is finished, and when the write response valid signal is asserted. The default value is 30 (75ns &#64; 400MHz), and the maximum value is 1000.</td>
+<tr class="row-even"><td><p>+mem_write_latency=&lt;clks&gt;</p></td>
+<td><p>Write to write ack latency: The write latency of the memory can be configured with the plusarg +mem_write_latency. The value of the parameter determines the number of clock cycles between when the last beat of write data is finished, and when the write response valid signal is asserted. The default value is 30 (75ns &#64; 400MHz), and the maximum value is 1000.</p></td>
 </tr>
-<tr class="row-odd"><td>+max_txn_outstanding_per_channel=&lt;txn&gt;</td>
-<td>Outstanding transaction count:  +max_txn_outstanding_per_channel specifies the total combined read + write transactions that are allowed to be outstanding per channel at any moment of time.  The default value is 128.</td>
+<tr class="row-odd"><td><p>+max_txn_outstanding_per_channel=&lt;txn&gt;</p></td>
+<td><p>Outstanding transaction count:  +max_txn_outstanding_per_channel specifies the total combined read + write transactions that are allowed to be outstanding per channel at any moment of time.  The default value is 128.</p></td>
 </tr>
-<tr class="row-even"><td>+max_rd_outstanding_per_channel=&lt;txn&gt;</td>
-<td>Outstanding read transaction count:
-+max_rd_outstanding_per_channel limits the number of read transactions that are allowed to be outstanding per channel at any moment of time.  The default value is 128.</td>
+<tr class="row-even"><td><p>+max_rd_outstanding_per_channel=&lt;txn&gt;</p></td>
+<td><p>Outstanding read transaction count:
++max_rd_outstanding_per_channel limits the number of read transactions that are allowed to be outstanding per channel at any moment of time.  The default value is 128.</p></td>
 </tr>
-<tr class="row-odd"><td>+max_wr_outstanding_per_channel=&lt;txn&gt;</td>
-<td>Outstanding write transaction count:
-+max_wr_outstanding_per_channel limits the number of write transactions that are allowed to be outstanding per channel at any moment of time.  The default value is 128.</td>
+<tr class="row-odd"><td><p>+max_wr_outstanding_per_channel=&lt;txn&gt;</p></td>
+<td><p>Outstanding write transaction count:
++max_wr_outstanding_per_channel limits the number of write transactions that are allowed to be outstanding per channel at any moment of time.  The default value is 128.</p></td>
 </tr>
 </tbody>
 </table>
@@ -1866,13 +1864,11 @@ checking data from a simulated AXI memory).</p>
     </ul>
    </div>
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="../../search.html" method="get">
-      <input type="text" name="q" />
+      <input type="text" name="q" aria-labelledby="searchlabel" />
       <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
@@ -1908,7 +1904,7 @@ checking data from a simulated AXI memory).</p>
 href="../../copyright.html">Copyright</a> 2018, NVIDIA Corporation.
 <a href="http://www.nvidia.com/object/legal_info.html">Legal Information.</a>
 <a href="http://www.nvidia.com/object/privacy_policy.html">Privacy Policy.</a>
-Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.1.
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.2.0.
 </div>
 </div>
 </div>

@@ -1,11 +1,9 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
     <title>Integrator’s Manual &#8212; NVDLA Documentation</title>
     <link rel="stylesheet" href="../../_static/nvdla.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -14,7 +12,8 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../../_static/language_data.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="Scalability parameters and ConfigROM" href="scalability.html" />
     <link rel="prev" title="NVDLA Environment Setup Guide" href="environment_setup_guide.html" />
@@ -57,13 +56,14 @@
 <div class="contents topic" id="contents">
 <p class="topic-title first">Contents</p>
 <ul class="simple">
-<li><a class="reference internal" href="#integrator-s-manual" id="id13">Integrator’s Manual</a><ul>
-<li><a class="reference internal" href="#introduction" id="id14">Introduction</a></li>
-<li><a class="reference internal" href="#hardware-system-interface" id="id15">Hardware System Interface</a></li>
-<li><a class="reference internal" href="#tree-build" id="id16">Tree Build</a></li>
-<li><a class="reference internal" href="#performance-model" id="id17">Performance Model</a></li>
-<li><a class="reference internal" href="#library-cells" id="id18">Library Cells</a></li>
-<li><a class="reference internal" href="#synthesis" id="id19">Synthesis</a></li>
+<li><p><a class="reference internal" href="#integrator-s-manual" id="id13">Integrator’s Manual</a></p>
+<ul>
+<li><p><a class="reference internal" href="#introduction" id="id14">Introduction</a></p></li>
+<li><p><a class="reference internal" href="#hardware-system-interface" id="id15">Hardware System Interface</a></p></li>
+<li><p><a class="reference internal" href="#tree-build" id="id16">Tree Build</a></p></li>
+<li><p><a class="reference internal" href="#performance-model" id="id17">Performance Model</a></p></li>
+<li><p><a class="reference internal" href="#library-cells" id="id18">Library Cells</a></p></li>
+<li><p><a class="reference internal" href="#synthesis" id="id19">Synthesis</a></p></li>
 </ul>
 </li>
 </ul>
@@ -99,12 +99,12 @@ to a controlling CPU that NVDLA has completed a task.</p>
 <h3>Interfaces<a class="headerlink" href="#interfaces" title="Permalink to this headline">¶</a></h3>
 <p>NVDLA’s external pins are grouped into the following interfaces:</p>
 <ol class="arabic simple">
-<li>Clock and Reset interface</li>
-<li>System Data interface</li>
-<li>Configure interface</li>
-<li>Interrupt interface</li>
-<li>Power control</li>
-<li>DFT interface</li>
+<li><p>Clock and Reset interface</p></li>
+<li><p>System Data interface</p></li>
+<li><p>Configure interface</p></li>
+<li><p>Interrupt interface</p></li>
+<li><p>Power control</p></li>
+<li><p>DFT interface</p></li>
 </ol>
 <div class="section" id="clock-and-reset-interface">
 <h4>Clock and reset interface<a class="headerlink" href="#clock-and-reset-interface" title="Permalink to this headline">¶</a></h4>
@@ -120,44 +120,44 @@ flops, so only the deassertion edge of the dla_reset_rstn signal is synchronized
 assertion edge is passed through.
 The other reset signal, direct_reset_, is
 useful for ATPG testing since it bypasses the internal synchronization.</p>
-<table border="1" class="colwidths-given docutils" id="id2">
+<table class="colwidths-given docutils align-default" id="id2">
 <caption><span class="caption-number">Table 61 </span><span class="caption-text">Clock and Reset Signals</span><a class="headerlink" href="#id2" title="Permalink to this table">¶</a></caption>
 <colgroup>
-<col width="20%" />
-<col width="40%" />
-<col width="40%" />
+<col style="width: 20%" />
+<col style="width: 40%" />
+<col style="width: 40%" />
 </colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">Signal Name</th>
-<th class="head">Description</th>
-<th class="head">Recommended Connection</th>
+<thead>
+<tr class="row-odd"><th class="head"><p>Signal Name</p></th>
+<th class="head"><p>Description</p></th>
+<th class="head"><p>Recommended Connection</p></th>
 </tr>
 </thead>
-<tbody valign="top">
-<tr class="row-even"><td>dla_core_clk</td>
-<td>Functional clock for NVDLA</td>
-<td>Always ticking clock</td>
+<tbody>
+<tr class="row-even"><td><p>dla_core_clk</p></td>
+<td><p>Functional clock for NVDLA</p></td>
+<td><p>Always ticking clock</p></td>
 </tr>
-<tr class="row-odd"><td>dla_csb_clk</td>
-<td>CSB bus clock for NVDLA configuration, same clock domain as host</td>
-<td>Clock of the configurable interface</td>
+<tr class="row-odd"><td><p>dla_csb_clk</p></td>
+<td><p>CSB bus clock for NVDLA configuration, same clock domain as host</p></td>
+<td><p>Clock of the configurable interface</p></td>
 </tr>
-<tr class="row-even"><td>global_clk_ovr_on</td>
-<td>Can be used to disable all non-inferred clock gates.  Typically not used.</td>
-<td>Connect to a register in system controller which is reset to 0.
-You can also tie to low.</td>
+<tr class="row-even"><td><p>global_clk_ovr_on</p></td>
+<td><p>Can be used to disable all non-inferred clock gates.  Typically not used.</p></td>
+<td><p>Connect to a register in system controller which is reset to 0.
+You can also tie to low.</p></td>
 </tr>
-<tr class="row-odd"><td>tmc2slcg_disable_clock_gating</td>
-<td>Disable clock gating during DFT operations.</td>
-<td>Connect system DFT controller, should be 0 in normal function mode.</td>
+<tr class="row-odd"><td><p>tmc2slcg_disable_clock_gating</p></td>
+<td><p>Disable clock gating during DFT operations.</p></td>
+<td><p>Connect system DFT controller, should be 0 in normal function mode.</p></td>
 </tr>
-<tr class="row-even"><td>direct_reset_</td>
-<td>DFT reset to allow for direct reset controllability during ATPG testing.</td>
-<td>Typically routed to a chip level port.</td>
+<tr class="row-even"><td><p>direct_reset_</p></td>
+<td><p>DFT reset to allow for direct reset controllability during ATPG testing.</p></td>
+<td><p>Typically routed to a chip level port.</p></td>
 </tr>
-<tr class="row-odd"><td>dla_reset_rstn</td>
-<td>Main functional reset for DLA block.</td>
-<td>System reset controller, can be hard-wired control logic or connect to register if SW reset is desired.</td>
+<tr class="row-odd"><td><p>dla_reset_rstn</p></td>
+<td><p>Main functional reset for DLA block.</p></td>
+<td><p>System reset controller, can be hard-wired control logic or connect to register if SW reset is desired.</p></td>
 </tr>
 </tbody>
 </table>
@@ -190,33 +190,33 @@ is independent from any other packet.</p>
 consumption when NVDLA is inactive. Each layout partition has one ram power control bus, allowing
 power to be ramped up/down one or more partitions at a time.  If a user is using RAM cells
 without power controls, those signals can be tied to 0.</p>
-<table border="1" class="colwidths-given docutils" id="id3">
+<table class="colwidths-given docutils align-default" id="id3">
 <caption><span class="caption-number">Table 62 </span><span class="caption-text">Power Control Signals</span><a class="headerlink" href="#id3" title="Permalink to this table">¶</a></caption>
 <colgroup>
-<col width="20%" />
-<col width="40%" />
-<col width="40%" />
+<col style="width: 20%" />
+<col style="width: 40%" />
+<col style="width: 40%" />
 </colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">Signal Name</th>
-<th class="head">Description</th>
-<th class="head">Recommended Connection</th>
+<thead>
+<tr class="row-odd"><th class="head"><p>Signal Name</p></th>
+<th class="head"><p>Description</p></th>
+<th class="head"><p>Recommended Connection</p></th>
 </tr>
 </thead>
-<tbody valign="top">
-<tr class="row-even"><td>nvdla_pwrbus_ram_*_pd[7:0]</td>
-<td>RAM power gate.  These signals are routed to the SLEEP_EN bus on the RAM macro wrappers.
-They can be used for controlling low power modes of the target RAMs.</td>
-<td>SoC power management unit or tie to 0</td>
+<tbody>
+<tr class="row-even"><td><p>nvdla_pwrbus_ram_*_pd[7:0]</p></td>
+<td><p>RAM power gate.  These signals are routed to the SLEEP_EN bus on the RAM macro wrappers.
+They can be used for controlling low power modes of the target RAMs.</p></td>
+<td><p>SoC power management unit or tie to 0</p></td>
 </tr>
-<tr class="row-odd"><td>nvdla_pwrbus_ram_*_pd[8]</td>
-<td>RAM retention control.  This signal is routed to the RET_EN signal on the RAM macro wrappers.
-It can be used for controlling retention control, or any other semi-static RAM configuration bit.</td>
-<td>SoC power management unit or tie to 0</td>
+<tr class="row-odd"><td><p>nvdla_pwrbus_ram_*_pd[8]</p></td>
+<td><p>RAM retention control.  This signal is routed to the RET_EN signal on the RAM macro wrappers.
+It can be used for controlling retention control, or any other semi-static RAM configuration bit.</p></td>
+<td><p>SoC power management unit or tie to 0</p></td>
 </tr>
-<tr class="row-even"><td>nvdla_pwrbus_ram_*_pd[31:9]</td>
-<td>Not used</td>
-<td>Tie to 0</td>
+<tr class="row-even"><td><p>nvdla_pwrbus_ram_*_pd[31:9]</p></td>
+<td><p>Not used</p></td>
+<td><p>Tie to 0</p></td>
 </tr>
 </tbody>
 </table>
@@ -224,24 +224,24 @@ It can be used for controlling retention control, or any other semi-static RAM c
 <div class="section" id="dft">
 <h4>DFT<a class="headerlink" href="#dft" title="Permalink to this headline">¶</a></h4>
 <p>In current release, NVDLA has implemented one signal named test_mode to enable DFT.</p>
-<table border="1" class="colwidths-given docutils" id="id4">
+<table class="colwidths-given docutils align-default" id="id4">
 <caption><span class="caption-number">Table 63 </span><span class="caption-text">DFT Signals</span><a class="headerlink" href="#id4" title="Permalink to this table">¶</a></caption>
 <colgroup>
-<col width="20%" />
-<col width="40%" />
-<col width="40%" />
+<col style="width: 20%" />
+<col style="width: 40%" />
+<col style="width: 40%" />
 </colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">Signal Name</th>
-<th class="head">Description</th>
-<th class="head">Recommended Connection</th>
+<thead>
+<tr class="row-odd"><th class="head"><p>Signal Name</p></th>
+<th class="head"><p>Description</p></th>
+<th class="head"><p>Recommended Connection</p></th>
 </tr>
 </thead>
-<tbody valign="top">
-<tr class="row-even"><td>test_mode</td>
-<td>Enable test mode.  The only use of this signal currently is to select between
-the functional and DFT reset signals.</td>
-<td>Should connect to the system DFT controller as needed.  Otherwise, tie to 0.</td>
+<tbody>
+<tr class="row-even"><td><p>test_mode</p></td>
+<td><p>Enable test mode.  The only use of this signal currently is to select between
+the functional and DFT reset signals.</p></td>
+<td><p>Should connect to the system DFT controller as needed.  Otherwise, tie to 0.</p></td>
 </tr>
 </tbody>
 </table>
@@ -267,10 +267,10 @@ is ideal performance as it doesn’t account for some software overhead.  The sp
 in the repository at hw/perf/DLA_OpenSource_Performance.xlsx.  The first tab in the spreadsheet, named
 “Readme”, describes how the model works.  It calculates the following metrics.</p>
 <ul class="simple">
-<li>Average run time for a frame</li>
-<li>Frames per second</li>
-<li>Hardware MAC utilization</li>
-<li>Network MAC utilization</li>
+<li><p>Average run time for a frame</p></li>
+<li><p>Frames per second</p></li>
+<li><p>Hardware MAC utilization</p></li>
+<li><p>Network MAC utilization</p></li>
 </ul>
 <p>The tool can be used to look at the affect of different hardware configurations on network performance.</p>
 </div>
@@ -289,16 +289,16 @@ they should be replaced with a standard cell designed to reduce MTBF.  To replac
 RTL impelemtnation of the cells below can be removed (keeping the port list), and replaced
 with an instantiation of a standard cell synchronizer as appropriate.</p>
 <ul>
-<li><p class="first">p_SSYNC2DO_C_PP</p>
+<li><p>p_SSYNC2DO_C_PP</p>
 <p>Two flop stage deep synchronizer with an active low asynchronous reset/clear pin.</p>
 </li>
-<li><p class="first">p_SSYNC3DO</p>
+<li><p>p_SSYNC3DO</p>
 <p>Three flop stage deep synchronizer.</p>
 </li>
-<li><p class="first">p_SSYNC3DO_C_PPP</p>
+<li><p>p_SSYNC3DO_C_PPP</p>
 <p>Three flop stage deep synchronizer with an active low asynchronous reset/clear pin.</p>
 </li>
-<li><p class="first">p_SSYNC3DO_S_PPP</p>
+<li><p>p_SSYNC3DO_S_PPP</p>
 <p>Three flop stage deep synchronizer with an active low asynchronous set pin.</p>
 </li>
 </ul>
@@ -329,93 +329,93 @@ a Verilog wrapper which maps to RAM cells from a local library.</p>
 <h4>RAMDP: Dual-Port SRAM<a class="headerlink" href="#ramdp-dual-port-sram" title="Permalink to this headline">¶</a></h4>
 <p>This section describes a dual-port SRAM design. The macro is designed to perform
 read and write operations independently.</p>
-<table border="1" class="docutils">
+<table class="docutils align-default">
 <colgroup>
-<col width="25%" />
-<col width="23%" />
-<col width="15%" />
-<col width="38%" />
+<col style="width: 25%" />
+<col style="width: 23%" />
+<col style="width: 15%" />
+<col style="width: 38%" />
 </colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">Pin</th>
-<th class="head">Type</th>
-<th class="head">Presence</th>
-<th class="head">Description</th>
+<thead>
+<tr class="row-odd"><th class="head"><p>Pin</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Presence</p></th>
+<th class="head"><p>Description</p></th>
 </tr>
 </thead>
-<tbody valign="top">
-<tr class="row-even"><td colspan="4">Read/Write Pins</td>
+<tbody>
+<tr class="row-even"><td colspan="4"><p>Read/Write Pins</p></td>
 </tr>
-<tr class="row-odd"><td>CLK_R</td>
-<td>Input; Clock</td>
-<td>Default</td>
-<td>Memory read clock</td>
+<tr class="row-odd"><td><p>CLK_R</p></td>
+<td><p>Input; Clock</p></td>
+<td><p>Default</p></td>
+<td><p>Memory read clock</p></td>
 </tr>
-<tr class="row-even"><td>CLK_W</td>
-<td>Input; Clock</td>
-<td>Default</td>
-<td>Memory write clock</td>
+<tr class="row-even"><td><p>CLK_W</p></td>
+<td><p>Input; Clock</p></td>
+<td><p>Default</p></td>
+<td><p>Memory write clock</p></td>
 </tr>
-<tr class="row-odd"><td>RADR_[msb:0]</td>
-<td>Input</td>
-<td>Default</td>
-<td>Synchronous read
-address input</td>
+<tr class="row-odd"><td><p>RADR_[msb:0]</p></td>
+<td><p>Input</p></td>
+<td><p>Default</p></td>
+<td><p>Synchronous read
+address input</p></td>
 </tr>
-<tr class="row-even"><td>RD_[msb:0]</td>
-<td>Output</td>
-<td>Default</td>
-<td>Memory read data
-output</td>
+<tr class="row-even"><td><p>RD_[msb:0]</p></td>
+<td><p>Output</p></td>
+<td><p>Default</p></td>
+<td><p>Memory read data
+output</p></td>
 </tr>
-<tr class="row-odd"><td>RE</td>
-<td>Input</td>
-<td>Default</td>
-<td>Synchronous read
-enable</td>
+<tr class="row-odd"><td><p>RE</p></td>
+<td><p>Input</p></td>
+<td><p>Default</p></td>
+<td><p>Synchronous read
+enable</p></td>
 </tr>
-<tr class="row-even"><td>WADR_[msb:0]</td>
-<td>Input</td>
-<td>Default</td>
-<td>Synchronous write
-address input</td>
+<tr class="row-even"><td><p>WADR_[msb:0]</p></td>
+<td><p>Input</p></td>
+<td><p>Default</p></td>
+<td><p>Synchronous write
+address input</p></td>
 </tr>
-<tr class="row-odd"><td>WD_[msb:0]</td>
-<td>Input</td>
-<td>Default</td>
-<td>Synchronous write
-data input</td>
+<tr class="row-odd"><td><p>WD_[msb:0]</p></td>
+<td><p>Input</p></td>
+<td><p>Default</p></td>
+<td><p>Synchronous write
+data input</p></td>
 </tr>
-<tr class="row-even"><td>WE</td>
-<td>Input</td>
-<td>Default</td>
-<td>Synchronous write
-enable</td>
+<tr class="row-even"><td><p>WE</p></td>
+<td><p>Input</p></td>
+<td><p>Default</p></td>
+<td><p>Synchronous write
+enable</p></td>
 </tr>
-<tr class="row-odd"><td colspan="4">Misc. Pins.  These will depend on the target RAM library for
-whether they are necessary.</td>
+<tr class="row-odd"><td colspan="4"><p>Misc. Pins.  These will depend on the target RAM library for
+whether they are necessary.</p></td>
 </tr>
-<tr class="row-even"><td>IDDQ</td>
-<td>Input</td>
-<td>Default</td>
-<td>Asynchronous stand-by
-mode enable pin</td>
+<tr class="row-even"><td><p>IDDQ</p></td>
+<td><p>Input</p></td>
+<td><p>Default</p></td>
+<td><p>Asynchronous stand-by
+mode enable pin</p></td>
 </tr>
-<tr class="row-odd"><td>SLEEP_EN_[7:0]</td>
-<td>Input</td>
-<td>Default</td>
-<td>Power gating controls</td>
+<tr class="row-odd"><td><p>SLEEP_EN_[7:0]</p></td>
+<td><p>Input</p></td>
+<td><p>Default</p></td>
+<td><p>Power gating controls</p></td>
 </tr>
-<tr class="row-even"><td>RET_EN</td>
-<td>Input</td>
-<td>Default</td>
-<td>Retention enable</td>
+<tr class="row-even"><td><p>RET_EN</p></td>
+<td><p>Input</p></td>
+<td><p>Default</p></td>
+<td><p>Retention enable</p></td>
 </tr>
-<tr class="row-odd"><td>RET_SVOP[1:0]</td>
-<td>Input</td>
-<td>Default</td>
-<td>Timing margin control
-pins</td>
+<tr class="row-odd"><td><p>RET_SVOP[1:0]</p></td>
+<td><p>Input</p></td>
+<td><p>Default</p></td>
+<td><p>Timing margin control
+pins</p></td>
 </tr>
 </tbody>
 </table>
@@ -429,11 +429,11 @@ A latch holds the read data whenever RE = ‘0’. There is no write through cap
 If the read address matches the write address, read out data may be corrupted.</p>
 <div class="figure align-center" id="id5">
 <a class="reference internal image-reference" href="../../_images/ig_sram_dp_read_timing1.png"><img alt="Dual Port RAM Read Timing" src="../../_images/ig_sram_dp_read_timing1.png" style="width: 706.0px; height: 354.0px;" /></a>
-<p class="caption"><span class="caption-number">Fig. 83 </span><span class="caption-text">Dual Port RAM Read Timing</span></p>
+<p class="caption"><span class="caption-number">Fig. 83 </span><span class="caption-text">Dual Port RAM Read Timing</span><a class="headerlink" href="#id5" title="Permalink to this image">¶</a></p>
 </div>
 <div class="figure align-center" id="id6">
 <a class="reference internal image-reference" href="../../_images/ig_sram_dp_write_timing1.png"><img alt="Dual Port RAM Write Timing" src="../../_images/ig_sram_dp_write_timing1.png" style="width: 671.0px; height: 372.5px;" /></a>
-<p class="caption"><span class="caption-number">Fig. 84 </span><span class="caption-text">Dual Port RAM Write Timing</span></p>
+<p class="caption"><span class="caption-number">Fig. 84 </span><span class="caption-text">Dual Port RAM Write Timing</span><a class="headerlink" href="#id6" title="Permalink to this image">¶</a></p>
 </div>
 <div class="line-block">
 <div class="line"><br /></div>
@@ -449,94 +449,94 @@ port RAM, but is created by double clocking a single port RAM.</p>
 <p>Note that:
 * All pin power is referenced to VDD.
 * All enables are active high.</p>
-<table border="1" class="docutils">
+<table class="docutils align-default">
 <colgroup>
-<col width="25%" />
-<col width="23%" />
-<col width="15%" />
-<col width="38%" />
+<col style="width: 25%" />
+<col style="width: 23%" />
+<col style="width: 15%" />
+<col style="width: 38%" />
 </colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">Pin</th>
-<th class="head">Type</th>
-<th class="head">Presence</th>
-<th class="head">Description</th>
+<thead>
+<tr class="row-odd"><th class="head"><p>Pin</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Presence</p></th>
+<th class="head"><p>Description</p></th>
 </tr>
 </thead>
-<tbody valign="top">
-<tr class="row-even"><td colspan="4">Read/Write Pins</td>
+<tbody>
+<tr class="row-even"><td colspan="4"><p>Read/Write Pins</p></td>
 </tr>
-<tr class="row-odd"><td>CLK</td>
-<td>Input; Clock</td>
-<td>Default</td>
-<td>Memory clock</td>
+<tr class="row-odd"><td><p>CLK</p></td>
+<td><p>Input; Clock</p></td>
+<td><p>Default</p></td>
+<td><p>Memory clock</p></td>
 </tr>
-<tr class="row-even"><td>RADR_[msb:0]</td>
-<td>Input</td>
-<td>Default</td>
-<td>Synchronous read
-address input</td>
+<tr class="row-even"><td><p>RADR_[msb:0]</p></td>
+<td><p>Input</p></td>
+<td><p>Default</p></td>
+<td><p>Synchronous read
+address input</p></td>
 </tr>
-<tr class="row-odd"><td>RD_[msb:0]</td>
-<td>Output</td>
-<td>Default</td>
-<td>Memory read data
-output</td>
+<tr class="row-odd"><td><p>RD_[msb:0]</p></td>
+<td><p>Output</p></td>
+<td><p>Default</p></td>
+<td><p>Memory read data
+output</p></td>
 </tr>
-<tr class="row-even"><td>RE</td>
-<td>Input</td>
-<td>Default</td>
-<td>Synchronous read
-enable</td>
+<tr class="row-even"><td><p>RE</p></td>
+<td><p>Input</p></td>
+<td><p>Default</p></td>
+<td><p>Synchronous read
+enable</p></td>
 </tr>
-<tr class="row-odd"><td>WADR_[msb:0]</td>
-<td>Input</td>
-<td>Default</td>
-<td>Synchronous write
-address input</td>
+<tr class="row-odd"><td><p>WADR_[msb:0]</p></td>
+<td><p>Input</p></td>
+<td><p>Default</p></td>
+<td><p>Synchronous write
+address input</p></td>
 </tr>
-<tr class="row-even"><td>WD_[msb:0]</td>
-<td>Input</td>
-<td>Default</td>
-<td>Synchronous write
-data input</td>
+<tr class="row-even"><td><p>WD_[msb:0]</p></td>
+<td><p>Input</p></td>
+<td><p>Default</p></td>
+<td><p>Synchronous write
+data input</p></td>
 </tr>
-<tr class="row-odd"><td>WE</td>
-<td>Input</td>
-<td>Default</td>
-<td>Synchronous write
-enable</td>
+<tr class="row-odd"><td><p>WE</p></td>
+<td><p>Input</p></td>
+<td><p>Default</p></td>
+<td><p>Synchronous write
+enable</p></td>
 </tr>
-<tr class="row-even"><td colspan="4">Misc. Pins.  These will depend on the target RAM library for
-whether they are necessary.</td>
+<tr class="row-even"><td colspan="4"><p>Misc. Pins.  These will depend on the target RAM library for
+whether they are necessary.</p></td>
 </tr>
-<tr class="row-odd"><td>IDDQ</td>
-<td>Input</td>
-<td>Default</td>
-<td>Asynchronous stand-by
-mode enable pin</td>
+<tr class="row-odd"><td><p>IDDQ</p></td>
+<td><p>Input</p></td>
+<td><p>Default</p></td>
+<td><p>Asynchronous stand-by
+mode enable pin</p></td>
 </tr>
-<tr class="row-even"><td>SLEEP_EN_[7:0]</td>
-<td>Input</td>
-<td>Default</td>
-<td>Power gating controls</td>
+<tr class="row-even"><td><p>SLEEP_EN_[7:0]</p></td>
+<td><p>Input</p></td>
+<td><p>Default</p></td>
+<td><p>Power gating controls</p></td>
 </tr>
-<tr class="row-odd"><td>RET_EN</td>
-<td>Input</td>
-<td>Default</td>
-<td>Retention enable</td>
+<tr class="row-odd"><td><p>RET_EN</p></td>
+<td><p>Input</p></td>
+<td><p>Default</p></td>
+<td><p>Retention enable</p></td>
 </tr>
-<tr class="row-even"><td>RET_SVOP[1:0]</td>
-<td>Input</td>
-<td>Default</td>
-<td>Timing margin control
-pins</td>
+<tr class="row-even"><td><p>RET_SVOP[1:0]</p></td>
+<td><p>Input</p></td>
+<td><p>Default</p></td>
+<td><p>Timing margin control
+pins</p></td>
 </tr>
 </tbody>
 </table>
 <div class="figure align-center" id="id7">
 <a class="reference internal image-reference" href="../../_images/ig_sram_pdp_timing1.png"><img alt="Pseudo Dual Port RAM Timing" src="../../_images/ig_sram_pdp_timing1.png" style="width: 748.0px; height: 473.0px;" /></a>
-<p class="caption"><span class="caption-number">Fig. 85 </span><span class="caption-text">Pseudo Dual Port RAM Timing</span></p>
+<p class="caption"><span class="caption-number">Fig. 85 </span><span class="caption-text">Pseudo Dual Port RAM Timing</span><a class="headerlink" href="#id7" title="Permalink to this image">¶</a></p>
 </div>
 <p>The RAMPDP behaves like a dual port RAM, but is created by double clocking a single port RAM.
 It can perform a ‘single read’ (1R), a ‘single write’ (1W) or a ‘read followed by write’ (1R+1W)
@@ -598,59 +598,59 @@ variables, meanings and defaults.</p>
 <div class="line"><br /></div>
 <div class="line"><br /></div>
 </div>
-<table border="1" class="colwidths-given docutils" id="id8">
+<table class="colwidths-given docutils align-default" id="id8">
 <caption><span class="caption-number">Table 64 </span><span class="caption-text">Design Related Options</span><a class="headerlink" href="#id8" title="Permalink to this table">¶</a></caption>
 <colgroup>
-<col width="25%" />
-<col width="75%" />
+<col style="width: 25%" />
+<col style="width: 75%" />
 </colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">Variable</th>
-<th class="head">Comments</th>
+<thead>
+<tr class="row-odd"><th class="head"><p>Variable</p></th>
+<th class="head"><p>Comments</p></th>
 </tr>
 </thead>
-<tbody valign="top">
-<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">NVDLA_ROOT</span></code></td>
-<td>Location on disk for the NVDLA source “hw” directory.</td>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">NVDLA_ROOT</span></code></p></td>
+<td><p>Location on disk for the NVDLA source “hw” directory.</p></td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">TOP_NAMES</span></code></td>
-<td>Space separated list of TOP_NAMES to synthesize. You may choose to synthesize all or a subset of TOP_NAMES.
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">TOP_NAMES</span></code></p></td>
+<td><p>Space separated list of TOP_NAMES to synthesize. You may choose to synthesize all or a subset of TOP_NAMES.
 Defaults to
-“NV_NVDLA_partition_a NV_NVDLA_partition_c NV_NVDLA_partition_o NV_NVDLA_partition_m NV_NVDLA_partition_p”</td>
+“NV_NVDLA_partition_a NV_NVDLA_partition_c NV_NVDLA_partition_o NV_NVDLA_partition_m NV_NVDLA_partition_p”</p></td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">RTL_SEARCH_PATH</span></code></td>
-<td>Space separated list of search paths (directories) for locating all the pieces of RTL.
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">RTL_SEARCH_PATH</span></code></p></td>
+<td><p>Space separated list of search paths (directories) for locating all the pieces of RTL.
 Defaults to an empty string.
-Please do not include paths to non synthesizable (behavioral) RAM models, like the ones in <code class="docutils literal notranslate"><span class="pre">${NVDLA_ROOT}/vmod/rams/model</span></code></td>
+Please do not include paths to non synthesizable (behavioral) RAM models, like the ones in <code class="docutils literal notranslate"><span class="pre">${NVDLA_ROOT}/vmod/rams/model</span></code></p></td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">RTL_INCLUDE_SEARCH_PATH</span></code></td>
-<td>Space separated list of search paths (directories) for locating all the supplementary Verilog include files.
-Defaults to an empty string.</td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">RTL_INCLUDE_SEARCH_PATH</span></code></p></td>
+<td><p>Space separated list of search paths (directories) for locating all the supplementary Verilog include files.
+Defaults to an empty string.</p></td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">EXTRA_RTL</span></code></td>
-<td>List of files to read in, apart from the modules that can be found in the search paths.
-Defaults to an empty string.</td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">EXTRA_RTL</span></code></p></td>
+<td><p>List of files to read in, apart from the modules that can be found in the search paths.
+Defaults to an empty string.</p></td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">RTL_EXTENSIONS</span></code></td>
-<td>List of extensions for the source RTL files.
-Defaults to “.v .sv .gv”</td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">RTL_EXTENSIONS</span></code></p></td>
+<td><p>List of extensions for the source RTL files.
+Defaults to “.v .sv .gv”</p></td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">RTL_INCLUDE_EXTENSIONS</span></code></td>
-<td>List of extensions for supplementary Verilog include files. Defaults to “.vh .svh”</td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">RTL_INCLUDE_EXTENSIONS</span></code></p></td>
+<td><p>List of extensions for supplementary Verilog include files. Defaults to “.vh .svh”</p></td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">DEF</span></code></td>
-<td><p class="first">Path to directory containing floorplans in the “DEF” format. Files should be named by the TOP_NAMES, with the extension “.def”
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">DEF</span></code></p></td>
+<td><p>Path to directory containing floorplans in the “DEF” format. Files should be named by the TOP_NAMES, with the extension “.def”
 This variable defaults to a directory called  “def” in the current directory</p>
-<p class="last">We do not provide templates, because it depends on the process node, and the memory compiler being used.</p>
+<p>We do not provide templates, because it depends on the process node, and the memory compiler being used.</p>
 </td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">CONS</span></code></td>
-<td><p class="first">Path to directory containing constraints in the “SDC” format.
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">CONS</span></code></p></td>
+<td><p>Path to directory containing constraints in the “SDC” format.
 Files should be named by the TOP_NAMES, with the extension “.sdc”
 This directory may also contain “&lt;TOP_NAME&gt;.tcl” to specify any non-SDC constraints to guide synthesis.
 All of these constraints are sourced before compiling the design.
 This variable defaults to a directory called “cons” in the current directory.</p>
-<p class="last">We provide template SDCs for all logical partitions in the <cite>${NVDLA_ROOT}/syn/cons</cite> directory including
+<p>We provide template SDCs for all logical partitions in the <cite>${NVDLA_ROOT}/syn/cons</cite> directory including
 clock constraints etc. You may provide your own constraints, based on the process node you are targeting.</p>
 </td>
 </tr>
@@ -661,21 +661,21 @@ clock constraints etc. You may provide your own constraints, based on the proces
 <div class="line"><br /></div>
 <div class="line"><br /></div>
 </div>
-<table border="1" class="colwidths-given docutils" id="id9">
+<table class="colwidths-given docutils align-default" id="id9">
 <caption><span class="caption-number">Table 65 </span><span class="caption-text">Tool Related Options</span><a class="headerlink" href="#id9" title="Permalink to this table">¶</a></caption>
 <colgroup>
-<col width="25%" />
-<col width="75%" />
+<col style="width: 25%" />
+<col style="width: 75%" />
 </colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">Variable</th>
-<th class="head">Comments</th>
+<thead>
+<tr class="row-odd"><th class="head"><p>Variable</p></th>
+<th class="head"><p>Comments</p></th>
 </tr>
 </thead>
-<tbody valign="top">
-<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">DC_PATH</span></code></td>
-<td>Location of the Design Compiler installation.
-Defaults to an empty string</td>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">DC_PATH</span></code></p></td>
+<td><p>Location of the Design Compiler installation.
+Defaults to an empty string</p></td>
 </tr>
 </tbody>
 </table>
@@ -684,83 +684,83 @@ Defaults to an empty string</td>
 <div class="line"><br /></div>
 <div class="line"><br /></div>
 </div>
-<table border="1" class="colwidths-given docutils" id="id10">
+<table class="colwidths-given docutils align-default" id="id10">
 <caption><span class="caption-number">Table 66 </span><span class="caption-text">Library Related Options</span><a class="headerlink" href="#id10" title="Permalink to this table">¶</a></caption>
 <colgroup>
-<col width="25%" />
-<col width="75%" />
+<col style="width: 25%" />
+<col style="width: 75%" />
 </colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">Variable</th>
-<th class="head">Comments</th>
+<thead>
+<tr class="row-odd"><th class="head"><p>Variable</p></th>
+<th class="head"><p>Comments</p></th>
 </tr>
 </thead>
-<tbody valign="top">
-<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">TARGET_LIB</span></code></td>
-<td>Path to a single standard cell library that will be used to map the design to (the “target” library).
-Defaults to an empty string.</td>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">TARGET_LIB</span></code></p></td>
+<td><p>Path to a single standard cell library that will be used to map the design to (the “target” library).
+Defaults to an empty string.</p></td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">LINK_LIB</span></code></td>
-<td>Path to all the libraries that are required to link the design.
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">LINK_LIB</span></code></p></td>
+<td><p>Path to all the libraries that are required to link the design.
 This should include the target library as well.
 Include any RAM compiler timing libraries here.
-Defaults to an empty string.</td>
+Defaults to an empty string.</p></td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">TF_FILE</span></code></td>
-<td>Path to the “Milkyway Technology File” that is used to create the Milkyway models for the physical library.
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">TF_FILE</span></code></p></td>
+<td><p>Path to the “Milkyway Technology File” that is used to create the Milkyway models for the physical library.
 Please check with your standard cell library vendor for the right file to use.
 Defaults to an empty string.
-Required for DC-Topographical</td>
+Required for DC-Topographical</p></td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">TLUPLUS_FILE</span></code></td>
-<td>Path to the “TLUPlus” files that will be used for RC extraction
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">TLUPLUS_FILE</span></code></p></td>
+<td><p>Path to the “TLUPlus” files that will be used for RC extraction
 Please check with your standard cell library vendor for the right file to use.
 Defaults to an empty string.
-Required for DC-Topographical</td>
+Required for DC-Topographical</p></td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">TLUPLUS_MAPPING_FILE</span></code></td>
-<td>Path to the “Tech2ITF” mapping file, that maps layer names from between the Milkyway Tech file and the interconnect technology format file.
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">TLUPLUS_MAPPING_FILE</span></code></p></td>
+<td><p>Path to the “Tech2ITF” mapping file, that maps layer names from between the Milkyway Tech file and the interconnect technology format file.
 Please check with your standard cell library vendor for the right file to use.
 Defaults to an empty string.
-Required for DC-Topographical</td>
+Required for DC-Topographical</p></td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">MIN_ROUTING_LAYER</span></code></td>
-<td>Bottom routing layer for signal nets.
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">MIN_ROUTING_LAYER</span></code></p></td>
+<td><p>Bottom routing layer for signal nets.
 Please check with place-and-route methodology for the right value.
 Defaults to an empty string.
-Required for DC-Topographical</td>
+Required for DC-Topographical</p></td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">MAX_ROUTING_LAYER</span></code></td>
-<td>Top routing layer for signal nets.
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">MAX_ROUTING_LAYER</span></code></p></td>
+<td><p>Top routing layer for signal nets.
 Please check with place-and-route methodology for the right value.
 Defaults to an empty string.
-Required for DC-Topographical</td>
+Required for DC-Topographical</p></td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">HORIZONTAL_LAYERS</span></code></td>
-<td>Space separated list of layers with preferred horizontal routing.
-Defaults to an empty string.</td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">HORIZONTAL_LAYERS</span></code></p></td>
+<td><p>Space separated list of layers with preferred horizontal routing.
+Defaults to an empty string.</p></td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">VERTICAL_LAYERS</span></code></td>
-<td>Space separated list of layers with preferred vertical routing.
-Defaults to an empty string.</td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">VERTICAL_LAYERS</span></code></p></td>
+<td><p>Space separated list of layers with preferred vertical routing.
+Defaults to an empty string.</p></td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">DONT_USE_LIST</span></code></td>
-<td>Space separated list of regular expressions for cells that you do not wish to map your design to.
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">DONT_USE_LIST</span></code></p></td>
+<td><p>Space separated list of regular expressions for cells that you do not wish to map your design to.
 A “dont_use” will be applied on these cells in Design Compiler.
-Defaults to an empty string.</td>
+Defaults to an empty string.</p></td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">WIRELOAD_MODEL_FILE</span></code></td>
-<td>A file containing a “wireload model” - a lookup table for resistance and capacitance calculation based on fanout.
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">WIRELOAD_MODEL_FILE</span></code></p></td>
+<td><p>A file containing a “wireload model” - a lookup table for resistance and capacitance calculation based on fanout.
 Refer to the lcug16_Defining_Wire_Load_Groups.htm on the Synopsys Solvnet site
 for more information regarding wire load modeling.
 Not required if your standard cell library contains the wireload models built in.
 Not required for DC-Topographical.
-Defaults to an empty string.</td>
+Defaults to an empty string.</p></td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">WIRELOAD_MODEL_NAME</span></code></td>
-<td>Name of the wireload model lookup table (if you have multiple tables)
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">WIRELOAD_MODEL_NAME</span></code></p></td>
+<td><p>Name of the wireload model lookup table (if you have multiple tables)
 Not required for DC-Topographical.
-Defaults to an empty string.</td>
+Defaults to an empty string.</p></td>
 </tr>
 </tbody>
 </table>
@@ -770,48 +770,48 @@ Defaults to an empty string.</td>
 <div class="line"><br /></div>
 </div>
 <div class="admonition warning">
-<p class="first admonition-title">Warning</p>
+<p class="admonition-title">Warning</p>
 <p>We do not supply timing models or synthesizable RTL for the RAMs in the design.
 These need to be provided by the user for the process node/ memory compiler being used.</p>
-<p class="last">Please DO NOT include <code class="docutils literal notranslate"><span class="pre">${NVDLA_ROOT}/vmod/rams/model</span></code> in the RTL_SEARCH_PATH - They are simulation models, not synthesizable.</p>
+<p>Please DO NOT include <code class="docutils literal notranslate"><span class="pre">${NVDLA_ROOT}/vmod/rams/model</span></code> in the RTL_SEARCH_PATH - They are simulation models, not synthesizable.</p>
 </div>
-<table border="1" class="colwidths-given docutils" id="id11">
+<table class="colwidths-given docutils align-default" id="id11">
 <caption><span class="caption-number">Table 67 </span><span class="caption-text">Miscellaneous Options</span><a class="headerlink" href="#id11" title="Permalink to this table">¶</a></caption>
 <colgroup>
-<col width="25%" />
-<col width="75%" />
+<col style="width: 25%" />
+<col style="width: 75%" />
 </colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">Variable</th>
-<th class="head">Comments</th>
+<thead>
+<tr class="row-odd"><th class="head"><p>Variable</p></th>
+<th class="head"><p>Comments</p></th>
 </tr>
 </thead>
-<tbody valign="top">
-<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">TIGHTEN_CGE</span></code></td>
-<td>Boolean, “1” to enable over constraining the CG-Enable paths. See section 5.5.2 below
-Default is set to “0”</td>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">TIGHTEN_CGE</span></code></p></td>
+<td><p>Boolean, “1” to enable over constraining the CG-Enable paths. See section 5.5.2 below
+Default is set to “0”</p></td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">CGLUT_FILE</span></code></td>
-<td>File containing the fanout-based CG over constraint lookup table to pessimize the CG enable paths. See section 5.5.2 below.
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">CGLUT_FILE</span></code></p></td>
+<td><p>File containing the fanout-based CG over constraint lookup table to pessimize the CG enable paths. See section 5.5.2 below.
 Please see “${NVDLA_ROOT}/syn/templates/cg_latency_lut.tcl” for an example.
-Defaults to an empty string.</td>
+Defaults to an empty string.</p></td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">DC_NUM_CORES</span></code></td>
-<td>The number of CPU cores available for Design Compiler.
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">DC_NUM_CORES</span></code></p></td>
+<td><p>The number of CPU cores available for Design Compiler.
 Defaults to ‘1’
-Note: Single CPU core synthesis may see a long overall runtime.</td>
+Note: Single CPU core synthesis may see a long overall runtime.</p></td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">AREA_RECOVERY</span></code></td>
-<td>Boolean, “1” to Run quick area optimization by undoing some optimizations on paths with positive slack.
-Defaults to “1”.</td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">AREA_RECOVERY</span></code></p></td>
+<td><p>Boolean, “1” to Run quick area optimization by undoing some optimizations on paths with positive slack.
+Defaults to “1”.</p></td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">INCREMENTAL_RECOMPILE_COUNT</span></code></td>
-<td>Number of rounds of incremental compiles  to run in Design Compiler.
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">INCREMENTAL_RECOMPILE_COUNT</span></code></p></td>
+<td><p>Number of rounds of incremental compiles  to run in Design Compiler.
 Defaults to “1” - This amounts to 2 rounds of compile, one for mapping - the “main” compile
-and one for incremental optimization - the “incremental” compile.</td>
+and one for incremental optimization - the “incremental” compile.</p></td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">COMMAND_PREFIX</span></code></td>
-<td><p class="first">String.
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">COMMAND_PREFIX</span></code></p></td>
+<td><p>String.
 Defaults to an empty string.
 This will be pre-fixed to the dc_shell command .
 Use this to manage job submission  on LSF farm or grid, as appropriate.
@@ -820,7 +820,7 @@ In the absence of a command prefix, the synthesis  jobs for each TOP_NAMES will 
 If you do provide a command prefix, make sure that it is non-blocking, so that all synthesis jobs
 can be parallelized. Otherwise, the jobs are run serially.
 Example:</p>
-<div class="last highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">export</span> <span class="n">COMMAND_PREFIX</span><span class="o">=</span><span class="s2">&quot;bsub -q some_queue -o &lt;LOG&gt;/&lt;MODULE&gt;.lsf.log&quot;</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">export</span> <span class="n">COMMAND_PREFIX</span><span class="o">=</span><span class="s2">&quot;bsub -q some_queue -o &lt;LOG&gt;/&lt;MODULE&gt;.lsf.log&quot;</span>
 </pre></div>
 </div>
 </td>
@@ -864,25 +864,25 @@ The supported arguments to the scripts are in table below.</p>
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
-<table border="1" class="colwidths-given docutils" id="id12">
+<table class="colwidths-given docutils align-default" id="id12">
 <caption><span class="caption-number">Table 68 </span><span class="caption-text">Miscellaneous Options</span><a class="headerlink" href="#id12" title="Permalink to this table">¶</a></caption>
 <colgroup>
-<col width="25%" />
-<col width="75%" />
+<col style="width: 25%" />
+<col style="width: 75%" />
 </colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">Argument</th>
-<th class="head">Explanation</th>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Explanation</p></th>
 </tr>
 </thead>
-<tbody valign="top">
-<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">-config</span></code></td>
-<td>Path to the synthesis configuration file (see section 5.4)
-If not provided, the flow will look for a file called “config.sh” in the current directory.</td>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">-config</span></code></p></td>
+<td><p>Path to the synthesis configuration file (see section 5.4)
+If not provided, the flow will look for a file called “config.sh” in the current directory.</p></td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">-mode</span></code></td>
-<td><p class="first">Specifies which tool to use for synthesis. Use one of the following:</p>
-<div class="last highlight-default notranslate"><div class="highlight"><pre><span></span>“wlm” =&gt; Use Design Compiler (non-topographical) for wireload model based synthesis (non-physical)
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">-mode</span></code></p></td>
+<td><p>Specifies which tool to use for synthesis. Use one of the following:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>“wlm” =&gt; Use Design Compiler (non-topographical) for wireload model based synthesis (non-physical)
 “dct” =&gt; Use DC-Topographical
 “dcg” =&gt; Use DC-Graphical along with “-spg” in the compile command.
 “de”  =&gt; Use DC Explorer for synthesis.
@@ -890,16 +890,16 @@ If not provided, the flow will look for a file called “config.sh” in the cur
 </div>
 </td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">-build</span></code></td>
-<td>Sandbox of synthesis. Optional.
-Defaults to “<code class="docutils literal notranslate"><span class="pre">nvdla_syn_&lt;timestamp&gt;</span></code>”</td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">-build</span></code></p></td>
+<td><p>Sandbox of synthesis. Optional.
+Defaults to “<code class="docutils literal notranslate"><span class="pre">nvdla_syn_&lt;timestamp&gt;</span></code>”</p></td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">-modules</span></code></td>
-<td>Space separated list of modules to run synthesis on / restore database for.
-If not specified, the TOP_NAMES must be populated in the configuration file.</td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">-modules</span></code></p></td>
+<td><p>Space separated list of modules to run synthesis on / restore database for.
+If not specified, the TOP_NAMES must be populated in the configuration file.</p></td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">-restore</span></code></td>
-<td>Path to design database (in DDC format) to restore.</td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">-restore</span></code></p></td>
+<td><p>Path to design database (in DDC format) to restore.</p></td>
 </tr>
 </tbody>
 </table>
@@ -1060,13 +1060,11 @@ ${NVDLA_ROOT}/syn/dc/scripts/syn_launch.sh -mode de -config /path/to/config.sh
     </ul>
    </div>
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="../../search.html" method="get">
-      <input type="text" name="q" />
+      <input type="text" name="q" aria-labelledby="searchlabel" />
       <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
@@ -1102,7 +1100,7 @@ ${NVDLA_ROOT}/syn/dc/scripts/syn_launch.sh -mode de -config /path/to/config.sh
 href="../../copyright.html">Copyright</a> 2018, NVIDIA Corporation.
 <a href="http://www.nvidia.com/object/legal_info.html">Legal Information.</a>
 <a href="http://www.nvidia.com/object/privacy_policy.html">Privacy Policy.</a>
-Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.1.
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.2.0.
 </div>
 </div>
 </div>

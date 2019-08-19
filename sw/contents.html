@@ -1,11 +1,9 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
     <title>Software Manual &#8212; NVDLA Documentation</title>
     <link rel="stylesheet" href="../_static/nvdla.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -14,7 +12,8 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Compilation tools" href="compilation_tool.html" />
     <link rel="prev" title="NVDLA Verification Suite User Guide" href="../hw/v2/verif_guide.html" />
@@ -53,9 +52,9 @@
           
   <div class="section" id="software-manual">
 <h1>Software Manual<a class="headerlink" href="#software-manual" title="Permalink to this headline">¶</a></h1>
-<p>NVDLA has a full software ecosystem including support from compiling network to inference. Part of this ecosystem includes the on-device software stack, a part of the <a class="reference internal" href="../glossary.html#term-23"><span class="xref std std-term">NVDLA</span></a> open source release; additionally, NVIDIA will provide a full training infrastructure to build new models that incorporate Deep Learning, and to convert existing models to a form that is usable by <a class="reference internal" href="../glossary.html#term-23"><span class="xref std std-term">NVDLA</span></a> software.  In general, the software associated with <a class="reference internal" href="../glossary.html#term-23"><span class="xref std std-term">NVDLA</span></a> is grouped into two parts: the <a class="reference internal" href="compilation_tool.html#compilation-tools"><span class="std std-ref">Compilation tools</span></a> (model conversion), and the <a class="reference internal" href="runtime_environment.html#runtime-environment"><span class="std std-ref">Runtime environment</span></a> (run-time software to load and execute compiled neural network on <a class="reference internal" href="../glossary.html#term-23"><span class="xref std std-term">NVDLA</span></a>). The general flow of this is as shown in the figure below;</p>
+<p>NVDLA has a full software ecosystem including support from compiling network to inference. Part of this ecosystem includes the on-device software stack, a part of the <a class="reference internal" href="../glossary.html#term-1"><span class="xref std std-term">NVDLA</span></a> open source release; additionally, NVIDIA will provide a full training infrastructure to build new models that incorporate Deep Learning, and to convert existing models to a form that is usable by <a class="reference internal" href="../glossary.html#term-1"><span class="xref std std-term">NVDLA</span></a> software.  In general, the software associated with <a class="reference internal" href="../glossary.html#term-1"><span class="xref std std-term">NVDLA</span></a> is grouped into two parts: the <a class="reference internal" href="compilation_tool.html#compilation-tools"><span class="std std-ref">Compilation tools</span></a> (model conversion), and the <a class="reference internal" href="runtime_environment.html#runtime-environment"><span class="std std-ref">Runtime environment</span></a> (run-time software to load and execute compiled neural network on <a class="reference internal" href="../glossary.html#term-1"><span class="xref std std-term">NVDLA</span></a>). The general flow of this is as shown in the figure below;</p>
 <div class="figure align-center" id="fig-software-package">
-<a class="reference internal image-reference" href="../_images/software_package.png"><img alt="Software Package" src="../_images/software_package.png" style="width: 484.4px; height: 355.6px;" /></a>
+<a class="reference internal image-reference" href="../_images/software_package.png"><img alt="Software Package" src="../_images/software_package.png" style="width: 484.4px; height: 355.59999999999997px;" /></a>
 </div>
 <div class="toctree-wrapper compound">
 <ul>
@@ -80,57 +79,51 @@
 <div class="section" id="browsing-source-code">
 <h1>Browsing Source Code<a class="headerlink" href="#browsing-source-code" title="Permalink to this headline">¶</a></h1>
 <ul class="simple">
-<li><dl class="first docutils">
-<dt>top (<a class="reference external" href="https://github.com/nvdla/sw">https://github.com/nvdla/sw</a>)</dt>
-<dd><ul class="first last">
-<li><dl class="first docutils">
-<dt>umd: <a class="reference internal" href="runtime_environment.html#user-mode-driver"><span class="std std-ref">User Mode Driver</span></a></dt>
-<dd><ul class="first last">
-<li><dl class="first docutils">
-<dt>core: NVDLA specific implementation of user mode components</dt>
-<dd><ul class="first last">
-<li><strong>runtime:</strong> <a class="reference internal" href="runtime_environment.html#runtime-environment"><span class="std std-ref">Runtime environment</span></a></li>
-<li><strong>compiler:</strong> <a class="reference internal" href="compilation_tool.html#compilation-tools"><span class="std std-ref">Compilation tools</span></a></li>
-<li><strong>include:</strong> Header file for common implementation</li>
-<li><strong>common:</strong> Implementation shared between runtime and compiler such as loadable and logging</li>
+<li><dl class="simple">
+<dt>top (<a class="reference external" href="https://github.com/nvdla/sw">https://github.com/nvdla/sw</a>)</dt><dd><ul>
+<li><dl class="simple">
+<dt>umd: <a class="reference internal" href="runtime_environment.html#user-mode-driver"><span class="std std-ref">User Mode Driver</span></a></dt><dd><ul>
+<li><dl class="simple">
+<dt>apps: Sample applications</dt><dd><ul>
+<li><p>runtime <a class="reference internal" href="test_application.html#runtime-test-app"><span class="std std-ref">Runtime test application</span></a></p></li>
+<li><p>compiler <a class="reference internal" href="test_application.html#compiler-test-app"><span class="std std-ref">Compiler test application</span></a></p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><strong>external:</strong> External modules used in UMD such as flatbuffers</li>
-<li><strong>include:</strong> <a class="reference internal" href="runtime_environment.html#umd-api"><span class="std std-ref">Application Programming Interface</span></a></li>
-<li><strong>make:</strong> Make files</li>
-<li><dl class="first docutils">
-<dt>port: <a class="reference internal" href="runtime_environment.html#umd-layer"><span class="std std-ref">Portability layer</span></a></dt>
-<dd><ul class="first last">
-<li><strong>linux:</strong> Portability layer for Linux</li>
+<li><dl class="simple">
+<dt>core: NVDLA specific implementation of user mode components</dt><dd><ul>
+<li><p><strong>runtime:</strong> <a class="reference internal" href="runtime_environment.html#runtime-environment"><span class="std std-ref">Runtime environment</span></a></p></li>
+<li><p><strong>compiler:</strong> <a class="reference internal" href="compilation_tool.html#compilation-tools"><span class="std std-ref">Compilation tools</span></a></p></li>
+<li><p><strong>include:</strong> Header file for common implementation</p></li>
+<li><p><strong>common:</strong> Implementation shared between runtime and compiler such as loadable and logging</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>tests: Test applications</dt>
-<dd><ul class="first last">
-<li>runtime <a class="reference internal" href="test_application.html#runtime-test-app"><span class="std std-ref">Runtime test application</span></a></li>
-<li>compiler <a class="reference internal" href="test_application.html#compiler-test-app"><span class="std std-ref">Compiler test application</span></a></li>
+<li><p><strong>external:</strong> External modules used in UMD such as flatbuffers</p></li>
+<li><p><strong>include:</strong> <a class="reference internal" href="runtime_environment.html#umd-api"><span class="std std-ref">Application Programming Interface</span></a></p></li>
+<li><p><strong>make:</strong> Make files</p></li>
+<li><dl class="simple">
+<dt>port: <a class="reference internal" href="runtime_environment.html#umd-layer"><span class="std std-ref">Portability layer</span></a></dt><dd><ul>
+<li><p><strong>linux:</strong> Portability layer for Linux</p></li>
 </ul>
 </dd>
 </dl>
 </li>
+<li><p>utils: Utility functions</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>kmd: <a class="reference internal" href="runtime_environment.html#kernel-mode-driver"><span class="std std-ref">Kernel Mode Driver</span></a></dt>
-<dd><ul class="first last">
-<li><strong>Documentation:</strong> Device tree bindings for NVDLA device</li>
-<li><strong>firmware:</strong> Core DLA hardware programming including HW layer scheduler</li>
-<li><strong>include:</strong> <a class="reference internal" href="runtime_environment.html#kmd-interface"><span class="std std-ref">Core Engine Interface</span></a></li>
-<li><dl class="first docutils">
-<dt><strong>port:</strong> <a class="reference internal" href="runtime_environment.html#kmd-layer"><span class="std std-ref">Portability layer</span></a></dt>
-<dd><ul class="first last">
-<li><strong>linux:</strong> Portability layer for Linux</li>
+<li><dl class="simple">
+<dt>kmd: <a class="reference internal" href="runtime_environment.html#kernel-mode-driver"><span class="std std-ref">Kernel Mode Driver</span></a></dt><dd><ul>
+<li><p><strong>Documentation:</strong> Device tree bindings for NVDLA device</p></li>
+<li><p><strong>firmware:</strong> Core DLA hardware programming including HW layer scheduler</p></li>
+<li><p><strong>include:</strong> <a class="reference internal" href="runtime_environment.html#kmd-interface"><span class="std std-ref">Core Engine Interface</span></a></p></li>
+<li><dl class="simple">
+<dt><strong>port:</strong> <a class="reference internal" href="runtime_environment.html#kmd-layer"><span class="std std-ref">Portability layer</span></a></dt><dd><ul>
+<li><p><strong>linux:</strong> Portability layer for Linux</p></li>
 </ul>
 </dd>
 </dl>
@@ -139,19 +132,18 @@
 </dd>
 </dl>
 </li>
-<li><strong>prebuilt: Prebuilt binaries</strong></li>
-<li><dl class="first docutils">
-<dt>regression: Test regression framework</dt>
-<dd><ul class="first last">
-<li>flatbufs: Pre-generated loadables for sanity tests</li>
-<li>golden: Golden results</li>
-<li>scripts: Scripts used for test execution</li>
-<li>testplan: Test plans</li>
+<li><p><strong>prebuilt: Prebuilt binaries</strong></p></li>
+<li><dl class="simple">
+<dt>regression: Test regression framework</dt><dd><ul>
+<li><p>flatbufs: Pre-generated loadables for sanity tests</p></li>
+<li><p>golden: Golden results</p></li>
+<li><p>scripts: Scripts used for test execution</p></li>
+<li><p>testplan: Test plans</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><strong>scripts: General scripts</strong></li>
+<li><p><strong>scripts: General scripts</strong></p></li>
 </ul>
 </dd>
 </dl>
@@ -185,13 +177,11 @@
     </ul>
    </div>
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" />
+      <input type="text" name="q" aria-labelledby="searchlabel" />
       <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
@@ -226,7 +216,7 @@
 href="../copyright.html">Copyright</a> 2018, NVIDIA Corporation.
 <a href="http://www.nvidia.com/object/legal_info.html">Legal Information.</a>
 <a href="http://www.nvidia.com/object/privacy_policy.html">Privacy Policy.</a>
-Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.1.
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.2.0.
 </div>
 </div>
 </div>

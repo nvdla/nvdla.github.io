@@ -1,11 +1,9 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
     <title>Unit Description &#8212; NVDLA Documentation</title>
     <link rel="stylesheet" href="../../../_static/nvdla.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
@@ -14,7 +12,8 @@
     <script type="text/javascript" src="../../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../../_static/doctools.js"></script>
-    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../../../_static/language_data.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="search" title="Search" href="../../../search.html" />
     <link rel="next" title="Programming Guide" href="programming_guide.html" />
     <link rel="prev" title="LUT programming" href="lut-programming.html" />
@@ -86,7 +85,7 @@ fetch of multiple lines can be repeated, which reflect multiple
 surfaces, reflect a cube.</p>
 <div class="figure align-center" id="id24">
 <span id="fig-image3-bdma-block"></span><img alt="../../../_images/ias_image3_bdma_block.png" src="../../../_images/ias_image3_bdma_block.png" />
-<p class="caption"><span class="caption-number">Fig. 39 </span><span class="caption-text">Bridge DMA</span></p>
+<p class="caption"><span class="caption-number">Fig. 39 </span><span class="caption-text">Bridge DMA</span><a class="headerlink" href="#id24" title="Permalink to this image">¶</a></p>
 </div>
 </div>
 </div>
@@ -107,9 +106,9 @@ data from the controlling CPU. A single synchronization mechanism is used
 by all stages.</p>
 <p>The Convolution Pipeline supports three types of operations. They are:</p>
 <ul class="simple">
-<li>Direct convolution for feature data, or DC mode</li>
-<li>Convolution of image input, or image input mode</li>
-<li>Winograd convolution, or Winograd mode</li>
+<li><p>Direct convolution for feature data, or DC mode</p></li>
+<li><p>Convolution of image input, or image input mode</p></li>
+<li><p>Winograd convolution, or Winograd mode</p></li>
 </ul>
 <p>The convolution pipeline contains 1024 MACs for int16 or fp16, along with
 a 32 element accumulator array for partial sum storage.  The
@@ -120,7 +119,7 @@ in this document.</p>
 <p>Below is the diagram of convolution pipeline.</p>
 <div class="figure align-center" id="id25">
 <span id="fig-image4-convolution-pipeline"></span><img alt="../../../_images/ias_image4_convolution_pipeline.png" src="../../../_images/ias_image4_convolution_pipeline.png" />
-<p class="caption"><span class="caption-number">Fig. 40 </span><span class="caption-text">Convolution Pipeline</span></p>
+<p class="caption"><span class="caption-number">Fig. 40 </span><span class="caption-text">Convolution Pipeline</span><a class="headerlink" href="#id25" title="Permalink to this image">¶</a></p>
 </div>
 </div>
 <div class="section" id="direct-convolution">
@@ -129,21 +128,21 @@ in this document.</p>
 activation data, the other is weight data. Suppose NVDLA engine has such
 input parameters:</p>
 <ul class="simple">
-<li>Size of feature data cube: <em>W</em>x<em>H</em>x<em>C</em></li>
-<li>Size of one weight kernel: <em>R</em>x<em>S</em>x<em>C</em></li>
-<li>Total kernel number: <em>K</em></li>
-<li>Zero padding size: <em>LP</em> at left boundary, <em>RP</em> at right boundary,
-<em>TP</em> at top boundary, <em>BP</em> at bottom boundary.</li>
-<li>Convolution stride: <em>SX</em> in X dimension, <em>SY</em> in Y dimension</li>
-<li>Dilation: <em>DX</em> in X dimension, <em>DY</em> in Y dimension</li>
-<li>Size of output data cube: <em>W’</em>x<em>H’</em>x<em>C’</em></li>
+<li><p>Size of feature data cube: <em>W</em>x<em>H</em>x<em>C</em></p></li>
+<li><p>Size of one weight kernel: <em>R</em>x<em>S</em>x<em>C</em></p></li>
+<li><p>Total kernel number: <em>K</em></p></li>
+<li><p>Zero padding size: <em>LP</em> at left boundary, <em>RP</em> at right boundary,
+<em>TP</em> at top boundary, <em>BP</em> at bottom boundary.</p></li>
+<li><p>Convolution stride: <em>SX</em> in X dimension, <em>SY</em> in Y dimension</p></li>
+<li><p>Dilation: <em>DX</em> in X dimension, <em>DY</em> in Y dimension</p></li>
+<li><p>Size of output data cube: <em>W’</em>x<em>H’</em>x<em>C’</em></p></li>
 </ul>
 <div class="figure align-center" id="id26">
-<span id="fig-image5-convolution-operation"></span><img alt="../../../_images/ias_image5_convolution_operation.svg" src="../../../_images/ias_image5_convolution_operation.svg" /><p class="caption"><span class="caption-number">Fig. 41 </span><span class="caption-text">Convolution operation</span></p>
+<span id="fig-image5-convolution-operation"></span><img alt="../../../_images/ias_image5_convolution_operation.svg" src="../../../_images/ias_image5_convolution_operation.svg" /><p class="caption"><span class="caption-number">Fig. 41 </span><span class="caption-text">Convolution operation</span><a class="headerlink" href="#id26" title="Permalink to this image">¶</a></p>
 </div>
 <p>Figure below shows the convolution stride and zero padding.</p>
 <div class="figure align-center" id="id27">
-<span id="fig-image6-convolution-stride-and-pad"></span><img alt="../../../_images/ias_image6_convolution_stride_and_pad.svg" src="../../../_images/ias_image6_convolution_stride_and_pad.svg" /><p class="caption"><span class="caption-number">Fig. 42 </span><span class="caption-text">Convolution stride and zero padding</span></p>
+<span id="fig-image6-convolution-stride-and-pad"></span><img alt="../../../_images/ias_image6_convolution_stride_and_pad.svg" src="../../../_images/ias_image6_convolution_stride_and_pad.svg" /><p class="caption"><span class="caption-number">Fig. 42 </span><span class="caption-text">Convolution stride and zero padding</span><a class="headerlink" href="#id27" title="Permalink to this image">¶</a></p>
 </div>
 <p>Then the equations of these parameters are:</p>
 <div class="math notranslate nohighlight">
@@ -167,19 +166,19 @@ idea of direct convolution is to split the multiplication oerations from
 each convolution kernel into groups such that each group contains 64
 multiplications. The basic rules are:</p>
 <ol class="arabic simple">
-<li>Distribute all MACs hardware into 16 sub units. One sub unit
+<li><p>Distribute all MACs hardware into 16 sub units. One sub unit
 is called MAC Cell, and has hardware for 64 int16/fp16 MACs, or
-for 128 int8 MACs.</li>
-<li>The assembly of MAC Cells is called MAC Cell Array.</li>
-<li>Divide all input data cubes into 1x1x64 element small cubes for
-int16, fp16 and int8.</li>
-<li>Divide all weight data cubes into 1x1x64 element small cubes for
-int16, fp16 and int8.</li>
-<li>Multiply one small input data cube by one small weight data cube, and
+for 128 int8 MACs.</p></li>
+<li><p>The assembly of MAC Cells is called MAC Cell Array.</p></li>
+<li><p>Divide all input data cubes into 1x1x64 element small cubes for
+int16, fp16 and int8.</p></li>
+<li><p>Divide all weight data cubes into 1x1x64 element small cubes for
+int16, fp16 and int8.</p></li>
+<li><p>Multiply one small input data cube by one small weight data cube, and
 add products together. These multiplications and additions are
-performed within one MAC cell.</li>
-<li>Combine these compute operations into 4 operation levels, which are atomic
-operation, stripe operation, block operation and channel operation.</li>
+performed within one MAC cell.</p></li>
+<li><p>Combine these compute operations into 4 operation levels, which are atomic
+operation, stripe operation, block operation and channel operation.</p></li>
 </ol>
 <p>The four operations are described below using int6 percision mode as an example.</p>
 <div class="section" id="atomic-operation">
@@ -201,7 +200,7 @@ further calculation.</p>
 divisible by 64.</p>
 <p>A diagram showing the Atomic Operation is as below.</p>
 <div class="figure align-center" id="id28">
-<span id="fig-image7-atomic-operation"></span><img alt="../../../_images/ias_image7_atomic_operation.svg" src="../../../_images/ias_image7_atomic_operation.svg" /><p class="caption"><span class="caption-number">Fig. 43 </span><span class="caption-text">Atomic operation</span></p>
+<span id="fig-image7-atomic-operation"></span><img alt="../../../_images/ias_image7_atomic_operation.svg" src="../../../_images/ias_image7_atomic_operation.svg" /><p class="caption"><span class="caption-number">Fig. 43 </span><span class="caption-text">Atomic operation</span><a class="headerlink" href="#id28" title="Permalink to this image">¶</a></p>
 </div>
 </div>
 <div class="section" id="stripe-operation">
@@ -223,7 +222,7 @@ with no padding so the last two columns aren’t part of the first stripe
 (with a 3x3 kernel, no padding, and an input with w=6, the output will
 have a w of 4).</p>
 <div class="figure align-center" id="id29">
-<span id="fig-image8-stripe-operation"></span><img alt="../../../_images/ias_image8_stripe_operation.svg" src="../../../_images/ias_image8_stripe_operation.svg" /><p class="caption"><span class="caption-number">Fig. 44 </span><span class="caption-text">Stripe operation</span></p>
+<span id="fig-image8-stripe-operation"></span><img alt="../../../_images/ias_image8_stripe_operation.svg" src="../../../_images/ias_image8_stripe_operation.svg" /><p class="caption"><span class="caption-number">Fig. 44 </span><span class="caption-text">Stripe operation</span><a class="headerlink" href="#id29" title="Permalink to this image">¶</a></p>
 </div>
 </div>
 <div class="section" id="block-operation">
@@ -236,7 +235,7 @@ a small cube of input feature data sized properly to ensure that the
 results can add together across stripe operations and accumulated into
 the 16-32 element accumulator.</p>
 <div class="figure align-center" id="id30">
-<span id="fig-image9-block-operation"></span><img alt="../../../_images/ias_image9_block_operation.svg" src="../../../_images/ias_image9_block_operation.svg" /><p class="caption"><span class="caption-number">Fig. 45 </span><span class="caption-text">Block operation</span></p>
+<span id="fig-image9-block-operation"></span><img alt="../../../_images/ias_image9_block_operation.svg" src="../../../_images/ias_image9_block_operation.svg" /><p class="caption"><span class="caption-number">Fig. 45 </span><span class="caption-text">Block operation</span><a class="headerlink" href="#id30" title="Permalink to this image">¶</a></p>
 </div>
 <p>All stripe operations in one block operation have the same atomic
 operation number. The partial sums from the same block operation are
@@ -255,7 +254,7 @@ divisible by 64.</p>
 operation are similar, except the coordinate of channel direction is
 different, showing as below</p>
 <div class="figure align-center" id="id31">
-<span id="fig-image10-channel-operation"></span><img alt="../../../_images/ias_image10_channel_operation.svg" src="../../../_images/ias_image10_channel_operation.svg" /><p class="caption"><span class="caption-number">Fig. 46 </span><span class="caption-text">Channel operation</span></p>
+<span id="fig-image10-channel-operation"></span><img alt="../../../_images/ias_image10_channel_operation.svg" src="../../../_images/ias_image10_channel_operation.svg" /><p class="caption"><span class="caption-number">Fig. 46 </span><span class="caption-text">Channel operation</span><a class="headerlink" href="#id31" title="Permalink to this image">¶</a></p>
 </div>
 <p>All partial sums of one channel operation can be added together by
 stripe operation. After a channel operation, the result in convolution
@@ -287,7 +286,7 @@ and 32 for int8.</p>
 <p>The output order of direct convolution is consistent with feature memory
 mapping order.</p>
 <div class="figure align-center" id="id32">
-<span id="fig-image11-output-sequence"></span><img alt="../../../_images/ias_image11_output_sequence.svg" src="../../../_images/ias_image11_output_sequence.svg" /><p class="caption"><span class="caption-number">Fig. 47 </span><span class="caption-text">Output sequence of a partition</span></p>
+<span id="fig-image11-output-sequence"></span><img alt="../../../_images/ias_image11_output_sequence.svg" src="../../../_images/ias_image11_output_sequence.svg" /><p class="caption"><span class="caption-number">Fig. 47 </span><span class="caption-text">Output sequence of a partition</span><a class="headerlink" href="#id32" title="Permalink to this image">¶</a></p>
 </div>
 </div>
 <div class="section" id="operation-for-int8-and-fp16">
@@ -299,45 +298,45 @@ int16/fp16 is split into two MACs for int8.
 The element throughput of int8 is
 therefore double the int16 element throughput.</p>
 <p>The table below records parameters of one atomic operation.</p>
-<table border="1" class="docutils" id="tab-precision-atomic-operation">
+<table class="docutils align-default" id="tab-precision-atomic-operation">
 <caption><span class="caption-number">Table 44 </span><span class="caption-text">Precision parameters of atomic operation</span><a class="headerlink" href="#tab-precision-atomic-operation" title="Permalink to this table">¶</a></caption>
 <colgroup>
-<col width="20%" />
-<col width="20%" />
-<col width="20%" />
-<col width="20%" />
-<col width="20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
 </colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">Convolution
-Precision</th>
-<th class="head">Input Data
-Elements</th>
-<th class="head">Weights per
-Kernel</th>
-<th class="head">Kernels</th>
-<th class="head">Output
-Elements</th>
+<thead>
+<tr class="row-odd"><th class="head"><p>Convolution
+Precision</p></th>
+<th class="head"><p>Input Data
+Elements</p></th>
+<th class="head"><p>Weights per
+Kernel</p></th>
+<th class="head"><p>Kernels</p></th>
+<th class="head"><p>Output
+Elements</p></th>
 </tr>
 </thead>
-<tbody valign="top">
-<tr class="row-even"><td>int16</td>
-<td>64</td>
-<td>1024</td>
-<td>16</td>
-<td>16</td>
+<tbody>
+<tr class="row-even"><td><p>int16</p></td>
+<td><p>64</p></td>
+<td><p>1024</p></td>
+<td><p>16</p></td>
+<td><p>16</p></td>
 </tr>
-<tr class="row-odd"><td>fp16</td>
-<td>64</td>
-<td>1024</td>
-<td>16</td>
-<td>16</td>
+<tr class="row-odd"><td><p>fp16</p></td>
+<td><p>64</p></td>
+<td><p>1024</p></td>
+<td><p>16</p></td>
+<td><p>16</p></td>
 </tr>
-<tr class="row-even"><td>int8</td>
-<td>64</td>
-<td>2048</td>
-<td>32</td>
-<td>32</td>
+<tr class="row-even"><td><p>int8</p></td>
+<td><p>64</p></td>
+<td><p>2048</p></td>
+<td><p>32</p></td>
+<td><p>32</p></td>
 </tr>
 </tbody>
 </table>
@@ -417,102 +416,102 @@ and <em>C</em>. This step is called PRA.</p>
 <p>In one Winograd atomic operation, 64 products in one MAC cell are not
 simply added together as in Direct Convolution. The addition has three phases:</p>
 <ul class="simple">
-<li>Phase 1, each of 4 products in the channel direction are added together. The
-output of phase 1 is 16 partial sums, representing a 4x4 matrix.</li>
-<li>Phase 2, each 4x4 partial sum matrix is multiplied with matrix <span class="math notranslate nohighlight">\(A^{T}\)</span>.
-The output of phase 2 is 8 partial sums, or a 4x2 matrix.</li>
-<li>Phase 3, each 4x2 partial sum matrix from phase 2 is multiplied
-with matrix <em>A</em>. The output is 4 partial sums.</li>
+<li><p>Phase 1, each of 4 products in the channel direction are added together. The
+output of phase 1 is 16 partial sums, representing a 4x4 matrix.</p></li>
+<li><p>Phase 2, each 4x4 partial sum matrix is multiplied with matrix <span class="math notranslate nohighlight">\(A^{T}\)</span>.
+The output of phase 2 is 8 partial sums, or a 4x2 matrix.</p></li>
+<li><p>Phase 3, each 4x2 partial sum matrix from phase 2 is multiplied
+with matrix <em>A</em>. The output is 4 partial sums.</p></li>
 </ul>
 <p>Then 4 partial sums are stored in accumulator for further calculation.
 Both phase 2 and phase 3 are called POA.</p>
 <p>Winograd mode also has five operations. The comparing of parameters is
 listed in table below.</p>
-<table border="1" class="docutils" id="tab-cc-operation-modes">
+<table class="docutils align-default" id="tab-cc-operation-modes">
 <caption><span class="caption-number">Table 45 </span><span class="caption-text">Parameters of operation modes</span><a class="headerlink" href="#tab-cc-operation-modes" title="Permalink to this table">¶</a></caption>
 <colgroup>
-<col width="20%" />
-<col width="20%" />
-<col width="20%" />
-<col width="20%" />
-<col width="20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
 </colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">mode</th>
-<th class="head">direct
-convolution</th>
-<th class="head">direct
-convolution</th>
-<th class="head">Winograd</th>
-<th class="head">Winograd</th>
+<thead>
+<tr class="row-odd"><th class="head"><p>mode</p></th>
+<th class="head"><p>direct
+convolution</p></th>
+<th class="head"><p>direct
+convolution</p></th>
+<th class="head"><p>Winograd</p></th>
+<th class="head"><p>Winograd</p></th>
 </tr>
 </thead>
-<tbody valign="top">
-<tr class="row-even"><td>formats</td>
-<td>int16/fp16</td>
-<td>int8</td>
-<td>int16/fp16</td>
-<td>int8</td>
+<tbody>
+<tr class="row-even"><td><p>formats</p></td>
+<td><p>int16/fp16</p></td>
+<td><p>int8</p></td>
+<td><p>int16/fp16</p></td>
+<td><p>int8</p></td>
 </tr>
-<tr class="row-odd"><td>small data
+<tr class="row-odd"><td><p>small data
 cube per
-MAC cell</td>
-<td>1x1x64</td>
-<td>1x1x64</td>
-<td>4x4x4</td>
-<td>4x4x4</td>
+MAC cell</p></td>
+<td><p>1x1x64</p></td>
+<td><p>1x1x64</p></td>
+<td><p>4x4x4</p></td>
+<td><p>4x4x4</p></td>
 </tr>
-<tr class="row-even"><td>kernels per
+<tr class="row-even"><td><p>kernels per
 atomic
-operation</td>
-<td>16</td>
-<td>32</td>
-<td>16</td>
-<td>32</td>
+operation</p></td>
+<td><p>16</p></td>
+<td><p>32</p></td>
+<td><p>16</p></td>
+<td><p>32</p></td>
 </tr>
-<tr class="row-odd"><td>atomics
+<tr class="row-odd"><td><p>atomics
 operation
 per stripe
-operation</td>
-<td>16~32</td>
-<td>16~32</td>
-<td>16~32</td>
-<td>16~32</td>
+operation</p></td>
+<td><p>16~32</p></td>
+<td><p>16~32</p></td>
+<td><p>16~32</p></td>
+<td><p>16~32</p></td>
 </tr>
-<tr class="row-even"><td>strips
+<tr class="row-even"><td><p>strips
 operation
 per block
-operation</td>
-<td>R*S</td>
-<td>R*S</td>
-<td>1</td>
-<td>1</td>
+operation</p></td>
+<td><p>R*S</p></td>
+<td><p>R*S</p></td>
+<td><p>1</p></td>
+<td><p>1</p></td>
 </tr>
-<tr class="row-odd"><td>blocks
+<tr class="row-odd"><td><p>blocks
 operation
 per channel
-operation</td>
-<td>C/64</td>
-<td>C/64</td>
-<td>C/4</td>
-<td>C/4</td>
+operation</p></td>
+<td><p>C/64</p></td>
+<td><p>C/64</p></td>
+<td><p>C/4</p></td>
+<td><p>C/4</p></td>
 </tr>
 </tbody>
 </table>
 <p>The output sequence of Winograd convolution is similar to direct
 convolution.  Some differences of Winograd:</p>
 <ul class="simple">
-<li>For Winograd operation, the output width and height shall be
+<li><p>For Winograd operation, the output width and height shall be
 divisible by 4. It’s a mandatory requirement. It’s for special scan
-order.</li>
-<li>The scan order of stripe operation in Winograd convolution is
-different from direct convolution. Please see figure below.</li>
-<li>The block operation always has only one stripe operation.</li>
-<li>Winograd layer always outputs 4 lines in parallel. SDP will guarantee
-the correction of memory mapping of output data cube.</li>
+order.</p></li>
+<li><p>The scan order of stripe operation in Winograd convolution is
+different from direct convolution. Please see figure below.</p></li>
+<li><p>The block operation always has only one stripe operation.</p></li>
+<li><p>Winograd layer always outputs 4 lines in parallel. SDP will guarantee
+the correction of memory mapping of output data cube.</p></li>
 </ul>
 <div class="figure align-center" id="id33">
-<span id="fig-image12-scan-order-wino"></span><img alt="../../../_images/ias_image12_scan_order_wino.svg" src="../../../_images/ias_image12_scan_order_wino.svg" /><p class="caption"><span class="caption-number">Fig. 48 </span><span class="caption-text">Scan order of stripe operation in Winograd (W-H projection)</span></p>
+<span id="fig-image12-scan-order-wino"></span><img alt="../../../_images/ias_image12_scan_order_wino.svg" src="../../../_images/ias_image12_scan_order_wino.svg" /><p class="caption"><span class="caption-number">Fig. 48 </span><span class="caption-text">Scan order of stripe operation in Winograd (W-H projection)</span><a class="headerlink" href="#id33" title="Permalink to this image">¶</a></p>
 </div>
 </div>
 <div class="section" id="deconvolution">
@@ -537,7 +536,7 @@ cube with K SxRxC kernels is:</p>
 <p>According to equation, the 3D deconvolution is equal to a convolution
 with (S-1) and (R-1) zero padding and reversed R/S weight order</p>
 <div class="figure align-center" id="id34">
-<span id="fig-image13-1d-deconvolution"></span><img alt="../../../_images/ias_image13_1d_deconvolution.svg" src="../../../_images/ias_image13_1d_deconvolution.svg" /><p class="caption"><span class="caption-number">Fig. 49 </span><span class="caption-text">One-dimensional deconvolution, x stride = 1</span></p>
+<span id="fig-image13-1d-deconvolution"></span><img alt="../../../_images/ias_image13_1d_deconvolution.svg" src="../../../_images/ias_image13_1d_deconvolution.svg" /><p class="caption"><span class="caption-number">Fig. 49 </span><span class="caption-text">One-dimensional deconvolution, x stride = 1</span><a class="headerlink" href="#id34" title="Permalink to this image">¶</a></p>
 </div>
 <p>If the deconvolution X stride or Y stride is not 1, the calculation flow is
 a bit different. The weight kernels are split into smaller kernel sets. Each
@@ -553,17 +552,17 @@ extension parameter is deconv_x_stride and deconv_y_stride.</p>
 to reorder these output values to get the desired deconvolutional output cube.</p>
 <p>In conclusion, NVDLA supports deconvolution layer by below strategy:</p>
 <ul class="simple">
-<li>NVDLA use two steps to perform a deconvolution layer which stride is
-bigger than 1</li>
-<li>The first step is a serial convolution layers with order-reversed
-kernels.</li>
-<li>The output of first step forms a Winograd channel-extended output
+<li><p>NVDLA use two steps to perform a deconvolution layer which stride is
+bigger than 1</p></li>
+<li><p>The first step is a serial convolution layers with order-reversed
+kernels.</p></li>
+<li><p>The output of first step forms a Winograd channel-extended output
 data cube. Extension parameter is deconvolution x stride and
-deconvolution y stride.</li>
-<li>The second step is running on RUBIK units.</li>
-<li>Rubik unit does an inverse operation to Winograd channel-extended
-data cube.</li>
-<li>After the second HW-layer, the output data cube is formated as per the expected result.</li>
+deconvolution y stride.</p></li>
+<li><p>The second step is running on RUBIK units.</p></li>
+<li><p>Rubik unit does an inverse operation to Winograd channel-extended
+data cube.</p></li>
+<li><p>After the second HW-layer, the output data cube is formated as per the expected result.</p></li>
 </ul>
 </div>
 <div class="section" id="convolution-with-image-input">
@@ -576,25 +575,25 @@ use pixel formats</strong>. Multi-batch option is also not supported for
 image input.</p>
 <p>Comparing to DC, image input case has some difference:</p>
 <ul class="simple">
-<li>Channel pre-extension. The weight kernel should do channel
-pre-extension. It is unlike DC mode or Winograd mode.</li>
-<li>Data mapping in convolution buffer. The image data mapping in the
+<li><p>Channel pre-extension. The weight kernel should do channel
+pre-extension. It is unlike DC mode or Winograd mode.</p></li>
+<li><p>Data mapping in convolution buffer. The image data mapping in the
 convolution buffer is different from DC and Winograd mode.
 All elements of left and right
 padding and input pixel line are compactly residing in CBUF entries.
 See figure below. If channel size is 4, the element mapping order is
 R(Y)-&gt;G(U)-&gt;B(V)-&gt;A(X). If channel size is 3, the order is
-R(Y)-&gt;G(U)-&gt;B(V).</li>
-<li>Distribution of stripe operation. The stripe operation length is
+R(Y)-&gt;G(U)-&gt;B(V).</p></li>
+<li><p>Distribution of stripe operation. The stripe operation length is
 fixed to 64. And stripe operation shall never across lines. So that
-every stripe operation is started from first byte of a CBUF entry.</li>
-<li>Use channel post-extension for speedup. Even with channel
+every stripe operation is started from first byte of a CBUF entry.</p></li>
+<li><p>Use channel post-extension for speedup. Even with channel
 pre-extension, usually kernel channel size is less than 32.
 Therefore, channel post-extension is very useful for image input
-convolution layer.</li>
+convolution layer.</p></li>
 </ul>
 <div class="figure align-center" id="id35">
-<span id="fig-image14-pixel-mapping-in-cbuf"></span><img alt="../../../_images/ias_image14_pixel_mapping_in_cbuf.svg" src="../../../_images/ias_image14_pixel_mapping_in_cbuf.svg" /><p class="caption"><span class="caption-number">Fig. 50 </span><span class="caption-text">Pixel mapping in convolution buffer</span></p>
+<span id="fig-image14-pixel-mapping-in-cbuf"></span><img alt="../../../_images/ias_image14_pixel_mapping_in_cbuf.svg" src="../../../_images/ias_image14_pixel_mapping_in_cbuf.svg" /><p class="caption"><span class="caption-number">Fig. 50 </span><span class="caption-text">Pixel mapping in convolution buffer</span><a class="headerlink" href="#id35" title="Permalink to this image">¶</a></p>
 </div>
 </div>
 <div class="section" id="channel-post-extension">
@@ -616,42 +615,42 @@ lines and combine them as a C=64 line. Then MAC efficiency rise back to
 100%.</p>
 <p>Some limitation of channel post-extension:</p>
 <ul class="simple">
-<li>Channel post-extension is only for image input convolution.</li>
-<li>Channel post-extension only supports 2-line extending and 4-line extending.</li>
-<li>Channel post-extension is limited by pre-extended channel size and
-convolution x stride</li>
+<li><p>Channel post-extension is only for image input convolution.</p></li>
+<li><p>Channel post-extension only supports 2-line extending and 4-line extending.</p></li>
+<li><p>Channel post-extension is limited by pre-extended channel size and
+convolution x stride</p></li>
 </ul>
-<table border="1" class="docutils" id="tab-limits-of-channel-post-extension">
+<table class="docutils align-default" id="tab-limits-of-channel-post-extension">
 <caption><span class="caption-number">Table 46 </span><span class="caption-text">Limits of channel post-extension</span><a class="headerlink" href="#tab-limits-of-channel-post-extension" title="Permalink to this table">¶</a></caption>
 <colgroup>
-<col width="33%" />
-<col width="33%" />
-<col width="33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
 </colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">Channel
-post-extension</th>
-<th class="head">conv_x_stride limit</th>
-<th class="head">pre-extended channel
-size limit</th>
+<thead>
+<tr class="row-odd"><th class="head"><p>Channel
+post-extension</p></th>
+<th class="head"><p>conv_x_stride limit</p></th>
+<th class="head"><p>pre-extended channel
+size limit</p></th>
 </tr>
 </thead>
-<tbody valign="top">
-<tr class="row-even"><td>1-line</td>
-<td>No</td>
-<td>No</td>
+<tbody>
+<tr class="row-even"><td><p>1-line</p></td>
+<td><p>No</p></td>
+<td><p>No</p></td>
 </tr>
-<tr class="row-odd"><td>2-lines</td>
-<td>(conv_x_stride *
+<tr class="row-odd"><td><p>2-lines</p></td>
+<td><p>(conv_x_stride *
 ori_channel_size)
-&lt;=32</td>
-<td>&lt;=32</td>
+&lt;=32</p></td>
+<td><p>&lt;=32</p></td>
 </tr>
-<tr class="row-even"><td>4-lines</td>
-<td>(conv_x_stride *
+<tr class="row-even"><td><p>4-lines</p></td>
+<td><p>(conv_x_stride *
 ori_channel_size)
-&lt;=16</td>
-<td>&lt;=16</td>
+&lt;=16</p></td>
+<td><p>&lt;=16</p></td>
 </tr>
 </tbody>
 </table>
@@ -680,96 +679,96 @@ interlaced for atomic operation one after another. The stripe operation
 then contains atomic operations for multiple batches. Since weights are reused
 accross a stripe weight loading cycles are hidden and the efficiency increases.</p>
 <p>The length of stripe operation with different batch size are:</p>
-<table border="1" class="docutils" id="tab-stripe-length-multi-batch-mode">
+<table class="docutils align-default" id="tab-stripe-length-multi-batch-mode">
 <caption><span class="caption-number">Table 47 </span><span class="caption-text">Stripe length of different batch size</span><a class="headerlink" href="#tab-stripe-length-multi-batch-mode" title="Permalink to this table">¶</a></caption>
 <colgroup>
-<col width="29%" />
-<col width="12%" />
-<col width="12%" />
-<col width="12%" />
-<col width="13%" />
-<col width="12%" />
-<col width="12%" />
+<col style="width: 29%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 13%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
 </colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">Batch Size</th>
-<th class="head">1</th>
-<th class="head">2</th>
-<th class="head">3</th>
-<th class="head">4</th>
-<th class="head">5</th>
-<th class="head">6</th>
+<thead>
+<tr class="row-odd"><th class="head"><p>Batch Size</p></th>
+<th class="head"><p>1</p></th>
+<th class="head"><p>2</p></th>
+<th class="head"><p>3</p></th>
+<th class="head"><p>4</p></th>
+<th class="head"><p>5</p></th>
+<th class="head"><p>6</p></th>
 </tr>
 </thead>
-<tbody valign="top">
-<tr class="row-even"><td>Normal length</td>
-<td>16</td>
-<td>8x2</td>
-<td>8x3</td>
-<td>4x4</td>
-<td>4x5</td>
-<td>4x6</td>
+<tbody>
+<tr class="row-even"><td><p>Normal length</p></td>
+<td><p>16</p></td>
+<td><p>8x2</p></td>
+<td><p>8x3</p></td>
+<td><p>4x4</p></td>
+<td><p>4x5</p></td>
+<td><p>4x6</p></td>
 </tr>
-<tr class="row-odd"><td>Max length</td>
-<td>32</td>
-<td>16x2</td>
-<td>16x3</td>
-<td>8x4</td>
-<td>8x5</td>
-<td>8x6</td>
+<tr class="row-odd"><td><p>Max length</p></td>
+<td><p>32</p></td>
+<td><p>16x2</p></td>
+<td><p>16x3</p></td>
+<td><p>8x4</p></td>
+<td><p>8x5</p></td>
+<td><p>8x6</p></td>
 </tr>
-<tr class="row-even"><td>Batch Size</td>
-<td>7</td>
-<td>8</td>
-<td>9</td>
-<td>10</td>
-<td>11</td>
-<td>12</td>
+<tr class="row-even"><td><p>Batch Size</p></td>
+<td><p>7</p></td>
+<td><p>8</p></td>
+<td><p>9</p></td>
+<td><p>10</p></td>
+<td><p>11</p></td>
+<td><p>12</p></td>
 </tr>
-<tr class="row-odd"><td>Normal length</td>
-<td>4x7</td>
-<td>2x8</td>
-<td>2x9</td>
-<td>2x10</td>
-<td>2x11</td>
-<td>2x12</td>
+<tr class="row-odd"><td><p>Normal length</p></td>
+<td><p>4x7</p></td>
+<td><p>2x8</p></td>
+<td><p>2x9</p></td>
+<td><p>2x10</p></td>
+<td><p>2x11</p></td>
+<td><p>2x12</p></td>
 </tr>
-<tr class="row-even"><td>Max length</td>
-<td>8x7</td>
-<td>4x8</td>
-<td>4x9</td>
-<td>4x10</td>
-<td>4x11</td>
-<td>4x12</td>
+<tr class="row-even"><td><p>Max length</p></td>
+<td><p>8x7</p></td>
+<td><p>4x8</p></td>
+<td><p>4x9</p></td>
+<td><p>4x10</p></td>
+<td><p>4x11</p></td>
+<td><p>4x12</p></td>
 </tr>
-<tr class="row-odd"><td>Batch Size</td>
-<td>13</td>
-<td>14</td>
-<td>15</td>
-<td>16~32</td>
-<td>&#160;</td>
-<td>&#160;</td>
+<tr class="row-odd"><td><p>Batch Size</p></td>
+<td><p>13</p></td>
+<td><p>14</p></td>
+<td><p>15</p></td>
+<td><p>16~32</p></td>
+<td></td>
+<td></td>
 </tr>
-<tr class="row-even"><td>Normal length</td>
-<td>2x13</td>
-<td>2x14</td>
-<td>2x15</td>
-<td>1xN</td>
-<td>&#160;</td>
-<td>&#160;</td>
+<tr class="row-even"><td><p>Normal length</p></td>
+<td><p>2x13</p></td>
+<td><p>2x14</p></td>
+<td><p>2x15</p></td>
+<td><p>1xN</p></td>
+<td></td>
+<td></td>
 </tr>
-<tr class="row-odd"><td>Max length</td>
-<td>4x13</td>
-<td>4x14</td>
-<td>4x15</td>
-<td>1xN</td>
-<td>&#160;</td>
-<td>&#160;</td>
+<tr class="row-odd"><td><p>Max length</p></td>
+<td><p>4x13</p></td>
+<td><p>4x14</p></td>
+<td><p>4x15</p></td>
+<td><p>1xN</p></td>
+<td></td>
+<td></td>
 </tr>
 </tbody>
 </table>
 <div class="figure align-center" id="id36">
-<span id="fig-image15-multi-batch"></span><img alt="../../../_images/ias_image15_multi_batch.svg" src="../../../_images/ias_image15_multi_batch.svg" /><p class="caption"><span class="caption-number">Fig. 51 </span><span class="caption-text">Multi-batch mode</span></p>
+<span id="fig-image15-multi-batch"></span><img alt="../../../_images/ias_image15_multi_batch.svg" src="../../../_images/ias_image15_multi_batch.svg" /><p class="caption"><span class="caption-number">Fig. 51 </span><span class="caption-text">Multi-batch mode</span><a class="headerlink" href="#id36" title="Permalink to this image">¶</a></p>
 </div>
 </div>
 <div class="section" id="dilation">
@@ -778,13 +777,13 @@ accross a stripe weight loading cycles are hidden and the efficiency increases.<
 with zero values. This function can be enabled by SW according as needed.</p>
 <p>The diagram below shows a case with the dilation parameter = 3.</p>
 <div class="figure align-center" id="id37">
-<span id="fig-image16-weight-dilation"></span><img alt="../../../_images/ias_image16_weight_dilation.svg" src="../../../_images/ias_image16_weight_dilation.svg" /><p class="caption"><span class="caption-number">Fig. 52 </span><span class="caption-text">Weight dilation</span></p>
+<span id="fig-image16-weight-dilation"></span><img alt="../../../_images/ias_image16_weight_dilation.svg" src="../../../_images/ias_image16_weight_dilation.svg" /><p class="caption"><span class="caption-number">Fig. 52 </span><span class="caption-text">Weight dilation</span><a class="headerlink" href="#id37" title="Permalink to this image">¶</a></p>
 </div>
 <p>NVDLA supports dilation in both R and S dimensions.</p>
 <p>Limits of dilation:</p>
 <ul class="simple">
-<li>Dilation is available for DC mode only.</li>
-<li>Dilation is not available for Winograd or image input mode.</li>
+<li><p>Dilation is available for DC mode only.</p></li>
+<li><p>Dilation is not available for Winograd or image input mode.</p></li>
 </ul>
 </div>
 <div class="section" id="power-consideration">
@@ -803,85 +802,85 @@ fetches data from SRAM/DRAM for the convolution operation and stores it
 into a buffer (Convolution Buffer or CBUF) in the order needed for the
 convolution engine. Supported input formats are:</p>
 <ul class="simple">
-<li>Pixel data</li>
-<li>Feature data</li>
-<li>Uncompressed/compressed weight</li>
-<li>WMB</li>
-<li>WGS</li>
+<li><p>Pixel data</p></li>
+<li><p>Feature data</p></li>
+<li><p>Uncompressed/compressed weight</p></li>
+<li><p>WMB</p></li>
+<li><p>WGS</p></li>
 </ul>
 <p>Two read channels connect from CDMA to the AXI interface.  These are the
 weight read channel, and data read channel. To fetch the input formats
 listed above, the channels are configured for that format formats. The table
 below records the input data format to read channel mapping.</p>
-<table border="1" class="docutils" id="tab-channel-sharing-in-cdma">
+<table class="docutils align-default" id="tab-channel-sharing-in-cdma">
 <caption><span class="caption-number">Table 48 </span><span class="caption-text">Channel sharing in CDMA</span><a class="headerlink" href="#tab-channel-sharing-in-cdma" title="Permalink to this table">¶</a></caption>
 <colgroup>
-<col width="21%" />
-<col width="20%" />
-<col width="20%" />
-<col width="20%" />
-<col width="20%" />
+<col style="width: 21%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
 </colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">Input
-Format</th>
-<th class="head">Image Case</th>
-<th class="head">Uncompressed
+<thead>
+<tr class="row-odd"><th class="head"><p>Input
+Format</p></th>
+<th class="head"><p>Image Case</p></th>
+<th class="head"><p>Uncompressed
 Feature
-Case</th>
-<th class="head">Uncompressed
-Weight Case</th>
-<th class="head">Compressed
-Weight Case</th>
+Case</p></th>
+<th class="head"><p>Uncompressed
+Weight Case</p></th>
+<th class="head"><p>Compressed
+Weight Case</p></th>
 </tr>
 </thead>
-<tbody valign="top">
-<tr class="row-even"><td>Pixel data</td>
-<td>data
-channel</td>
-<td>NA</td>
-<td>NA</td>
-<td>NA</td>
+<tbody>
+<tr class="row-even"><td><p>Pixel data</p></td>
+<td><p>data
+channel</p></td>
+<td><p>NA</p></td>
+<td><p>NA</p></td>
+<td><p>NA</p></td>
 </tr>
-<tr class="row-odd"><td>Uncompressed
+<tr class="row-odd"><td><p>Uncompressed
 feature
-data</td>
-<td>NA</td>
-<td>data
-channel</td>
-<td>NA</td>
-<td>NA</td>
+data</p></td>
+<td><p>NA</p></td>
+<td><p>data
+channel</p></td>
+<td><p>NA</p></td>
+<td><p>NA</p></td>
 </tr>
-<tr class="row-even"><td>Uncompressed
-weight</td>
-<td>NA</td>
-<td>NA</td>
-<td>weight
-channel</td>
-<td>NA</td>
+<tr class="row-even"><td><p>Uncompressed
+weight</p></td>
+<td><p>NA</p></td>
+<td><p>NA</p></td>
+<td><p>weight
+channel</p></td>
+<td><p>NA</p></td>
 </tr>
-<tr class="row-odd"><td>Sparse
+<tr class="row-odd"><td><p>Sparse
 compressed
-weight</td>
-<td>NA</td>
-<td>NA</td>
-<td>NA</td>
-<td>weight
-channel</td>
+weight</p></td>
+<td><p>NA</p></td>
+<td><p>NA</p></td>
+<td><p>NA</p></td>
+<td><p>weight
+channel</p></td>
 </tr>
-<tr class="row-even"><td>WMB</td>
-<td>NA</td>
-<td>NA</td>
-<td>NA</td>
-<td>weight
-channel</td>
+<tr class="row-even"><td><p>WMB</p></td>
+<td><p>NA</p></td>
+<td><p>NA</p></td>
+<td><p>NA</p></td>
+<td><p>weight
+channel</p></td>
 </tr>
-<tr class="row-odd"><td>WGS</td>
-<td>NA</td>
-<td>NA</td>
-<td>NA</td>
-<td>weight
-channel</td>
+<tr class="row-odd"><td><p>WGS</p></td>
+<td><p>NA</p></td>
+<td><p>NA</p></td>
+<td><p>NA</p></td>
+<td><p>weight
+channel</p></td>
 </tr>
 </tbody>
 </table>
@@ -889,7 +888,7 @@ channel</td>
 Convolution DMA are 64-byte aligned.</p>
 <div class="figure align-center" id="id38">
 <span id="fig-image17-cdma"></span><img alt="../../../_images/ias_image17_cdma.png" src="../../../_images/ias_image17_cdma.png" />
-<p class="caption"><span class="caption-number">Fig. 53 </span><span class="caption-text">Convolution DMA</span></p>
+<p class="caption"><span class="caption-number">Fig. 53 </span><span class="caption-text">Convolution DMA</span><a class="headerlink" href="#id38" title="Permalink to this image">¶</a></p>
 </div>
 <p>CDMA consists of three sub-modules to
 fetch pixel data or feature data for convolution: CDMA_DC, CDMA_WG
@@ -899,13 +898,13 @@ into the CBUF RAM. At any time, only one of the sub modules
 is activated to fetch pixel/feature data.</p>
 <p>Take CDMA_DC as an example to introduce the procedures:</p>
 <ul class="simple">
-<li>Check status of convolution buffer for enough free space.</li>
-<li>Generate read transactions</li>
-<li>Cache feature data in shared buffers</li>
-<li>Reshape feature cubes into proper order</li>
-<li>Generate convolution buffer write address</li>
-<li>Write feature data into convolution buffer</li>
-<li>Update status of convolution buffer in the CDMA_STATUS sub-module</li>
+<li><p>Check status of convolution buffer for enough free space.</p></li>
+<li><p>Generate read transactions</p></li>
+<li><p>Cache feature data in shared buffers</p></li>
+<li><p>Reshape feature cubes into proper order</p></li>
+<li><p>Generate convolution buffer write address</p></li>
+<li><p>Write feature data into convolution buffer</p></li>
+<li><p>Update status of convolution buffer in the CDMA_STATUS sub-module</p></li>
 </ul>
 <p>Convolution DMA uses a dedicated engine to handle the
 requirements of Winograd. CDMA_WG has very similar structure and
@@ -961,9 +960,9 @@ three read ports.</p>
 256-entry two-port SRAMs. These banks act as three logical circular
 buffers:</p>
 <ul class="simple">
-<li>Input data buffer</li>
-<li>Weight buffer</li>
-<li>WMB buffer</li>
+<li><p>Input data buffer</p></li>
+<li><p>Weight buffer</p></li>
+<li><p>WMB buffer</p></li>
 </ul>
 <p>If the weight format is compressed, bank15 is assigned for WMB buffer,
 while two other buffers can use bank0~bank14. If weight format is
@@ -975,7 +974,7 @@ incremental entry address. If the address reaches the max, it wraps to
 zero and then starts increasing again.</p>
 <div class="figure align-center" id="id39">
 <span id="fig-image18-cbuf"></span><img alt="../../../_images/ias_image18_cbuf.png" src="../../../_images/ias_image18_cbuf.png" />
-<p class="caption"><span class="caption-number">Fig. 54 </span><span class="caption-text">Convolution buffer</span></p>
+<p class="caption"><span class="caption-number">Fig. 54 </span><span class="caption-text">Convolution buffer</span><a class="headerlink" href="#id39" title="Permalink to this image">¶</a></p>
 </div>
 </div>
 <div class="section" id="id5">
@@ -1003,20 +1002,20 @@ CSC_SG, CSC_WL and CSC_DL. See <a class="reference internal" href="#fig-image19-
 the sequence to control convolution operation.</p>
 <p>The working flow of CSC_SG is as below:</p>
 <ol class="arabic simple">
-<li>Poll for enough data and weights in CBUF</li>
-<li>Generate a pair of sequence package, including weight loading package
+<li><p>Poll for enough data and weights in CBUF</p></li>
+<li><p>Generate a pair of sequence package, including weight loading package
 and data loading package. Each package represents one stripe
-operation.</li>
-<li>Push the two packages into two FIFOs</li>
-<li>Two counters for weight and feature/pixel are both down counting</li>
-<li>When the counters reach zero, check signals from the convolution accumulator
-for any back pressure</li>
-<li>If all conditions are ready, send weight and data packages in proper
-time to CSC_WL and CSC_DL.</li>
+operation.</p></li>
+<li><p>Push the two packages into two FIFOs</p></li>
+<li><p>Two counters for weight and feature/pixel are both down counting</p></li>
+<li><p>When the counters reach zero, check signals from the convolution accumulator
+for any back pressure</p></li>
+<li><p>If all conditions are ready, send weight and data packages in proper
+time to CSC_WL and CSC_DL.</p></li>
 </ol>
 <div class="figure align-center" id="id40">
 <span id="fig-image19-csc"></span><img alt="../../../_images/ias_image19_csc.png" src="../../../_images/ias_image19_csc.png" />
-<p class="caption"><span class="caption-number">Fig. 55 </span><span class="caption-text">Convolution sequence controller</span></p>
+<p class="caption"><span class="caption-number">Fig. 55 </span><span class="caption-text">Convolution sequence controller</span><a class="headerlink" href="#id40" title="Permalink to this image">¶</a></p>
 </div>
 <p>CSC_DL is the convolution data loader. This module contains the logic to
 execute the feature/pixel loading sequence. It receives packages from
@@ -1062,7 +1061,7 @@ cycles to go through pipeline, which is 3 cycles ahead of partial sum to
 prefetch assembly buffer in CACC.</p>
 <div class="figure align-center" id="id41">
 <span id="fig-image20-cmac"></span><img alt="../../../_images/ias_image20_cmac.png" src="../../../_images/ias_image20_cmac.png" />
-<p class="caption"><span class="caption-number">Fig. 56 </span><span class="caption-text">Convolution MAC</span></p>
+<p class="caption"><span class="caption-number">Fig. 56 </span><span class="caption-text">Convolution MAC</span><a class="headerlink" href="#id41" title="Permalink to this image">¶</a></p>
 </div>
 <p>For physical design optimization the CMAC is divided into two parts, CMAC_A and
 CMAC_B. Each part has an individual CSB interface and register file. But they are
@@ -1097,22 +1096,22 @@ For FP16, the value is just converted from FP48 to FP32.</p>
 adder array, truncating array, valid-credit controller and a checker.</p>
 <p>Here is the CACC working flow:</p>
 <ol class="arabic simple">
-<li>Prefetch accumulative sums from the assembly SRAM group.</li>
-<li>When partial sums arrive, send them to adder array along with
+<li><p>Prefetch accumulative sums from the assembly SRAM group.</p></li>
+<li><p>When partial sums arrive, send them to adder array along with
 accumulative sums. If the partial sums are from the first stripe
-operation, the accumulative sums should be 0.</li>
-<li>Gather new accumulative sums from output side of adder array.</li>
-<li>Store into assembly SRAM group</li>
-<li>Repeat step1~ step3 in terms of stripe operation until a channel
-operation is done.</li>
-<li>If a channel operation is done, the output of adders is rounded and saturated.</li>
-<li>Gather results of previous step and store them into delivery SRAM group.</li>
-<li>Load results from delivery buffer group and send them to
-SDP</li>
+operation, the accumulative sums should be 0.</p></li>
+<li><p>Gather new accumulative sums from output side of adder array.</p></li>
+<li><p>Store into assembly SRAM group</p></li>
+<li><p>Repeat step1~ step3 in terms of stripe operation until a channel
+operation is done.</p></li>
+<li><p>If a channel operation is done, the output of adders is rounded and saturated.</p></li>
+<li><p>Gather results of previous step and store them into delivery SRAM group.</p></li>
+<li><p>Load results from delivery buffer group and send them to
+SDP</p></li>
 </ol>
 <div class="figure align-center" id="id42">
 <span id="fig-image21-cacc"></span><img alt="../../../_images/ias_image21_cacc.png" src="../../../_images/ias_image21_cacc.png" />
-<p class="caption"><span class="caption-number">Fig. 57 </span><span class="caption-text">Convolution accumulator</span></p>
+<p class="caption"><span class="caption-number">Fig. 57 </span><span class="caption-text">Convolution accumulator</span><a class="headerlink" href="#id42" title="Permalink to this image">¶</a></p>
 </div>
 <p>The assembly SRAM group contains 4 96Bx32 SRAMs and 4 64Bx32 SRAMs. The
 buffer group is used to cache accumulative sums with high precision. For
@@ -1126,87 +1125,87 @@ used to cache the result to be delivered to SDP. The input varies
 from 16 elements to 128 elements per cycle, while the output is always
 16 elements per cycle.</p>
 <p>The precision of accumulative sum is as below.</p>
-<table border="1" class="docutils" id="tab-cacc-precision">
+<table class="docutils align-default" id="tab-cacc-precision">
 <caption><span class="caption-number">Table 49 </span><span class="caption-text">CACC precision</span><a class="headerlink" href="#tab-cacc-precision" title="Permalink to this table">¶</a></caption>
 <colgroup>
-<col width="33%" />
-<col width="33%" />
-<col width="33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
 </colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">Input Format</th>
-<th class="head">Accumulative Sum</th>
-<th class="head">Truncated Result</th>
+<thead>
+<tr class="row-odd"><th class="head"><p>Input Format</p></th>
+<th class="head"><p>Accumulative Sum</p></th>
+<th class="head"><p>Truncated Result</p></th>
 </tr>
 </thead>
-<tbody valign="top">
-<tr class="row-even"><td>INT8</td>
-<td>INT34</td>
-<td>INT32</td>
+<tbody>
+<tr class="row-even"><td><p>INT8</p></td>
+<td><p>INT34</p></td>
+<td><p>INT32</p></td>
 </tr>
-<tr class="row-odd"><td>INT16</td>
-<td>INT48</td>
-<td>INT32</td>
+<tr class="row-odd"><td><p>INT16</p></td>
+<td><p>INT48</p></td>
+<td><p>INT32</p></td>
 </tr>
-<tr class="row-even"><td>FP16</td>
-<td>FP44 (8b exponent,
-38b signed decimal)</td>
-<td>FP32 (IEEE754
-standard)</td>
+<tr class="row-even"><td><p>FP16</p></td>
+<td><p>FP44 (8b exponent,
+38b signed decimal)</p></td>
+<td><p>FP32 (IEEE754
+standard)</p></td>
 </tr>
 </tbody>
 </table>
 <p>In adder array, there are 64 INT48 adders, 64 INT34 adders and 64 FP48
 adders. Part of them are activated in different mode</p>
-<table border="1" class="docutils" id="tab-adder-cacc">
+<table class="docutils align-default" id="tab-adder-cacc">
 <caption><span class="caption-number">Table 50 </span><span class="caption-text">Activated adders for different precision and mode</span><a class="headerlink" href="#tab-adder-cacc" title="Permalink to this table">¶</a></caption>
 <colgroup>
-<col width="25%" />
-<col width="25%" />
-<col width="25%" />
-<col width="25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
 </colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">Input Format
-and Mode</th>
-<th class="head">Activated INT48
-Adders</th>
-<th class="head">Activated INT34
-Adders</th>
-<th class="head">Activated FP44
-Adders</th>
+<thead>
+<tr class="row-odd"><th class="head"><p>Input Format
+and Mode</p></th>
+<th class="head"><p>Activated INT48
+Adders</p></th>
+<th class="head"><p>Activated INT34
+Adders</p></th>
+<th class="head"><p>Activated FP44
+Adders</p></th>
 </tr>
 </thead>
-<tbody valign="top">
-<tr class="row-even"><td>INT8 DC/Image</td>
-<td>Adder 0~15</td>
-<td>Adder 0~15</td>
-<td>NA</td>
+<tbody>
+<tr class="row-even"><td><p>INT8 DC/Image</p></td>
+<td><p>Adder 0~15</p></td>
+<td><p>Adder 0~15</p></td>
+<td><p>NA</p></td>
 </tr>
-<tr class="row-odd"><td>INT8 Winograd</td>
-<td>Adder 0~63</td>
-<td>Adder 0~63</td>
-<td>NA</td>
+<tr class="row-odd"><td><p>INT8 Winograd</p></td>
+<td><p>Adder 0~63</p></td>
+<td><p>Adder 0~63</p></td>
+<td><p>NA</p></td>
 </tr>
-<tr class="row-even"><td>INT16 DC/Image</td>
-<td>Adder 0~15</td>
-<td>NA</td>
-<td>NA</td>
+<tr class="row-even"><td><p>INT16 DC/Image</p></td>
+<td><p>Adder 0~15</p></td>
+<td><p>NA</p></td>
+<td><p>NA</p></td>
 </tr>
-<tr class="row-odd"><td>INT16 Winograd</td>
-<td>Adder 0~63</td>
-<td>NA</td>
-<td>NA</td>
+<tr class="row-odd"><td><p>INT16 Winograd</p></td>
+<td><p>Adder 0~63</p></td>
+<td><p>NA</p></td>
+<td><p>NA</p></td>
 </tr>
-<tr class="row-even"><td>FP16 DC/Image</td>
-<td>NA</td>
-<td>NA</td>
-<td>Adder 0~15</td>
+<tr class="row-even"><td><p>FP16 DC/Image</p></td>
+<td><p>NA</p></td>
+<td><p>NA</p></td>
+<td><p>Adder 0~15</p></td>
 </tr>
-<tr class="row-odd"><td>FP16 Winograd</td>
-<td>NA</td>
-<td>NA</td>
-<td>Adder 0~63</td>
+<tr class="row-odd"><td><p>FP16 Winograd</p></td>
+<td><p>NA</p></td>
+<td><p>NA</p></td>
+<td><p>Adder 0~63</p></td>
 </tr>
 </tbody>
 </table>
@@ -1219,7 +1218,7 @@ calculation in SDP. This function allows SDP to send 64B aligned write
 requests as many as possible when multi-batch is enabled. Below diagram
 shows a case with batch size of 2.</p>
 <div class="figure align-center" id="id43">
-<span id="fig-image22-data-remapping-in-cacc"></span><img alt="../../../_images/ias_image22_data_remapping_in_cacc.svg" src="../../../_images/ias_image22_data_remapping_in_cacc.svg" /><p class="caption"><span class="caption-number">Fig. 58 </span><span class="caption-text">Data remapping in CACC</span></p>
+<span id="fig-image22-data-remapping-in-cacc"></span><img alt="../../../_images/ias_image22_data_remapping_in_cacc.svg" src="../../../_images/ias_image22_data_remapping_in_cacc.svg" /><p class="caption"><span class="caption-number">Fig. 58 </span><span class="caption-text">Data remapping in CACC</span><a class="headerlink" href="#id43" title="Permalink to this image">¶</a></p>
 </div>
 <p>The protocol between CMAC and CACC is valid-only protocol. In case of
 overflow, CACC uses valid-credit protocol to back pressure CSC.</p>
@@ -1253,11 +1252,11 @@ In NVDLA, we implement bias addition in SDP.</p>
 M-RDMA;</p>
 <p>bias is a pre-trained parameter which can be one of 3 options:</p>
 <ol class="loweralpha simple">
-<li>Register: If bias is unique for entire data cube;</li>
-<li>SDP B/N/E-RDMA per-channel mode: If bias is shared for all elements
-in the same channel;</li>
-<li>SDP B/N/E-RDMA per-element mode: If bias is different
-element-by-element;</li>
+<li><p>Register: If bias is unique for entire data cube;</p></li>
+<li><p>SDP B/N/E-RDMA per-channel mode: If bias is shared for all elements
+in the same channel;</p></li>
+<li><p>SDP B/N/E-RDMA per-element mode: If bias is different
+element-by-element;</p></li>
 </ol>
 </div>
 <div class="section" id="non-linear-function">
@@ -1267,21 +1266,21 @@ layer operations.</p>
 <p>Based on current network analysis, there are three activation functions
 are commonly used:</p>
 <ul class="simple">
-<li>ReLU, for an input <span class="math notranslate nohighlight">\(x\)</span>, the output is <span class="math notranslate nohighlight">\(max(x,0)\)</span>.</li>
-<li>Sigmoid, for an input <span class="math notranslate nohighlight">\(x\)</span>, the output is
-<span class="math notranslate nohighlight">\(\frac{1}{1 + e^{- x}}\)</span>.</li>
+<li><p>ReLU, for an input <span class="math notranslate nohighlight">\(x\)</span>, the output is <span class="math notranslate nohighlight">\(max(x,0)\)</span>.</p></li>
+<li><p>Sigmoid, for an input <span class="math notranslate nohighlight">\(x\)</span>, the output is
+<span class="math notranslate nohighlight">\(\frac{1}{1 + e^{- x}}\)</span>.</p></li>
 </ul>
 <div class="figure align-center" id="id44">
 <span id="fig-image26-sigmoid"></span><img alt="../../../_images/ias_image26_sigmoid.png" src="../../../_images/ias_image26_sigmoid.png" />
-<p class="caption"><span class="caption-number">Fig. 59 </span><span class="caption-text">Sigmoid Function</span></p>
+<p class="caption"><span class="caption-number">Fig. 59 </span><span class="caption-text">Sigmoid Function</span><a class="headerlink" href="#id44" title="Permalink to this image">¶</a></p>
 </div>
 <ul class="simple">
-<li>Hyperbolic tangent, for an input <span class="math notranslate nohighlight">\(x\)</span>, the output is
-<span class="math notranslate nohighlight">\(\frac{1 - e^{- 2x}}{1 + e^{- 2x}}\)</span>.</li>
+<li><p>Hyperbolic tangent, for an input <span class="math notranslate nohighlight">\(x\)</span>, the output is
+<span class="math notranslate nohighlight">\(\frac{1 - e^{- 2x}}{1 + e^{- 2x}}\)</span>.</p></li>
 </ul>
 <div class="figure align-center" id="id45">
 <span id="fig-image27-hyperbolic"></span><img alt="../../../_images/ias_image27_hyperbolic.png" src="../../../_images/ias_image27_hyperbolic.png" />
-<p class="caption"><span class="caption-number">Fig. 60 </span><span class="caption-text">Hyperbolic Tangent Function</span></p>
+<p class="caption"><span class="caption-number">Fig. 60 </span><span class="caption-text">Hyperbolic Tangent Function</span><a class="headerlink" href="#id45" title="Permalink to this image">¶</a></p>
 </div>
 <p>In the case of the ReLU activation function, it could be implemented directly by hardware
 logic. Sigmoid and hyperbolic tangent functions are
@@ -1312,7 +1311,7 @@ data cubes which have the same W, H and C size. These two W x H x C
 feature data cubes do element-wise addition, multiplication or max/min
 comparison operation and output one W x H x C feature data cube.</p>
 <div class="figure align-center" id="id46">
-<span id="fig-image31-element-wise"></span><img alt="../../../_images/ias_image31_element_wise.svg" src="../../../_images/ias_image31_element_wise.svg" /><p class="caption"><span class="caption-number">Fig. 61 </span><span class="caption-text">Element-wise operation</span></p>
+<span id="fig-image31-element-wise"></span><img alt="../../../_images/ias_image31_element_wise.svg" src="../../../_images/ias_image31_element_wise.svg" /><p class="caption"><span class="caption-number">Fig. 61 </span><span class="caption-text">Element-wise operation</span><a class="headerlink" href="#id46" title="Permalink to this image">¶</a></p>
 </div>
 <p>The SDP unit can support element-wise layers for all 3 types of data
 precisions. Every element-wise layer on SDP is configured to do addition
@@ -1327,7 +1326,7 @@ fetches both input data cubes from memory.</p>
 <p>Different from ReLU which clip negative values to 0, PReLU acts as:</p>
 <div class="figure align-center" id="id47">
 <span id="fig-image32-prelu"></span><a class="reference internal image-reference" href="../../../_images/ias_image32_prelu.svg"><img alt="../../../_images/ias_image32_prelu.svg" src="../../../_images/ias_image32_prelu.svg" width="20%" /></a>
-<p class="caption"><span class="caption-number">Fig. 62 </span><span class="caption-text">PReLU</span></p>
+<p class="caption"><span class="caption-number">Fig. 62 </span><span class="caption-text">PReLU</span><a class="headerlink" href="#id47" title="Permalink to this image">¶</a></p>
 </div>
 <p>The scaling factor k can be either per cube constant or per-channel
 variant.</p>
@@ -1370,113 +1369,117 @@ memory in comparison mode.</p>
 connections to other sub-units.</p>
 <div class="figure align-center" id="id48">
 <span id="fig-image33-sdp"></span><img alt="../../../_images/ias_image33_sdp.png" src="../../../_images/ias_image33_sdp.png" />
-<p class="caption"><span class="caption-number">Fig. 63 </span><span class="caption-text">Single point Data Processing block diagram</span></p>
+<p class="caption"><span class="caption-number">Fig. 63 </span><span class="caption-text">Single point Data Processing block diagram</span><a class="headerlink" href="#id48" title="Permalink to this image">¶</a></p>
 </div>
 <p>Function Blocks:</p>
 <p>There are several function blocks, each of which targets a different
 purpose:</p>
 <ul class="simple">
-<li>Block M is used to select input data from MEM or Conv Core, which can be
-set from register</li>
-<li>Block X1/X2 have the same architecture and supports: Bias addition,
-BatchNorm, PReLU, ReLU, Eltwise.</li>
-<li>Block Y is primarily designed for element-wise, but it’s also able to
+<li><p>Block M is used to select input data from MEM or Conv Core, which can be
+set from register</p></li>
+<li><p>Block X1/X2 have the same architecture and supports: Bias addition,
+BatchNorm, PReLU, ReLU, Eltwise.</p></li>
+<li><p>Block Y is primarily designed for element-wise, but it’s also able to
 support Bias addition, PReLU. An extra LUT operation which can be selected
-before output to implement any non-linear operation.</li>
-<li>Block C1/C2 is for additional scaling and offset to save bits while
-keeping accuracy high.</li>
-<li>A Demux on the very end to send the output data to either WDMA for
-writing back to memory, or to PDP for a subsequent pooling operation.</li>
+before output to implement any non-linear operation.</p></li>
+<li><p>Block C1/C2 is for additional scaling and offset to save bits while
+keeping accuracy high.</p></li>
+<li><p>A Demux on the very end to send the output data to either WDMA for
+writing back to memory, or to PDP for a subsequent pooling operation.</p></li>
 </ul>
 <p>Most of function units have a configurable bypass mode so SW can
 choose full function or partial to match all the operations needed in
 one hardware layer.</p>
 <p>The throughput for each sub-unit is:</p>
-<table border="1" class="docutils">
+<table class="docutils align-default">
 <colgroup>
-<col width="34%" />
-<col width="66%" />
+<col style="width: 34%" />
+<col style="width: 66%" />
 </colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">Sub-unit</th>
-<th class="head">Throughput</th>
+<thead>
+<tr class="row-odd"><th class="head"><p>Sub-unit</p></th>
+<th class="head"><p>Throughput</p></th>
 </tr>
 </thead>
-<tbody valign="top">
-<tr class="row-even"><td>X1/X2</td>
-<td>16 elements/cycle</td>
+<tbody>
+<tr class="row-even"><td><p>X1/X2</p></td>
+<td><p>16 elements/cycle</p></td>
 </tr>
-<tr class="row-odd"><td>Y</td>
-<td>4 elements/cycle</td>
+<tr class="row-odd"><td><p>Y</p></td>
+<td><p>4 elements/cycle</p></td>
 </tr>
 </tbody>
 </table>
 <ol class="arabic">
-<li><p class="first">Working Mode: Flying:</p>
+<li><p>Working Mode: Flying:</p>
 <ol class="loweralpha simple">
-<li>On-flying: source data is from Conv-Core</li>
-<li>Off-flying: source data is from Memory, which is read by M-RDMA</li>
+<li><p>On-flying: source data is from Conv-Core</p></li>
+<li><p>Off-flying: source data is from Memory, which is read by M-RDMA</p></li>
 </ol>
 </li>
-<li><p class="first">Bias Addition:</p>
+<li><p>Bias Addition:</p>
 <ol class="loweralpha simple">
-<li>Operand data can be per element, per channel or per cube, the
+<li><p>Operand data can be per element, per channel or per cube, the
 actual operation can be performed at any of X1/X2/Y based on
-software configuration<ol class="lowerroman">
-<li>Bias data will be fetched from MEM if per element/channel. If
-truncate is enabled, all elements shares a same truncate value</li>
-<li>Bias data will be set by register if per cube</li>
+software configuration</p>
+<ol class="lowerroman simple">
+<li><p>Bias data will be fetched from MEM if per element/channel. If
+truncate is enabled, all elements shares a same truncate value</p></li>
+<li><p>Bias data will be set by register if per cube</p></li>
 </ol>
 </li>
-<li>Multiplier will be bypassed</li>
+<li><p>Multiplier will be bypassed</p></li>
 </ol>
 </li>
-<li><p class="first">Batch Normalization</p>
+<li><p>Batch Normalization</p>
 <ol class="loweralpha simple">
-<li>Operand data can be per element, per channel or per cube, the
+<li><p>Operand data can be per element, per channel or per cube, the
 actual operation can be performed in X1/X2/Y based on the software
-configuration.<ol class="lowerroman">
-<li>Operand data will be fetched from MEM if per element/channel.
+configuration.</p>
+<ol class="lowerroman simple">
+<li><p>Operand data will be fetched from MEM if per element/channel.
 If truncate is enabled, all elements shares a same truncate
-value.</li>
-<li>Operand data will be set through a software configuration
-register if per cube.</li>
+value.</p></li>
+<li><p>Operand data will be set through a software configuration
+register if per cube.</p></li>
 </ol>
 </li>
-<li>Operand data for the adder and multiplier should be packed
+<li><p>Operand data for the adder and multiplier should be packed
 together and in same format of per element, per channel or per
-cube.  See <a class="reference external" href="http://nvdla.org/hw/format.html">Data Formats</a> for details.</li>
-<li>ReLU can be bypassed or enabled.</li>
+cube.  See <a class="reference external" href="http://nvdla.org/hw/format.html">Data Formats</a> for details.</p></li>
+<li><p>ReLU can be bypassed or enabled.</p></li>
 </ol>
 </li>
-<li><p class="first">Element-Wise</p>
+<li><p>Element-Wise</p>
 <ol class="loweralpha simple">
-<li>Operand data can be per element, per channel or per cube<ol class="lowerroman">
-<li>Operand data will be fetched from MEM if per element/channel,
+<li><p>Operand data can be per element, per channel or per cube</p>
+<ol class="lowerroman simple">
+<li><p>Operand data will be fetched from MEM if per element/channel,
 if truncate is enabled, all elements shares a same truncate
-value</li>
-<li>Operand data will be set by software configuration register if per cube</li>
+value</p></li>
+<li><p>Operand data will be set by software configuration register if per cube</p></li>
 </ol>
 </li>
-<li>Operand data should be either for max/min/sum, or for the multiplier</li>
-<li>LUT can be bypassed or enabled</li>
+<li><p>Operand data should be either for max/min/sum, or for the multiplier</p></li>
+<li><p>LUT can be bypassed or enabled</p></li>
 </ol>
 </li>
-<li><p class="first">PReLU:</p>
+<li><p>PReLU:</p>
 <ol class="loweralpha simple">
-<li>Operand data can be per channel or per cube<ol class="lowerroman">
-<li>Operand data will be fetched from MEM if per channel, if
-truncate is enabled, all elements shares a same truncate value</li>
-<li>Operand data will be set by register if per cube;</li>
+<li><p>Operand data can be per channel or per cube</p>
+<ol class="lowerroman simple">
+<li><p>Operand data will be fetched from MEM if per channel, if
+truncate is enabled, all elements shares a same truncate value</p></li>
+<li><p>Operand data will be set by register if per cube;</p></li>
 </ol>
 </li>
-<li>PReLU mode bit should be set as true for multiplier.  After this bit
+<li><p>PReLU mode bit should be set as true for multiplier.  After this bit
 is set, hardware will bypass positive input samples, and the scaling will be
-applied on negative iputs.</li>
-<li>LUT can be bypassed or enabled</li>
+applied on negative iputs.</p></li>
+<li><p>LUT can be bypassed or enabled</p></li>
 </ol>
 </li>
-<li><p class="first">Hybrid Mode (SW feature)</p>
+<li><p>Hybrid Mode (SW feature)</p>
 <p>Bias addition/BatchNorm operations are linear operations. This means
 software can fuse those operation into one sub-module to optimize
 power/perf. Take BiasAddition + BatchNorm for example, if they’re
@@ -1489,51 +1492,51 @@ thus it’s doable;</p>
 </ol>
 <p>As a summary, the features supported by each sub-unit are listed in
 table below:</p>
-<table border="1" class="docutils" id="tab-sdp-supported-use-scenarios">
+<table class="docutils align-default" id="tab-sdp-supported-use-scenarios">
 <caption><span class="caption-number">Table 51 </span><span class="caption-text">SDP supported use scenarios</span><a class="headerlink" href="#tab-sdp-supported-use-scenarios" title="Permalink to this table">¶</a></caption>
 <colgroup>
-<col width="68%" />
-<col width="12%" />
-<col width="12%" />
-<col width="9%" />
+<col style="width: 68%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 9%" />
 </colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">FeatureModule</th>
-<th class="head">X1</th>
-<th class="head">X2</th>
-<th class="head">Y</th>
+<thead>
+<tr class="row-odd"><th class="head"><p>FeatureModule</p></th>
+<th class="head"><p>X1</p></th>
+<th class="head"><p>X2</p></th>
+<th class="head"><p>Y</p></th>
 </tr>
 </thead>
-<tbody valign="top">
-<tr class="row-even"><td>Bias addition</td>
-<td>Y</td>
-<td>Y</td>
-<td>Y</td>
+<tbody>
+<tr class="row-even"><td><p>Bias addition</p></td>
+<td><p>Y</p></td>
+<td><p>Y</p></td>
+<td><p>Y</p></td>
 </tr>
-<tr class="row-odd"><td>BatchNorm</td>
-<td>Y</td>
-<td>Y</td>
-<td>Y</td>
+<tr class="row-odd"><td><p>BatchNorm</p></td>
+<td><p>Y</p></td>
+<td><p>Y</p></td>
+<td><p>Y</p></td>
 </tr>
-<tr class="row-even"><td>Eltwise</td>
-<td>Y</td>
-<td>Y</td>
-<td>Y</td>
+<tr class="row-even"><td><p>Eltwise</p></td>
+<td><p>Y</p></td>
+<td><p>Y</p></td>
+<td><p>Y</p></td>
 </tr>
-<tr class="row-odd"><td>PReLU</td>
-<td>Y</td>
-<td>Y</td>
-<td>Y</td>
+<tr class="row-odd"><td><p>PReLU</p></td>
+<td><p>Y</p></td>
+<td><p>Y</p></td>
+<td><p>Y</p></td>
 </tr>
-<tr class="row-even"><td>ReLU</td>
-<td>Y</td>
-<td>Y</td>
-<td>Y</td>
+<tr class="row-even"><td><p>ReLU</p></td>
+<td><p>Y</p></td>
+<td><p>Y</p></td>
+<td><p>Y</p></td>
 </tr>
-<tr class="row-odd"><td>Non-linear activation</td>
-<td>N</td>
-<td>N</td>
-<td>Y</td>
+<tr class="row-odd"><td><p>Non-linear activation</p></td>
+<td><p>N</p></td>
+<td><p>N</p></td>
+<td><p>Y</p></td>
 </tr>
 </tbody>
 </table>
@@ -1545,7 +1548,7 @@ all input/output interfaces are the same, and it is exactly the
 convolution output sequence which is shown in the following diagram.</p>
 <div class="figure align-center" id="id49">
 <span id="fig-image37-sdp-sequence"></span><img alt="../../../_images/ias_image37_sdp_sequence.png" src="../../../_images/ias_image37_sdp_sequence.png" />
-<p class="caption"><span class="caption-number">Fig. 64 </span><span class="caption-text">Point processing input/output sequences</span></p>
+<p class="caption"><span class="caption-number">Fig. 64 </span><span class="caption-text">Point processing input/output sequences</span><a class="headerlink" href="#id49" title="Permalink to this image">¶</a></p>
 </div>
 <p>Bias/Operand Data is Per Channel:</p>
 <p>Data will be fetched from memory, and maintain one value for multiple
@@ -1591,7 +1594,7 @@ The following diagram shows an example for max-pooling.  The maximum value
 among 3x2 neighboring elements is the pooling result value.</p>
 <div class="figure align-center" id="id50">
 <span id="fig-image38-max-pooling"></span><img alt="../../../_images/ias_image38_max_pooling.png" src="../../../_images/ias_image38_max_pooling.png" />
-<p class="caption"><span class="caption-number">Fig. 65 </span><span class="caption-text">Max-pooling example</span></p>
+<p class="caption"><span class="caption-number">Fig. 65 </span><span class="caption-text">Max-pooling example</span><a class="headerlink" href="#id50" title="Permalink to this image">¶</a></p>
 </div>
 <p>The following diagram shows the internal blocks of the PDP sub-unit,
 along with connections to other units and sub-units. The diagram is
@@ -1601,11 +1604,11 @@ processing sub-unit receives data from SDP or MCIF/SRAMIF, and sends
 data to MCIF/SRAMIF.</p>
 <div class="figure align-center" id="id51">
 <span id="fig-image39-pdp"></span><img alt="../../../_images/ias_image39_pdp.png" src="../../../_images/ias_image39_pdp.png" />
-<p class="caption"><span class="caption-number">Fig. 66 </span><span class="caption-text">Planar processing block diagram</span></p>
+<p class="caption"><span class="caption-number">Fig. 66 </span><span class="caption-text">Planar processing block diagram</span><a class="headerlink" href="#id51" title="Permalink to this image">¶</a></p>
 </div>
 <div class="figure align-center" id="id52">
 <span id="fig-image40-pdp"></span><img alt="../../../_images/ias_image40_pdp_processing.png" src="../../../_images/ias_image40_pdp_processing.png" />
-<p class="caption"><span class="caption-number">Fig. 67 </span><span class="caption-text">Processing flow in one plane</span></p>
+<p class="caption"><span class="caption-number">Fig. 67 </span><span class="caption-text">Processing flow in one plane</span><a class="headerlink" href="#id52" title="Permalink to this image">¶</a></p>
 </div>
 <p>Pooling operations are done within a plane. There is no interference
 between different planes. <a class="reference internal" href="#fig-image41-pdp-in-mode0"><span class="std std-numref">Fig. 68</span></a> shows a complete scheme of
@@ -1622,11 +1625,11 @@ partial result from share buffer, and the result will be stored to the
 same entry of the original partial result. Partial result calculation is
 done in the pre-processing block.</p>
 <ol class="arabic simple">
-<li>In cases of max/min pooling schemes, the partial result is the
+<li><p>In cases of max/min pooling schemes, the partial result is the
 maximum/minimum value of the input element and the original partial
-result.</li>
-<li>In case of mean pooling scheme, the partial result is the sum of the
-input element and the original partial result.</li>
+result.</p></li>
+<li><p>In case of mean pooling scheme, the partial result is the sum of the
+input element and the original partial result.</p></li>
 </ol>
 <p>If an input data element is the last element of a kernel, it will be
 operated with the existed partial result from the share line buffer to
@@ -1634,14 +1637,14 @@ generate a pre-final result. The post-processing block will fetch pre-final
 results from share line buffer, and after proper operations it generates
 the final result.  This final result is sent out to SRAMIF or MCIF.</p>
 <ol class="arabic simple">
-<li>In cases of max/min pooling schemes, the pre-final result is the
-final result, no extra operation is needed.</li>
-<li>In case of mean pooling scheme, the final result could be calculated
+<li><p>In cases of max/min pooling schemes, the pre-final result is the
+final result, no extra operation is needed.</p></li>
+<li><p>In case of mean pooling scheme, the final result could be calculated
 by
 <span class="math notranslate nohighlight">\(pre\_ final\_ result \times \frac{1}{\text{Kerne}l_{\text{width}} \times Kernel_{\text{height}}} = pre\_ final\_ result \times scale\_ factor\_ width \times scale\_ factor\_ height\)</span>.
 Division is expensive for a hardware implementation, so a pair of
 <span class="math notranslate nohighlight">\(scale\_ factors\)</span> are used to transform division into
-multiplication.</li>
+multiplication.</p></li>
 </ol>
 <p>The greatest number of kernels which share the same line of data is
 determined by
@@ -1652,18 +1655,18 @@ is <span class="math notranslate nohighlight">\(width\_ out \times ceiling\left(
 <span class="math notranslate nohighlight">\(total\_ buf\_ entry\)</span> within one plane is as below, and 112 bits
 for each entry:</p>
 <ol class="loweralpha simple">
-<li>if
+<li><p>if
 <span class="math notranslate nohighlight">\(\text{ceiling}\left( \frac{Kernel\_ Height}{Stride\_ H} \right)\)</span>
-= 1, <span class="math notranslate nohighlight">\(total\_ buf\_ entry\)</span>=16*4*8=512;</li>
-<li>if
+= 1, <span class="math notranslate nohighlight">\(total\_ buf\_ entry\)</span>=16*4*8=512;</p></li>
+<li><p>if
 <span class="math notranslate nohighlight">\(\text{ceiling}\left( \frac{Kernel\_ Height}{Stride\_ H} \right)\)</span>
-= 2, <span class="math notranslate nohighlight">\(total\_ buf\_ entry\)</span>=16*4*4=256;</li>
-<li>if
+= 2, <span class="math notranslate nohighlight">\(total\_ buf\_ entry\)</span>=16*4*4=256;</p></li>
+<li><p>if
 <span class="math notranslate nohighlight">\(\text{ceiling}\left( \frac{Kernel\_ Height}{Stride\_ H} \right)\)</span>
-= 3 or 4, <span class="math notranslate nohighlight">\(total\_ buf\_ entry\)</span>=16*4*2=128;</li>
-<li>if
+= 3 or 4, <span class="math notranslate nohighlight">\(total\_ buf\_ entry\)</span>=16*4*2=128;</p></li>
+<li><p>if
 <span class="math notranslate nohighlight">\(\text{ceiling}\left( \frac{Kernel\_ Height}{Stride\_ H} \right)\)</span>
-&gt; 4, <span class="math notranslate nohighlight">\(total\_ buf\_ entry\)</span>=16*4*1=64;</li>
+&gt; 4, <span class="math notranslate nohighlight">\(total\_ buf\_ entry\)</span>=16*4*1=64;</p></li>
 </ol>
 <p>Since the pooling operation is a down sampling method, there is a
 significant amount of information are discarded.  Pooling in a large
@@ -1675,93 +1678,93 @@ is pooling size is 3x3, with stride 1x1.
 There are two other less used cases: one is pooling
 size 3x3, with stride 3x3. And the other
 is pooling size 7x7, with stride 1x1.</p>
-<table border="1" class="docutils" id="tab-pooling-kerne-type">
+<table class="docutils align-default" id="tab-pooling-kerne-type">
 <caption><span class="caption-number">Table 52 </span><span class="caption-text">Pooling Kernel Type Summary</span><a class="headerlink" href="#tab-pooling-kerne-type" title="Permalink to this table">¶</a></caption>
 <colgroup>
-<col width="14%" />
-<col width="14%" />
-<col width="14%" />
-<col width="14%" />
-<col width="14%" />
-<col width="14%" />
-<col width="14%" />
+<col style="width: 14%" />
+<col style="width: 14%" />
+<col style="width: 14%" />
+<col style="width: 14%" />
+<col style="width: 14%" />
+<col style="width: 14%" />
+<col style="width: 14%" />
 </colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">Network</th>
-<th class="head">Total
+<thead>
+<tr class="row-odd"><th class="head"><p>Network</p></th>
+<th class="head"><p>Total
 Pooling
 Layer
-Number</th>
-<th class="head">size 3x3
+Number</p></th>
+<th class="head"><p>size 3x3
 stride
 2x2
-Number</th>
-<th class="head">size 2x2
+Number</p></th>
+<th class="head"><p>size 2x2
 stride
 2x2
-Number</th>
-<th class="head">size 3x3
+Number</p></th>
+<th class="head"><p>size 3x3
 stride
 1x1
-Number</th>
-<th class="head">Other
+Number</p></th>
+<th class="head"><p>Other
 Layer
-Number</th>
-<th class="head">Other
+Number</p></th>
+<th class="head"><p>Other
 Layer
 Pooling
-Format</th>
+Format</p></th>
 </tr>
 </thead>
-<tbody valign="top">
-<tr class="row-even"><td>AlexNet</td>
-<td>3</td>
-<td>3</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>NA</td>
+<tbody>
+<tr class="row-even"><td><p>AlexNet</p></td>
+<td><p>3</p></td>
+<td><p>3</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+<td><p>NA</p></td>
 </tr>
-<tr class="row-odd"><td>Overfea
+<tr class="row-odd"><td><p>Overfea
 t-Accur
-ate</td>
-<td>3</td>
-<td>0</td>
-<td>1</td>
-<td>0</td>
-<td>2</td>
-<td>size 3x3
+ate</p></td>
+<td><p>3</p></td>
+<td><p>0</p></td>
+<td><p>1</p></td>
+<td><p>0</p></td>
+<td><p>2</p></td>
+<td><p>size 3x3
 stride
-3x3</td>
+3x3</p></td>
 </tr>
-<tr class="row-even"><td>VGG 19</td>
-<td>5</td>
-<td>0</td>
-<td>5</td>
-<td>0</td>
-<td>0</td>
-<td>NA</td>
+<tr class="row-even"><td><p>VGG 19</p></td>
+<td><p>5</p></td>
+<td><p>0</p></td>
+<td><p>5</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+<td><p>NA</p></td>
 </tr>
-<tr class="row-odd"><td>GoogLeN
-et</td>
-<td>14</td>
-<td>4</td>
-<td>0</td>
-<td>9</td>
-<td>1</td>
-<td>size 7x7
+<tr class="row-odd"><td><p>GoogLeN
+et</p></td>
+<td><p>14</p></td>
+<td><p>4</p></td>
+<td><p>0</p></td>
+<td><p>9</p></td>
+<td><p>1</p></td>
+<td><p>size 7x7
 stride
-1x1</td>
+1x1</p></td>
 </tr>
-<tr class="row-even"><td>NVDrive
+<tr class="row-even"><td><p>NVDrive
 <a class="reference external" href="mailto:Net&#37;&#52;&#48;960">Net<span>&#64;</span>960</a>
-x540</td>
-<td>12</td>
-<td>3</td>
-<td>0</td>
-<td>9</td>
-<td>0</td>
-<td>NA</td>
+x540</p></td>
+<td><p>12</p></td>
+<td><p>3</p></td>
+<td><p>0</p></td>
+<td><p>9</p></td>
+<td><p>0</p></td>
+<td><p>NA</p></td>
 </tr>
 </tbody>
 </table>
@@ -1807,12 +1810,12 @@ same as convolution output sequences which is shown in following
 diagram.</p>
 <div class="figure align-center" id="id53">
 <span id="fig-image41-pdp-in-mode0"></span><img alt="../../../_images/ias_image41_pdp_in_mode0.png" src="../../../_images/ias_image41_pdp_in_mode0.png" />
-<p class="caption"><span class="caption-number">Fig. 68 </span><span class="caption-text">Planar processing input sequence, mode 0</span></p>
+<p class="caption"><span class="caption-number">Fig. 68 </span><span class="caption-text">Planar processing input sequence, mode 0</span><a class="headerlink" href="#id53" title="Permalink to this image">¶</a></p>
 </div>
 <p>And output sequence is shown in following diagram.</p>
 <div class="figure align-center" id="id54">
 <span id="fig-image42-pdp-out-mode0"></span><img alt="../../../_images/ias_image42_pdp_out_mode0.png" src="../../../_images/ias_image42_pdp_out_mode0.png" />
-<p class="caption"><span class="caption-number">Fig. 69 </span><span class="caption-text">Planar processing output sequence, mode 0</span></p>
+<p class="caption"><span class="caption-number">Fig. 69 </span><span class="caption-text">Planar processing output sequence, mode 0</span><a class="headerlink" href="#id54" title="Permalink to this image">¶</a></p>
 </div>
 <p>If planar processing on-the-fly operation condition is not meet, planar processing shall work in off-fly
 mode, it receives data from PDMA, and the ongoing channel number is
@@ -1820,37 +1823,37 @@ always 16. There are two sub-cases, one is non-split-width, and the
 other is split-width. The input data sequence is shown in following diagram.</p>
 <div class="figure align-center" id="id55">
 <span id="fig-image43-pdp-in-mode1-2"></span><img alt="../../../_images/ias_image43_pdp_in_mode1_2.png" src="../../../_images/ias_image43_pdp_in_mode1_2.png" />
-<p class="caption"><span class="caption-number">Fig. 70 </span><span class="caption-text">Planar processing input sequence, mode 1 and 2</span></p>
+<p class="caption"><span class="caption-number">Fig. 70 </span><span class="caption-text">Planar processing input sequence, mode 1 and 2</span><a class="headerlink" href="#id55" title="Permalink to this image">¶</a></p>
 </div>
 <p>The output data sequence is shown in following diagram.</p>
 <div class="figure align-center" id="id56">
 <span id="fig-image44-pdp-out-mode1-2"></span><img alt="../../../_images/ias_image44_pdp_out_mode1_2.png" src="../../../_images/ias_image44_pdp_out_mode1_2.png" />
-<p class="caption"><span class="caption-number">Fig. 71 </span><span class="caption-text">Planar processing output sequence, mode 1 and 2</span></p>
+<p class="caption"><span class="caption-number">Fig. 71 </span><span class="caption-text">Planar processing output sequence, mode 1 and 2</span><a class="headerlink" href="#id56" title="Permalink to this image">¶</a></p>
 </div>
-<table border="1" class="docutils">
+<table class="docutils align-default">
 <colgroup>
-<col width="27%" />
-<col width="51%" />
-<col width="22%" />
+<col style="width: 27%" />
+<col style="width: 51%" />
+<col style="width: 22%" />
 </colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">Operation mode</th>
-<th class="head">Data Source</th>
-<th class="head">Split-Width</th>
+<thead>
+<tr class="row-odd"><th class="head"><p>Operation mode</p></th>
+<th class="head"><p>Data Source</p></th>
+<th class="head"><p>Split-Width</p></th>
 </tr>
 </thead>
-<tbody valign="top">
-<tr class="row-even"><td>Mode 0</td>
-<td>Single-point Data Processing</td>
-<td>No</td>
+<tbody>
+<tr class="row-even"><td><p>Mode 0</p></td>
+<td><p>Single-point Data Processing</p></td>
+<td><p>No</p></td>
 </tr>
-<tr class="row-odd"><td>Mode 1</td>
-<td>MC/SRAM</td>
-<td>No</td>
+<tr class="row-odd"><td><p>Mode 1</p></td>
+<td><p>MC/SRAM</p></td>
+<td><p>No</p></td>
 </tr>
-<tr class="row-even"><td>Mode 2</td>
-<td>MC/SRAM</td>
-<td>Yes</td>
+<tr class="row-even"><td><p>Mode 2</p></td>
+<td><p>MC/SRAM</p></td>
+<td><p>Yes</p></td>
 </tr>
 </tbody>
 </table>
@@ -1876,318 +1879,318 @@ for INT8, 28/8 for INT16, 28/8 for FP16).</p>
 have to work in off-fly mode, so there will be a performance drop since
 extra-time is needed to store data to MC/SRAM, and then fetch back to
 PDP for pooling processing.</p>
-<table border="1" class="docutils" id="tab-pooling-buffer-size">
+<table class="docutils align-default" id="tab-pooling-buffer-size">
 <caption><span class="caption-number">Table 53 </span><span class="caption-text">Pooling Share Line Buffer Consumption Summary</span><a class="headerlink" href="#tab-pooling-buffer-size" title="Permalink to this table">¶</a></caption>
 <colgroup>
-<col width="14%" />
-<col width="14%" />
-<col width="14%" />
-<col width="14%" />
-<col width="14%" />
-<col width="14%" />
-<col width="14%" />
+<col style="width: 14%" />
+<col style="width: 14%" />
+<col style="width: 14%" />
+<col style="width: 14%" />
+<col style="width: 14%" />
+<col style="width: 14%" />
+<col style="width: 14%" />
 </colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">Layer</th>
-<th class="head">Channel
-Number</th>
-<th class="head">Kernel
-Size</th>
-<th class="head">Kernel
-Stride</th>
-<th class="head">Output
-Width</th>
-<th class="head">Minimum
-Size</th>
-<th class="head">Maximum
-Size</th>
+<thead>
+<tr class="row-odd"><th class="head"><p>Layer</p></th>
+<th class="head"><p>Channel
+Number</p></th>
+<th class="head"><p>Kernel
+Size</p></th>
+<th class="head"><p>Kernel
+Stride</p></th>
+<th class="head"><p>Output
+Width</p></th>
+<th class="head"><p>Minimum
+Size</p></th>
+<th class="head"><p>Maximum
+Size</p></th>
 </tr>
 </thead>
-<tbody valign="top">
-<tr class="row-even"><td>AlexNet
-– pool1</td>
-<td>96</td>
-<td>3</td>
-<td>2</td>
-<td>27</td>
-<td>1728</td>
-<td>5184</td>
+<tbody>
+<tr class="row-even"><td><p>AlexNet
+– pool1</p></td>
+<td><p>96</p></td>
+<td><p>3</p></td>
+<td><p>2</p></td>
+<td><p>27</p></td>
+<td><p>1728</p></td>
+<td><p>5184</p></td>
 </tr>
-<tr class="row-odd"><td>AlexNet
-– pool2</td>
-<td>128</td>
-<td>3</td>
-<td>2</td>
-<td>13</td>
-<td>832</td>
-<td>3328</td>
+<tr class="row-odd"><td><p>AlexNet
+– pool2</p></td>
+<td><p>128</p></td>
+<td><p>3</p></td>
+<td><p>2</p></td>
+<td><p>13</p></td>
+<td><p>832</p></td>
+<td><p>3328</p></td>
 </tr>
-<tr class="row-even"><td>AlexNet
-– pool5</td>
-<td>128</td>
-<td>3</td>
-<td>2</td>
-<td>6</td>
-<td>384</td>
-<td>1536</td>
+<tr class="row-even"><td><p>AlexNet
+– pool5</p></td>
+<td><p>128</p></td>
+<td><p>3</p></td>
+<td><p>2</p></td>
+<td><p>6</p></td>
+<td><p>384</p></td>
+<td><p>1536</p></td>
 </tr>
-<tr class="row-odd"><td>Overfea
+<tr class="row-odd"><td><p>Overfea
 t-Accur
 ate
 – layer
-3</td>
-<td>96</td>
-<td>3</td>
-<td>3</td>
-<td>36</td>
-<td>1152</td>
-<td>6912</td>
+3</p></td>
+<td><p>96</p></td>
+<td><p>3</p></td>
+<td><p>3</p></td>
+<td><p>36</p></td>
+<td><p>1152</p></td>
+<td><p>6912</p></td>
 </tr>
-<tr class="row-even"><td>Overfea
+<tr class="row-even"><td><p>Overfea
 t-Accur
 ate
 – layer
-6</td>
-<td>256</td>
-<td>2</td>
-<td>2</td>
-<td>15</td>
-<td>480</td>
-<td>7680</td>
+6</p></td>
+<td><p>256</p></td>
+<td><p>2</p></td>
+<td><p>2</p></td>
+<td><p>15</p></td>
+<td><p>480</p></td>
+<td><p>7680</p></td>
 </tr>
-<tr class="row-odd"><td>Overfea
+<tr class="row-odd"><td><p>Overfea
 t-Accur
 ate
 – layer
-19</td>
-<td>1024</td>
-<td>3</td>
-<td>3</td>
-<td>5</td>
-<td>160</td>
-<td>10240</td>
+19</p></td>
+<td><p>1024</p></td>
+<td><p>3</p></td>
+<td><p>3</p></td>
+<td><p>5</p></td>
+<td><p>160</p></td>
+<td><p>10240</p></td>
 </tr>
-<tr class="row-even"><td>VGG 19
-– pool1</td>
-<td>64</td>
-<td>2</td>
-<td>2</td>
-<td>112</td>
-<td>3584</td>
-<td>14336</td>
+<tr class="row-even"><td><p>VGG 19
+– pool1</p></td>
+<td><p>64</p></td>
+<td><p>2</p></td>
+<td><p>2</p></td>
+<td><p>112</p></td>
+<td><p>3584</p></td>
+<td><p>14336</p></td>
 </tr>
-<tr class="row-odd"><td>VGG 19
-– pool2</td>
-<td>128</td>
-<td>2</td>
-<td>2</td>
-<td>56</td>
-<td>1792</td>
-<td>14336</td>
+<tr class="row-odd"><td><p>VGG 19
+– pool2</p></td>
+<td><p>128</p></td>
+<td><p>2</p></td>
+<td><p>2</p></td>
+<td><p>56</p></td>
+<td><p>1792</p></td>
+<td><p>14336</p></td>
 </tr>
-<tr class="row-even"><td>VGG 19
-– pool3</td>
-<td>256</td>
-<td>2</td>
-<td>2</td>
-<td>28</td>
-<td>896</td>
-<td>14336</td>
+<tr class="row-even"><td><p>VGG 19
+– pool3</p></td>
+<td><p>256</p></td>
+<td><p>2</p></td>
+<td><p>2</p></td>
+<td><p>28</p></td>
+<td><p>896</p></td>
+<td><p>14336</p></td>
 </tr>
-<tr class="row-odd"><td>VGG 19
-– pool4</td>
-<td>512</td>
-<td>2</td>
-<td>2</td>
-<td>14</td>
-<td>448</td>
-<td>14336</td>
+<tr class="row-odd"><td><p>VGG 19
+– pool4</p></td>
+<td><p>512</p></td>
+<td><p>2</p></td>
+<td><p>2</p></td>
+<td><p>14</p></td>
+<td><p>448</p></td>
+<td><p>14336</p></td>
 </tr>
-<tr class="row-even"><td>VGG 19
-– pool5</td>
-<td>512</td>
-<td>2</td>
-<td>2</td>
-<td>7</td>
-<td>224</td>
-<td>7168</td>
+<tr class="row-even"><td><p>VGG 19
+– pool5</p></td>
+<td><p>512</p></td>
+<td><p>2</p></td>
+<td><p>2</p></td>
+<td><p>7</p></td>
+<td><p>224</p></td>
+<td><p>7168</p></td>
 </tr>
-<tr class="row-odd"><td>GoogLeN
+<tr class="row-odd"><td><p>GoogLeN
 et
 -
 pool1/3
-x3_s2</td>
-<td>64</td>
-<td>3</td>
-<td>2</td>
-<td>56</td>
-<td>3584</td>
-<td>7168</td>
+x3_s2</p></td>
+<td><p>64</p></td>
+<td><p>3</p></td>
+<td><p>2</p></td>
+<td><p>56</p></td>
+<td><p>3584</p></td>
+<td><p>7168</p></td>
 </tr>
-<tr class="row-even"><td>GoogLeN
+<tr class="row-even"><td><p>GoogLeN
 et
 -
 pool2/3
-x3_s2</td>
-<td>192</td>
-<td>3</td>
-<td>2</td>
-<td>56</td>
-<td>3584</td>
-<td>21504</td>
+x3_s2</p></td>
+<td><p>192</p></td>
+<td><p>3</p></td>
+<td><p>2</p></td>
+<td><p>56</p></td>
+<td><p>3584</p></td>
+<td><p>21504</p></td>
 </tr>
-<tr class="row-odd"><td>GoogLeN
+<tr class="row-odd"><td><p>GoogLeN
 et
 -
 incepti
 on_3a/p
-ool</td>
-<td>192</td>
-<td>3</td>
-<td>1</td>
-<td>28</td>
-<td>2688</td>
-<td>32256</td>
+ool</p></td>
+<td><p>192</p></td>
+<td><p>3</p></td>
+<td><p>1</p></td>
+<td><p>28</p></td>
+<td><p>2688</p></td>
+<td><p>32256</p></td>
 </tr>
-<tr class="row-even"><td>GoogLeN
+<tr class="row-even"><td><p>GoogLeN
 et
 -
 incepti
 on_3b/p
-ool</td>
-<td>256</td>
-<td>3</td>
-<td>1</td>
-<td>28</td>
-<td>2688</td>
-<td>43008</td>
+ool</p></td>
+<td><p>256</p></td>
+<td><p>3</p></td>
+<td><p>1</p></td>
+<td><p>28</p></td>
+<td><p>2688</p></td>
+<td><p>43008</p></td>
 </tr>
-<tr class="row-odd"><td>GoogLeN
+<tr class="row-odd"><td><p>GoogLeN
 et
 -
 pool3/3
-x3_s2</td>
-<td>480</td>
-<td>3</td>
-<td>2</td>
-<td>14</td>
-<td>896</td>
-<td>13440</td>
+x3_s2</p></td>
+<td><p>480</p></td>
+<td><p>3</p></td>
+<td><p>2</p></td>
+<td><p>14</p></td>
+<td><p>896</p></td>
+<td><p>13440</p></td>
 </tr>
-<tr class="row-even"><td>GoogLeN
+<tr class="row-even"><td><p>GoogLeN
 et
 -
 incepti
 on_4a/p
-ool</td>
-<td>480</td>
-<td>3</td>
-<td>1</td>
-<td>14</td>
-<td>1344</td>
-<td>40320</td>
+ool</p></td>
+<td><p>480</p></td>
+<td><p>3</p></td>
+<td><p>1</p></td>
+<td><p>14</p></td>
+<td><p>1344</p></td>
+<td><p>40320</p></td>
 </tr>
-<tr class="row-odd"><td>GoogLeN
+<tr class="row-odd"><td><p>GoogLeN
 et
 -
 incepti
 on_4b/p
-ool</td>
-<td>512</td>
-<td>3</td>
-<td>1</td>
-<td>14</td>
-<td>1344</td>
-<td>43008</td>
+ool</p></td>
+<td><p>512</p></td>
+<td><p>3</p></td>
+<td><p>1</p></td>
+<td><p>14</p></td>
+<td><p>1344</p></td>
+<td><p>43008</p></td>
 </tr>
-<tr class="row-even"><td>GoogLeN
+<tr class="row-even"><td><p>GoogLeN
 et
 -
 incepti
 on_4c/p
-ool</td>
-<td>512</td>
-<td>3</td>
-<td>1</td>
-<td>14</td>
-<td>1344</td>
-<td>43008</td>
+ool</p></td>
+<td><p>512</p></td>
+<td><p>3</p></td>
+<td><p>1</p></td>
+<td><p>14</p></td>
+<td><p>1344</p></td>
+<td><p>43008</p></td>
 </tr>
-<tr class="row-odd"><td>GoogLeN
+<tr class="row-odd"><td><p>GoogLeN
 et
 -
 incepti
 on_4d/p
-ool</td>
-<td>512</td>
-<td>3</td>
-<td>1</td>
-<td>14</td>
-<td>1344</td>
-<td>43008</td>
+ool</p></td>
+<td><p>512</p></td>
+<td><p>3</p></td>
+<td><p>1</p></td>
+<td><p>14</p></td>
+<td><p>1344</p></td>
+<td><p>43008</p></td>
 </tr>
-<tr class="row-even"><td>GoogLeN
+<tr class="row-even"><td><p>GoogLeN
 et
 -
 incepti
 on_4e/p
-ool</td>
-<td>528</td>
-<td>3</td>
-<td>1</td>
-<td>14</td>
-<td>1344</td>
-<td>44352</td>
+ool</p></td>
+<td><p>528</p></td>
+<td><p>3</p></td>
+<td><p>1</p></td>
+<td><p>14</p></td>
+<td><p>1344</p></td>
+<td><p>44352</p></td>
 </tr>
-<tr class="row-odd"><td>GoogLeN
+<tr class="row-odd"><td><p>GoogLeN
 et
 -
 pool4/3
-x3_s2</td>
-<td>832</td>
-<td>3</td>
-<td>2</td>
-<td>7</td>
-<td>448</td>
-<td>11648</td>
+x3_s2</p></td>
+<td><p>832</p></td>
+<td><p>3</p></td>
+<td><p>2</p></td>
+<td><p>7</p></td>
+<td><p>448</p></td>
+<td><p>11648</p></td>
 </tr>
-<tr class="row-even"><td>GoogLeN
+<tr class="row-even"><td><p>GoogLeN
 et
 -
 incepti
 on_5a/p
-ool</td>
-<td>832</td>
-<td>3</td>
-<td>1</td>
-<td>7</td>
-<td>672</td>
-<td>34944</td>
+ool</p></td>
+<td><p>832</p></td>
+<td><p>3</p></td>
+<td><p>1</p></td>
+<td><p>7</p></td>
+<td><p>672</p></td>
+<td><p>34944</p></td>
 </tr>
-<tr class="row-odd"><td>GoogLeN
+<tr class="row-odd"><td><p>GoogLeN
 et
 -
 incepti
 on_5b/p
-ool</td>
-<td>832</td>
-<td>3</td>
-<td>1</td>
-<td>7</td>
-<td>672</td>
-<td>34944</td>
+ool</p></td>
+<td><p>832</p></td>
+<td><p>3</p></td>
+<td><p>1</p></td>
+<td><p>7</p></td>
+<td><p>672</p></td>
+<td><p>34944</p></td>
 </tr>
-<tr class="row-even"><td>GoogLeN
+<tr class="row-even"><td><p>GoogLeN
 et
 -
 pool5/7
-x7_s1</td>
-<td>1024</td>
-<td>7</td>
-<td>1</td>
-<td>1</td>
-<td>224</td>
-<td>14336</td>
+x7_s1</p></td>
+<td><p>1024</p></td>
+<td><p>7</p></td>
+<td><p>1</p></td>
+<td><p>1</p></td>
+<td><p>224</p></td>
+<td><p>14336</p></td>
 </tr>
 </tbody>
 </table>
@@ -2205,43 +2208,43 @@ DMA buffer size is<span class="math notranslate nohighlight">\(128 \times 8 = 1K
 <p>Planar processing sub-unit targets for pooling layer in NVDLA 1.0, based
 on analysis on current networks, planar processing usage is not
 expected to be high.</p>
-<table border="1" class="docutils" id="tab-pooling-layer-percentage">
+<table class="docutils align-default" id="tab-pooling-layer-percentage">
 <caption><span class="caption-number">Table 54 </span><span class="caption-text">Pooling Layer Percentage Summary</span><a class="headerlink" href="#tab-pooling-layer-percentage" title="Permalink to this table">¶</a></caption>
 <colgroup>
-<col width="27%" />
-<col width="24%" />
-<col width="24%" />
-<col width="24%" />
+<col style="width: 27%" />
+<col style="width: 24%" />
+<col style="width: 24%" />
+<col style="width: 24%" />
 </colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">Network</th>
-<th class="head">Total Pooling
-Layer Number</th>
-<th class="head">Total Layer
-Number*</th>
-<th class="head">Percentage</th>
+<thead>
+<tr class="row-odd"><th class="head"><p>Network</p></th>
+<th class="head"><p>Total Pooling
+Layer Number</p></th>
+<th class="head"><p>Total Layer
+Number*</p></th>
+<th class="head"><p>Percentage</p></th>
 </tr>
 </thead>
-<tbody valign="top">
-<tr class="row-even"><td>AlexNet</td>
-<td>3</td>
-<td>13</td>
-<td>23%</td>
+<tbody>
+<tr class="row-even"><td><p>AlexNet</p></td>
+<td><p>3</p></td>
+<td><p>13</p></td>
+<td><p>23%</p></td>
 </tr>
-<tr class="row-odd"><td>Overfeat-Accurate</td>
-<td>3</td>
-<td>12</td>
-<td>25%</td>
+<tr class="row-odd"><td><p>Overfeat-Accurate</p></td>
+<td><p>3</p></td>
+<td><p>12</p></td>
+<td><p>25%</p></td>
 </tr>
-<tr class="row-even"><td>VGG 19</td>
-<td>5</td>
-<td>24</td>
-<td>21%</td>
+<tr class="row-even"><td><p>VGG 19</p></td>
+<td><p>5</p></td>
+<td><p>24</p></td>
+<td><p>21%</p></td>
 </tr>
-<tr class="row-odd"><td>GoogLeNet</td>
-<td>14</td>
-<td>74</td>
-<td>19%</td>
+<tr class="row-odd"><td><p>GoogLeNet</p></td>
+<td><p>14</p></td>
+<td><p>74</p></td>
+<td><p>19%</p></td>
 </tr>
 </tbody>
 </table>
@@ -2281,14 +2284,14 @@ standalone lookup table (LUT) function.</p>
 (reciprocation-exponent-sum-multi operation)<span class="math notranslate nohighlight">\(f\left( x \right)\)</span>.</p>
 <div class="figure align-center" id="id57">
 <span id="fig-image45-cdp-curve"></span><img alt="../../../_images/ias_image45_cdp_curve.png" src="../../../_images/ias_image45_cdp_curve.png" />
-<p class="caption"><span class="caption-number">Fig. 72 </span><span class="caption-text">Curve for reciprocation-exponent-sum-multi operation</span></p>
+<p class="caption"><span class="caption-number">Fig. 72 </span><span class="caption-text">Curve for reciprocation-exponent-sum-multi operation</span><a class="headerlink" href="#id57" title="Permalink to this image">¶</a></p>
 </div>
 <p>The following diagram shows internal blocks of the channel data processing
 sub-unit and connections to other sub-units. The diagram is just for
 capturing ideas and does not represent the actual RTL modules boundaries and hierarchies.</p>
 <div class="figure align-center" id="id58">
 <span id="fig-image46-cdp"></span><img alt="../../../_images/ias_image46_cdp.png" src="../../../_images/ias_image46_cdp.png" />
-<p class="caption"><span class="caption-number">Fig. 73 </span><span class="caption-text">Cross Channel Data Processing Block diagram</span></p>
+<p class="caption"><span class="caption-number">Fig. 73 </span><span class="caption-text">Cross Channel Data Processing Block diagram</span><a class="headerlink" href="#id58" title="Permalink to this image">¶</a></p>
 </div>
 <p>Channel processing sub-unit always works independently with other
 processing sub-units. It receives input data from and send output data
@@ -2297,50 +2300,50 @@ in a particular orders. The input sequence is shown in following
 diagram, and output sequence is the same as input sequence.</p>
 <div class="figure align-center" id="id59">
 <span id="fig-image47-cdp-seq"></span><img alt="../../../_images/ias_image47_cdp_seq.png" src="../../../_images/ias_image47_cdp_seq.png" />
-<p class="caption"><span class="caption-number">Fig. 74 </span><span class="caption-text">Channel Processing input/output sequence</span></p>
+<p class="caption"><span class="caption-number">Fig. 74 </span><span class="caption-text">Channel Processing input/output sequence</span><a class="headerlink" href="#id59" title="Permalink to this image">¶</a></p>
 </div>
 <p>The following table shows LRN layers parameters in current well know networks.</p>
-<table border="1" class="docutils" id="tab-lrn-layer">
+<table class="docutils align-default" id="tab-lrn-layer">
 <caption><span class="caption-number">Table 55 </span><span class="caption-text">LRN Layer Parameter Summary</span><a class="headerlink" href="#tab-lrn-layer" title="Permalink to this table">¶</a></caption>
 <colgroup>
-<col width="25%" />
-<col width="32%" />
-<col width="25%" />
-<col width="11%" />
-<col width="8%" />
+<col style="width: 25%" />
+<col style="width: 32%" />
+<col style="width: 25%" />
+<col style="width: 11%" />
+<col style="width: 8%" />
 </colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">Network</th>
-<th class="head">Total LRN Layer Number</th>
-<th class="head">Local Size Number</th>
-<th class="head">Alpha</th>
-<th class="head">beta</th>
+<thead>
+<tr class="row-odd"><th class="head"><p>Network</p></th>
+<th class="head"><p>Total LRN Layer Number</p></th>
+<th class="head"><p>Local Size Number</p></th>
+<th class="head"><p>Alpha</p></th>
+<th class="head"><p>beta</p></th>
 </tr>
 </thead>
-<tbody valign="top">
-<tr class="row-even"><td>AlexNet</td>
-<td>2</td>
-<td>5</td>
-<td>0.0001</td>
-<td>0.75</td>
+<tbody>
+<tr class="row-even"><td><p>AlexNet</p></td>
+<td><p>2</p></td>
+<td><p>5</p></td>
+<td><p>0.0001</p></td>
+<td><p>0.75</p></td>
 </tr>
-<tr class="row-odd"><td>Overfeat-Accurate</td>
-<td>0</td>
-<td>NA</td>
-<td>0.0001</td>
-<td>0.75</td>
+<tr class="row-odd"><td><p>Overfeat-Accurate</p></td>
+<td><p>0</p></td>
+<td><p>NA</p></td>
+<td><p>0.0001</p></td>
+<td><p>0.75</p></td>
 </tr>
-<tr class="row-even"><td>VGG-19</td>
-<td>0</td>
-<td>NA</td>
-<td>0.0001</td>
-<td>0.75</td>
+<tr class="row-even"><td><p>VGG-19</p></td>
+<td><p>0</p></td>
+<td><p>NA</p></td>
+<td><p>0.0001</p></td>
+<td><p>0.75</p></td>
 </tr>
-<tr class="row-odd"><td>GoogLeNet</td>
-<td>2</td>
-<td>5</td>
-<td>0.0001</td>
-<td>0.75</td>
+<tr class="row-odd"><td><p>GoogLeNet</p></td>
+<td><p>2</p></td>
+<td><p>5</p></td>
+<td><p>0.0001</p></td>
+<td><p>0.75</p></td>
 </tr>
 </tbody>
 </table>
@@ -2363,41 +2366,41 @@ DMA buffer size is <span class="math notranslate nohighlight">\(128 \times 8 = 1
 <h3>Power Consideration<a class="headerlink" href="#id21" title="Permalink to this headline">¶</a></h3>
 <p>The channel data processing sub-unit targets for LRN layer in NVDLA 1.0. Based on
 analysis of current networks, the channel processing usage is low.</p>
-<table border="1" class="docutils" id="tab-lrn-percentage">
+<table class="docutils align-default" id="tab-lrn-percentage">
 <caption><span class="caption-number">Table 56 </span><span class="caption-text">Local Response Layer Percentage</span><a class="headerlink" href="#tab-lrn-percentage" title="Permalink to this table">¶</a></caption>
 <colgroup>
-<col width="25%" />
-<col width="31%" />
-<col width="29%" />
-<col width="16%" />
+<col style="width: 25%" />
+<col style="width: 31%" />
+<col style="width: 29%" />
+<col style="width: 16%" />
 </colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">Network</th>
-<th class="head">Total LRN Layer Number</th>
-<th class="head">Total Layer Number*</th>
-<th class="head">Percentage</th>
+<thead>
+<tr class="row-odd"><th class="head"><p>Network</p></th>
+<th class="head"><p>Total LRN Layer Number</p></th>
+<th class="head"><p>Total Layer Number*</p></th>
+<th class="head"><p>Percentage</p></th>
 </tr>
 </thead>
-<tbody valign="top">
-<tr class="row-even"><td>AlexNet</td>
-<td>2</td>
-<td>13</td>
-<td>15%</td>
+<tbody>
+<tr class="row-even"><td><p>AlexNet</p></td>
+<td><p>2</p></td>
+<td><p>13</p></td>
+<td><p>15%</p></td>
 </tr>
-<tr class="row-odd"><td>Overfeat-Accurate</td>
-<td>0</td>
-<td>12</td>
-<td>0%</td>
+<tr class="row-odd"><td><p>Overfeat-Accurate</p></td>
+<td><p>0</p></td>
+<td><p>12</p></td>
+<td><p>0%</p></td>
 </tr>
-<tr class="row-even"><td>VGG 19</td>
-<td>0</td>
-<td>24</td>
-<td>0%</td>
+<tr class="row-even"><td><p>VGG 19</p></td>
+<td><p>0</p></td>
+<td><p>24</p></td>
+<td><p>0%</p></td>
 </tr>
-<tr class="row-odd"><td>GoogLeNet</td>
-<td>2</td>
-<td>74</td>
-<td>3%</td>
+<tr class="row-odd"><td><p>GoogLeNet</p></td>
+<td><p>2</p></td>
+<td><p>74</p></td>
+<td><p>3%</p></td>
 </tr>
 </tbody>
 </table>
@@ -2414,15 +2417,15 @@ the design supports clock gating of the unit.</p>
 <p>RUBIK module is similar to BDMA. It transforms data mapping format
 without any data calculation. RUBIK has 3 working modes, they are:</p>
 <ul class="simple">
-<li>contract data cube</li>
-<li>split feature data cube into multi-planar formats</li>
-<li>merge multi-planar formats to data cube</li>
+<li><p>contract data cube</p></li>
+<li><p>split feature data cube into multi-planar formats</p></li>
+<li><p>merge multi-planar formats to data cube</p></li>
 </ul>
 <p>Since the module’s function is to transform feature data cubes, we call it RUBIK
 unit.</p>
 <div class="figure align-center" id="id60">
 <span id="fig-image48-cdp"></span><img alt="../../../_images/ias_image48_cdp.png" src="../../../_images/ias_image48_cdp.png" />
-<p class="caption"><span class="caption-number">Fig. 75 </span><span class="caption-text">RUBIK</span></p>
+<p class="caption"><span class="caption-number">Fig. 75 </span><span class="caption-text">RUBIK</span><a class="headerlink" href="#id60" title="Permalink to this image">¶</a></p>
 </div>
 </div>
 <div class="section" id="contract">
@@ -2436,7 +2439,7 @@ phase I HW-layer is a channel-extended data cube. Contract mode in RUBIK
 transforms mapping format to de-extend the cube. The figure below shows a
 remapping example where the x stride is 2 and the y stride is 3.</p>
 <div class="figure align-center" id="id61">
-<span id="fig-image49-rubik-contract"></span><img alt="../../../_images/ias_image49_rubik_contract.svg" src="../../../_images/ias_image49_rubik_contract.svg" /><p class="caption"><span class="caption-number">Fig. 76 </span><span class="caption-text">Contract mode in RUBIK</span></p>
+<span id="fig-image49-rubik-contract"></span><img alt="../../../_images/ias_image49_rubik_contract.svg" src="../../../_images/ias_image49_rubik_contract.svg" /><p class="caption"><span class="caption-number">Fig. 76 </span><span class="caption-text">Contract mode in RUBIK</span><a class="headerlink" href="#id61" title="Permalink to this image">¶</a></p>
 </div>
 <p>The formula of input cube size and output size are:</p>
 <div class="math notranslate nohighlight">
@@ -2455,15 +2458,15 @@ address. If all address stride and start address are 256 byte aligned,
 the memory efficiency reaches 100%.</p>
 <p>Requirement of contract mode:</p>
 <ul class="simple">
-<li>The channel size shall be divisible by deconvolution x stride, y
-stride and 32 bytes. As formula below:</li>
+<li><p>The channel size shall be divisible by deconvolution x stride, y
+stride and 32 bytes. As formula below:</p></li>
 </ul>
 <div class="math notranslate nohighlight">
 \[C\ \%\ \left( \text{decon}v_{x_{\text{stride}}}*deconv_{y_{\text{stride}}}*32 \right) == 0\]</div>
 <ul class="simple">
-<li>Each dimension of input and output data cube, like input data width,
+<li><p>Each dimension of input and output data cube, like input data width,
 output data width, input channel size, should not exceed 8192 in one
-contract layer.</li>
+contract layer.</p></li>
 </ul>
 </div>
 <div class="section" id="split-and-merge">
@@ -2473,7 +2476,7 @@ transforms a data cube into M-planar formats (NCHW). The number of planes
 is equal to channel size. The merge mode transforms a serial of planes to a
 feature data cube. The transform is showed in figure below.</p>
 <div class="figure align-center" id="id62">
-<span id="fig-image50-rubik-split-and-merge"></span><img alt="../../../_images/ias_image50_rubik_split_and_merge.svg" src="../../../_images/ias_image50_rubik_split_and_merge.svg" /><p class="caption"><span class="caption-number">Fig. 77 </span><span class="caption-text">Split and merge modes in RUBIK</span></p>
+<span id="fig-image50-rubik-split-and-merge"></span><img alt="../../../_images/ias_image50_rubik_split_and_merge.svg" src="../../../_images/ias_image50_rubik_split_and_merge.svg" /><p class="caption"><span class="caption-number">Fig. 77 </span><span class="caption-text">Split and merge modes in RUBIK</span><a class="headerlink" href="#id62" title="Permalink to this image">¶</a></p>
 </div>
 <p>The M-planar format is similar to image formats. It’s a pitch linear
 format which contains T_R16_I, T_R8_I or T_R16_F data. Each plane
@@ -2495,7 +2498,7 @@ programmable registers.</p>
 convert to AXI protocol to connect to external DRAM.</p>
 <div class="figure align-center" id="id63">
 <span id="fig-image51-mcif"></span><img alt="../../../_images/ias_image51_mcif.png" src="../../../_images/ias_image51_mcif.png" />
-<p class="caption"><span class="caption-number">Fig. 78 </span><span class="caption-text">MCIF</span></p>
+<p class="caption"><span class="caption-number">Fig. 78 </span><span class="caption-text">MCIF</span><a class="headerlink" href="#id63" title="Permalink to this image">¶</a></p>
 </div>
 <p>MCIF will support both a read and write channels, but some NVDLA
 sub-module will only have read requirement, so the interface between
@@ -2510,7 +2513,7 @@ sub-modules to on-chip SRAM.  It’s similar to the MCIF but the bus
 latency is expected to be lower.</p>
 <div class="figure align-center" id="id64">
 <span id="fig-image52-sramif"></span><img alt="../../../_images/ias_image52_sramif.png" src="../../../_images/ias_image52_sramif.png" />
-<p class="caption"><span class="caption-number">Fig. 79 </span><span class="caption-text">SRAMIF</span></p>
+<p class="caption"><span class="caption-number">Fig. 79 </span><span class="caption-text">SRAMIF</span><a class="headerlink" href="#id64" title="Permalink to this image">¶</a></p>
 </div>
 <p>SRAMIF will support both read and write channels, but some NVDLA
 sub-modules will only have a read requirement, so the interface between
@@ -2530,69 +2533,69 @@ accordingly.</p>
 <p>To achieve that, NVDLA implements result statistic registers in most
 pipeline stages. These registers record:</p>
 <ul class="simple">
-<li>Number of results that is equals to max non-infinity values.</li>
-<li>Number of INF/NaN on input port</li>
-<li>Number of INF on output port</li>
+<li><p>Number of results that is equals to max non-infinity values.</p></li>
+<li><p>Number of INF/NaN on input port</p></li>
+<li><p>Number of INF on output port</p></li>
 </ul>
 <p>Based on these statistic record, SW can tell rough situation of output
 feature data cube and figure out proper parameters for next layer.</p>
 <p>The pipeline stages involved in result statistic are:</p>
 <ul class="simple">
-<li>Convolution DMA</li>
-<li>Convolution accumulator</li>
-<li>Single data processor</li>
-<li>Planar data processor</li>
-<li>Cross channel data processor</li>
+<li><p>Convolution DMA</p></li>
+<li><p>Convolution accumulator</p></li>
+<li><p>Single data processor</p></li>
+<li><p>Planar data processor</p></li>
+<li><p>Cross channel data processor</p></li>
 </ul>
 <p>Here’s a list of statistic counting registers and its valid condition:</p>
-<table border="1" class="docutils">
+<table class="docutils align-default">
 <colgroup>
-<col width="48%" />
-<col width="52%" />
+<col style="width: 48%" />
+<col style="width: 52%" />
 </colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">Register</th>
-<th class="head">Valid condition</th>
+<thead>
+<tr class="row-odd"><th class="head"><p>Register</p></th>
+<th class="head"><p>Valid condition</p></th>
 </tr>
 </thead>
-<tbody valign="top">
-<tr class="row-even"><td><p class="first">CDMA. D_INF_INPUT_DATA_NUM</p>
-<p class="last">CDMA. D_INF_INPUT_WEIGHT_NUM</p>
+<tbody>
+<tr class="row-even"><td><p>CDMA. D_INF_INPUT_DATA_NUM</p>
+<p>CDMA. D_INF_INPUT_WEIGHT_NUM</p>
 </td>
-<td>CDMA. IN_PRECISION==FP16</td>
+<td><p>CDMA. IN_PRECISION==FP16</p></td>
 </tr>
-<tr class="row-odd"><td><p class="first">CDMA. D_NAN_INPUT_DATA_NUM</p>
-<p class="last">CDMA. D_NAN_INPUT_WEIGHT_NUM</p>
+<tr class="row-odd"><td><p>CDMA. D_NAN_INPUT_DATA_NUM</p>
+<p>CDMA. D_NAN_INPUT_WEIGHT_NUM</p>
 </td>
-<td>CDMA. IN_PRECISION==FP16</td>
+<td><p>CDMA. IN_PRECISION==FP16</p></td>
 </tr>
-<tr class="row-even"><td>SDP_RDMA.D_STATUS_NAN_INPUT_NUM
-SDP_RDMA. D_STATUS_INF_INPUT_NUM</td>
-<td><p class="first">SDP_RDMA.IN_PRECISION==FP16 &amp;&amp;</p>
-<p class="last">SDP_RDMA.PERF_NAN_INF_COUNT_EN==YES</p>
-</td>
-</tr>
-<tr class="row-odd"><td><p class="first">SDP. D_STATUS_NAN_INPUT_NUM</p>
-<p class="last">SDP. D_STATUS_INF_INPUT_NUM</p>
-</td>
-<td>Not used</td>
-</tr>
-<tr class="row-even"><td>SDP. D_STATUS_NAN_OUTPUT_NUM</td>
-<td><p class="first">SDP.OUT_PRECISION==FP16 &amp;&amp;</p>
-<p class="last">SDP. PERF_NAN_INF_COUNT_EN=YES</p>
+<tr class="row-even"><td><p>SDP_RDMA.D_STATUS_NAN_INPUT_NUM
+SDP_RDMA. D_STATUS_INF_INPUT_NUM</p></td>
+<td><p>SDP_RDMA.IN_PRECISION==FP16 &amp;&amp;</p>
+<p>SDP_RDMA.PERF_NAN_INF_COUNT_EN==YES</p>
 </td>
 </tr>
-<tr class="row-odd"><td><p class="first">CDP. D_INF_INPUT_NUM</p>
+<tr class="row-odd"><td><p>SDP. D_STATUS_NAN_INPUT_NUM</p>
+<p>SDP. D_STATUS_INF_INPUT_NUM</p>
+</td>
+<td><p>Not used</p></td>
+</tr>
+<tr class="row-even"><td><p>SDP. D_STATUS_NAN_OUTPUT_NUM</p></td>
+<td><p>SDP.OUT_PRECISION==FP16 &amp;&amp;</p>
+<p>SDP. PERF_NAN_INF_COUNT_EN=YES</p>
+</td>
+</tr>
+<tr class="row-odd"><td><p>CDP. D_INF_INPUT_NUM</p>
 <p>CDP. D_NAN_INPUT_NUM</p>
-<p class="last">CDP. D_NAN_OUTPUT_NUM</p>
+<p>CDP. D_NAN_OUTPUT_NUM</p>
 </td>
-<td>CDP. INPUT_DATA_TYPE=FP16</td>
+<td><p>CDP. INPUT_DATA_TYPE=FP16</p></td>
 </tr>
-<tr class="row-even"><td><p class="first">PDP. D_INF_INPUT_NUM</p>
+<tr class="row-even"><td><p>PDP. D_INF_INPUT_NUM</p>
 <p>PDP. D_NAN_INPUT_NUM</p>
-<p class="last">PDP. D_NAN_OUTPUT_NUM</p>
+<p>PDP. D_NAN_OUTPUT_NUM</p>
 </td>
-<td>PDP. INPUT_DATA =FP16</td>
+<td><p>PDP. INPUT_DATA =FP16</p></td>
 </tr>
 </tbody>
 </table>
@@ -2603,30 +2606,30 @@ SDP_RDMA. D_STATUS_INF_INPUT_NUM</td>
 sub units are combined as one pipeline; some are working as individual
 pipelines. All of possible pipeline working modes are summarized in
 table below.</p>
-<table border="1" class="docutils" id="tab-pipelines-nvdla-core">
+<table class="docutils align-default" id="tab-pipelines-nvdla-core">
 <caption><span class="caption-number">Table 57 </span><span class="caption-text">pipeline working mode of NVDLA core</span><a class="headerlink" href="#tab-pipelines-nvdla-core" title="Permalink to this table">¶</a></caption>
 <colgroup>
-<col width="25%" />
-<col width="25%" />
-<col width="25%" />
-<col width="25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
 </colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">Pipeline
-Working Mode</th>
-<th class="head">Sub Units</th>
-<th class="head">Interface</th>
-<th class="head">Support Layers</th>
+<thead>
+<tr class="row-odd"><th class="head"><p>Pipeline
+Working Mode</p></th>
+<th class="head"><p>Sub Units</p></th>
+<th class="head"><p>Interface</p></th>
+<th class="head"><p>Support Layers</p></th>
 </tr>
 </thead>
-<tbody valign="top">
-<tr class="row-even"><td>Convolution
-pipeline</td>
-<td>CDMA, CBUF,
+<tbody>
+<tr class="row-even"><td><p>Convolution
+pipeline</p></td>
+<td><p>CDMA, CBUF,
 CSC, CMAC,
-CACC, SDP</td>
-<td>MCIF/SRAMIF</td>
-<td>direct
+CACC, SDP</p></td>
+<td><p>MCIF/SRAMIF</p></td>
+<td><p>direct
 convolution,
 Winograd, image
 input layer,
@@ -2637,28 +2640,28 @@ tion,
 activation
 (relu, prelu,
 sigmoid, etc.)
-layer</td>
+layer</p></td>
 </tr>
-<tr class="row-odd"><td>Convolution &amp;
+<tr class="row-odd"><td><p>Convolution &amp;
 pooling
-pipeline</td>
-<td>CDMA, CBUF,
+pipeline</p></td>
+<td><p>CDMA, CBUF,
 CSC, CMAC,
-CACC, SDP, PDP</td>
-<td>MCIF/SRAMIF</td>
-<td><p class="first">direct
+CACC, SDP, PDP</p></td>
+<td><p>MCIF/SRAMIF</p></td>
+<td><p>direct
 convolution +
 pooling layer</p>
-<p class="last">(multi-batch
+<p>(multi-batch
 mode is not
 supported)</p>
 </td>
 </tr>
-<tr class="row-even"><td>Offline SDP
-pipeline</td>
-<td>SDP</td>
-<td>MCIF/SRAMIF</td>
-<td>activation
+<tr class="row-even"><td><p>Offline SDP
+pipeline</p></td>
+<td><p>SDP</p></td>
+<td><p>MCIF/SRAMIF</p></td>
+<td><p>activation
 layer,
 element-wise
 layer,
@@ -2668,31 +2671,31 @@ layer, format
 conversion
 layer,
 comparison
-layer</td>
+layer</p></td>
 </tr>
-<tr class="row-odd"><td>Offline PDP
-pipeline</td>
-<td>PDP</td>
-<td>MCIF/SRAMIF</td>
-<td>Pooling layer</td>
+<tr class="row-odd"><td><p>Offline PDP
+pipeline</p></td>
+<td><p>PDP</p></td>
+<td><p>MCIF/SRAMIF</p></td>
+<td><p>Pooling layer</p></td>
 </tr>
-<tr class="row-even"><td>CDP pipeline</td>
-<td>CDP</td>
-<td>MCIF/SRAMIF</td>
-<td>LRN layer</td>
+<tr class="row-even"><td><p>CDP pipeline</p></td>
+<td><p>CDP</p></td>
+<td><p>MCIF/SRAMIF</p></td>
+<td><p>LRN layer</p></td>
 </tr>
-<tr class="row-odd"><td>BDMA pipeline</td>
-<td>BDMA</td>
-<td>MCIF/SRAMIF</td>
-<td>Data
+<tr class="row-odd"><td><p>BDMA pipeline</p></td>
+<td><p>BDMA</p></td>
+<td><p>MCIF/SRAMIF</p></td>
+<td><p>Data
 transmission
-layer</td>
+layer</p></td>
 </tr>
-<tr class="row-even"><td>Rubik pipeline</td>
-<td>Rubik</td>
-<td>MCIF/SRAMIF</td>
-<td>Data transform
-layers</td>
+<tr class="row-even"><td><p>Rubik pipeline</p></td>
+<td><p>Rubik</p></td>
+<td><p>MCIF/SRAMIF</p></td>
+<td><p>Data transform
+layers</p></td>
 </tr>
 </tbody>
 </table>
@@ -2813,13 +2816,11 @@ layers</td>
     </ul>
    </div>
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="../../../search.html" method="get">
-      <input type="text" name="q" />
+      <input type="text" name="q" aria-labelledby="searchlabel" />
       <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
@@ -2855,7 +2856,7 @@ layers</td>
 href="../../../copyright.html">Copyright</a> 2018, NVIDIA Corporation.
 <a href="http://www.nvidia.com/object/legal_info.html">Legal Information.</a>
 <a href="http://www.nvidia.com/object/privacy_policy.html">Privacy Policy.</a>
-Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.1.
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.2.0.
 </div>
 </div>
 </div>

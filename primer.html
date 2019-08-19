@@ -1,11 +1,9 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
     <title>NVDLA Primer &#8212; NVDLA Documentation</title>
     <link rel="stylesheet" href="_static/nvdla.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -14,7 +12,8 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Open Source Roadmap" href="roadmap.html" />
     <link rel="prev" title="NVDLA Index of Documentation" href="contents.html" />
@@ -105,13 +104,13 @@ integration and portability; it exposes the building blocks used to
 accelerate core Deep Learning inference operations.  NVDLA hardware is
 comprised of the following components:</p>
 <ul class="simple">
-<li>Convolution Core – optimized high-performance convolution engine.</li>
-<li>Single Data Processor – single-point lookup engine for activation functions.</li>
-<li>Planar Data Processor – planar averaging engine for pooling.</li>
-<li>Channel Data Processor – multi-channel averaging engine for advanced
-normalization functions.</li>
-<li>Dedicated Memory and Data Reshape Engines – memory-to-memory
-transformation acceleration for tensor reshape and copy operations.</li>
+<li><p>Convolution Core – optimized high-performance convolution engine.</p></li>
+<li><p>Single Data Processor – single-point lookup engine for activation functions.</p></li>
+<li><p>Planar Data Processor – planar averaging engine for pooling.</p></li>
+<li><p>Channel Data Processor – multi-channel averaging engine for advanced
+normalization functions.</p></li>
+<li><p>Dedicated Memory and Data Reshape Engines – memory-to-memory
+transformation acceleration for tensor reshape and copy operations.</p></li>
 </ul>
 <p>Each of these blocks are separate and independently configurable. A system
 that has no need for pooling, for instance, can remove the planar averaging
@@ -153,14 +152,14 @@ process again.  This kind of command-execute-interrupt flow repeats until
 inference on the entire network is complete.</p>
 <p>NVDLA implementations generally fall into two categories:</p>
 <ul class="simple">
-<li>Headless – unit-by-unit management of the NVDLA hardware happens on the main
-system processor.</li>
-<li>Headed – delegates the high-interrupt-frequency tasks to a companion
-microcontroller that is tightly coupled to the NVDLA sub-system.</li>
+<li><p>Headless – unit-by-unit management of the NVDLA hardware happens on the main
+system processor.</p></li>
+<li><p>Headed – delegates the high-interrupt-frequency tasks to a companion
+microcontroller that is tightly coupled to the NVDLA sub-system.</p></li>
 </ul>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">The initial open source release of NVDLA will provide only a software
+<p class="admonition-title">Note</p>
+<p>The initial open source release of NVDLA will provide only a software
 solution for “headless” mode, with “headed” mode drivers to come at a
 later time.</p>
 </div>
@@ -172,7 +171,7 @@ model is characterized by the addition of a dedicated control coprocessor
 and high-bandwidth SRAM to support the NVDLA sub-system.  The Large System model is
 geared more toward high-performance IoT devices that may run many tasks at once.</p>
 <div class="figure align-center" id="id1">
-<span id="fig-system-comparison"></span><img alt="&quot;Small&quot; and &quot;Large&quot; NVDLA systems side by side, with SRAMIF disconnected on &quot;small&quot; system, and a microcontroller on &quot;large&quot; system." src="_images/nvdla-primer-system-comparison.svg" /><p class="caption"><span class="caption-number">Fig. 1 </span><span class="caption-text">Comparison of two possible NVDLA systems.</span></p>
+<span id="fig-system-comparison"></span><img alt="&quot;Small&quot; and &quot;Large&quot; NVDLA systems side by side, with SRAMIF disconnected on &quot;small&quot; system, and a microcontroller on &quot;large&quot; system." src="_images/nvdla-primer-system-comparison.svg" /><p class="caption"><span class="caption-number">Fig. 1 </span><span class="caption-text">Comparison of two possible NVDLA systems.</span><a class="headerlink" href="#id1" title="Permalink to this image">¶</a></p>
 </div>
 <div class="section" id="small-nvdla-model">
 <h3>Small NVDLA Model<a class="headerlink" href="#small-nvdla-model" title="Permalink to this headline">¶</a></h3>
@@ -239,42 +238,42 @@ other system components and tasks that run on NVDLA.</p>
 <p>The NVDLA architecture can be programmed in two modes of operation:
 independent mode, and fused mode.</p>
 <ul class="simple">
-<li><strong>Independent.</strong> When operating independently, each functional block is
+<li><p><strong>Independent.</strong> When operating independently, each functional block is
 configured for when and what it executes, with each block working on its
 assigned task (akin to independent layers in a Deep Learning framework).
 Independent operation begins and ends with the assigned block performing
 memory-to-memory operations, in and out of main system memory or dedicated
-SRAM memory.</li>
-<li><strong>Fused.</strong> Fused operation is similar to independent operation, however, some
+SRAM memory.</p></li>
+<li><p><strong>Fused.</strong> Fused operation is similar to independent operation, however, some
 blocks can be assembled as a pipeline.  This improves performance by
 bypassing the round trip through memory, instead having blocks communicate
 with each other through small FIFOs (i.e., the convolution core can pass
 data to the Single Data Point Processor, which can pass data to the Planar
-Data Processor, and in turn to the Cross-channel Data Processor).</li>
+Data Processor, and in turn to the Cross-channel Data Processor).</p></li>
 </ul>
 <div class="figure align-center" id="id2">
-<span id="fig-core-diagram"></span><img alt="&quot;Headless NVDLA core&quot; architectural drawing.  A configuration interface block is connected to the outside world through the CSB/interrupt interface.  The memory interface block is connected outside with a DBB interface and a second, optional, DBB interface.  The memory interface connects to a convolution buffer, which connects to a convolution core; the memory interface also connects to the activation engine, the pooling engine, local response normalization engine, reshape engine, and bridge DMA engine.   The convolution core, activation engine, pooling engine, and local response normalization engine also form a pipeline." src="_images/nvdla-primer-core-diagram1.svg" /><p class="caption"><span class="caption-number">Fig. 2 </span><span class="caption-text">Internal architecture of NVDLA core.</span></p>
+<span id="fig-core-diagram"></span><img alt="&quot;Headless NVDLA core&quot; architectural drawing.  A configuration interface block is connected to the outside world through the CSB/interrupt interface.  The memory interface block is connected outside with a DBB interface and a second, optional, DBB interface.  The memory interface connects to a convolution buffer, which connects to a convolution core; the memory interface also connects to the activation engine, the pooling engine, local response normalization engine, reshape engine, and bridge DMA engine.   The convolution core, activation engine, pooling engine, and local response normalization engine also form a pipeline." src="_images/nvdla-primer-core-diagram1.svg" /><p class="caption"><span class="caption-number">Fig. 2 </span><span class="caption-text">Internal architecture of NVDLA core.</span><a class="headerlink" href="#id2" title="Permalink to this image">¶</a></p>
 </div>
 <div class="section" id="connections">
 <h3>Connections<a class="headerlink" href="#connections" title="Permalink to this headline">¶</a></h3>
 <p>NVDLA implements three major connections to the rest of the system:</p>
 <ul class="simple">
-<li><strong>Configuration Space Bus (CSB) interface.</strong> This interface is a
+<li><p><strong>Configuration Space Bus (CSB) interface.</strong> This interface is a
 synchronous, low-bandwidth, low-power, 32-bit control bus designed to be
 used by a CPU to access the NVDLA configuration registers.  NVDLA
 functions as a slave on the CSB interface.  CSB implements a very simple
 interface protocol so it can be easily converted to AMBA, OCP or any other
-system bus with a simple shim layer.</li>
-<li><strong>Interrupt interface.</strong>  NVDLA hardware includes a 1-bit level-driven
+system bus with a simple shim layer.</p></li>
+<li><p><strong>Interrupt interface.</strong>  NVDLA hardware includes a 1-bit level-driven
 interrupt.  The interrupt line is asserted when a task has been
-completed or when an error occurs.</li>
-<li><strong>Data Backbone (DBB) interface.</strong>  The DBB interface connects NVDLA and
+completed or when an error occurs.</p></li>
+<li><p><strong>Data Backbone (DBB) interface.</strong>  The DBB interface connects NVDLA and
 the main system memory subsystems.  It is a synchronous, high-speed, and
 highly configurable data bus.  It can be specified to have different
 address sizes, different data sizes, and to issue different sizes of
 requests depending upon the requirements of the system.  The data backbone
 interface is a simple interface protocol that is similar to AXI (and can
-be readily used in AXI-compliant systems).</li>
+be readily used in AXI-compliant systems).</p></li>
 </ul>
 <p>The DBB interface has an optional second connection which can be used when
 there is a second memory path available.  This connection is identical in
@@ -370,58 +369,58 @@ otherwise non-connected memory systems.</p>
 balance area, power, and performance.  The following is a short list of
 these options.</p>
 <ul class="simple">
-<li><strong>Data types.</strong>  NVDLA natively supports a wide array of data types across its
+<li><p><strong>Data types.</strong>  NVDLA natively supports a wide array of data types across its
 various functional units; a subset of these can be chosen to save area.
 Data types that can be selected include binary; int4; int8; int16; int32;
-fp16; fp32; and fp64.</li>
-<li><strong>Input image memory formats.</strong>  NVDLA can support planar images, semi-planar
+fp16; fp32; and fp64.</p></li>
+<li><p><strong>Input image memory formats.</strong>  NVDLA can support planar images, semi-planar
 images, or other packed memory formats.  These different modes can be
-enabled or disabled to save area.</li>
-<li><strong>Weight compression.</strong>  NVDLA has a mechanism to reduce memory bandwidth
+enabled or disabled to save area.</p></li>
+<li><p><strong>Weight compression.</strong>  NVDLA has a mechanism to reduce memory bandwidth
 by sparsely storing convolution weights.  This feature can be disabled to
-save area.</li>
-<li><strong>Winograd convolution.</strong>  The Winograd algorithm is an optimization for
+save area.</p></li>
+<li><p><strong>Winograd convolution.</strong>  The Winograd algorithm is an optimization for
 certain dimensions of convolution.  NVDLA can be built with or without
-support for it.</li>
-<li><strong>Batched convolution.</strong>  Batching is a feature that saves memory
-bandwidth.  NVDLA can be built with or without support for it.</li>
-<li><strong>Convolution buffer size.</strong>  The convolution buffer is formed of a number
+support for it.</p></li>
+<li><p><strong>Batched convolution.</strong>  Batching is a feature that saves memory
+bandwidth.  NVDLA can be built with or without support for it.</p></li>
+<li><p><strong>Convolution buffer size.</strong>  The convolution buffer is formed of a number
 of banks.  It is possible to adjust the quantity of banks (from 2 to 32)
 and the size of each bank (from 4 KiB to 8 KiB).  (By multiplying these
 together, it is possible to determine the total amount of convolution
-buffer memory that will be instantiated.)</li>
-<li><strong>MAC array size.</strong>  The multiply-accumulate engine is formed in two
+buffer memory that will be instantiated.)</p></li>
+<li><p><strong>MAC array size.</strong>  The multiply-accumulate engine is formed in two
 dimensions.  The width (the “C” dimension) can be adjusted from 8 to 64,
 and the depth (the “K” dimension) can be adjusted from 4 to 64.  (The
 total number of multiply-accumulates that are created can be determined by
-multiplying these two together.)</li>
-<li><strong>Second memory interface.</strong>  NVDLA can have support for a second memory
+multiplying these two together.)</p></li>
+<li><p><strong>Second memory interface.</strong>  NVDLA can have support for a second memory
 interface for high-speed accesses, or it can be built with only one memory
-interface.</li>
-<li><strong>Non-linear activation functions.</strong>  To save area, the lookup table that
+interface.</p></li>
+<li><p><strong>Non-linear activation functions.</strong>  To save area, the lookup table that
 supports nonlinear activation functions (like sigmoid or tanh) can be
-removed.</li>
-<li><strong>Activation engine size.</strong>  The number of activation outputs produced per
-cycle can be adjusted from 1 through 16.</li>
-<li><strong>Bridge DMA engine.</strong>  The bridge DMA engine can be removed to save area.</li>
-<li><strong>Data reshape engine.</strong>  The data reshape engine can be removed to save
-area.</li>
-<li><strong>Pooling engine presence.</strong>  The pooling engine can be removed to save
-area.</li>
-<li><strong>Pooling engine size.</strong>  The pooling engine can be adjusted to produce
-between 1 and 4 outputs per cycle.</li>
-<li><strong>Local response normalization engine presence.</strong>  The local response
-normalization engine can be removed to save area.</li>
-<li><strong>Local response normalization engine size.</strong>  The local response
+removed.</p></li>
+<li><p><strong>Activation engine size.</strong>  The number of activation outputs produced per
+cycle can be adjusted from 1 through 16.</p></li>
+<li><p><strong>Bridge DMA engine.</strong>  The bridge DMA engine can be removed to save area.</p></li>
+<li><p><strong>Data reshape engine.</strong>  The data reshape engine can be removed to save
+area.</p></li>
+<li><p><strong>Pooling engine presence.</strong>  The pooling engine can be removed to save
+area.</p></li>
+<li><p><strong>Pooling engine size.</strong>  The pooling engine can be adjusted to produce
+between 1 and 4 outputs per cycle.</p></li>
+<li><p><strong>Local response normalization engine presence.</strong>  The local response
+normalization engine can be removed to save area.</p></li>
+<li><p><strong>Local response normalization engine size.</strong>  The local response
 normalization engine can be adjusted to produce between 1 and 4 outputs
-per cycle.</li>
-<li><strong>Memory interface bit width.</strong>  The memory interface bit width can be
+per cycle.</p></li>
+<li><p><strong>Memory interface bit width.</strong>  The memory interface bit width can be
 adjusted according to the width of the external memory interface to
-appropriately size internal buffers.</li>
-<li><strong>Memory read latency tolerance.</strong>  Memory latency time is defined as the number
+appropriately size internal buffers.</p></li>
+<li><p><strong>Memory read latency tolerance.</strong>  Memory latency time is defined as the number
 of cycles from read request to read data return.  The tolerance for this
 can be adjusted, which impacts the internal latency buffer size of each
-read DMA engine.</li>
+read DMA engine.</p></li>
 </ul>
 </div>
 </div>
@@ -438,7 +437,7 @@ networks on NVDLA).  The general flow of this is as shown in the figure
 below; and each of these is described below.</p>
 <div class="figure align-center" id="id3">
 <span id="fig-sw-flow"></span><a class="reference internal image-reference" href="_images/nvdla-primer-sw-flow.svg"><img alt="DL training software produces a model, which the compilation tool takes and turns into a loadable, which is used by runtime environment. In runtime, UMD submits with ioctl()s to KMD, which is sent to NVDLA with register writes." src="_images/nvdla-primer-sw-flow.svg" /></a>
-<p class="caption"><span class="caption-number">Fig. 3 </span><span class="caption-text">Dataflow diagram inside of NVDLA system software.</span></p>
+<p class="caption"><span class="caption-number">Fig. 3 </span><span class="caption-text">Dataflow diagram inside of NVDLA system software.</span><a class="headerlink" href="#id3" title="Permalink to this image">¶</a></p>
 </div>
 <div class="section" id="compilation-tools-model-creation-and-compilation">
 <h3>Compilation Tools: Model Creation and Compilation<a class="headerlink" href="#compilation-tools-model-creation-and-compilation" title="Permalink to this headline">¶</a></h3>
@@ -472,13 +471,13 @@ configurations.</p>
 <p>The runtime environment involves running a model on compatible NVDLA hardware. It
 is effectively divided into two layers:</p>
 <ul class="simple">
-<li><strong>User Mode Driver.</strong> The main interface with user-mode programs.
+<li><p><strong>User Mode Driver.</strong> The main interface with user-mode programs.
 After parsing the neural network compiler compiles network layer by layer and converts it
 into a file format called <a class="reference internal" href="glossary.html#term-nvdla-loadable"><span class="xref std std-term">NVDLA Loadable</span></a>. User mode runtime driver loads this
-loadable and submits inference job to <a class="reference internal" href="sw/runtime_environment.html#kernel-mode-driver"><span class="std std-ref">Kernel Mode Driver</span></a></li>
-<li><strong>Kernel Mode Driver.</strong> Consists of drivers and firmware that do the work of
+loadable and submits inference job to <a class="reference internal" href="sw/runtime_environment.html#kernel-mode-driver"><span class="std std-ref">Kernel Mode Driver</span></a></p></li>
+<li><p><strong>Kernel Mode Driver.</strong> Consists of drivers and firmware that do the work of
 scheduling layer operations on NVDLA and programming the NVDLA registers
-to configure each functional block.</li>
+to configure each functional block.</p></li>
 </ul>
 <p>The runtime execution starts with a stored representation of the network; this
 stored format is called an “NVDLA loadable” image. In the view of a
@@ -510,7 +509,7 @@ determine when subsequent layers are ready to be scheduled; this allows the
 compiler to decide scheduling of layers in an optimized way, and avoids
 performance differences from different implementations of KMD.</p>
 <div class="figure align-center" id="id4">
-<span id="fig-portability-layer"></span><img alt="Inside of the user application software and OS kernel, there is a portability layer, which wraps the DLA core code from the NVDLA GitHub." src="_images/nvdla-primer-portability-layer.svg" /><p class="caption"><span class="caption-number">Fig. 4 </span><span class="caption-text">Portability layers in the NVDLA system.</span></p>
+<span id="fig-portability-layer"></span><img alt="Inside of the user application software and OS kernel, there is a portability layer, which wraps the DLA core code from the NVDLA GitHub." src="_images/nvdla-primer-portability-layer.svg" /><p class="caption"><span class="caption-number">Fig. 4 </span><span class="caption-text">Portability layers in the NVDLA system.</span><a class="headerlink" href="#id4" title="Permalink to this image">¶</a></p>
 </div>
 <p>Both the UMD stack and the KMD stack exist as
 defined APIs, and are expected to be wrapped with a system portability
@@ -616,91 +615,91 @@ the impact on performance.</p>
 <p>Power and performance in the following table are shown for a 1GHz frequency.
 Power and performance for a given configuration can be varied though
 adjustment of voltage and frquency.</p>
-<table border="1" class="docutils">
+<table class="docutils align-default">
 <colgroup>
-<col width="8%" />
-<col width="14%" />
-<col width="18%" />
-<col width="14%" />
-<col width="15%" />
-<col width="15%" />
-<col width="16%" />
+<col style="width: 8%" />
+<col style="width: 14%" />
+<col style="width: 18%" />
+<col style="width: 14%" />
+<col style="width: 15%" />
+<col style="width: 15%" />
+<col style="width: 16%" />
 </colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head"># MACs</th>
-<th class="head">Conv. buffer
-size (KB)</th>
-<th class="head">SDRAM
-bandwidth (GB/s)</th>
-<th class="head">Silicon Cell
+<thead>
+<tr class="row-odd"><th class="head"><p># MACs</p></th>
+<th class="head"><p>Conv. buffer
+size (KB)</p></th>
+<th class="head"><p>SDRAM
+bandwidth (GB/s)</p></th>
+<th class="head"><p>Silicon Cell
 Area
-(mm^2, 28nm)</th>
-<th class="head">Silicon Cell
+(mm^2, 28nm)</p></th>
+<th class="head"><p>Silicon Cell
 Area
-(mm^2, 16nm)</th>
-<th class="head">Int8 ResNet-50
-(frames/sec)</th>
-<th class="head">Power Estimate
+(mm^2, 16nm)</p></th>
+<th class="head"><p>Int8 ResNet-50
+(frames/sec)</p></th>
+<th class="head"><p>Power Estimate
 Peak/Average
-(mW, 16nm)</th>
+(mW, 16nm)</p></th>
 </tr>
 </thead>
-<tbody valign="top">
-<tr class="row-even"><td>2048</td>
-<td>512</td>
-<td>20</td>
-<td>5.5</td>
-<td>3.3</td>
-<td>269</td>
-<td>766 / 291</td>
+<tbody>
+<tr class="row-even"><td><p>2048</p></td>
+<td><p>512</p></td>
+<td><p>20</p></td>
+<td><p>5.5</p></td>
+<td><p>3.3</p></td>
+<td><p>269</p></td>
+<td><p>766 / 291</p></td>
 </tr>
-<tr class="row-odd"><td>1024</td>
-<td>256</td>
-<td>15</td>
-<td>3.0</td>
-<td>1.8</td>
-<td>153</td>
-<td>375 / 143</td>
+<tr class="row-odd"><td><p>1024</p></td>
+<td><p>256</p></td>
+<td><p>15</p></td>
+<td><p>3.0</p></td>
+<td><p>1.8</p></td>
+<td><p>153</p></td>
+<td><p>375 / 143</p></td>
 </tr>
-<tr class="row-even"><td>512</td>
-<td>256</td>
-<td>10</td>
-<td>2.3</td>
-<td>1.4</td>
-<td>93</td>
-<td>210 / 80</td>
+<tr class="row-even"><td><p>512</p></td>
+<td><p>256</p></td>
+<td><p>10</p></td>
+<td><p>2.3</p></td>
+<td><p>1.4</p></td>
+<td><p>93</p></td>
+<td><p>210 / 80</p></td>
 </tr>
-<tr class="row-odd"><td>256</td>
-<td>256</td>
-<td>5</td>
-<td>1.7</td>
-<td>1.0</td>
-<td>46</td>
-<td>135 / 48</td>
+<tr class="row-odd"><td><p>256</p></td>
+<td><p>256</p></td>
+<td><p>5</p></td>
+<td><p>1.7</p></td>
+<td><p>1.0</p></td>
+<td><p>46</p></td>
+<td><p>135 / 48</p></td>
 </tr>
-<tr class="row-even"><td>128</td>
-<td>256</td>
-<td>2</td>
-<td>1.4</td>
-<td>0.84</td>
-<td>20</td>
-<td>82  / 31</td>
+<tr class="row-even"><td><p>128</p></td>
+<td><p>256</p></td>
+<td><p>2</p></td>
+<td><p>1.4</p></td>
+<td><p>0.84</p></td>
+<td><p>20</p></td>
+<td><p>82  / 31</p></td>
 </tr>
-<tr class="row-odd"><td>64</td>
-<td>128</td>
-<td>1</td>
-<td>0.91</td>
-<td>0.55</td>
-<td>7.3</td>
-<td>55  / 21</td>
+<tr class="row-odd"><td><p>64</p></td>
+<td><p>128</p></td>
+<td><p>1</p></td>
+<td><p>0.91</p></td>
+<td><p>0.55</p></td>
+<td><p>7.3</p></td>
+<td><p>55  / 21</p></td>
 </tr>
-<tr class="row-even"><td>32</td>
-<td>128</td>
-<td>0.5</td>
-<td>0.85</td>
-<td>0.51</td>
-<td>3.6</td>
-<td>45  / 17</td>
+<tr class="row-even"><td><p>32</p></td>
+<td><p>128</p></td>
+<td><p>0.5</p></td>
+<td><p>0.85</p></td>
+<td><p>0.51</p></td>
+<td><p>3.6</p></td>
+<td><p>45  / 17</p></td>
 </tr>
 </tbody>
 </table>
@@ -804,19 +803,20 @@ pertaining to Deep Learning and Convolutional Neural Networks. The following
 links have been provided as a means to begin or further an individual’s
 investigation into these topics, as needed.</p>
 <ul class="simple">
-<li><a class="reference external" href="http://info.nvidia.com/deep-learning-demystified.html">NVIDIA Webinar Series: Deep Learning Demystified</a></li>
-<li>A Beginner’s Guide to Understanding Convolutional Neural Networks<ul>
-<li><a class="reference external" href="https://adeshpande3.github.io/adeshpande3.github.io/A-Beginner's-Guide-To-Understanding-Convolutional-Neural-Networks/">Part 1</a></li>
-<li><a class="reference external" href="https://adeshpande3.github.io/adeshpande3.github.io/A-Beginner's-Guide-To-Understanding-Convolutional-Neural-Networks-Part-2/">Part 2</a></li>
+<li><p><a class="reference external" href="http://info.nvidia.com/deep-learning-demystified.html">NVIDIA Webinar Series: Deep Learning Demystified</a></p></li>
+<li><p>A Beginner’s Guide to Understanding Convolutional Neural Networks</p>
+<ul>
+<li><p><a class="reference external" href="https://adeshpande3.github.io/adeshpande3.github.io/A-Beginner's-Guide-To-Understanding-Convolutional-Neural-Networks/">Part 1</a></p></li>
+<li><p><a class="reference external" href="https://adeshpande3.github.io/adeshpande3.github.io/A-Beginner's-Guide-To-Understanding-Convolutional-Neural-Networks-Part-2/">Part 2</a></p></li>
 </ul>
 </li>
-<li><a class="reference external" href="https://devblogs.nvidia.com/parallelforall/inference-next-step-gpu-accelerated-deep-learning/">Inference: The Next Step in GPU-Accelerated Deep Learning</a></li>
-<li><a class="reference external" href="http://www.nvidia.com/content/tegra/embedded-systems/pdf/jetson_tx1_whitepaper.pdf">NVIDIA Whitepaper: GPU-Based Deep Learning Inference: A performance and Power Analysis</a></li>
-<li><a class="reference external" href="https://blogs.nvidia.com/blog/2016/08/22/difference-deep-learning-training-inference-ai/">Fundamentals of Deep Learning: What’s the Difference between Deep Learning Training and Inference?</a></li>
-<li><a class="reference external" href="http://www.cv-foundation.org/openaccess/content_cvpr_2015/papers/Szegedy_Going_Deeper_With_2015_CVPR_paper.pdf">Inception (GoogLeNet): Going Deeper with Convolutions</a></li>
-<li><a class="reference external" href="https://arxiv.org/pdf/1512.03385v1.pdf">Microsoft ResNet: Deep Residual Learning for Image Recognition</a></li>
-<li><a class="reference external" href="https://papers.nips.cc/paper/4824-imagenet-classification-with-deep-convolutional-neural-networks.pdf">AlexNet: ImageNet Classification with Deep Convolutional Neural Networks</a></li>
-<li><a class="reference external" href="https://arxiv.org/pdf/1409.1556v6.pdf">VGG Net: Very Deep Convolutional Networks for Large-Scale Image Recognition</a></li>
+<li><p><a class="reference external" href="https://devblogs.nvidia.com/parallelforall/inference-next-step-gpu-accelerated-deep-learning/">Inference: The Next Step in GPU-Accelerated Deep Learning</a></p></li>
+<li><p><a class="reference external" href="http://www.nvidia.com/content/tegra/embedded-systems/pdf/jetson_tx1_whitepaper.pdf">NVIDIA Whitepaper: GPU-Based Deep Learning Inference: A performance and Power Analysis</a></p></li>
+<li><p><a class="reference external" href="https://blogs.nvidia.com/blog/2016/08/22/difference-deep-learning-training-inference-ai/">Fundamentals of Deep Learning: What’s the Difference between Deep Learning Training and Inference?</a></p></li>
+<li><p><a class="reference external" href="http://www.cv-foundation.org/openaccess/content_cvpr_2015/papers/Szegedy_Going_Deeper_With_2015_CVPR_paper.pdf">Inception (GoogLeNet): Going Deeper with Convolutions</a></p></li>
+<li><p><a class="reference external" href="https://arxiv.org/pdf/1512.03385v1.pdf">Microsoft ResNet: Deep Residual Learning for Image Recognition</a></p></li>
+<li><p><a class="reference external" href="https://papers.nips.cc/paper/4824-imagenet-classification-with-deep-convolutional-neural-networks.pdf">AlexNet: ImageNet Classification with Deep Convolutional Neural Networks</a></p></li>
+<li><p><a class="reference external" href="https://arxiv.org/pdf/1409.1556v6.pdf">VGG Net: Very Deep Convolutional Networks for Large-Scale Image Recognition</a></p></li>
 </ul>
 </div>
 </div>
@@ -895,13 +895,11 @@ investigation into these topics, as needed.</p>
     </ul>
    </div>
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" />
+      <input type="text" name="q" aria-labelledby="searchlabel" />
       <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
@@ -936,7 +934,7 @@ investigation into these topics, as needed.</p>
 href="copyright.html">Copyright</a> 2018, NVIDIA Corporation.
 <a href="http://www.nvidia.com/object/legal_info.html">Legal Information.</a>
 <a href="http://www.nvidia.com/object/privacy_policy.html">Privacy Policy.</a>
-Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.1.
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.2.0.
 </div>
 </div>
 </div>

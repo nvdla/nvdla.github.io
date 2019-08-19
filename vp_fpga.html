@@ -1,11 +1,9 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
     <title>Virtual Platform On AWS FPGA &#8212; NVDLA Documentation</title>
     <link rel="stylesheet" href="_static/nvdla.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -14,7 +12,8 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Open NVDLA Repository Updates" href="updates.html" />
     <link rel="prev" title="Virtual Platform" href="vp.html" />
@@ -57,13 +56,13 @@
 <h2>1. Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
 <p>Virtual Platform (<a class="reference internal" href="vp.html#overview"><span class="std std-ref">1. Overview</span></a>) can run on Amazon Web Services (AWS) FPGA platform. <a class="reference internal" href="#fig-vp-fpga"><span class="std std-numref">Fig. 90</span></a> below shows the top level diagram of the NVDLA virtual simulator on AWS FPGA platform.</p>
 <div class="figure align-center" id="id3">
-<span id="fig-vp-fpga"></span><img alt="NVDLA Virtual Platform FPGA Diagram." src="_images/nvdla-vp-fpga.svg" /><p class="caption"><span class="caption-number">Fig. 90 </span><span class="caption-text">NVDLA Virtual Platform on AWS FPGA platform.</span></p>
+<span id="fig-vp-fpga"></span><img alt="NVDLA Virtual Platform FPGA Diagram." src="_images/nvdla-vp-fpga.svg" /><p class="caption"><span class="caption-number">Fig. 90 </span><span class="caption-text">NVDLA Virtual Platform on AWS FPGA platform.</span><a class="headerlink" href="#id3" title="Permalink to this image">¶</a></p>
 </div>
 <p>To launch an instance which is a virtual server in the cloud, Amazon Machine Image (AMI) is required. Virtual simulator can run on the instance with FPGA board connected. The following sections describe how virtual simulator runs on different AMIs.</p>
 <ul class="simple">
-<li><a class="reference internal" href="#using-the-virtual-simulator-on-nvidia-ami">2. Using the Virtual Simulator on NVIDIA AMI</a>: NVIDIA provides NVDLA AMI (ubuntu14.04 based) included all necessary system requirements which allow users to run virtual simulator without any additional operation.</li>
-<li><a class="reference internal" href="#using-the-virtual-simulator-on-aws-ami">3. Using the Virtual Simulator on AWS AMI</a>: Virtual simulator can run on basic ubuntu/centos AMI delivered by AWS. This section shows how to run virtual simulator on basic AMI step by step.</li>
-<li><a class="reference internal" href="#generating-the-afi-on-aws-fpga-ami">4. Generating the AFI on AWS FPGA AMI</a>: Amazon FPGA Image (AFI) is necessary for AWS FPGA platform. Before running virtual simulator on AWS FPGA platform, AFI needs to be registered and loaded to AWS. NVIDIA provides one demo AFI which has been verified. Users also can develop their own FPGA design, when design completes, users can generate AFI with FPGA AWS AMI pre-built included FPGA development and run-time tools. This section shows how to generate AFI on AWS FPGA AMI step by step.</li>
+<li><p><a class="reference internal" href="#using-the-virtual-simulator-on-nvidia-ami">2. Using the Virtual Simulator on NVIDIA AMI</a>: NVIDIA provides NVDLA AMI (ubuntu14.04 based) included all necessary system requirements which allow users to run virtual simulator without any additional operation.</p></li>
+<li><p><a class="reference internal" href="#using-the-virtual-simulator-on-aws-ami">3. Using the Virtual Simulator on AWS AMI</a>: Virtual simulator can run on basic ubuntu/centos AMI delivered by AWS. This section shows how to run virtual simulator on basic AMI step by step.</p></li>
+<li><p><a class="reference internal" href="#generating-the-afi-on-aws-fpga-ami">4. Generating the AFI on AWS FPGA AMI</a>: Amazon FPGA Image (AFI) is necessary for AWS FPGA platform. Before running virtual simulator on AWS FPGA platform, AFI needs to be registered and loaded to AWS. NVIDIA provides one demo AFI which has been verified. Users also can develop their own FPGA design, when design completes, users can generate AFI with FPGA AWS AMI pre-built included FPGA development and run-time tools. This section shows how to generate AFI on AWS FPGA AMI step by step.</p></li>
 </ul>
 </div>
 <div class="section" id="using-the-virtual-simulator-on-nvidia-ami">
@@ -74,8 +73,8 @@
 <h4>2.1.1 Set up and log into your AWS account<a class="headerlink" href="#set-up-and-log-into-your-aws-account" title="Permalink to this headline">¶</a></h4>
 <p>Log into the <a class="reference external" href="https://console.aws.amazon.com/">AWS Management Console</a> and set up your root account.</p>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">Please set your aws region to US East (N.Virginia) since each AWS region is independent.</p>
+<p class="admonition-title">Note</p>
+<p>Please set your aws region to US East (N.Virginia) since each AWS region is independent.</p>
 </div>
 </div>
 <div class="section" id="launch-an-amazon-ec2-instance">
@@ -86,27 +85,27 @@
 <h4>2.1.3 Configure your instance<a class="headerlink" href="#configure-your-instance" title="Permalink to this headline">¶</a></h4>
 <p>In this tutorial, you have the option to configure your instance features. Below are some guidelines on setting up your first instance.</p>
 <ul class="simple">
-<li><strong>Choose an Amazon Machine Image (AMI)</strong>: we recommend the <em>“nvdla_vp_fpga_ami_ubuntu”</em></li>
-<li><strong>Choose an instance type</strong>: we recommend the <em>“f1.2xlarge”</em>.</li>
-<li><strong>Launch instance</strong>: review your instance configuration and choose “Launch”.</li>
-<li><strong>Create a key pair</strong>: Select “Create a new key pair” and assign a name. The key pair file (.pem) will download automatically - save this in a safe place as we will later use this file to log in to the instance. Finally, choose “Launch Instances” to complete the set up.</li>
+<li><p><strong>Choose an Amazon Machine Image (AMI)</strong>: we recommend the <em>“nvdla_vp_fpga_ami_ubuntu”</em></p></li>
+<li><p><strong>Choose an instance type</strong>: we recommend the <em>“f1.2xlarge”</em>.</p></li>
+<li><p><strong>Launch instance</strong>: review your instance configuration and choose “Launch”.</p></li>
+<li><p><strong>Create a key pair</strong>: Select “Create a new key pair” and assign a name. The key pair file (.pem) will download automatically - save this in a safe place as we will later use this file to log in to the instance. Finally, choose “Launch Instances” to complete the set up.</p></li>
 </ul>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">It may take a few minutes to initialize your instance.</p>
+<p class="admonition-title">Note</p>
+<p>It may take a few minutes to initialize your instance.</p>
 </div>
 </div>
 <div class="section" id="connect-to-your-instance">
 <h4>2.1.4 Connect to your instance<a class="headerlink" href="#connect-to-your-instance" title="Permalink to this headline">¶</a></h4>
 <p>After you launch your instance, you can connect to it and use it the way that you’d use a computer sitting in front of you. To connect from the console, follow the steps below:</p>
 <ul class="simple">
-<li>Select the EC2 instance you created and choose “Connect”.</li>
-<li>Select “A Java SSH client directly from my browser”. Ensure Java is installed and enabled.</li>
-<li>Enter the Private key path (example: C:KeyPairsmy-key-pair.pem). Choose “Launch SSH Client”.</li>
+<li><p>Select the EC2 instance you created and choose “Connect”.</p></li>
+<li><p>Select “A Java SSH client directly from my browser”. Ensure Java is installed and enabled.</p></li>
+<li><p>Enter the Private key path (example: C:KeyPairsmy-key-pair.pem). Choose “Launch SSH Client”.</p></li>
 </ul>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">You can also connect via SSH or PuTTY, <a class="reference external" href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AccessingInstances.html">click here</a> to learn more.</p>
+<p class="admonition-title">Note</p>
+<p>You can also connect via SSH or PuTTY, <a class="reference external" href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AccessingInstances.html">click here</a> to learn more.</p>
 </div>
 </div>
 </div>
@@ -271,8 +270,8 @@ L11 -l_num=4 -r_num=10 -timeout 500 -monitor –dump_trace_only”.</p>
 </pre></div>
 </div>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">Always sync latest version for AWS EC2 FPGA Hardware and Software Development Kits. Please sync aws repository to specified version (refer to <a class="reference external" href="https://github.com/nvdla/vp_awsfpga/blob/master/README.md">VP AWS FPGA README</a>) which was verified with any issue.</p>
+<p class="admonition-title">Note</p>
+<p>Always sync latest version for AWS EC2 FPGA Hardware and Software Development Kits. Please sync aws repository to specified version (refer to <a class="reference external" href="https://github.com/nvdla/vp_awsfpga/blob/master/README.md">VP AWS FPGA README</a>) which was verified with any issue.</p>
 </div>
 </div>
 <div class="section" id="setup-aws-sdk-and-edma-driver">
@@ -383,16 +382,16 @@ L11 -l_num=4 -r_num=10 -timeout 500 -monitor –dump_trace_only”.</p>
 <div class="section" id="setup-aws-ec2-instance-machine-on-fpga-ami">
 <h3>4.1 Setup AWS EC2 instance machine on FPGA AMI<a class="headerlink" href="#setup-aws-ec2-instance-machine-on-fpga-ami" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
-<li><a class="reference internal" href="#setup-aws-ec2-instance-machine">2.1 Setup AWS EC2 instance machine</a>: we recommend to choose <em>“FPGA Developer AMI”</em> (CentOS)</li>
-<li><a class="reference internal" href="#install-dependencies">3.3 Install Dependencies</a>: Follow the CentOS steps.</li>
+<li><p><a class="reference internal" href="#setup-aws-ec2-instance-machine">2.1 Setup AWS EC2 instance machine</a>: we recommend to choose <em>“FPGA Developer AMI”</em> (CentOS)</p></li>
+<li><p><a class="reference internal" href="#install-dependencies">3.3 Install Dependencies</a>: Follow the CentOS steps.</p></li>
 </ul>
 </div>
 <div class="section" id="download-source-code">
 <h3>4.2 Download source code<a class="headerlink" href="#download-source-code" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
-<li><a class="reference internal" href="#download-nvdla-aws-fpga-custom-logic-cl">Download NVDLA AWS FPGA Custom Logic (CL)</a></li>
-<li><a class="reference internal" href="#download-and-build-nvdla-cmod-and-vmod">Download and build NVDLA</a></li>
-<li><a class="reference internal" href="#download-aws-ec2-fpga-hardware-and-software-development-kit">AWS EC2 FPGA Hardware and Software Development Kits</a></li>
+<li><p><a class="reference internal" href="#download-nvdla-aws-fpga-custom-logic-cl">Download NVDLA AWS FPGA Custom Logic (CL)</a></p></li>
+<li><p><a class="reference internal" href="#download-and-build-nvdla-cmod-and-vmod">Download and build NVDLA</a></p></li>
+<li><p><a class="reference internal" href="#download-aws-ec2-fpga-hardware-and-software-development-kit">AWS EC2 FPGA Hardware and Software Development Kits</a></p></li>
 </ul>
 </div>
 <div class="section" id="build-nvdla-rtl">
@@ -410,11 +409,11 @@ L11 -l_num=4 -r_num=10 -timeout 500 -monitor –dump_trace_only”.</p>
 Vivado IP in AWS EC2 instance.  The generated IP is not distributed with the
 NVDLA source distribution because of licensing restrictions.</p>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<ul class="last simple">
-<li>You need to access the AWS EC2 instance from GUI machine to use Xilinx tool.</li>
-<li>Vivado veresion is /opt/Xilinx/SDx/2017.1.op/Vivado/bin/vivado</li>
-<li>For IP location, we recommend to use [vp_awsfpga prefix]/common/design/xilinx_ip/</li>
+<p class="admonition-title">Note</p>
+<ul class="simple">
+<li><p>You need to access the AWS EC2 instance from GUI machine to use Xilinx tool.</p></li>
+<li><p>Vivado veresion is /opt/Xilinx/SDx/2017.1.op/Vivado/bin/vivado</p></li>
+<li><p>For IP location, we recommend to use [vp_awsfpga prefix]/common/design/xilinx_ip/</p></li>
 </ul>
 </div>
 <div class="section" id="start-xilinx-tool-in-aws-ec2-instance">
@@ -426,110 +425,110 @@ NVDLA source distribution because of licensing restrictions.</p>
 <div class="section" id="configure-ip-setting">
 <h4>4.4.2 Configure IP setting<a class="headerlink" href="#configure-ip-setting" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
-<li>Click “Manage IP”</li>
-<li>Click “New IP Location”</li>
-<li>Click “Next”</li>
-<li>Configure the Manage IP Settings page, set “part” to “xcvu9p-flgb2104-2-i”</li>
-<li>Click “Finish”</li>
+<li><p>Click “Manage IP”</p></li>
+<li><p>Click “New IP Location”</p></li>
+<li><p>Click “Next”</p></li>
+<li><p>Configure the Manage IP Settings page, set “part” to “xcvu9p-flgb2104-2-i”</p></li>
+<li><p>Click “Finish”</p></li>
 </ul>
 </div>
 <div class="section" id="generate-ip-axi2apb">
 <h4>4.4.3 Generate IP axi2apb<a class="headerlink" href="#generate-ip-axi2apb" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
-<li>In the IP catalog, search axi_apb</li>
-<li>Double click “AXI APB Bridge”</li>
-<li>Set “Component Name” to “axi_apb_bridge_0”</li>
-<li>Set “Number Of Slaves” to “1”</li>
-<li>Click “OK”</li>
-<li>Click “Generate”</li>
-<li>Click “OK” and wait the task in “Design Runs” panel to finish</li>
+<li><p>In the IP catalog, search axi_apb</p></li>
+<li><p>Double click “AXI APB Bridge”</p></li>
+<li><p>Set “Component Name” to “axi_apb_bridge_0”</p></li>
+<li><p>Set “Number Of Slaves” to “1”</p></li>
+<li><p>Click “OK”</p></li>
+<li><p>Click “Generate”</p></li>
+<li><p>Click “OK” and wait the task in “Design Runs” panel to finish</p></li>
 </ul>
 </div>
 <div class="section" id="generate-ip-axi-interconnect-nvdla-64b">
 <h4>4.4.4 Generate IP axi_interconnect_nvdla_64b<a class="headerlink" href="#generate-ip-axi-interconnect-nvdla-64b" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
-<li>In the IP catalog, expand “AXI_Infrastructure”, double click “AXI Interconnect RTL”</li>
-<li>Set “Component Name” to “axi_interconnect_nvdla_64b”</li>
-<li>Click the tab “Global”</li>
-<li>Set “Number of Slave Interface” to “2”</li>
-<li>Set “Slave Interface Thread ID Width” to “8”</li>
-<li>Set “Address Width” to “64”</li>
-<li>Set “Interconnect Internal Data Width” to “512”</li>
-<li>Click the tab “Interfaces”</li>
-<li>Set “Master Interface Data Width” to “512”</li>
-<li>Set “Slave Interface 0 data width” to “512”</li>
-<li>Set “Slave Interface 1 data width” to “64”</li>
-<li>Click the tab “Read Write Channels”</li>
-<li>Set all the “Acceptance” to “32”</li>
-<li>Set all the “FIFO Depth” to “512”</li>
-<li>Click “OK”</li>
-<li>Click “Generate”</li>
-<li>Click “OK” and wait the task in “Design Runs” panel to finish</li>
+<li><p>In the IP catalog, expand “AXI_Infrastructure”, double click “AXI Interconnect RTL”</p></li>
+<li><p>Set “Component Name” to “axi_interconnect_nvdla_64b”</p></li>
+<li><p>Click the tab “Global”</p></li>
+<li><p>Set “Number of Slave Interface” to “2”</p></li>
+<li><p>Set “Slave Interface Thread ID Width” to “8”</p></li>
+<li><p>Set “Address Width” to “64”</p></li>
+<li><p>Set “Interconnect Internal Data Width” to “512”</p></li>
+<li><p>Click the tab “Interfaces”</p></li>
+<li><p>Set “Master Interface Data Width” to “512”</p></li>
+<li><p>Set “Slave Interface 0 data width” to “512”</p></li>
+<li><p>Set “Slave Interface 1 data width” to “64”</p></li>
+<li><p>Click the tab “Read Write Channels”</p></li>
+<li><p>Set all the “Acceptance” to “32”</p></li>
+<li><p>Set all the “FIFO Depth” to “512”</p></li>
+<li><p>Click “OK”</p></li>
+<li><p>Click “Generate”</p></li>
+<li><p>Click “OK” and wait the task in “Design Runs” panel to finish</p></li>
 </ul>
 </div>
 <div class="section" id="generate-ip-axi-interconnect-nvdla-512b">
 <h4>4.4.5 Generate IP axi_interconnect_nvdla_512b<a class="headerlink" href="#generate-ip-axi-interconnect-nvdla-512b" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
-<li>In the IP catalog, expand “AXI_Infrastructure”, double click “AXI Interconnect RTL”</li>
-<li>Set “Component Name” to “axi_interconnect_nvdla_512b”</li>
-<li>Click the tab “Global”</li>
-<li>Set “Number of Slave Interface” to “3”</li>
-<li>Set “Slave Interface Thread ID Width” to “8”</li>
-<li>Set “Address Width” to “64”</li>
-<li>Set “Interconnect Internal Data Width” to “512”</li>
-<li>Click the tab “Interfaces”</li>
-<li>Set all the “Data Width” to “512”</li>
-<li>Click the tab “Read Write Channels”</li>
-<li>Set all the “Acceptance” to “32”</li>
-<li>Set all the “FIFO Depth” to “512”</li>
-<li>Click “OK”</li>
-<li>Click “Generate”</li>
-<li>Click “OK” and wait the task in “Design Runs” panel to finish</li>
+<li><p>In the IP catalog, expand “AXI_Infrastructure”, double click “AXI Interconnect RTL”</p></li>
+<li><p>Set “Component Name” to “axi_interconnect_nvdla_512b”</p></li>
+<li><p>Click the tab “Global”</p></li>
+<li><p>Set “Number of Slave Interface” to “3”</p></li>
+<li><p>Set “Slave Interface Thread ID Width” to “8”</p></li>
+<li><p>Set “Address Width” to “64”</p></li>
+<li><p>Set “Interconnect Internal Data Width” to “512”</p></li>
+<li><p>Click the tab “Interfaces”</p></li>
+<li><p>Set all the “Data Width” to “512”</p></li>
+<li><p>Click the tab “Read Write Channels”</p></li>
+<li><p>Set all the “Acceptance” to “32”</p></li>
+<li><p>Set all the “FIFO Depth” to “512”</p></li>
+<li><p>Click “OK”</p></li>
+<li><p>Click “Generate”</p></li>
+<li><p>Click “OK” and wait the task in “Design Runs” panel to finish</p></li>
 </ul>
 </div>
 <div class="section" id="generate-ip-axi-interconnect-nvdla-256b">
 <h4>4.4.6 Generate IP axi_interconnect_nvdla_256b<a class="headerlink" href="#generate-ip-axi-interconnect-nvdla-256b" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
-<li>In the IP catalog, expand “AXI_Infrastructure”, double click “AXI Interconnect RTL”</li>
-<li>Set “Component Name” to “axi_interconnect_nvdla_256b”</li>
-<li>Click the tab “Global”</li>
-<li>Set “Number of Slave Interface” to “3”</li>
-<li>Set “Slave Interface Thread ID Width” to “8”</li>
-<li>Set “Address Width” to “64”</li>
-<li>Set “Interconnect Internal Data Width” to “512”</li>
-<li>Click the tab “Interfaces”</li>
-<li>Set all the “Data Width” to “256”</li>
-<li>Click the tab “Read Write Channels”</li>
-<li>Set all the “Acceptance” to “32”</li>
-<li>Set all the “FIFO Depth” to “512”</li>
-<li>Click “OK”</li>
-<li>Click “Generate”</li>
-<li>Click “OK” and wait the task in “Design Runs” panel to finish</li>
+<li><p>In the IP catalog, expand “AXI_Infrastructure”, double click “AXI Interconnect RTL”</p></li>
+<li><p>Set “Component Name” to “axi_interconnect_nvdla_256b”</p></li>
+<li><p>Click the tab “Global”</p></li>
+<li><p>Set “Number of Slave Interface” to “3”</p></li>
+<li><p>Set “Slave Interface Thread ID Width” to “8”</p></li>
+<li><p>Set “Address Width” to “64”</p></li>
+<li><p>Set “Interconnect Internal Data Width” to “512”</p></li>
+<li><p>Click the tab “Interfaces”</p></li>
+<li><p>Set all the “Data Width” to “256”</p></li>
+<li><p>Click the tab “Read Write Channels”</p></li>
+<li><p>Set all the “Acceptance” to “32”</p></li>
+<li><p>Set all the “FIFO Depth” to “512”</p></li>
+<li><p>Click “OK”</p></li>
+<li><p>Click “Generate”</p></li>
+<li><p>Click “OK” and wait the task in “Design Runs” panel to finish</p></li>
 </ul>
 </div>
 <div class="section" id="generate-ip-axi-protocol-converter-axi-to-axil">
 <h4>4.4.7 Generate IP axi_protocol_converter_axi_to_axil<a class="headerlink" href="#generate-ip-axi-protocol-converter-axi-to-axil" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
-<li>In the IP catalog, expand “AXI_Infrastructure”, double click “AXI Protocol Converter”</li>
-<li>Set “Component Name” to “axi_protocol_converter_axi_to_axil”</li>
-<li>Set “Address Width” to “64”</li>
-<li>Set “Data Width” to “64”</li>
-<li>Click “OK”</li>
-<li>Click “Generate”</li>
-<li>Click “OK” and wait the task in “Design Runs” panel to finish</li>
+<li><p>In the IP catalog, expand “AXI_Infrastructure”, double click “AXI Protocol Converter”</p></li>
+<li><p>Set “Component Name” to “axi_protocol_converter_axi_to_axil”</p></li>
+<li><p>Set “Address Width” to “64”</p></li>
+<li><p>Set “Data Width” to “64”</p></li>
+<li><p>Click “OK”</p></li>
+<li><p>Click “Generate”</p></li>
+<li><p>Click “OK” and wait the task in “Design Runs” panel to finish</p></li>
 </ul>
 </div>
 <div class="section" id="generate-ip-axi-dwidth-converter-512b-to-64b">
 <h4>4.4.8 Generate IP axi_dwidth_converter_512b_to_64b<a class="headerlink" href="#generate-ip-axi-dwidth-converter-512b-to-64b" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
-<li>In the IP catalog, expand “AXI_Infrastructure”, double click “AXI Data Width Converter”</li>
-<li>Set “Component Name” to “axi_dwidth_converter_512b_to_64b”</li>
-<li>Set “Address Width” to “64”</li>
-<li>Set “SI Data Width” to “512”</li>
-<li>Set “SI ID Width” to “16”</li>
-<li>Click “OK”</li>
-<li>Click “Generate”</li>
-<li>Click “OK” and wait the task in “Design Runs” panel to finish</li>
+<li><p>In the IP catalog, expand “AXI_Infrastructure”, double click “AXI Data Width Converter”</p></li>
+<li><p>Set “Component Name” to “axi_dwidth_converter_512b_to_64b”</p></li>
+<li><p>Set “Address Width” to “64”</p></li>
+<li><p>Set “SI Data Width” to “512”</p></li>
+<li><p>Set “SI ID Width” to “16”</p></li>
+<li><p>Click “OK”</p></li>
+<li><p>Click “Generate”</p></li>
+<li><p>Click “OK” and wait the task in “Design Runs” panel to finish</p></li>
 </ul>
 </div>
 </div>
@@ -539,8 +538,8 @@ NVDLA source distribution because of licensing restrictions.</p>
 </pre></div>
 </div>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">You need to setup access keys for your AWS account, please refer to <a class="reference external" href="https://docs.aws.amazon.com/general/latest/gr/managing-aws-access-keys.html">Managing Access Keys for Your AWS Account</a></p>
+<p class="admonition-title">Note</p>
+<p>You need to setup access keys for your AWS account, please refer to <a class="reference external" href="https://docs.aws.amazon.com/general/latest/gr/managing-aws-access-keys.html">Managing Access Keys for Your AWS Account</a></p>
 </div>
 </div>
 <div class="section" id="generate-design-checkpoint-dcp">
@@ -676,13 +675,11 @@ NVDLA source distribution because of licensing restrictions.</p>
     </ul>
    </div>
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" />
+      <input type="text" name="q" aria-labelledby="searchlabel" />
       <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
@@ -717,7 +714,7 @@ NVDLA source distribution because of licensing restrictions.</p>
 href="copyright.html">Copyright</a> 2018, NVIDIA Corporation.
 <a href="http://www.nvidia.com/object/legal_info.html">Legal Information.</a>
 <a href="http://www.nvidia.com/object/privacy_policy.html">Privacy Policy.</a>
-Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.1.
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.2.0.
 </div>
 </div>
 </div>

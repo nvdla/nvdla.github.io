@@ -1,11 +1,9 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
     <title>Glossary And Acronyms &#8212; NVDLA Documentation</title>
     <link rel="stylesheet" href="_static/nvdla.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -14,7 +12,8 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="search" title="Search" href="search.html" />
     <link rel="prev" title="Open NVDLA Code of Conduct" href="conduct.html" />
  
@@ -49,62 +48,62 @@
           
   <div class="section" id="glossary-and-acronyms">
 <h1>Glossary And Acronyms<a class="headerlink" href="#glossary-and-acronyms" title="Permalink to this headline">¶</a></h1>
-<dl class="glossary docutils">
-<dt id="term-nvdla">NVDLA</dt>
-<dd>NVIDIA Deep Learning Accelerator. Hardware logic implementing different function engines.</dd>
-<dt id="term-dla">DLA</dt>
-<dd>Deep Learning Accelerator</dd>
-<dt id="term-umd">UMD</dt>
-<dd>User Mode Driver, software running in user space. It provides interfaces to user application</dd>
-<dt id="term-kmd">KMD</dt>
-<dd>Kernel Mode Driver, software running in kernel space. It implement low level functions such as hardware
-programming and provides interfaces to UMD</dd>
-<dt id="term-nvdla-loadable">NVDLA Loadable</dt>
-<dd>Format used to store compiled neural network.</dd>
-<dt id="term-hw-layer">hw-layer</dt>
-<dd>One complete hardware block processing. It starts with a set of register configuration with an
-enable field. When it is done, it triggers ONE interrupt.</dd>
-<dt id="term-sdp">SDP</dt>
-<dd>Single data processor, a functional sub unit in NVDLA engine</dd>
-<dt id="term-pdp">PDP</dt>
-<dd>Planar data processor, a functional sub unit in NVDLA engine</dd>
-<dt id="term-cdp">CDP</dt>
-<dd>Channel data processor, a functional sub unit in NVDLA engine</dd>
-<dt id="term-rubik">Rubik</dt>
-<dd>Data operation processor. A functional sub unit in NVDLA engine to
-support data layout transformation</dd>
-<dt id="term-bdma">BDMA</dt>
-<dd>Bridge DMA. BDMA transform data from CVSRAM to MC and vice versa</dd>
-<dt id="term-cdma">CDMA</dt>
-<dd>Convolution DMA, responsible for load image/weight/feature data to convolution core</dd>
-<dt id="term-rdma">RDMA</dt>
-<dd>Read DMA, instanced in SDP/CDP/PDP/Rubik engines which responsible for load
-input data from external memory (either MC or CVSRAM)</dd>
-<dt id="term-wdma">WDMA</dt>
-<dd>Write DMA, instanced in SDP/CDP/PDP/Rubik engines and responsible for write
-output data to external memory (either MC or CVSRAM)</dd>
-<dt id="term-cbb">CBB</dt>
-<dd>Control backbone. System control data path that connected to NVDLA</dd>
-<dt id="term-dbb">DBB</dt>
-<dd>Data backbone. The memory system that to which NVDLA connects</dd>
-<dt id="term-amba">AMBA</dt>
-<dd>ARM Advanced Microcontroller Bus Architecture. A set of ARM defined bus standards.</dd>
-<dt id="term-axi">AXI</dt>
-<dd>Advanced eXtensible Interface. The third generation of AMBA interface defined in the AMBA 3 specification.</dd>
-<dt id="term-cnn">CNN</dt>
-<dd>Convolutional Neural Network. A class of artificial neural networks.</dd>
-<dt id="term-csb">CSB</dt>
-<dd>Configuration Space Bus.  (See <a class="reference internal" href="hw/v1/hwarch.html#external-interfaces"><span class="std std-ref">External Interfaces</span></a>.)</dd>
-<dt id="term-20">DBB</dt>
-<dd>Data Back Bone – the path that NVDLA uses to perform DMA to system memory, such as the DRAM interface.</dd>
-<dt id="term-dbbif">DBBIF</dt>
-<dd>The NVDLA interface to the DBB.  (See <a class="reference internal" href="hw/v1/hwarch.html#external-interfaces"><span class="std std-ref">External Interfaces</span></a>.)</dd>
-<dt id="term-irq">IRQ</dt>
-<dd>Interrupt request.  (See <a class="reference internal" href="hw/v1/hwarch.html#external-interfaces"><span class="std std-ref">External Interfaces</span></a>.)</dd>
-<dt id="term-23">NVDLA</dt>
-<dd>NVIDIA Deep Learning Accelerator.</dd>
-<dt id="term-sramif">SRAMIF</dt>
-<dd>The NVDLA interface to an optional high-performance SRAM subsystem.</dd>
+<dl class="glossary simple">
+<dt id="term-nvdla">NVDLA</dt><dd><p>NVIDIA Deep Learning Accelerator. Hardware logic implementing different function engines.</p>
+</dd>
+<dt id="term-dla">DLA</dt><dd><p>Deep Learning Accelerator</p>
+</dd>
+<dt id="term-umd">UMD</dt><dd><p>User Mode Driver, software running in user space. It provides interfaces to user application</p>
+</dd>
+<dt id="term-kmd">KMD</dt><dd><p>Kernel Mode Driver, software running in kernel space. It implement low level functions such as hardware
+programming and provides interfaces to UMD</p>
+</dd>
+<dt id="term-nvdla-loadable">NVDLA Loadable</dt><dd><p>Format used to store compiled neural network.</p>
+</dd>
+<dt id="term-hw-layer">hw-layer</dt><dd><p>One complete hardware block processing. It starts with a set of register configuration with an
+enable field. When it is done, it triggers ONE interrupt.</p>
+</dd>
+<dt id="term-sdp">SDP</dt><dd><p>Single data processor, a functional sub unit in NVDLA engine</p>
+</dd>
+<dt id="term-pdp">PDP</dt><dd><p>Planar data processor, a functional sub unit in NVDLA engine</p>
+</dd>
+<dt id="term-cdp">CDP</dt><dd><p>Channel data processor, a functional sub unit in NVDLA engine</p>
+</dd>
+<dt id="term-rubik">Rubik</dt><dd><p>Data operation processor. A functional sub unit in NVDLA engine to
+support data layout transformation</p>
+</dd>
+<dt id="term-bdma">BDMA</dt><dd><p>Bridge DMA. BDMA transform data from CVSRAM to MC and vice versa</p>
+</dd>
+<dt id="term-cdma">CDMA</dt><dd><p>Convolution DMA, responsible for load image/weight/feature data to convolution core</p>
+</dd>
+<dt id="term-rdma">RDMA</dt><dd><p>Read DMA, instanced in SDP/CDP/PDP/Rubik engines which responsible for load
+input data from external memory (either MC or CVSRAM)</p>
+</dd>
+<dt id="term-wdma">WDMA</dt><dd><p>Write DMA, instanced in SDP/CDP/PDP/Rubik engines and responsible for write
+output data to external memory (either MC or CVSRAM)</p>
+</dd>
+<dt id="term-cbb">CBB</dt><dd><p>Control backbone. System control data path that connected to NVDLA</p>
+</dd>
+<dt id="term-dbb">DBB</dt><dd><p>Data backbone. The memory system that to which NVDLA connects</p>
+</dd>
+<dt id="term-amba">AMBA</dt><dd><p>ARM Advanced Microcontroller Bus Architecture. A set of ARM defined bus standards.</p>
+</dd>
+<dt id="term-axi">AXI</dt><dd><p>Advanced eXtensible Interface. The third generation of AMBA interface defined in the AMBA 3 specification.</p>
+</dd>
+<dt id="term-cnn">CNN</dt><dd><p>Convolutional Neural Network. A class of artificial neural networks.</p>
+</dd>
+<dt id="term-csb">CSB</dt><dd><p>Configuration Space Bus.  (See <a class="reference internal" href="hw/v1/hwarch.html#external-interfaces"><span class="std std-ref">External Interfaces</span></a>.)</p>
+</dd>
+<dt id="term-0">DBB</dt><dd><p>Data Back Bone – the path that NVDLA uses to perform DMA to system memory, such as the DRAM interface.</p>
+</dd>
+<dt id="term-dbbif">DBBIF</dt><dd><p>The NVDLA interface to the DBB.  (See <a class="reference internal" href="hw/v1/hwarch.html#external-interfaces"><span class="std std-ref">External Interfaces</span></a>.)</p>
+</dd>
+<dt id="term-irq">IRQ</dt><dd><p>Interrupt request.  (See <a class="reference internal" href="hw/v1/hwarch.html#external-interfaces"><span class="std std-ref">External Interfaces</span></a>.)</p>
+</dd>
+<dt id="term-1">NVDLA</dt><dd><p>NVIDIA Deep Learning Accelerator.</p>
+</dd>
+<dt id="term-sramif">SRAMIF</dt><dd><p>The NVDLA interface to an optional high-performance SRAM subsystem.</p>
+</dd>
 </dl>
 </div>
 
@@ -125,13 +124,11 @@ output data to external memory (either MC or CVSRAM)</dd>
     </ul>
    </div>
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" />
+      <input type="text" name="q" aria-labelledby="searchlabel" />
       <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
@@ -163,7 +160,7 @@ output data to external memory (either MC or CVSRAM)</dd>
 href="copyright.html">Copyright</a> 2018, NVIDIA Corporation.
 <a href="http://www.nvidia.com/object/legal_info.html">Legal Information.</a>
 <a href="http://www.nvidia.com/object/privacy_policy.html">Privacy Policy.</a>
-Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.1.
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.2.0.
 </div>
 </div>
 </div>

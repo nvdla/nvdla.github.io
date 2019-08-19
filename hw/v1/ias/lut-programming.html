@@ -1,11 +1,9 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
     <title>LUT programming &#8212; NVDLA Documentation</title>
     <link rel="stylesheet" href="../../../_static/nvdla.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
@@ -14,7 +12,8 @@
     <script type="text/javascript" src="../../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../../_static/doctools.js"></script>
-    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../../../_static/language_data.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="search" title="Search" href="../../../search.html" />
     <link rel="next" title="Unit Description" href="unit_description.html" />
     <link rel="prev" title="Precision Preservation" href="precision.html" />
@@ -66,10 +65,10 @@ CDP pipeline is 37bits.</p>
 high precision by limited LUT entries:</p>
 <p>There’re 2 highlights of this implementation:</p>
 <ul class="simple">
-<li>2 level:</li>
+<li><p>2 level:</p></li>
 </ul>
 <div class="figure align-center" id="id2">
-<span id="fig-image85-lut-architecture"></span><img alt="../../../_images/ias_image85_lut_architecture.svg" src="../../../_images/ias_image85_lut_architecture.svg" /><p class="caption"><span class="caption-number">Fig. 33 </span><span class="caption-text">LUT architecture</span></p>
+<span id="fig-image85-lut-architecture"></span><img alt="../../../_images/ias_image85_lut_architecture.svg" src="../../../_images/ias_image85_lut_architecture.svg" /><p class="caption"><span class="caption-number">Fig. 33 </span><span class="caption-text">LUT architecture</span><a class="headerlink" href="#id2" title="Permalink to this image">¶</a></p>
 </div>
 <p>There’re 2 tables (X/Y table), the typical configuration is use one of
 them as raw table to cover entire dynamic range and the other work as
@@ -79,10 +78,10 @@ relative high sample rate, this is inspired by the attribute of
 LRN/Sigmoid/TanH curve:</p>
 <div class="figure align-center" id="id3">
 <span id="fig-image86-non-linear-lrn"></span><img alt="../../../_images/ias_image86_non_linear_lrn.png" src="../../../_images/ias_image86_non_linear_lrn.png" />
-<p class="caption"><span class="caption-number">Fig. 34 </span><span class="caption-text">Non-linear function: LRN</span></p>
+<p class="caption"><span class="caption-number">Fig. 34 </span><span class="caption-text">Non-linear function: LRN</span><a class="headerlink" href="#id3" title="Permalink to this image">¶</a></p>
 </div>
 <div class="figure align-center" id="id4">
-<span id="fig-image87-non-linear"></span><img alt="../../../_images/ias_image87_non_linear_sigmoid.svg" src="../../../_images/ias_image87_non_linear_sigmoid.svg" /><p class="caption"><span class="caption-number">Fig. 35 </span><span class="caption-text">Non-linear function: Sigmoid</span></p>
+<span id="fig-image87-non-linear"></span><img alt="../../../_images/ias_image87_non_linear_sigmoid.svg" src="../../../_images/ias_image87_non_linear_sigmoid.svg" /><p class="caption"><span class="caption-number">Fig. 35 </span><span class="caption-text">Non-linear function: Sigmoid</span><a class="headerlink" href="#id4" title="Permalink to this image">¶</a></p>
 </div>
 <p>We can see from figures above, for those functions, only a small portion
 has significant slope variation and the others portion almost without
@@ -94,13 +93,13 @@ LUT table output should be taken as final output when one sample fits to
 both tables. Of course, the suggestion is to use density output all the
 time.</p>
 <ul class="simple">
-<li>Hybrid working mode</li>
+<li><p>Hybrid working mode</p></li>
 </ul>
 <p>We noticed for LRN, the input dynamic range is very high (0~10^8), but
 most of the samples are within a small data range:</p>
 <div class="figure align-center" id="id5">
 <span id="fig-image88-histogram-of-lrn-lut-input"></span><img alt="../../../_images/ias_image88_histogram_of_lrn_lut_input.png" src="../../../_images/ias_image88_histogram_of_lrn_lut_input.png" />
-<p class="caption"><span class="caption-number">Fig. 36 </span><span class="caption-text">Histogram of LRN LUT input</span></p>
+<p class="caption"><span class="caption-number">Fig. 36 </span><span class="caption-text">Histogram of LRN LUT input</span><a class="headerlink" href="#id5" title="Permalink to this image">¶</a></p>
 </div>
 <p>Histogram above are collected from “pool1/norm1” layer of GoogleNet, we
 viewed the same data by different x-axis coordinate system (linear and
@@ -117,63 +116,63 @@ is fixed as <span class="math notranslate nohighlight">\(2^{exp\_start} ~ 2^{exp
 <p>Table below summarized the LUT attributes of NVDLA (The X/Y are used to
 denote different table, when mapping to hardware, X corresponding to
 LE(Linear/Exponent) while Y corresponding to LO(Linear only)):</p>
-<table border="1" class="docutils">
+<table class="docutils align-default">
 <colgroup>
-<col width="55%" />
-<col width="45%" />
+<col style="width: 55%" />
+<col style="width: 45%" />
 </colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">Attributes</th>
-<th class="head">Description</th>
+<thead>
+<tr class="row-odd"><th class="head"><p>Attributes</p></th>
+<th class="head"><p>Description</p></th>
 </tr>
 </thead>
-<tbody valign="top">
-<tr class="row-even"><td>X table entries</td>
-<td>65</td>
+<tbody>
+<tr class="row-even"><td><p>X table entries</p></td>
+<td><p>65</p></td>
 </tr>
-<tr class="row-odd"><td>Y table entries</td>
-<td>257</td>
+<tr class="row-odd"><td><p>Y table entries</p></td>
+<td><p>257</p></td>
 </tr>
-<tr class="row-even"><td>Bits per entry</td>
-<td>16</td>
+<tr class="row-even"><td><p>Bits per entry</p></td>
+<td><p>16</p></td>
 </tr>
-<tr class="row-odd"><td>X supported working modes</td>
-<td>Exponential/Linear</td>
+<tr class="row-odd"><td><p>X supported working modes</p></td>
+<td><p>Exponential/Linear</p></td>
 </tr>
-<tr class="row-even"><td>Y supported working modes</td>
-<td>Linear</td>
+<tr class="row-even"><td><p>Y supported working modes</p></td>
+<td><p>Linear</p></td>
 </tr>
-<tr class="row-odd"><td>Interpolation methods</td>
-<td>Linear interpolation</td>
+<tr class="row-odd"><td><p>Interpolation methods</p></td>
+<td><p>Linear interpolation</p></td>
 </tr>
-<tr class="row-even"><td>Out-of-range behavior</td>
-<td>Linear interpolation</td>
+<tr class="row-even"><td><p>Out-of-range behavior</p></td>
+<td><p>Linear interpolation</p></td>
 </tr>
 </tbody>
 </table>
 <p>Recommended LUT configuration for typical use scenarios:</p>
-<table border="1" class="docutils">
+<table class="docutils align-default">
 <colgroup>
-<col width="50%" />
-<col width="50%" />
+<col style="width: 50%" />
+<col style="width: 50%" />
 </colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">Use scenario</th>
-<th class="head">Configuration</th>
+<thead>
+<tr class="row-odd"><th class="head"><p>Use scenario</p></th>
+<th class="head"><p>Configuration</p></th>
 </tr>
 </thead>
-<tbody valign="top">
-<tr class="row-even"><td>LRN</td>
-<td><p class="first">X – Exponential mode (worked as
+<tbody>
+<tr class="row-even"><td><p>LRN</p></td>
+<td><p>X – Exponential mode (worked as
 raw table)</p>
-<p class="last">Y – Linear mode (worked as
+<p>Y – Linear mode (worked as
 density table)</p>
 </td>
 </tr>
-<tr class="row-odd"><td>Activation (Sigmoid/TanH, etc.)</td>
-<td><p class="first">X – Linear mode (worked as
+<tr class="row-odd"><td><p>Activation (Sigmoid/TanH, etc.)</p></td>
+<td><p>X – Linear mode (worked as
 density table)</p>
-<p class="last">Y – Linear mode (worked as raw
+<p>Y – Linear mode (worked as raw
 table)</p>
 </td>
 </tr>
@@ -182,7 +181,7 @@ table)</p>
 <p>However, this is not mandatory, software can program LUT work as any of
 cases below (X/Y can be reversed, which means totally 6 cases):</p>
 <div class="figure align-center" id="id6">
-<span id="fig-image90-lut-coverage"></span><img alt="../../../_images/ias_image90_lut_coverage.svg" src="../../../_images/ias_image90_lut_coverage.svg" /><p class="caption"><span class="caption-number">Fig. 37 </span><span class="caption-text">LUT coverage</span></p>
+<span id="fig-image90-lut-coverage"></span><img alt="../../../_images/ias_image90_lut_coverage.svg" src="../../../_images/ias_image90_lut_coverage.svg" /><p class="caption"><span class="caption-number">Fig. 37 </span><span class="caption-text">LUT coverage</span><a class="headerlink" href="#id6" title="Permalink to this image">¶</a></p>
 </div>
 <p>As shown in <a class="reference internal" href="#fig-image85-lut-architecture"><span class="std std-numref">Fig. 33</span></a>, there’re couple parameters for LUT, let’s
 discuss how to configure them based on different modes.</p>
@@ -190,16 +189,16 @@ discuss how to configure them based on different modes.</p>
 <h2>Exponential mode<a class="headerlink" href="#exponential-mode" title="Permalink to this headline">¶</a></h2>
 <p>If LUT is working on exponential mode and LUT storage has example below
 (actually, exp_start is programmable):</p>
-<table border="1" class="docutils">
+<table class="docutils align-default">
 <colgroup>
-<col width="100%" />
+<col style="width: 100%" />
 </colgroup>
-<tbody valign="top">
-<tr class="row-odd"><td><p class="first">exp_start=-32</p>
+<tbody>
+<tr class="row-odd"><td><p>exp_start=-32</p>
 <p>LUT[0]=f(2<sup>exp_start</sup>)=f(2<sup>-32</sup>)</p>
 <p>LUT[1]=f(2<sup>exp_start+1</sup>)=f(2<sup>-31</sup>)</p>
 <p>…</p>
-<p class="last">LUT[64]= f(2<sup>exp_start+64</sup>)=f(2<sup>32</sup>)</p>
+<p>LUT[64]= f(2<sup>exp_start+64</sup>)=f(2<sup>32</sup>)</p>
 </td>
 </tr>
 </tbody>
@@ -213,25 +212,25 @@ discuss how to configure them based on different modes.</p>
 -32 here) while <em>M</em> is related to upstream convertor setting.</p>
 <p>The mapping between register and symbols above are lists below (only X
 table supports exponential mode):</p>
-<table border="1" class="docutils">
+<table class="docutils align-default">
 <colgroup>
-<col width="33%" />
-<col width="67%" />
+<col style="width: 33%" />
+<col style="width: 67%" />
 </colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">Register</th>
-<th class="head">Symbol</th>
+<thead>
+<tr class="row-odd"><th class="head"><p>Register</p></th>
+<th class="head"><p>Symbol</p></th>
 </tr>
 </thead>
-<tbody valign="top">
-<tr class="row-even"><td>LE_INDEX_OFFSET</td>
-<td>M+exp_start</td>
+<tbody>
+<tr class="row-even"><td><p>LE_INDEX_OFFSET</p></td>
+<td><p>M+exp_start</p></td>
 </tr>
-<tr class="row-odd"><td>LUT_LE_INDEX_SELECT</td>
-<td>Not used</td>
+<tr class="row-odd"><td><p>LUT_LE_INDEX_SELECT</p></td>
+<td><p>Not used</p></td>
 </tr>
-<tr class="row-even"><td>S_LUT_LE_START_LOW/HIGH</td>
-<td><span class="math notranslate nohighlight">\(SF_{in}(linear\_start - O_{in})\)</span></td>
+<tr class="row-even"><td><p>S_LUT_LE_START_LOW/HIGH</p></td>
+<td><p><span class="math notranslate nohighlight">\(SF_{in}(linear\_start - O_{in})\)</span></p></td>
 </tr>
 </tbody>
 </table>
@@ -240,16 +239,16 @@ table supports exponential mode):</p>
 <h2>Linear mode<a class="headerlink" href="#linear-mode" title="Permalink to this headline">¶</a></h2>
 <p>If LUT is working on linear mode and LUT is supposed to cover min~max,
 then, LUT entry storage should be (suppose entry_num=257):</p>
-<table border="1" class="docutils">
+<table class="docutils align-default">
 <colgroup>
-<col width="100%" />
+<col style="width: 100%" />
 </colgroup>
-<tbody valign="top">
-<tr class="row-odd"><td><p class="first">step=(max-min)/(entry_num-1)</p>
+<tbody>
+<tr class="row-odd"><td><p>step=(max-min)/(entry_num-1)</p>
 <p>LUT[0]=f(0*step + min)</p>
 <p>LUT[1]=f(1*step + min)</p>
 <p>…</p>
-<p class="last">LUT[256]=f(256*step + min)=f(max)</p>
+<p>LUT[256]=f(256*step + min)=f(max)</p>
 </td>
 </tr>
 </tbody>
@@ -271,25 +270,25 @@ however, this implies:</p>
 X/X/Y multiplier in SDP).</p>
 <p>The mapping between symbols above and the actual registers are (X could
 be LE/LO):</p>
-<table border="1" class="docutils">
+<table class="docutils align-default">
 <colgroup>
-<col width="49%" />
-<col width="51%" />
+<col style="width: 49%" />
+<col style="width: 51%" />
 </colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">Register</th>
-<th class="head">Symbol</th>
+<thead>
+<tr class="row-odd"><th class="head"><p>Register</p></th>
+<th class="head"><p>Symbol</p></th>
 </tr>
 </thead>
-<tbody valign="top">
-<tr class="row-even"><td>LUT_LE/LO_INDEX_SELECT</td>
-<td>-M</td>
+<tbody>
+<tr class="row-even"><td><p>LUT_LE/LO_INDEX_SELECT</p></td>
+<td><p>-M</p></td>
 </tr>
-<tr class="row-odd"><td>X_START_LOW/HIGH</td>
-<td><span class="math notranslate nohighlight">\(O_{lut}\)</span></td>
+<tr class="row-odd"><td><p>X_START_LOW/HIGH</p></td>
+<td><p><span class="math notranslate nohighlight">\(O_{lut}\)</span></p></td>
 </tr>
-<tr class="row-even"><td>LE_INDEX_OFFSET</td>
-<td>Not used</td>
+<tr class="row-even"><td><p>LE_INDEX_OFFSET</p></td>
+<td><p>Not used</p></td>
 </tr>
 </tbody>
 </table>
@@ -330,55 +329,55 @@ LUT[0] + (X-START)*UFLOW\_SCALE/UFLOW\_SHIFT &amp; = y_0 * SF + (x-min) * 2^M * 
 <div class="math notranslate nohighlight">
 \[\frac{2^M * UFLOW\_SCALE/UFLOW\_SHIFT}{SF} = k_{underflow}\]</div>
 <p>The mapping between the symbols in above formula and registers are:</p>
-<table border="1" class="docutils">
+<table class="docutils align-default">
 <colgroup>
-<col width="29%" />
-<col width="42%" />
-<col width="29%" />
+<col style="width: 29%" />
+<col style="width: 42%" />
+<col style="width: 29%" />
 </colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">Register</th>
-<th class="head">Symbol</th>
-<th class="head">NOTE</th>
+<thead>
+<tr class="row-odd"><th class="head"><p>Register</p></th>
+<th class="head"><p>Symbol</p></th>
+<th class="head"><p>NOTE</p></th>
 </tr>
 </thead>
-<tbody valign="top">
-<tr class="row-even"><td>LUT[0]</td>
-<td><span class="math notranslate nohighlight">\(y_0\)</span></td>
-<td>No register,
+<tbody>
+<tr class="row-even"><td><p>LUT[0]</p></td>
+<td><p><span class="math notranslate nohighlight">\(y_0\)</span></p></td>
+<td><p>No register,
 directly use LUT
-content</td>
+content</p></td>
 </tr>
-<tr class="row-odd"><td>LUT[N], (N is the
+<tr class="row-odd"><td><p>LUT[N], (N is the
 last entry of the
-LUT)</td>
-<td><span class="math notranslate nohighlight">\(y_n\)</span></td>
-<td>No register,
+LUT)</p></td>
+<td><p><span class="math notranslate nohighlight">\(y_n\)</span></p></td>
+<td><p>No register,
 directly use LUT
-content</td>
+content</p></td>
 </tr>
-<tr class="row-even"><td>X_START_LOW/HIGH</td>
-<td>Min*2<sup>M</sup></td>
-<td>Same bits/encoding
+<tr class="row-even"><td><p>X_START_LOW/HIGH</p></td>
+<td><p>Min*2<sup>M</sup></p></td>
+<td><p>Same bits/encoding
 as the pipeline.
 (i.e.: for INT, it
 will be treat as INT
 and for FP16, it
 will be treated as
-FP16)</td>
+FP16)</p></td>
 </tr>
-<tr class="row-odd"><td>X_END_LOW/HIGH</td>
-<td>Max*2<sup>M</sup></td>
-<td>Same bits/encoding
-as the pipeline.</td>
+<tr class="row-odd"><td><p>X_END_LOW/HIGH</p></td>
+<td><p>Max*2<sup>M</sup></p></td>
+<td><p>Same bits/encoding
+as the pipeline.</p></td>
 </tr>
-<tr class="row-even"><td><p class="first">SLOPE_UNDERFLOW_SCAL
+<tr class="row-even"><td><p>SLOPE_UNDERFLOW_SCAL
 E</p>
-<p class="last">SLOPE_UNDERFLOW_SHIF
+<p>SLOPE_UNDERFLOW_SHIF
 T</p>
 </td>
-<td><span class="math notranslate nohighlight">\(SF*k_{underflow}*2^{-M}\)</span></td>
-<td><p class="first">16bits for SCALE
+<td><p><span class="math notranslate nohighlight">\(SF*k_{underflow}*2^{-M}\)</span></p></td>
+<td><p>16bits for SCALE
 will be treated as
 INT/FP16 for
 INT/FP16 pipeline
@@ -386,17 +385,17 @@ respectively;</p>
 <p>SHIFT is 5 bit
 signed int, won’t be
 used for FP16 pipe;</p>
-<p class="last">(if shift &gt; 0,
+<p>(if shift &gt; 0,
 k=SCALE&gt;&gt;SHIFT;
 otherwise,
 k=SCALE&lt;&lt;SHIFT)</p>
 </td>
 </tr>
-<tr class="row-odd"><td><p class="first">SLOPE_OVERFLOW_SCALE</p>
-<p class="last">SLOPE_OVERFLOW_SHIFT</p>
+<tr class="row-odd"><td><p>SLOPE_OVERFLOW_SCALE</p>
+<p>SLOPE_OVERFLOW_SHIFT</p>
 </td>
-<td><span class="math notranslate nohighlight">\(SF*k_{overflow}*2^{-M}\)</span></td>
-<td>Same as UNDERFLOW</td>
+<td><p><span class="math notranslate nohighlight">\(SF*k_{overflow}*2^{-M}\)</span></p></td>
+<td><p>Same as UNDERFLOW</p></td>
 </tr>
 </tbody>
 </table>
@@ -409,15 +408,15 @@ operation. NVDLA simplifies this process by introducing hardware
 automatic address incremental mechanism, which means, when you need to
 program an LUT table, you just have to write your code as below (take LE
 table program for example):</p>
-<div class="code c highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">/</span>\<span class="o">*</span> <span class="n">program</span> <span class="n">raw</span> <span class="n">table</span> \<span class="o">*/</span>
-<span class="n">reg</span> <span class="o">=</span> <span class="p">(</span><span class="n">FIELD_ENUM</span><span class="p">(</span><span class="n">S_LUT_ACCESS_CFG</span><span class="p">,</span> <span class="n">LUT_TABLE_ID</span><span class="p">,</span> <span class="n">LE</span><span class="p">)</span>
-      <span class="o">&lt;&lt;</span> <span class="n">SHIFT</span><span class="p">(</span><span class="n">S_LUT_ACCESS_CFG</span><span class="p">,</span> <span class="n">LUT_TABLE_ID</span><span class="p">))</span> \<span class="o">|</span>
-      <span class="p">(</span><span class="n">FIELD_ENUM</span><span class="p">(</span><span class="n">S_LUT_ACCESS_CFG</span><span class="p">,</span> <span class="n">LUT_ACCESS_TYPE</span><span class="p">,</span> <span class="n">WRITE</span><span class="p">)</span>
-      <span class="o">&lt;&lt;</span> <span class="n">SHIFT</span><span class="p">(</span><span class="n">S_LUT_ACCESS_CFG</span><span class="p">,</span> <span class="n">LUT_ACCESS_TYPE</span><span class="p">));</span>
-<span class="n">reg_write</span><span class="p">(</span><span class="n">S_LUT_ACCESS_CFG</span><span class="p">,</span> <span class="n">reg</span><span class="p">);</span>
-<span class="k">for</span><span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">LUT_LE_TABLE_ENTRIES</span><span class="p">;</span> <span class="n">i</span>\<span class="o">+</span>\<span class="o">+</span><span class="p">)</span> <span class="p">{</span>
-    <span class="n">reg_write</span><span class="p">(</span><span class="n">S_LUT_ACCESS_DATA</span><span class="p">,</span> <span class="n">lut</span><span class="o">-&gt;</span><span class="n">le_table</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
-<span class="p">}</span>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span>/\* program raw table \*/
+reg = (FIELD_ENUM(S_LUT_ACCESS_CFG, LUT_TABLE_ID, LE)
+      &lt;&lt; SHIFT(S_LUT_ACCESS_CFG, LUT_TABLE_ID)) \|
+      (FIELD_ENUM(S_LUT_ACCESS_CFG, LUT_ACCESS_TYPE, WRITE)
+      &lt;&lt; SHIFT(S_LUT_ACCESS_CFG, LUT_ACCESS_TYPE));
+reg_write(S_LUT_ACCESS_CFG, reg);
+for(i = 0; i &lt; LUT_LE_TABLE_ENTRIES; i\+\+) {
+    reg_write(S_LUT_ACCESS_DATA, lut-&gt;le_table[i]);
+}
 </pre></div>
 </div>
 <p>If the address beyond the total LUT entry (e.g.: The
@@ -429,9 +428,9 @@ increase automatically. <strong>Please be noticed that programming of
 S_LUT_ACCESS_CFG has to be non-post write for LUT read case;</strong></p>
 <p>There’re 2 constrains for LUT programming:</p>
 <ul class="simple">
-<li>Make sure always write LUT from first entry and update entire table;</li>
-<li>There’s only one LUT storage shared for both register groups, make
-sure update LUT are happened when corresponding sub-unit is IDLE;</li>
+<li><p>Make sure always write LUT from first entry and update entire table;</p></li>
+<li><p>There’s only one LUT storage shared for both register groups, make
+sure update LUT are happened when corresponding sub-unit is IDLE;</p></li>
 </ul>
 </div>
 <div class="section" id="hit-miss-behavior">
@@ -443,56 +442,56 @@ so flexible then leads to different hit/miss cases:</p>
 <img alt="../../../_images/ias_image109_lut_hit_miss.png" src="../../../_images/ias_image109_lut_hit_miss.png" />
 </div>
 <ol class="loweralpha simple">
-<li>One input sample might be hit in both table; (Case 1)</li>
-<li>One input sample might miss in both table due to overflow; (Case1, 2,
-3)</li>
-<li>One input sample might miss in both table due to underflow; (Case 1,
-2, 3)</li>
-<li>One input sample might miss in both table due to one table overflow
-while the other underflow (Case 3)</li>
+<li><p>One input sample might be hit in both table; (Case 1)</p></li>
+<li><p>One input sample might miss in both table due to overflow; (Case1, 2,
+3)</p></li>
+<li><p>One input sample might miss in both table due to underflow; (Case 1,
+2, 3)</p></li>
+<li><p>One input sample might miss in both table due to one table overflow
+while the other underflow (Case 3)</p></li>
 </ol>
 <p>For all the cases above, hardware need a way to choose how to get
 the final output thus we expose programmable registers below to
 allow software program the priority:</p>
-<table border="1" class="docutils">
+<table class="docutils align-default">
 <colgroup>
-<col width="50%" />
-<col width="50%" />
+<col style="width: 50%" />
+<col style="width: 50%" />
 </colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">Register Name</th>
-<th class="head">Description</th>
+<thead>
+<tr class="row-odd"><th class="head"><p>Register Name</p></th>
+<th class="head"><p>Description</p></th>
 </tr>
 </thead>
-<tbody valign="top">
-<tr class="row-even"><td>Priority</td>
-<td><p class="first">One bit register to indicate
+<tbody>
+<tr class="row-even"><td><p>Priority</p></td>
+<td><p>One bit register to indicate
 which table output should be
 selected as the final output when
 both hit or hybrid miss happens
 (case a, d);</p>
 <p>0 means X table is selected;</p>
-<p class="last">1 means Y table is selected;</p>
+<p>1 means Y table is selected;</p>
 </td>
 </tr>
-<tr class="row-odd"><td>OverflowPriority</td>
-<td><p class="first">One bit register to indicate
+<tr class="row-odd"><td><p>OverflowPriority</p></td>
+<td><p>One bit register to indicate
 which table output should be
 selected as final output when
 overflow for both table happens.
 (case b)</p>
 <p>0 means X table is selected;</p>
-<p class="last">1 means Y table is selected;</p>
+<p>1 means Y table is selected;</p>
 </td>
 </tr>
-<tr class="row-even"><td>UnderflowPriority</td>
-<td><p class="first">One bit register to indicate
+<tr class="row-even"><td><p>UnderflowPriority</p></td>
+<td><p>One bit register to indicate
 which table output should be
 selected as final output when
 underflow for both table happens
 (case c)</p>
 <p>0 means X table is selected;</p>
-<p class="last">1 means Y table is selected;</p>
+<p>1 means Y table is selected;</p>
 </td>
 </tr>
 </tbody>
@@ -503,33 +502,33 @@ underflow for both table happens
 <p>When one hardware layer completes, hardware will report statistics below
 to help software understand whether the LUT table is reasonably
 programmed.</p>
-<table border="1" class="docutils">
+<table class="docutils align-default">
 <colgroup>
-<col width="50%" />
-<col width="50%" />
+<col style="width: 50%" />
+<col style="width: 50%" />
 </colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">Statistic register</th>
-<th class="head">Description</th>
+<thead>
+<tr class="row-odd"><th class="head"><p>Statistic register</p></th>
+<th class="head"><p>Description</p></th>
 </tr>
 </thead>
-<tbody valign="top">
-<tr class="row-even"><td>XHitNum</td>
-<td>Number of samples hit on X only</td>
+<tbody>
+<tr class="row-even"><td><p>XHitNum</p></td>
+<td><p>Number of samples hit on X only</p></td>
 </tr>
-<tr class="row-odd"><td>YHitNum</td>
-<td>Number of samples hit on Y only</td>
+<tr class="row-odd"><td><p>YHitNum</p></td>
+<td><p>Number of samples hit on Y only</p></td>
 </tr>
-<tr class="row-even"><td>UnderflowNum</td>
-<td>Number of samples underflow for
-both X and Y table</td>
+<tr class="row-even"><td><p>UnderflowNum</p></td>
+<td><p>Number of samples underflow for
+both X and Y table</p></td>
 </tr>
-<tr class="row-odd"><td>OverflowNum</td>
-<td>Number of samples overflow for
-both X and Y table</td>
+<tr class="row-odd"><td><p>OverflowNum</p></td>
+<td><p>Number of samples overflow for
+both X and Y table</p></td>
 </tr>
-<tr class="row-even"><td>PriorityNum</td>
-<td>Number of samples both hit on X/Y
+<tr class="row-even"><td><p>PriorityNum</p></td>
+<td><p>Number of samples both hit on X/Y
 table or Hybrid miss on X/Y table
 (Actually, this counter has 2
 different meanings which
@@ -539,7 +538,7 @@ mutual exclusive, we just use one
 register for them. Software is
 able to distinguish the different
 meanings since it knows each LUT
-coverage)</td>
+coverage)</p></td>
 </tr>
 </tbody>
 </table>
@@ -584,13 +583,11 @@ be set)</p>
     </ul>
    </div>
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="../../../search.html" method="get">
-      <input type="text" name="q" />
+      <input type="text" name="q" aria-labelledby="searchlabel" />
       <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
@@ -626,7 +623,7 @@ be set)</p>
 href="../../../copyright.html">Copyright</a> 2018, NVIDIA Corporation.
 <a href="http://www.nvidia.com/object/legal_info.html">Legal Information.</a>
 <a href="http://www.nvidia.com/object/privacy_policy.html">Privacy Policy.</a>
-Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.1.
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.2.0.
 </div>
 </div>
 </div>
