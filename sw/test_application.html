@@ -54,25 +54,26 @@
   <div class="section" id="test-applications">
 <span id="test-application"></span><h1>Test applications<a class="headerlink" href="#test-applications" title="Permalink to this headline">¶</a></h1>
 <p>Nvidia provides reference test applications for runtime and compiler verified on Linux.</p>
-<div class="section" id="runtime-test-application">
-<span id="runtime-test-app"></span><h2>Runtime test application<a class="headerlink" href="#runtime-test-application" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="compiler-sample-application">
+<span id="compiler-test-app"></span><h2>Compiler sample application<a class="headerlink" href="#compiler-sample-application" title="Permalink to this headline">¶</a></h2>
+<p>Compiler test application also called as compiler tool gives option to convert caffe model to NVDLA format. It stores compiled network in loadable which can be loaded by runtime test application for execution.</p>
+<p>Usage:</p>
+<p><code class="docutils literal notranslate"><span class="pre">./nvdla_compiler</span> <span class="pre">[-options]</span> <span class="pre">--prototxt</span> <span class="pre">&lt;prototxt_file&gt;</span> <span class="pre">--caffemodel</span> <span class="pre">&lt;caffemodel_file&gt;</span> <span class="pre">-o</span> <span class="pre">&lt;outputpath&gt;</span></code></p>
+<p>Options:</p>
+<p>For more options supported</p>
+<p><code class="docutils literal notranslate"><span class="pre">./nvdla_compiler</span> <span class="pre">-h</span></code></p>
+</div>
+<div class="section" id="runtime-sample-application">
+<span id="runtime-test-app"></span><h2>Runtime sample application<a class="headerlink" href="#runtime-sample-application" title="Permalink to this headline">¶</a></h2>
 <p>Runtime test application provides options to run neural network loadable generated using NVDLA compiler. Along with network execution it also provides options for pre and post processing. This application can be launched in server mode too which allows sending test commands and files over network.</p>
 <p>It demonstrates usage of IRuntime interface to execute a network on NVDLA.</p>
 <dl>
-<dt>Usage:</dt><dd><p>For sanity tests which has input embedded in it.
-./nvdla_runtime –loadable &lt;loadable_file&gt;</p>
-<p>For network tests which need image input
-./nvdla_runtime –loadable &lt;loadable_file&gt; –image &lt;image_file&gt;</p>
-<p>Run in server mode
-./nvdla_runtime -s</p>
-</dd>
-</dl>
-</div>
-<div class="section" id="compiler-test-application">
-<span id="compiler-test-app"></span><h2>Compiler test application<a class="headerlink" href="#compiler-test-application" title="Permalink to this headline">¶</a></h2>
-<p>Compiler test application also called as compiler tool gives option to convert caffe model to NVDLA format. It stores compiled network in loadable which can be loaded by runtime test application for execution.</p>
-<dl class="simple">
-<dt>Usage:</dt><dd><p>./nvdla_compiler [-options] –prototxt &lt;prototxt_file&gt; –caffemodel &lt;caffemodel_file&gt; -o &lt;outputpath&gt;</p>
+<dt>Usage:</dt><dd><p>For sanity tests which has input embedded in it.</p>
+<p><code class="docutils literal notranslate"><span class="pre">./nvdla_runtime</span> <span class="pre">--loadable</span> <span class="pre">&lt;loadable_file&gt;</span></code></p>
+<p>For network tests which need image input</p>
+<p><code class="docutils literal notranslate"><span class="pre">./nvdla_runtime</span> <span class="pre">--loadable</span> <span class="pre">&lt;loadable_file&gt;</span> <span class="pre">--image</span> <span class="pre">&lt;image_file&gt;</span></code></p>
+<p>Run in server mode</p>
+<p><code class="docutils literal notranslate"><span class="pre">./nvdla_runtime</span> <span class="pre">-s</span></code></p>
 </dd>
 </dl>
 </div>
@@ -87,8 +88,8 @@
   <h3><a href="../contents.html">Table of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">Test applications</a><ul>
-<li><a class="reference internal" href="#runtime-test-application">Runtime test application</a></li>
-<li><a class="reference internal" href="#compiler-test-application">Compiler test application</a></li>
+<li><a class="reference internal" href="#compiler-sample-application">Compiler sample application</a></li>
+<li><a class="reference internal" href="#runtime-sample-application">Runtime sample application</a></li>
 </ul>
 </li>
 </ul>

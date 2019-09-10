@@ -16,7 +16,7 @@
     <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Test applications" href="test_application.html" />
-    <link rel="prev" title="Compilation tools" href="compilation_tool.html" />
+    <link rel="prev" title="Compiler library" href="compilation_tool.html" />
  
 <script src="//assets.adobedtm.com/b92787824f2e0e9b68dc2e993f9bd995339fe417/satelliteLib-30c8ffcc8ece089156fd5590fbcf390ffc296f51.js"></script>
   </head><body>
@@ -37,7 +37,7 @@
           <a href="test_application.html" title="Test applications"
              accesskey="N">next</a></li>
         <li class="right">
-          <a href="compilation_tool.html" title="Compilation tools"
+          <a href="compilation_tool.html" title="Compiler library"
              accesskey="P">previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">NVDLA Open Source Project</a>&#187;</li>
         <li class="nav-item nav-item-1"><a href="../contents.html">Documentation</a>&#187;</li>
@@ -58,7 +58,7 @@
 </div>
 <p>The runtime envionment includes software to run a compiled neural network on compatible <a class="reference internal" href="../glossary.html#term-1"><span class="xref std std-term">NVDLA</span></a> hardware. It consists of 2 parts:</p>
 <ul class="simple">
-<li><p><a class="reference internal" href="#user-mode-driver"><span class="std std-ref">User Mode Driver</span></a> - This is the main interface to the application. As detailed in the <a class="reference internal" href="compilation_tool.html#compilation-tools"><span class="std std-ref">Compilation tools</span></a>, after parsing and compiling the neural network layer by layer, the compiled output is stored in a file format called <a class="reference internal" href="../glossary.html#term-nvdla-loadable"><span class="xref std std-term">NVDLA Loadable</span></a>. User mode runtime driver loads this loadable and submits inference jobs to the <a class="reference internal" href="#kernel-mode-driver"><span class="std std-ref">Kernel Mode Driver</span></a>.</p></li>
+<li><p><a class="reference internal" href="#user-mode-driver"><span class="std std-ref">User Mode Driver</span></a> - This is the main interface to the application. As detailed in the <span class="xref std std-ref">compilation_tools</span>, after parsing and compiling the neural network layer by layer, the compiled output is stored in a file format called <a class="reference internal" href="../glossary.html#term-nvdla-loadable"><span class="xref std std-term">NVDLA Loadable</span></a>. User mode runtime driver loads this loadable and submits inference jobs to the <a class="reference internal" href="#kernel-mode-driver"><span class="std std-ref">Kernel Mode Driver</span></a>.</p></li>
 <li><p><a class="reference internal" href="#kernel-mode-driver"><span class="std std-ref">Kernel Mode Driver</span></a> - Consists of kernel mode driver and engine scheduler that does the work of scheduling the compiled network on <a class="reference internal" href="../glossary.html#term-1"><span class="xref std std-term">NVDLA</span></a> and programming the <a class="reference internal" href="../glossary.html#term-1"><span class="xref std std-term">NVDLA</span></a> registers to configure each functional block.</p></li>
 </ul>
 <p>The runtime environment uses the stored representation of the network saved as <a class="reference internal" href="../glossary.html#term-nvdla-loadable"><span class="xref std std-term">NVDLA Loadable</span></a> image. From point of view of the <a class="reference internal" href="../glossary.html#term-nvdla-loadable"><span class="xref std std-term">NVDLA Loadable</span></a>, each compiled “layer” in software is loadable on a functional block in the <a class="reference internal" href="../glossary.html#term-1"><span class="xref std std-term">NVDLA</span></a> implementation. Each layer includes information about its dependencies on other layers, the buffers that it uses for inputs and outputs in memory, and the specific configuration of each functional block used for its execution. Layers are linked together through a dependency graph, which the engine scheduler uses for scheduling layers. The format of an <a class="reference internal" href="../glossary.html#term-nvdla-loadable"><span class="xref std std-term">NVDLA Loadable</span></a> is standardized across compiler implementations and UMD implementations. All implementations that comply with the <a class="reference internal" href="../glossary.html#term-1"><span class="xref std std-term">NVDLA</span></a> standard should be able to at least interpret any <a class="reference internal" href="../glossary.html#term-nvdla-loadable"><span class="xref std std-term">NVDLA Loadable</span></a> image, even if the implementation may not have some features that are required to run inferencing using that loadable image.</p>
@@ -975,7 +975,7 @@ void <code class="sig-name descname">dla_error</code><span class="sig-paren">(</
 
   <h4>Previous topic</h4>
   <p class="topless"><a href="compilation_tool.html"
-                        title="previous chapter">Compilation tools</a></p>
+                        title="previous chapter">Compiler library</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="test_application.html"
                         title="next chapter">Test applications</a></p>
@@ -1011,7 +1011,7 @@ void <code class="sig-name descname">dla_error</code><span class="sig-paren">(</
           <a href="test_application.html" title="Test applications"
              >next</a></li>
         <li class="right">
-          <a href="compilation_tool.html" title="Compilation tools"
+          <a href="compilation_tool.html" title="Compiler library"
              >previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">NVDLA Open Source Project</a>&#187;</li>
         <li class="nav-item nav-item-1"><a href="../contents.html">Documentation</a>&#187;</li>

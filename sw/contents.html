@@ -15,7 +15,7 @@
     <script type="text/javascript" src="../_static/language_data.js"></script>
     <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Compilation tools" href="compilation_tool.html" />
+    <link rel="next" title="Compiler library" href="compilation_tool.html" />
     <link rel="prev" title="NVDLA Verification Suite User Guide" href="../hw/v2/verif_guide.html" />
  
 <script src="//assets.adobedtm.com/b92787824f2e0e9b68dc2e993f9bd995339fe417/satelliteLib-30c8ffcc8ece089156fd5590fbcf390ffc296f51.js"></script>
@@ -34,7 +34,7 @@
       <h3>Navigation</h3>
       <ul>
         <li class="right first">
-          <a href="compilation_tool.html" title="Compilation tools"
+          <a href="compilation_tool.html" title="Compiler library"
              accesskey="N">next</a></li>
         <li class="right">
           <a href="../hw/v2/verif_guide.html" title="NVDLA Verification Suite User Guide"
@@ -52,13 +52,13 @@
           
   <div class="section" id="software-manual">
 <h1>Software Manual<a class="headerlink" href="#software-manual" title="Permalink to this headline">¶</a></h1>
-<p>NVDLA has a full software ecosystem including support from compiling network to inference. Part of this ecosystem includes the on-device software stack, a part of the <a class="reference internal" href="../glossary.html#term-1"><span class="xref std std-term">NVDLA</span></a> open source release; additionally, NVIDIA will provide a full training infrastructure to build new models that incorporate Deep Learning, and to convert existing models to a form that is usable by <a class="reference internal" href="../glossary.html#term-1"><span class="xref std std-term">NVDLA</span></a> software.  In general, the software associated with <a class="reference internal" href="../glossary.html#term-1"><span class="xref std std-term">NVDLA</span></a> is grouped into two parts: the <a class="reference internal" href="compilation_tool.html#compilation-tools"><span class="std std-ref">Compilation tools</span></a> (model conversion), and the <a class="reference internal" href="runtime_environment.html#runtime-environment"><span class="std std-ref">Runtime environment</span></a> (run-time software to load and execute compiled neural network on <a class="reference internal" href="../glossary.html#term-1"><span class="xref std std-term">NVDLA</span></a>). The general flow of this is as shown in the figure below;</p>
+<p>NVDLA has a full software ecosystem including support from compiling network to inference. Part of this ecosystem includes the on-device software stack, a part of the <a class="reference internal" href="../glossary.html#term-1"><span class="xref std std-term">NVDLA</span></a> open source release; additionally, NVIDIA will provide a full training infrastructure to build new models that incorporate Deep Learning, and to convert existing models to a form that is usable by <a class="reference internal" href="../glossary.html#term-1"><span class="xref std std-term">NVDLA</span></a> software.  In general, the software associated with <a class="reference internal" href="../glossary.html#term-1"><span class="xref std std-term">NVDLA</span></a> is grouped into two parts: the <a class="reference internal" href="compilation_tool.html#compiler-library"><span class="std std-ref">Compiler library</span></a> (model conversion), and the <a class="reference internal" href="runtime_environment.html#runtime-environment"><span class="std std-ref">Runtime environment</span></a> (run-time software to load and execute compiled neural network on <a class="reference internal" href="../glossary.html#term-1"><span class="xref std std-term">NVDLA</span></a>). The general flow of this is as shown in the figure below;</p>
 <div class="figure align-center" id="fig-software-package">
 <a class="reference internal image-reference" href="../_images/software_package.png"><img alt="Software Package" src="../_images/software_package.png" style="width: 484.4px; height: 355.59999999999997px;" /></a>
 </div>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="compilation_tool.html">Compilation tools</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="compilation_tool.html">Compiler library</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="compilation_tool.html#parser">Parser</a></li>
 <li class="toctree-l2"><a class="reference internal" href="compilation_tool.html#compiler">Compiler</a></li>
 </ul>
@@ -69,8 +69,8 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="test_application.html">Test applications</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="test_application.html#runtime-test-application">Runtime test application</a></li>
-<li class="toctree-l2"><a class="reference internal" href="test_application.html#compiler-test-application">Compiler test application</a></li>
+<li class="toctree-l2"><a class="reference internal" href="test_application.html#compiler-sample-application">Compiler sample application</a></li>
+<li class="toctree-l2"><a class="reference internal" href="test_application.html#runtime-sample-application">Runtime sample application</a></li>
 </ul>
 </li>
 </ul>
@@ -85,8 +85,8 @@
 <dt>umd: <a class="reference internal" href="runtime_environment.html#user-mode-driver"><span class="std std-ref">User Mode Driver</span></a></dt><dd><ul>
 <li><dl class="simple">
 <dt>apps: Sample applications</dt><dd><ul>
-<li><p>runtime <a class="reference internal" href="test_application.html#runtime-test-app"><span class="std std-ref">Runtime test application</span></a></p></li>
-<li><p>compiler <a class="reference internal" href="test_application.html#compiler-test-app"><span class="std std-ref">Compiler test application</span></a></p></li>
+<li><p><strong>compiler:</strong> <a class="reference internal" href="test_application.html#compiler-test-app"><span class="std std-ref">Compiler sample application</span></a></p></li>
+<li><p><strong>runtime:</strong> <a class="reference internal" href="test_application.html#runtime-test-app"><span class="std std-ref">Runtime sample application</span></a></p></li>
 </ul>
 </dd>
 </dl>
@@ -94,15 +94,14 @@
 <li><dl class="simple">
 <dt>core: NVDLA specific implementation of user mode components</dt><dd><ul>
 <li><p><strong>runtime:</strong> <a class="reference internal" href="runtime_environment.html#runtime-environment"><span class="std std-ref">Runtime environment</span></a></p></li>
-<li><p><strong>compiler:</strong> <a class="reference internal" href="compilation_tool.html#compilation-tools"><span class="std std-ref">Compilation tools</span></a></p></li>
-<li><p><strong>include:</strong> Header file for common implementation</p></li>
+<li><p><strong>compiler:</strong> <a class="reference internal" href="compilation_tool.html#compiler-library"><span class="std std-ref">Compiler library</span></a></p></li>
+<li><p><strong>include:</strong> <a class="reference internal" href="runtime_environment.html#umd-api"><span class="std std-ref">Application Programming Interface</span></a></p></li>
 <li><p><strong>common:</strong> Implementation shared between runtime and compiler such as loadable and logging</p></li>
 </ul>
 </dd>
 </dl>
 </li>
 <li><p><strong>external:</strong> External modules used in UMD such as flatbuffers</p></li>
-<li><p><strong>include:</strong> <a class="reference internal" href="runtime_environment.html#umd-api"><span class="std std-ref">Application Programming Interface</span></a></p></li>
 <li><p><strong>make:</strong> Make files</p></li>
 <li><dl class="simple">
 <dt>port: <a class="reference internal" href="runtime_environment.html#umd-layer"><span class="std std-ref">Portability layer</span></a></dt><dd><ul>
@@ -111,7 +110,7 @@
 </dd>
 </dl>
 </li>
-<li><p>utils: Utility functions</p></li>
+<li><p><strong>utils:</strong> Utility functions</p></li>
 </ul>
 </dd>
 </dl>
@@ -168,7 +167,7 @@
                         title="previous chapter">NVDLA Verification Suite User Guide</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="compilation_tool.html"
-                        title="next chapter">Compilation tools</a></p>
+                        title="next chapter">Compiler library</a></p>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
@@ -198,7 +197,7 @@
       <h3>Navigation</h3>
       <ul>
         <li class="right first">
-          <a href="compilation_tool.html" title="Compilation tools"
+          <a href="compilation_tool.html" title="Compiler library"
              >next</a></li>
         <li class="right">
           <a href="../hw/v2/verif_guide.html" title="NVDLA Verification Suite User Guide"
