@@ -1,19 +1,19 @@
 
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>LUT programming &#8212; NVDLA Documentation</title>
-    <link rel="stylesheet" href="../../../_static/nvdla.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/nvdla.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/styles.css" />
-    <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
-    <script type="text/javascript" src="../../../_static/jquery.js"></script>
-    <script type="text/javascript" src="../../../_static/underscore.js"></script>
-    <script type="text/javascript" src="../../../_static/doctools.js"></script>
-    <script type="text/javascript" src="../../../_static/language_data.js"></script>
-    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="search" title="Search" href="../../../search.html" />
     <link rel="next" title="Unit Description" href="unit_description.html" />
     <link rel="prev" title="Precision Preservation" href="precision.html" />
@@ -68,7 +68,7 @@ high precision by limited LUT entries:</p>
 <li><p>2 level:</p></li>
 </ul>
 <div class="figure align-center" id="id2">
-<span id="fig-image85-lut-architecture"></span><img alt="../../../_images/ias_image85_lut_architecture.svg" src="../../../_images/ias_image85_lut_architecture.svg" /><p class="caption"><span class="caption-number">Fig. 33 </span><span class="caption-text">LUT architecture</span><a class="headerlink" href="#id2" title="Permalink to this image">¶</a></p>
+<span id="fig-image85-lut-architecture"></span><img alt="../../../_images/ias_image85_lut_architecture.svg" src="../../../_images/ias_image85_lut_architecture.svg" /><p class="caption"><span class="caption-number">Fig. 32 </span><span class="caption-text">LUT architecture</span><a class="headerlink" href="#id2" title="Permalink to this image">¶</a></p>
 </div>
 <p>There’re 2 tables (X/Y table), the typical configuration is use one of
 them as raw table to cover entire dynamic range and the other work as
@@ -78,10 +78,10 @@ relative high sample rate, this is inspired by the attribute of
 LRN/Sigmoid/TanH curve:</p>
 <div class="figure align-center" id="id3">
 <span id="fig-image86-non-linear-lrn"></span><img alt="../../../_images/ias_image86_non_linear_lrn.png" src="../../../_images/ias_image86_non_linear_lrn.png" />
-<p class="caption"><span class="caption-number">Fig. 34 </span><span class="caption-text">Non-linear function: LRN</span><a class="headerlink" href="#id3" title="Permalink to this image">¶</a></p>
+<p class="caption"><span class="caption-number">Fig. 33 </span><span class="caption-text">Non-linear function: LRN</span><a class="headerlink" href="#id3" title="Permalink to this image">¶</a></p>
 </div>
 <div class="figure align-center" id="id4">
-<span id="fig-image87-non-linear"></span><img alt="../../../_images/ias_image87_non_linear_sigmoid.svg" src="../../../_images/ias_image87_non_linear_sigmoid.svg" /><p class="caption"><span class="caption-number">Fig. 35 </span><span class="caption-text">Non-linear function: Sigmoid</span><a class="headerlink" href="#id4" title="Permalink to this image">¶</a></p>
+<span id="fig-image87-non-linear"></span><img alt="../../../_images/ias_image87_non_linear_sigmoid.svg" src="../../../_images/ias_image87_non_linear_sigmoid.svg" /><p class="caption"><span class="caption-number">Fig. 34 </span><span class="caption-text">Non-linear function: Sigmoid</span><a class="headerlink" href="#id4" title="Permalink to this image">¶</a></p>
 </div>
 <p>We can see from figures above, for those functions, only a small portion
 has significant slope variation and the others portion almost without
@@ -99,7 +99,7 @@ time.</p>
 most of the samples are within a small data range:</p>
 <div class="figure align-center" id="id5">
 <span id="fig-image88-histogram-of-lrn-lut-input"></span><img alt="../../../_images/ias_image88_histogram_of_lrn_lut_input.png" src="../../../_images/ias_image88_histogram_of_lrn_lut_input.png" />
-<p class="caption"><span class="caption-number">Fig. 36 </span><span class="caption-text">Histogram of LRN LUT input</span><a class="headerlink" href="#id5" title="Permalink to this image">¶</a></p>
+<p class="caption"><span class="caption-number">Fig. 35 </span><span class="caption-text">Histogram of LRN LUT input</span><a class="headerlink" href="#id5" title="Permalink to this image">¶</a></p>
 </div>
 <p>Histogram above are collected from “pool1/norm1” layer of GoogleNet, we
 viewed the same data by different x-axis coordinate system (linear and
@@ -181,9 +181,9 @@ table)</p>
 <p>However, this is not mandatory, software can program LUT work as any of
 cases below (X/Y can be reversed, which means totally 6 cases):</p>
 <div class="figure align-center" id="id6">
-<span id="fig-image90-lut-coverage"></span><img alt="../../../_images/ias_image90_lut_coverage.svg" src="../../../_images/ias_image90_lut_coverage.svg" /><p class="caption"><span class="caption-number">Fig. 37 </span><span class="caption-text">LUT coverage</span><a class="headerlink" href="#id6" title="Permalink to this image">¶</a></p>
+<span id="fig-image90-lut-coverage"></span><img alt="../../../_images/ias_image90_lut_coverage.svg" src="../../../_images/ias_image90_lut_coverage.svg" /><p class="caption"><span class="caption-number">Fig. 36 </span><span class="caption-text">LUT coverage</span><a class="headerlink" href="#id6" title="Permalink to this image">¶</a></p>
 </div>
-<p>As shown in <a class="reference internal" href="#fig-image85-lut-architecture"><span class="std std-numref">Fig. 33</span></a>, there’re couple parameters for LUT, let’s
+<p>As shown in <a class="reference internal" href="#fig-image85-lut-architecture"><span class="std std-numref">Fig. 32</span></a>, there’re couple parameters for LUT, let’s
 discuss how to configure them based on different modes.</p>
 <div class="section" id="exponential-mode">
 <h2>Exponential mode<a class="headerlink" href="#exponential-mode" title="Permalink to this headline">¶</a></h2>
@@ -408,15 +408,13 @@ operation. NVDLA simplifies this process by introducing hardware
 automatic address incremental mechanism, which means, when you need to
 program an LUT table, you just have to write your code as below (take LE
 table program for example):</p>
-<div class="highlight-c notranslate"><div class="highlight"><pre><span></span>/\* program raw table \*/
-reg = (FIELD_ENUM(S_LUT_ACCESS_CFG, LUT_TABLE_ID, LE)
-      &lt;&lt; SHIFT(S_LUT_ACCESS_CFG, LUT_TABLE_ID)) \|
-      (FIELD_ENUM(S_LUT_ACCESS_CFG, LUT_ACCESS_TYPE, WRITE)
-      &lt;&lt; SHIFT(S_LUT_ACCESS_CFG, LUT_ACCESS_TYPE));
-reg_write(S_LUT_ACCESS_CFG, reg);
-for(i = 0; i &lt; LUT_LE_TABLE_ENTRIES; i\+\+) {
-    reg_write(S_LUT_ACCESS_DATA, lut-&gt;le_table[i]);
-}
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cm">/* program raw table */</span>
+<span class="n">reg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">FIELD_ENUM</span><span class="p">(</span><span class="n">S_LUT_ACCESS_CFG</span><span class="p">,</span><span class="w"> </span><span class="n">LUT_TABLE_ID</span><span class="p">,</span><span class="w"> </span><span class="n">LE</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">SHIFT</span><span class="p">(</span><span class="n">S_LUT_ACCESS_CFG</span><span class="p">,</span><span class="w"> </span><span class="n">LUT_TABLE_ID</span><span class="p">))</span><span class="w"> </span><span class="o">|</span>
+<span class="w">      </span><span class="p">(</span><span class="n">FIELD_ENUM</span><span class="p">(</span><span class="n">S_LUT_ACCESS_CFG</span><span class="p">,</span><span class="w"> </span><span class="n">LUT_ACCESS_TYPE</span><span class="p">,</span><span class="w"> </span><span class="n">WRITE</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">SHIFT</span><span class="p">(</span><span class="n">S_LUT_ACCESS_CFG</span><span class="p">,</span><span class="w"> </span><span class="n">LUT_ACCESS_TYPE</span><span class="p">));</span>
+<span class="n">reg_write</span><span class="p">(</span><span class="n">S_LUT_ACCESS_CFG</span><span class="p">,</span><span class="w"> </span><span class="n">reg</span><span class="p">);</span>
+<span class="k">for</span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">LUT_LE_TABLE_ENTRIES</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">reg_write</span><span class="p">(</span><span class="n">S_LUT_ACCESS_DATA</span><span class="p">,</span><span class="w"> </span><span class="n">lut</span><span class="o">-&gt;</span><span class="n">le_table</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+<span class="p">}</span>
 </pre></div>
 </div>
 <p>If the address beyond the total LUT entry (e.g.: The
@@ -591,7 +589,7 @@ be set)</p>
     </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
         </div>
       </div>
         </div>
@@ -620,10 +618,10 @@ be set)</p>
 <div class="container">
 <div class="row">
 &#169; <a
-href="../../../copyright.html">Copyright</a> 2018, NVIDIA Corporation.
-<a href="http://www.nvidia.com/object/legal_info.html">Legal Information.</a>
-<a href="http://www.nvidia.com/object/privacy_policy.html">Privacy Policy.</a>
-Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.2.0.
+href="../../../copyright.html">Copyright</a> 2018 - 2024, NVIDIA Corporation.
+<a href="https://www.nvidia.com/object/legal_info.html">Legal Information.</a>
+<a href="https://www.nvidia.com/object/privacy_policy.html">Privacy Policy.</a>
+Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.5.4.
 </div>
 </div>
 </div>

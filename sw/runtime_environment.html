@@ -1,19 +1,18 @@
 
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Runtime environment &#8212; NVDLA Documentation</title>
-    <link rel="stylesheet" href="../_static/nvdla.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/nvdla.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/styles.css" />
-    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-    <script type="text/javascript" src="../_static/jquery.js"></script>
-    <script type="text/javascript" src="../_static/underscore.js"></script>
-    <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="../_static/language_data.js"></script>
-    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Test applications" href="test_application.html" />
     <link rel="prev" title="Compiler library" href="compilation_tool.html" />
@@ -56,13 +55,13 @@
 <div class="figure align-center">
 <a class="reference internal image-reference" href="../_images/runtime_environment.png"><img alt="../_images/runtime_environment.png" src="../_images/runtime_environment.png" style="width: 484.4px; height: 355.59999999999997px;" /></a>
 </div>
-<p>The runtime envionment includes software to run a compiled neural network on compatible <a class="reference internal" href="../glossary.html#term-1"><span class="xref std std-term">NVDLA</span></a> hardware. It consists of 2 parts:</p>
+<p>The runtime envionment includes software to run a compiled neural network on compatible <a class="reference internal" href="../glossary.html#term-NVDLA"><span class="xref std std-term">NVDLA</span></a> hardware. It consists of 2 parts:</p>
 <ul class="simple">
-<li><p><a class="reference internal" href="#user-mode-driver"><span class="std std-ref">User Mode Driver</span></a> - This is the main interface to the application. As detailed in the <span class="xref std std-ref">compilation_tools</span>, after parsing and compiling the neural network layer by layer, the compiled output is stored in a file format called <a class="reference internal" href="../glossary.html#term-nvdla-loadable"><span class="xref std std-term">NVDLA Loadable</span></a>. User mode runtime driver loads this loadable and submits inference jobs to the <a class="reference internal" href="#kernel-mode-driver"><span class="std std-ref">Kernel Mode Driver</span></a>.</p></li>
-<li><p><a class="reference internal" href="#kernel-mode-driver"><span class="std std-ref">Kernel Mode Driver</span></a> - Consists of kernel mode driver and engine scheduler that does the work of scheduling the compiled network on <a class="reference internal" href="../glossary.html#term-1"><span class="xref std std-term">NVDLA</span></a> and programming the <a class="reference internal" href="../glossary.html#term-1"><span class="xref std std-term">NVDLA</span></a> registers to configure each functional block.</p></li>
+<li><p><a class="reference internal" href="#user-mode-driver"><span class="std std-ref">User Mode Driver</span></a> - This is the main interface to the application. As detailed in the <a class="reference internal" href="compilation_tool.html#compiler-library"><span class="std std-ref">Compiler library</span></a>, after parsing and compiling the neural network layer by layer, the compiled output is stored in a file format called <a class="reference internal" href="../glossary.html#term-NVDLA-Loadable"><span class="xref std std-term">NVDLA Loadable</span></a>. User mode runtime driver loads this loadable and submits inference jobs to the <a class="reference internal" href="#kernel-mode-driver"><span class="std std-ref">Kernel Mode Driver</span></a>.</p></li>
+<li><p><a class="reference internal" href="#kernel-mode-driver"><span class="std std-ref">Kernel Mode Driver</span></a> - Consists of kernel mode driver and engine scheduler that does the work of scheduling the compiled network on <a class="reference internal" href="../glossary.html#term-NVDLA"><span class="xref std std-term">NVDLA</span></a> and programming the <a class="reference internal" href="../glossary.html#term-NVDLA"><span class="xref std std-term">NVDLA</span></a> registers to configure each functional block.</p></li>
 </ul>
-<p>The runtime environment uses the stored representation of the network saved as <a class="reference internal" href="../glossary.html#term-nvdla-loadable"><span class="xref std std-term">NVDLA Loadable</span></a> image. From point of view of the <a class="reference internal" href="../glossary.html#term-nvdla-loadable"><span class="xref std std-term">NVDLA Loadable</span></a>, each compiled “layer” in software is loadable on a functional block in the <a class="reference internal" href="../glossary.html#term-1"><span class="xref std std-term">NVDLA</span></a> implementation. Each layer includes information about its dependencies on other layers, the buffers that it uses for inputs and outputs in memory, and the specific configuration of each functional block used for its execution. Layers are linked together through a dependency graph, which the engine scheduler uses for scheduling layers. The format of an <a class="reference internal" href="../glossary.html#term-nvdla-loadable"><span class="xref std std-term">NVDLA Loadable</span></a> is standardized across compiler implementations and UMD implementations. All implementations that comply with the <a class="reference internal" href="../glossary.html#term-1"><span class="xref std std-term">NVDLA</span></a> standard should be able to at least interpret any <a class="reference internal" href="../glossary.html#term-nvdla-loadable"><span class="xref std std-term">NVDLA Loadable</span></a> image, even if the implementation may not have some features that are required to run inferencing using that loadable image.</p>
-<p>Both the <a class="reference internal" href="#user-mode-driver"><span class="std std-ref">User Mode Driver</span></a> stack and the <a class="reference internal" href="#kernel-mode-driver"><span class="std std-ref">Kernel Mode Driver</span></a> stack exist as defined APIs, and are expected to be wrapped with a system portability layer. Maintaining core implementations within a portability layer is expected to require relatively few changes. This expedites any effort that may be necessary to run the <a class="reference internal" href="../glossary.html#term-1"><span class="xref std std-term">NVDLA</span></a> software-stack on multiple platforms. With the appropriate portability layers in place, the same core implementations should compile as readily on both Linux and FreeRTOS. Similarly, on “headed” implementations that have a microcontroller closely coupled to <a class="reference internal" href="../glossary.html#term-1"><span class="xref std std-term">NVDLA</span></a>, the existence of the portability layer makes it possible to run the same kernel mode driver on that microcontroller as would have run on the main CPU in a “headless” implementation that had no such companion microcontroller.</p>
+<p>The runtime environment uses the stored representation of the network saved as <a class="reference internal" href="../glossary.html#term-NVDLA-Loadable"><span class="xref std std-term">NVDLA Loadable</span></a> image. From point of view of the <a class="reference internal" href="../glossary.html#term-NVDLA-Loadable"><span class="xref std std-term">NVDLA Loadable</span></a>, each compiled “layer” in software is loadable on a functional block in the <a class="reference internal" href="../glossary.html#term-NVDLA"><span class="xref std std-term">NVDLA</span></a> implementation. Each layer includes information about its dependencies on other layers, the buffers that it uses for inputs and outputs in memory, and the specific configuration of each functional block used for its execution. Layers are linked together through a dependency graph, which the engine scheduler uses for scheduling layers. The format of an <a class="reference internal" href="../glossary.html#term-NVDLA-Loadable"><span class="xref std std-term">NVDLA Loadable</span></a> is standardized across compiler implementations and UMD implementations. All implementations that comply with the <a class="reference internal" href="../glossary.html#term-NVDLA"><span class="xref std std-term">NVDLA</span></a> standard should be able to at least interpret any <a class="reference internal" href="../glossary.html#term-NVDLA-Loadable"><span class="xref std std-term">NVDLA Loadable</span></a> image, even if the implementation may not have some features that are required to run inferencing using that loadable image.</p>
+<p>Both the <a class="reference internal" href="#user-mode-driver"><span class="std std-ref">User Mode Driver</span></a> stack and the <a class="reference internal" href="#kernel-mode-driver"><span class="std std-ref">Kernel Mode Driver</span></a> stack exist as defined APIs, and are expected to be wrapped with a system portability layer. Maintaining core implementations within a portability layer is expected to require relatively few changes. This expedites any effort that may be necessary to run the <a class="reference internal" href="../glossary.html#term-NVDLA"><span class="xref std std-term">NVDLA</span></a> software-stack on multiple platforms. With the appropriate portability layers in place, the same core implementations should compile as readily on both Linux and FreeRTOS. Similarly, on “headed” implementations that have a microcontroller closely coupled to <a class="reference internal" href="../glossary.html#term-NVDLA"><span class="xref std std-term">NVDLA</span></a>, the existence of the portability layer makes it possible to run the same kernel mode driver on that microcontroller as would have run on the main CPU in a “headless” implementation that had no such companion microcontroller.</p>
 <div class="section" id="user-mode-driver">
 <span id="id2"></span><h2>User Mode Driver<a class="headerlink" href="#user-mode-driver" title="Permalink to this headline">¶</a></h2>
 <div class="figure align-center">
@@ -80,9 +79,9 @@
 <blockquote>
 <div><p>This is the interface for runtime library. It implements functions to process loadable buffer passed from application after reding it from file, allocate memory for tensors and intermediate buffers, prepare synchronization points and finally submit inference job to KMD. Inference job submitted to KMD is referred as DLA task.</p>
 </div></blockquote>
-<dl class="class">
+<dl class="cpp class">
 <dt id="_CPPv4N5nvdla5nvdla8IRuntimeE">
-<span id="_CPPv3N5nvdla5nvdla8IRuntimeE"></span><span id="_CPPv2N5nvdla5nvdla8IRuntimeE"></span><span id="nvdla::nvdla::IRuntime"></span><em class="property">class </em><code class="sig-prename descclassname">nvdla<code class="sig-prename descclassname">::</code></code><code class="sig-name descname">IRuntime</code><a class="headerlink" href="#_CPPv4N5nvdla5nvdla8IRuntimeE" title="Permalink to this definition">¶</a><br /></dt>
+<span id="_CPPv3N5nvdla5nvdla8IRuntimeE"></span><span id="_CPPv2N5nvdla5nvdla8IRuntimeE"></span><span id="nvdla::nvdla::IRuntime"></span><em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">nvdla</span><code class="sig-prename descclassname"><span class="pre">::</span></code></code><code class="sig-name descname"><span class="pre">IRuntime</span></code><a class="headerlink" href="#_CPPv4N5nvdla5nvdla8IRuntimeE" title="Permalink to this definition">¶</a><br /></dt>
 <dd></dd></dl>
 
 <p>Submitting task for inference using runtime interface includes below steps</p>
@@ -103,9 +102,9 @@
 </div>
 <div class="section" id="create-nvdla-runtime-instance">
 <span id="create-runtime-instance"></span><h4>Create NVDLA runtime instance<a class="headerlink" href="#create-nvdla-runtime-instance" title="Permalink to this headline">¶</a></h4>
-<dl class="function">
+<dl class="cpp function">
 <dt id="_CPPv4N5nvdla5nvdla13createRuntimeEv">
-<span id="_CPPv3N5nvdla5nvdla13createRuntimeEv"></span><span id="_CPPv2N5nvdla5nvdla13createRuntimeEv"></span><span id="nvdla::nvdla::createRuntime"></span><a class="reference internal" href="#_CPPv4N5nvdla5nvdla8IRuntimeE" title="nvdla::nvdla::IRuntime">IRuntime</a> *<code class="sig-prename descclassname">nvdla<code class="sig-prename descclassname">::</code></code><code class="sig-name descname">createRuntime</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5nvdla5nvdla13createRuntimeEv" title="Permalink to this definition">¶</a><br /></dt>
+<span id="_CPPv3N5nvdla5nvdla13createRuntimeEv"></span><span id="_CPPv2N5nvdla5nvdla13createRuntimeEv"></span><span id="nvdla::nvdla::createRuntime"></span><a class="reference internal" href="#_CPPv4N5nvdla5nvdla8IRuntimeE" title="nvdla::nvdla::IRuntime"><span class="pre">IRuntime</span></a> <span class="pre">*</span><code class="sig-prename descclassname"><span class="pre">nvdla</span><code class="sig-prename descclassname"><span class="pre">::</span></code></code><code class="sig-name descname"><span class="pre">createRuntime</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5nvdla5nvdla13createRuntimeEv" title="Permalink to this definition">¶</a><br /></dt>
 <dd></dd></dl>
 
 <dl class="field-list simple">
@@ -119,9 +118,9 @@
 </div>
 <div class="section" id="get-nvdla-device-information">
 <span id="device-information"></span><h4>Get NVDLA device information<a class="headerlink" href="#get-nvdla-device-information" title="Permalink to this headline">¶</a></h4>
-<dl class="function">
+<dl class="cpp function">
 <dt id="_CPPv4N5nvdla5nvdla8IRuntime13getMaxDevicesEv">
-<span id="_CPPv3N5nvdla5nvdla8IRuntime13getMaxDevicesEv"></span><span id="_CPPv2N5nvdla5nvdla8IRuntime13getMaxDevicesEv"></span><span id="nvdla::nvdla::IRuntime::getMaxDevices"></span>NvU16 <code class="sig-prename descclassname">nvdla::<a class="reference internal" href="#_CPPv4N5nvdla5nvdla8IRuntimeE" title="nvdla::nvdla::IRuntime">IRuntime</a><code class="sig-prename descclassname">::</code></code><code class="sig-name descname">getMaxDevices</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5nvdla5nvdla8IRuntime13getMaxDevicesEv" title="Permalink to this definition">¶</a><br /></dt>
+<span id="_CPPv3N5nvdla5nvdla8IRuntime13getMaxDevicesEv"></span><span id="_CPPv2N5nvdla5nvdla8IRuntime13getMaxDevicesEv"></span><span id="nvdla::nvdla::IRuntime::getMaxDevices"></span><span class="pre">NvU16</span> <code class="sig-prename descclassname"><span class="pre">nvdla</span><span class="pre">::</span><a class="reference internal" href="#_CPPv4N5nvdla5nvdla8IRuntimeE" title="nvdla::nvdla::IRuntime"><span class="pre">IRuntime</span></a><code class="sig-prename descclassname"><span class="pre">::</span></code></code><code class="sig-name descname"><span class="pre">getMaxDevices</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5nvdla5nvdla8IRuntime13getMaxDevicesEv" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Get maximum number of device supported by HW configuration. Runtime driver supports submitting inference jobs to  multiple DLA devices. User application can select device to use. One task can’t splitted across devices but one task can be submitted to only one devices.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
@@ -130,9 +129,9 @@
 </dl>
 </dd></dl>
 
-<dl class="function">
+<dl class="cpp function">
 <dt id="_CPPv4N5nvdla5nvdla8IRuntime13getNumDevicesEv">
-<span id="_CPPv3N5nvdla5nvdla8IRuntime13getNumDevicesEv"></span><span id="_CPPv2N5nvdla5nvdla8IRuntime13getNumDevicesEv"></span><span id="nvdla::nvdla::IRuntime::getNumDevices"></span>NvU16 <code class="sig-prename descclassname">nvdla::<a class="reference internal" href="#_CPPv4N5nvdla5nvdla8IRuntimeE" title="nvdla::nvdla::IRuntime">IRuntime</a><code class="sig-prename descclassname">::</code></code><code class="sig-name descname">getNumDevices</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5nvdla5nvdla8IRuntime13getNumDevicesEv" title="Permalink to this definition">¶</a><br /></dt>
+<span id="_CPPv3N5nvdla5nvdla8IRuntime13getNumDevicesEv"></span><span id="_CPPv2N5nvdla5nvdla8IRuntime13getNumDevicesEv"></span><span id="nvdla::nvdla::IRuntime::getNumDevices"></span><span class="pre">NvU16</span> <code class="sig-prename descclassname"><span class="pre">nvdla</span><span class="pre">::</span><a class="reference internal" href="#_CPPv4N5nvdla5nvdla8IRuntimeE" title="nvdla::nvdla::IRuntime"><span class="pre">IRuntime</span></a><code class="sig-prename descclassname"><span class="pre">::</span></code></code><code class="sig-name descname"><span class="pre">getNumDevices</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5nvdla5nvdla8IRuntime13getNumDevicesEv" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Get number of available devices from the maximum number of devices supported by HW configuration.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
@@ -147,9 +146,9 @@
 </div>
 <div class="section" id="load-network-data">
 <span id="load-network"></span><h4>Load network data<a class="headerlink" href="#load-network-data" title="Permalink to this headline">¶</a></h4>
-<dl class="function">
+<dl class="cpp function">
 <dt id="_CPPv4N5nvdla5nvdla8IRuntime4loadEPK4NvU8i">
-<span id="_CPPv3N5nvdla5nvdla8IRuntime4loadEPK4NvU8i"></span><span id="_CPPv2N5nvdla5nvdla8IRuntime4loadEPK4NvU8i"></span><span id="nvdla::nvdla::IRuntime::load__NvU8CP.i"></span>NvError <code class="sig-prename descclassname">nvdla::<a class="reference internal" href="#_CPPv4N5nvdla5nvdla8IRuntimeE" title="nvdla::nvdla::IRuntime">IRuntime</a><code class="sig-prename descclassname">::</code></code><code class="sig-name descname">load</code><span class="sig-paren">(</span><em class="property">const</em> NvU8 *<em>buf</em>, int <em>instance</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5nvdla5nvdla8IRuntime4loadEPK4NvU8i" title="Permalink to this definition">¶</a><br /></dt>
+<span id="_CPPv3N5nvdla5nvdla8IRuntime4loadEPK4NvU8i"></span><span id="_CPPv2N5nvdla5nvdla8IRuntime4loadEPK4NvU8i"></span><span id="nvdla::nvdla::IRuntime::load__NvU8CP.i"></span><span class="pre">NvError</span> <code class="sig-prename descclassname"><span class="pre">nvdla</span><span class="pre">::</span><a class="reference internal" href="#_CPPv4N5nvdla5nvdla8IRuntimeE" title="nvdla::nvdla::IRuntime"><span class="pre">IRuntime</span></a><code class="sig-prename descclassname"><span class="pre">::</span></code></code><code class="sig-name descname"><span class="pre">load</span></code><span class="sig-paren">(</span><em class="property"><span class="pre">const</span></em> <span class="pre">NvU8</span> <span class="pre">*</span><em><span class="pre">buf</span></em>, <span class="pre">int</span> <em><span class="pre">instance</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5nvdla5nvdla8IRuntime4loadEPK4NvU8i" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Parse loadable from buffer and update ILoadable with information required to create task</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -170,9 +169,9 @@
 </div>
 <div class="section" id="get-input-and-output-tensors-information">
 <span id="tensor-information"></span><h4>Get input and output tensors information<a class="headerlink" href="#get-input-and-output-tensors-information" title="Permalink to this headline">¶</a></h4>
-<dl class="function">
+<dl class="cpp function">
 <dt id="_CPPv4N5nvdla5nvdla8IRuntime18getNumInputTensorsEPi">
-<span id="_CPPv3N5nvdla5nvdla8IRuntime18getNumInputTensorsEPi"></span><span id="_CPPv2N5nvdla5nvdla8IRuntime18getNumInputTensorsEPi"></span><span id="nvdla::nvdla::IRuntime::getNumInputTensors__iP"></span>NvError <code class="sig-prename descclassname">nvdla::<a class="reference internal" href="#_CPPv4N5nvdla5nvdla8IRuntimeE" title="nvdla::nvdla::IRuntime">IRuntime</a><code class="sig-prename descclassname">::</code></code><code class="sig-name descname">getNumInputTensors</code><span class="sig-paren">(</span>int *<em>input_tensors</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5nvdla5nvdla8IRuntime18getNumInputTensorsEPi" title="Permalink to this definition">¶</a><br /></dt>
+<span id="_CPPv3N5nvdla5nvdla8IRuntime18getNumInputTensorsEPi"></span><span id="_CPPv2N5nvdla5nvdla8IRuntime18getNumInputTensorsEPi"></span><span id="nvdla::nvdla::IRuntime::getNumInputTensors__iP"></span><span class="pre">NvError</span> <code class="sig-prename descclassname"><span class="pre">nvdla</span><span class="pre">::</span><a class="reference internal" href="#_CPPv4N5nvdla5nvdla8IRuntimeE" title="nvdla::nvdla::IRuntime"><span class="pre">IRuntime</span></a><code class="sig-prename descclassname"><span class="pre">::</span></code></code><code class="sig-name descname"><span class="pre">getNumInputTensors</span></code><span class="sig-paren">(</span><span class="pre">int</span> <span class="pre">*</span><em><span class="pre">input_tensors</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5nvdla5nvdla8IRuntime18getNumInputTensorsEPi" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Get number of network’s input tensors from loadable</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -184,9 +183,9 @@
 </dl>
 </dd></dl>
 
-<dl class="function">
+<dl class="cpp function">
 <dt id="_CPPv4N5nvdla5nvdla8IRuntime18getInputTensorDescEiP11NvDlaTensor">
-<span id="_CPPv3N5nvdla5nvdla8IRuntime18getInputTensorDescEiP11NvDlaTensor"></span><span id="_CPPv2N5nvdla5nvdla8IRuntime18getInputTensorDescEiP11NvDlaTensor"></span><span id="nvdla::nvdla::IRuntime::getInputTensorDesc__i.NvDlaTensorP"></span>NvError <code class="sig-prename descclassname">nvdla::<a class="reference internal" href="#_CPPv4N5nvdla5nvdla8IRuntimeE" title="nvdla::nvdla::IRuntime">IRuntime</a><code class="sig-prename descclassname">::</code></code><code class="sig-name descname">getInputTensorDesc</code><span class="sig-paren">(</span>int <em>id</em>, NvDlaTensor *<em>tensors</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5nvdla5nvdla8IRuntime18getInputTensorDescEiP11NvDlaTensor" title="Permalink to this definition">¶</a><br /></dt>
+<span id="_CPPv3N5nvdla5nvdla8IRuntime18getInputTensorDescEiP11NvDlaTensor"></span><span id="_CPPv2N5nvdla5nvdla8IRuntime18getInputTensorDescEiP11NvDlaTensor"></span><span id="nvdla::nvdla::IRuntime::getInputTensorDesc__i.NvDlaTensorP"></span><span class="pre">NvError</span> <code class="sig-prename descclassname"><span class="pre">nvdla</span><span class="pre">::</span><a class="reference internal" href="#_CPPv4N5nvdla5nvdla8IRuntimeE" title="nvdla::nvdla::IRuntime"><span class="pre">IRuntime</span></a><code class="sig-prename descclassname"><span class="pre">::</span></code></code><code class="sig-name descname"><span class="pre">getInputTensorDesc</span></code><span class="sig-paren">(</span><span class="pre">int</span> <em><span class="pre">id</span></em>, <span class="pre">NvDlaTensor</span> <span class="pre">*</span><em><span class="pre">tensors</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5nvdla5nvdla8IRuntime18getInputTensorDescEiP11NvDlaTensor" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Get network’s input tensor descriptor</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -201,9 +200,9 @@
 </dl>
 </dd></dl>
 
-<dl class="function">
+<dl class="cpp function">
 <dt id="_CPPv4N5nvdla5nvdla8IRuntime19getNumOutputTensorsEPi">
-<span id="_CPPv3N5nvdla5nvdla8IRuntime19getNumOutputTensorsEPi"></span><span id="_CPPv2N5nvdla5nvdla8IRuntime19getNumOutputTensorsEPi"></span><span id="nvdla::nvdla::IRuntime::getNumOutputTensors__iP"></span>NvError <code class="sig-prename descclassname">nvdla::<a class="reference internal" href="#_CPPv4N5nvdla5nvdla8IRuntimeE" title="nvdla::nvdla::IRuntime">IRuntime</a><code class="sig-prename descclassname">::</code></code><code class="sig-name descname">getNumOutputTensors</code><span class="sig-paren">(</span>int *<em>output_tensors</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5nvdla5nvdla8IRuntime19getNumOutputTensorsEPi" title="Permalink to this definition">¶</a><br /></dt>
+<span id="_CPPv3N5nvdla5nvdla8IRuntime19getNumOutputTensorsEPi"></span><span id="_CPPv2N5nvdla5nvdla8IRuntime19getNumOutputTensorsEPi"></span><span id="nvdla::nvdla::IRuntime::getNumOutputTensors__iP"></span><span class="pre">NvError</span> <code class="sig-prename descclassname"><span class="pre">nvdla</span><span class="pre">::</span><a class="reference internal" href="#_CPPv4N5nvdla5nvdla8IRuntimeE" title="nvdla::nvdla::IRuntime"><span class="pre">IRuntime</span></a><code class="sig-prename descclassname"><span class="pre">::</span></code></code><code class="sig-name descname"><span class="pre">getNumOutputTensors</span></code><span class="sig-paren">(</span><span class="pre">int</span> <span class="pre">*</span><em><span class="pre">output_tensors</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5nvdla5nvdla8IRuntime19getNumOutputTensorsEPi" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Get number of network’s output tensors from loadable</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -215,9 +214,9 @@
 </dl>
 </dd></dl>
 
-<dl class="function">
+<dl class="cpp function">
 <dt id="_CPPv4N5nvdla5nvdla8IRuntime19getOutputTensorDescEiP11NvDlaTensor">
-<span id="_CPPv3N5nvdla5nvdla8IRuntime19getOutputTensorDescEiP11NvDlaTensor"></span><span id="_CPPv2N5nvdla5nvdla8IRuntime19getOutputTensorDescEiP11NvDlaTensor"></span><span id="nvdla::nvdla::IRuntime::getOutputTensorDesc__i.NvDlaTensorP"></span>NvError <code class="sig-prename descclassname">nvdla::<a class="reference internal" href="#_CPPv4N5nvdla5nvdla8IRuntimeE" title="nvdla::nvdla::IRuntime">IRuntime</a><code class="sig-prename descclassname">::</code></code><code class="sig-name descname">getOutputTensorDesc</code><span class="sig-paren">(</span>int <em>id</em>, NvDlaTensor *<em>tensors</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5nvdla5nvdla8IRuntime19getOutputTensorDescEiP11NvDlaTensor" title="Permalink to this definition">¶</a><br /></dt>
+<span id="_CPPv3N5nvdla5nvdla8IRuntime19getOutputTensorDescEiP11NvDlaTensor"></span><span id="_CPPv2N5nvdla5nvdla8IRuntime19getOutputTensorDescEiP11NvDlaTensor"></span><span id="nvdla::nvdla::IRuntime::getOutputTensorDesc__i.NvDlaTensorP"></span><span class="pre">NvError</span> <code class="sig-prename descclassname"><span class="pre">nvdla</span><span class="pre">::</span><a class="reference internal" href="#_CPPv4N5nvdla5nvdla8IRuntimeE" title="nvdla::nvdla::IRuntime"><span class="pre">IRuntime</span></a><code class="sig-prename descclassname"><span class="pre">::</span></code></code><code class="sig-name descname"><span class="pre">getOutputTensorDesc</span></code><span class="sig-paren">(</span><span class="pre">int</span> <em><span class="pre">id</span></em>, <span class="pre">NvDlaTensor</span> <span class="pre">*</span><em><span class="pre">tensors</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5nvdla5nvdla8IRuntime19getOutputTensorDescEiP11NvDlaTensor" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Get network’s output tensor descriptor</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -242,9 +241,9 @@
 <p class="admonition-title">Note</p>
 <p>Required only if tensor information is changed, not all parameters can be changed</p>
 </div>
-<dl class="function">
+<dl class="cpp function">
 <dt id="_CPPv4N5nvdla5nvdla8IRuntime18setInputTensorDescEiPK11NvDlaTensor">
-<span id="_CPPv3N5nvdla5nvdla8IRuntime18setInputTensorDescEiPK11NvDlaTensor"></span><span id="_CPPv2N5nvdla5nvdla8IRuntime18setInputTensorDescEiPK11NvDlaTensor"></span><span id="nvdla::nvdla::IRuntime::setInputTensorDesc__i.NvDlaTensorCP"></span>NvError <code class="sig-prename descclassname">nvdla::<a class="reference internal" href="#_CPPv4N5nvdla5nvdla8IRuntimeE" title="nvdla::nvdla::IRuntime">IRuntime</a><code class="sig-prename descclassname">::</code></code><code class="sig-name descname">setInputTensorDesc</code><span class="sig-paren">(</span>int <em>id</em>, <em class="property">const</em> NvDlaTensor *<em>tensors</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5nvdla5nvdla8IRuntime18setInputTensorDescEiPK11NvDlaTensor" title="Permalink to this definition">¶</a><br /></dt>
+<span id="_CPPv3N5nvdla5nvdla8IRuntime18setInputTensorDescEiPK11NvDlaTensor"></span><span id="_CPPv2N5nvdla5nvdla8IRuntime18setInputTensorDescEiPK11NvDlaTensor"></span><span id="nvdla::nvdla::IRuntime::setInputTensorDesc__i.NvDlaTensorCP"></span><span class="pre">NvError</span> <code class="sig-prename descclassname"><span class="pre">nvdla</span><span class="pre">::</span><a class="reference internal" href="#_CPPv4N5nvdla5nvdla8IRuntimeE" title="nvdla::nvdla::IRuntime"><span class="pre">IRuntime</span></a><code class="sig-prename descclassname"><span class="pre">::</span></code></code><code class="sig-name descname"><span class="pre">setInputTensorDesc</span></code><span class="sig-paren">(</span><span class="pre">int</span> <em><span class="pre">id</span></em>, <em class="property"><span class="pre">const</span></em> <span class="pre">NvDlaTensor</span> <span class="pre">*</span><em><span class="pre">tensors</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5nvdla5nvdla8IRuntime18setInputTensorDescEiPK11NvDlaTensor" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Set network’s input tensor descriptor</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -259,9 +258,9 @@
 </dl>
 </dd></dl>
 
-<dl class="function">
+<dl class="cpp function">
 <dt id="_CPPv4N5nvdla5nvdla8IRuntime19setOutputTensorDescEiPK11NvDlaTensor">
-<span id="_CPPv3N5nvdla5nvdla8IRuntime19setOutputTensorDescEiPK11NvDlaTensor"></span><span id="_CPPv2N5nvdla5nvdla8IRuntime19setOutputTensorDescEiPK11NvDlaTensor"></span><span id="nvdla::nvdla::IRuntime::setOutputTensorDesc__i.NvDlaTensorCP"></span>NvError <code class="sig-prename descclassname">nvdla::<a class="reference internal" href="#_CPPv4N5nvdla5nvdla8IRuntimeE" title="nvdla::nvdla::IRuntime">IRuntime</a><code class="sig-prename descclassname">::</code></code><code class="sig-name descname">setOutputTensorDesc</code><span class="sig-paren">(</span>int <em>id</em>, <em class="property">const</em> NvDlaTensor *<em>tensors</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5nvdla5nvdla8IRuntime19setOutputTensorDescEiPK11NvDlaTensor" title="Permalink to this definition">¶</a><br /></dt>
+<span id="_CPPv3N5nvdla5nvdla8IRuntime19setOutputTensorDescEiPK11NvDlaTensor"></span><span id="_CPPv2N5nvdla5nvdla8IRuntime19setOutputTensorDescEiPK11NvDlaTensor"></span><span id="nvdla::nvdla::IRuntime::setOutputTensorDesc__i.NvDlaTensorCP"></span><span class="pre">NvError</span> <code class="sig-prename descclassname"><span class="pre">nvdla</span><span class="pre">::</span><a class="reference internal" href="#_CPPv4N5nvdla5nvdla8IRuntimeE" title="nvdla::nvdla::IRuntime"><span class="pre">IRuntime</span></a><code class="sig-prename descclassname"><span class="pre">::</span></code></code><code class="sig-name descname"><span class="pre">setOutputTensorDesc</span></code><span class="sig-paren">(</span><span class="pre">int</span> <em><span class="pre">id</span></em>, <em class="property"><span class="pre">const</span></em> <span class="pre">NvDlaTensor</span> <span class="pre">*</span><em><span class="pre">tensors</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5nvdla5nvdla8IRuntime19setOutputTensorDescEiPK11NvDlaTensor" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Set network’s output tensor descriptor</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -282,9 +281,9 @@
 </div>
 <div class="section" id="allocate-memory-for-input-and-output-tensors">
 <span id="allocate-memory"></span><h4>Allocate memory for input and output tensors<a class="headerlink" href="#allocate-memory-for-input-and-output-tensors" title="Permalink to this headline">¶</a></h4>
-<dl class="function">
+<dl class="cpp function">
 <dt id="_CPPv4N5nvdla20allocateSystemMemoryEPPv5NvU64PPv">
-<span id="_CPPv3N5nvdla20allocateSystemMemoryEPPv5NvU64PPv"></span><span id="_CPPv2N5nvdla20allocateSystemMemoryEPPv5NvU64PPv"></span><span id="nvdla::allocateSystemMemory__voidPP.NvU64.voidPP"></span>NvDlaError <code class="sig-name descname">allocateSystemMemory</code><span class="sig-paren">(</span>void **<em>h_mem</em>, NvU64 <em>size</em>, void **<em>pData</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5nvdla20allocateSystemMemoryEPPv5NvU64PPv" title="Permalink to this definition">¶</a><br /></dt>
+<span id="_CPPv3N5nvdla20allocateSystemMemoryEPPv5NvU64PPv"></span><span id="_CPPv2N5nvdla20allocateSystemMemoryEPPv5NvU64PPv"></span><span id="nvdla::allocateSystemMemory__voidPP.NvU64.voidPP"></span><span class="pre">NvDlaError</span> <code class="sig-name descname"><span class="pre">allocateSystemMemory</span></code><span class="sig-paren">(</span><span class="pre">void</span> <span class="pre">*</span><span class="pre">*</span><em><span class="pre">h_mem</span></em>, <span class="pre">NvU64</span> <em><span class="pre">size</span></em>, <span class="pre">void</span> <span class="pre">*</span><span class="pre">*</span><em><span class="pre">pData</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5nvdla20allocateSystemMemoryEPPv5NvU64PPv" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Allocate DMA memory accessible by NVDLA for input and output tensors.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -306,9 +305,9 @@
 </div>
 <div class="section" id="bind-memory-handle-with-tensor">
 <span id="bind-tensor"></span><h4>Bind memory handle with tensor<a class="headerlink" href="#bind-memory-handle-with-tensor" title="Permalink to this headline">¶</a></h4>
-<dl class="function">
+<dl class="cpp function">
 <dt id="_CPPv4N5nvdla5nvdla8IRuntime15bindInputTensorEiPv">
-<span id="_CPPv3N5nvdla5nvdla8IRuntime15bindInputTensorEiPv"></span><span id="_CPPv2N5nvdla5nvdla8IRuntime15bindInputTensorEiPv"></span><span id="nvdla::nvdla::IRuntime::bindInputTensor__i.voidP"></span>NvError <code class="sig-prename descclassname">nvdla::<a class="reference internal" href="#_CPPv4N5nvdla5nvdla8IRuntimeE" title="nvdla::nvdla::IRuntime">IRuntime</a><code class="sig-prename descclassname">::</code></code><code class="sig-name descname">bindInputTensor</code><span class="sig-paren">(</span>int <em>id</em>, void *<em>hMem</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5nvdla5nvdla8IRuntime15bindInputTensorEiPv" title="Permalink to this definition">¶</a><br /></dt>
+<span id="_CPPv3N5nvdla5nvdla8IRuntime15bindInputTensorEiPv"></span><span id="_CPPv2N5nvdla5nvdla8IRuntime15bindInputTensorEiPv"></span><span id="nvdla::nvdla::IRuntime::bindInputTensor__i.voidP"></span><span class="pre">NvError</span> <code class="sig-prename descclassname"><span class="pre">nvdla</span><span class="pre">::</span><a class="reference internal" href="#_CPPv4N5nvdla5nvdla8IRuntimeE" title="nvdla::nvdla::IRuntime"><span class="pre">IRuntime</span></a><code class="sig-prename descclassname"><span class="pre">::</span></code></code><code class="sig-name descname"><span class="pre">bindInputTensor</span></code><span class="sig-paren">(</span><span class="pre">int</span> <em><span class="pre">id</span></em>, <span class="pre">void</span> <span class="pre">*</span><em><span class="pre">hMem</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5nvdla5nvdla8IRuntime15bindInputTensorEiPv" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Bind network’s input tensor to memory handle</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -323,9 +322,9 @@
 </dl>
 </dd></dl>
 
-<dl class="function">
+<dl class="cpp function">
 <dt id="_CPPv4N5nvdla5nvdla8IRuntime16bindOutputTensorEiPv">
-<span id="_CPPv3N5nvdla5nvdla8IRuntime16bindOutputTensorEiPv"></span><span id="_CPPv2N5nvdla5nvdla8IRuntime16bindOutputTensorEiPv"></span><span id="nvdla::nvdla::IRuntime::bindOutputTensor__i.voidP"></span>NvError <code class="sig-prename descclassname">nvdla::<a class="reference internal" href="#_CPPv4N5nvdla5nvdla8IRuntimeE" title="nvdla::nvdla::IRuntime">IRuntime</a><code class="sig-prename descclassname">::</code></code><code class="sig-name descname">bindOutputTensor</code><span class="sig-paren">(</span>int <em>id</em>, void *<em>hMem</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5nvdla5nvdla8IRuntime16bindOutputTensorEiPv" title="Permalink to this definition">¶</a><br /></dt>
+<span id="_CPPv3N5nvdla5nvdla8IRuntime16bindOutputTensorEiPv"></span><span id="_CPPv2N5nvdla5nvdla8IRuntime16bindOutputTensorEiPv"></span><span id="nvdla::nvdla::IRuntime::bindOutputTensor__i.voidP"></span><span class="pre">NvError</span> <code class="sig-prename descclassname"><span class="pre">nvdla</span><span class="pre">::</span><a class="reference internal" href="#_CPPv4N5nvdla5nvdla8IRuntimeE" title="nvdla::nvdla::IRuntime"><span class="pre">IRuntime</span></a><code class="sig-prename descclassname"><span class="pre">::</span></code></code><code class="sig-name descname"><span class="pre">bindOutputTensor</span></code><span class="sig-paren">(</span><span class="pre">int</span> <em><span class="pre">id</span></em>, <span class="pre">void</span> <span class="pre">*</span><em><span class="pre">hMem</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5nvdla5nvdla8IRuntime16bindOutputTensorEiPv" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Bind network’s output tensor to memory handle</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -346,9 +345,9 @@
 </div>
 <div class="section" id="submit-task-for-inference">
 <span id="submit-task"></span><h4>Submit task for inference<a class="headerlink" href="#submit-task-for-inference" title="Permalink to this headline">¶</a></h4>
-<dl class="function">
+<dl class="cpp function">
 <dt id="_CPPv4N5nvdla5nvdla8IRuntime6submitEv">
-<span id="_CPPv3N5nvdla5nvdla8IRuntime6submitEv"></span><span id="_CPPv2N5nvdla5nvdla8IRuntime6submitEv"></span><span id="nvdla::nvdla::IRuntime::submit"></span>NvError <code class="sig-prename descclassname">nvdla::<a class="reference internal" href="#_CPPv4N5nvdla5nvdla8IRuntimeE" title="nvdla::nvdla::IRuntime">IRuntime</a><code class="sig-prename descclassname">::</code></code><code class="sig-name descname">submit</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5nvdla5nvdla8IRuntime6submitEv" title="Permalink to this definition">¶</a><br /></dt>
+<span id="_CPPv3N5nvdla5nvdla8IRuntime6submitEv"></span><span id="_CPPv2N5nvdla5nvdla8IRuntime6submitEv"></span><span id="nvdla::nvdla::IRuntime::submit"></span><span class="pre">NvError</span> <code class="sig-prename descclassname"><span class="pre">nvdla</span><span class="pre">::</span><a class="reference internal" href="#_CPPv4N5nvdla5nvdla8IRuntimeE" title="nvdla::nvdla::IRuntime"><span class="pre">IRuntime</span></a><code class="sig-prename descclassname"><span class="pre">::</span></code></code><code class="sig-name descname"><span class="pre">submit</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5nvdla5nvdla8IRuntime6submitEv" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Submit task for inference, it is blocking call</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
@@ -360,9 +359,9 @@
 </div>
 <div class="section" id="unload-network-resources">
 <span id="unload-network"></span><h4>Unload network resources<a class="headerlink" href="#unload-network-resources" title="Permalink to this headline">¶</a></h4>
-<dl class="function">
+<dl class="cpp function">
 <dt id="_CPPv4N5nvdla5nvdla8IRuntime6unloadEi">
-<span id="_CPPv3N5nvdla5nvdla8IRuntime6unloadEi"></span><span id="_CPPv2N5nvdla5nvdla8IRuntime6unloadEi"></span><span id="nvdla::nvdla::IRuntime::unload__i"></span>NvError <code class="sig-prename descclassname">nvdla::<a class="reference internal" href="#_CPPv4N5nvdla5nvdla8IRuntimeE" title="nvdla::nvdla::IRuntime">IRuntime</a><code class="sig-prename descclassname">::</code></code><code class="sig-name descname">unload</code><span class="sig-paren">(</span>int <em>instance</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5nvdla5nvdla8IRuntime6unloadEi" title="Permalink to this definition">¶</a><br /></dt>
+<span id="_CPPv3N5nvdla5nvdla8IRuntime6unloadEi"></span><span id="_CPPv2N5nvdla5nvdla8IRuntime6unloadEi"></span><span id="nvdla::nvdla::IRuntime::unload__i"></span><span class="pre">NvError</span> <code class="sig-prename descclassname"><span class="pre">nvdla</span><span class="pre">::</span><a class="reference internal" href="#_CPPv4N5nvdla5nvdla8IRuntimeE" title="nvdla::nvdla::IRuntime"><span class="pre">IRuntime</span></a><code class="sig-prename descclassname"><span class="pre">::</span></code></code><code class="sig-name descname"><span class="pre">unload</span></code><span class="sig-paren">(</span><span class="pre">int</span> <em><span class="pre">instance</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5nvdla5nvdla8IRuntime6unloadEi" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Unload network data, free all resourced used for network if no plan to submit inference using same network</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -385,38 +384,38 @@
 <blockquote>
 <div><p>Portability layer for UMD implements functions to access NVDLA device, allocate DMA memory and submit task to low level driver. For this functionality UMD has to communicate with KMD and the communication interface is OS dependent. Portability layer abstracts this OS dependent interface.</p>
 </div></blockquote>
-<dl class="type">
+<dl class="c type">
 <dt id="c.NvError">
-<code class="sig-name descname">NvError</code><a class="headerlink" href="#c.NvError" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">type</span> </em><code class="sig-name descname"><span class="pre">NvError</span></code><a class="headerlink" href="#c.NvError" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Enum for error codes</p>
 </dd></dl>
 
-<dl class="type">
+<dl class="c type">
 <dt id="c.NvDlaHeap">
-<code class="sig-name descname">NvDlaHeap</code><a class="headerlink" href="#c.NvDlaHeap" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">type</span> </em><code class="sig-name descname"><span class="pre">NvDlaHeap</span></code><a class="headerlink" href="#c.NvDlaHeap" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Memory heap to allocate memory, NVDLA supports two memory interfaces. Generally these interfaces are connected to DRAM (System memory) and internal SRAM. KMD can maintain separate heaps for allocation depending on memory type.</p>
 </dd></dl>
 
-<dl class="type">
+<dl class="c type">
 <dt id="c.NvDlaMemDesc">
-<code class="sig-name descname">NvDlaMemDesc</code><a class="headerlink" href="#c.NvDlaMemDesc" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">type</span> </em><code class="sig-name descname"><span class="pre">NvDlaMemDesc</span></code><a class="headerlink" href="#c.NvDlaMemDesc" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Memory descriptor, it includes memory handle and buffer size.</p>
 </dd></dl>
 
-<dl class="type">
+<dl class="c type">
 <dt id="c.NvDlaTask">
-<code class="sig-name descname">NvDlaTask</code><a class="headerlink" href="#c.NvDlaTask" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">type</span> </em><code class="sig-name descname"><span class="pre">NvDlaTask</span></code><a class="headerlink" href="#c.NvDlaTask" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>DLA task structure. Runtime driver populates it using information from loadable and is used by portability layer to submit inference task to KMD in an implementation define manner.</p>
 </dd></dl>
 
-<dl class="function">
+<dl class="c function">
 <dt id="c.NvDlaInitialize">
-<a class="reference internal" href="#c.NvError" title="NvError">NvError</a> <code class="sig-name descname">NvDlaInitialize</code><span class="sig-paren">(</span>void<em> **session_handle</em><span class="sig-paren">)</span><a class="headerlink" href="#c.NvDlaInitialize" title="Permalink to this definition">¶</a></dt>
+<a class="reference internal" href="#c.NvError" title="NvError"><span class="pre">NvError</span></a> <code class="sig-name descname"><span class="pre">NvDlaInitialize</span></code><span class="sig-paren">(</span><span class="pre">void</span> <span class="pre">*</span><span class="pre">*</span><em><span class="pre">session_handle</span></em><span class="sig-paren">)</span><a class="headerlink" href="#c.NvDlaInitialize" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>This API should initialize session for portability layer which may include allocating some structure required to maintain information such such device context, file descriptors. This function can be empty.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>session_handle</strong> (<em>[out]</em>) – Pointer to update session handle address. This address is passed in any APIs called after this which can be used by portability layer to recover session information.</p></li>
+<li><p><strong>session_handle</strong> – [out] Pointer to update session handle address. This address is passed in any APIs called after this which can be used by portability layer to recover session information.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -425,9 +424,9 @@
 </dl>
 </dd></dl>
 
-<dl class="function">
+<dl class="c function">
 <dt id="c.NvDlaDestroy">
-void <code class="sig-name descname">NvDlaDestroy</code><span class="sig-paren">(</span>void<em> *session_handle</em><span class="sig-paren">)</span><a class="headerlink" href="#c.NvDlaDestroy" title="Permalink to this definition">¶</a></dt>
+<span class="pre">void</span> <code class="sig-name descname"><span class="pre">NvDlaDestroy</span></code><span class="sig-paren">(</span><span class="pre">void</span> <span class="pre">*</span><em><span class="pre">session_handle</span></em><span class="sig-paren">)</span><a class="headerlink" href="#c.NvDlaDestroy" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Release all session resources</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -438,16 +437,16 @@ void <code class="sig-name descname">NvDlaDestroy</code><span class="sig-paren">
 </dl>
 </dd></dl>
 
-<dl class="function">
+<dl class="c function">
 <dt id="c.NvDlaOpen">
-<a class="reference internal" href="#c.NvError" title="NvError">NvError</a> <code class="sig-name descname">NvDlaOpen</code><span class="sig-paren">(</span>void<em> *session_handle</em>, NvU32<em> instance</em>, void<em> **device_handle</em><span class="sig-paren">)</span><a class="headerlink" href="#c.NvDlaOpen" title="Permalink to this definition">¶</a></dt>
+<a class="reference internal" href="#c.NvError" title="NvError"><span class="pre">NvError</span></a> <code class="sig-name descname"><span class="pre">NvDlaOpen</span></code><span class="sig-paren">(</span><span class="pre">void</span> <span class="pre">*</span><em><span class="pre">session_handle</span></em>, <span class="pre">NvU32</span> <em><span class="pre">instance</span></em>, <span class="pre">void</span> <span class="pre">*</span><span class="pre">*</span><em><span class="pre">device_handle</span></em><span class="sig-paren">)</span><a class="headerlink" href="#c.NvDlaOpen" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>This API should open DLA device instance. .</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>session_handle</strong> – Session handle address obtained from <a class="reference internal" href="#c.NvDlaInitialize" title="NvDlaInitialize"><code class="xref c c-func docutils literal notranslate"><span class="pre">NvDlaInitialize()</span></code></a></p></li>
 <li><p><strong>instance</strong> – NVDLA instance to use if there are more than one instances in SoC</p></li>
-<li><p><strong>device_handle</strong> (<em>[out]</em>) – Pointer to update device context. It is used to obtain device information required for further callbacks which need device context.</p></li>
+<li><p><strong>device_handle</strong> – [out] Pointer to update device context. It is used to obtain device information required for further callbacks which need device context.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -456,9 +455,9 @@ void <code class="sig-name descname">NvDlaDestroy</code><span class="sig-paren">
 </dl>
 </dd></dl>
 
-<dl class="function">
+<dl class="c function">
 <dt id="c.NvDlaClose">
-void <code class="sig-name descname">NvDlaClose</code><span class="sig-paren">(</span>void<em> *session_handle</em>, void<em> *device_handle</em><span class="sig-paren">)</span><a class="headerlink" href="#c.NvDlaClose" title="Permalink to this definition">¶</a></dt>
+<span class="pre">void</span> <code class="sig-name descname"><span class="pre">NvDlaClose</span></code><span class="sig-paren">(</span><span class="pre">void</span> <span class="pre">*</span><em><span class="pre">session_handle</span></em>, <span class="pre">void</span> <span class="pre">*</span><em><span class="pre">device_handle</span></em><span class="sig-paren">)</span><a class="headerlink" href="#c.NvDlaClose" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Close DLA device instance</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -470,9 +469,9 @@ void <code class="sig-name descname">NvDlaClose</code><span class="sig-paren">(<
 </dl>
 </dd></dl>
 
-<dl class="function">
+<dl class="c function">
 <dt id="c.NvDlaSubmit">
-<a class="reference internal" href="#c.NvError" title="NvError">NvError</a> <code class="sig-name descname">NvDlaSubmit</code><span class="sig-paren">(</span>void<em> *session_handle</em>, void<em> *device_handle</em>, <a class="reference internal" href="#c.NvDlaTask" title="NvDlaTask">NvDlaTask</a><em> *tasks</em>, NvU32<em> num_tasks</em><span class="sig-paren">)</span><a class="headerlink" href="#c.NvDlaSubmit" title="Permalink to this definition">¶</a></dt>
+<a class="reference internal" href="#c.NvError" title="NvError"><span class="pre">NvError</span></a> <code class="sig-name descname"><span class="pre">NvDlaSubmit</span></code><span class="sig-paren">(</span><span class="pre">void</span> <span class="pre">*</span><em><span class="pre">session_handle</span></em>, <span class="pre">void</span> <span class="pre">*</span><em><span class="pre">device_handle</span></em>, <a class="reference internal" href="#c.NvDlaTask" title="NvDlaTask"><span class="pre">NvDlaTask</span></a> <span class="pre">*</span><em><span class="pre">tasks</span></em>, <span class="pre">NvU32</span> <em><span class="pre">num_tasks</span></em><span class="sig-paren">)</span><a class="headerlink" href="#c.NvDlaSubmit" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Submit inference task to KMD</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -489,18 +488,18 @@ void <code class="sig-name descname">NvDlaClose</code><span class="sig-paren">(<
 </dl>
 </dd></dl>
 
-<dl class="function">
+<dl class="c function">
 <dt id="c.NvDlaAllocMem">
-<a class="reference internal" href="#c.NvError" title="NvError">NvError</a> <code class="sig-name descname">NvDlaAllocMem</code><span class="sig-paren">(</span>void<em> *session_handle</em>, void<em> *device_handle</em>, void<em> **mem_handle</em>, void<em> **pData</em>, NvU32<em> size</em>, <a class="reference internal" href="#c.NvDlaHeap" title="NvDlaHeap">NvDlaHeap</a><em> heap</em><span class="sig-paren">)</span><a class="headerlink" href="#c.NvDlaAllocMem" title="Permalink to this definition">¶</a></dt>
+<a class="reference internal" href="#c.NvError" title="NvError"><span class="pre">NvError</span></a> <code class="sig-name descname"><span class="pre">NvDlaAllocMem</span></code><span class="sig-paren">(</span><span class="pre">void</span> <span class="pre">*</span><em><span class="pre">session_handle</span></em>, <span class="pre">void</span> <span class="pre">*</span><em><span class="pre">device_handle</span></em>, <span class="pre">void</span> <span class="pre">*</span><span class="pre">*</span><em><span class="pre">mem_handle</span></em>, <span class="pre">void</span> <span class="pre">*</span><span class="pre">*</span><em><span class="pre">pData</span></em>, <span class="pre">NvU32</span> <em><span class="pre">size</span></em>, <a class="reference internal" href="#c.NvDlaHeap" title="NvDlaHeap"><span class="pre">NvDlaHeap</span></a> <em><span class="pre">heap</span></em><span class="sig-paren">)</span><a class="headerlink" href="#c.NvDlaAllocMem" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Allocate, pin and map DLA engine accessible memory. For example, in case of systems where DLA is behind IOMMU then this call should ensure that IOMMU mappings are created for this memory. In case of Linux, internal implementation can use readily available frameworks such as ION for this.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>session_handle</strong> – Session handle address obtained from <a class="reference internal" href="#c.NvDlaInitialize" title="NvDlaInitialize"><code class="xref c c-func docutils literal notranslate"><span class="pre">NvDlaInitialize()</span></code></a></p></li>
 <li><p><strong>device_handle</strong> – Device handle address obtained from <a class="reference internal" href="#c.NvDlaOpen" title="NvDlaOpen"><code class="xref c c-func docutils literal notranslate"><span class="pre">NvDlaOpen()</span></code></a></p></li>
-<li><p><strong>mem_handle</strong> (<em>[out]</em>) – Memory handle updated by this function</p></li>
+<li><p><strong>mem_handle</strong> – [out] Memory handle updated by this function</p></li>
+<li><p><strong>pData</strong> – [out] If the allocation and mapping is successful, provides a virtual address through which the memory buffer can be accessed.</p></li>
 <li><p><strong>size</strong> – Size of buffer to allocate</p></li>
-<li><p><strong>pData</strong> – If the allocation and mapping is successful, provides a virtual address through which the memory buffer can be accessed.</p></li>
 <li><p><strong>heap</strong> – Implementation defined memory heap selection</p></li>
 </ul>
 </dd>
@@ -510,9 +509,9 @@ void <code class="sig-name descname">NvDlaClose</code><span class="sig-paren">(<
 </dl>
 </dd></dl>
 
-<dl class="function">
+<dl class="c function">
 <dt id="c.NvDlaFreeMem">
-<a class="reference internal" href="#c.NvError" title="NvError">NvError</a> <code class="sig-name descname">NvDlaFreeMem</code><span class="sig-paren">(</span>void<em> *session_handle</em>, void<em> *device_handle</em>, void<em> *mem_handle</em>, void<em> *pData</em>, NvU32<em> size</em><span class="sig-paren">)</span><a class="headerlink" href="#c.NvDlaFreeMem" title="Permalink to this definition">¶</a></dt>
+<a class="reference internal" href="#c.NvError" title="NvError"><span class="pre">NvError</span></a> <code class="sig-name descname"><span class="pre">NvDlaFreeMem</span></code><span class="sig-paren">(</span><span class="pre">void</span> <span class="pre">*</span><em><span class="pre">session_handle</span></em>, <span class="pre">void</span> <span class="pre">*</span><em><span class="pre">device_handle</span></em>, <span class="pre">void</span> <span class="pre">*</span><em><span class="pre">mem_handle</span></em>, <span class="pre">void</span> <span class="pre">*</span><em><span class="pre">pData</span></em>, <span class="pre">NvU32</span> <em><span class="pre">size</span></em><span class="sig-paren">)</span><a class="headerlink" href="#c.NvDlaFreeMem" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Free DMA memory allocated using <a class="reference internal" href="#c.NvDlaAllocMem" title="NvDlaAllocMem"><code class="xref c c-func docutils literal notranslate"><span class="pre">NvDlaAllocMem()</span></code></a></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -530,9 +529,9 @@ void <code class="sig-name descname">NvDlaClose</code><span class="sig-paren">(<
 </dl>
 </dd></dl>
 
-<dl class="function">
+<dl class="c function">
 <dt id="c.NvDlaDebugPrintf">
-void <code class="sig-name descname">NvDlaDebugPrintf</code><span class="sig-paren">(</span>const char<em> *format</em>, ...<span class="sig-paren">)</span><a class="headerlink" href="#c.NvDlaDebugPrintf" title="Permalink to this definition">¶</a></dt>
+<span class="pre">void</span> <code class="sig-name descname"><span class="pre">NvDlaDebugPrintf</span></code><span class="sig-paren">(</span><em class="property"><span class="pre">const</span></em> <span class="pre">char</span> <span class="pre">*</span><em><span class="pre">format</span></em>, <span class="pre">...</span><span class="sig-paren">)</span><a class="headerlink" href="#c.NvDlaDebugPrintf" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Outputs a message to the debugging console, if present.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -553,7 +552,7 @@ void <code class="sig-name descname">NvDlaDebugPrintf</code><span class="sig-par
 <div class="figure align-center">
 <a class="reference internal image-reference" href="../_images/kmd.png"><img alt="../_images/kmd.png" src="../_images/kmd.png" style="width: 331.09999999999997px; height: 355.59999999999997px;" /></a>
 </div>
-<p>The KMD main entry point receives an inference job in memory, selects from multiple available jobs for execution (if on a multi-process system), and submits it to the core engine scheduler. This core engine scheduler is responsible for handling interrupts from <a class="reference internal" href="../glossary.html#term-1"><span class="xref std std-term">NVDLA</span></a>, scheduling layers on each individual functional block, and updating any dependencies based upon the completion of the layer. The scheduler uses information from the dependency graph to determine when subsequent layers are ready to be scheduled; this allows the compiler to decide scheduling of layers in an optimized way, and avoids performance differences from different implementations of the KMD.</p>
+<p>The KMD main entry point receives an inference job in memory, selects from multiple available jobs for execution (if on a multi-process system), and submits it to the core engine scheduler. This core engine scheduler is responsible for handling interrupts from <a class="reference internal" href="../glossary.html#term-NVDLA"><span class="xref std std-term">NVDLA</span></a>, scheduling layers on each individual functional block, and updating any dependencies based upon the completion of the layer. The scheduler uses information from the dependency graph to determine when subsequent layers are ready to be scheduled; this allows the compiler to decide scheduling of layers in an optimized way, and avoids performance differences from different implementations of the KMD.</p>
 <div class="figure align-center">
 <a class="reference internal image-reference" href="../_images/kmd_interface.png"><img alt="../_images/kmd_interface.png" src="../_images/kmd_interface.png" style="width: 453.59999999999997px; height: 349.29999999999995px;" /></a>
 </div>
@@ -576,9 +575,9 @@ void <code class="sig-name descname">NvDlaDebugPrintf</code><span class="sig-par
 </div>
 <div class="section" id="register-driver-with-firmware-during-probe">
 <span id="register-driver"></span><h4>Register driver with firmware during probe<a class="headerlink" href="#register-driver-with-firmware-during-probe" title="Permalink to this headline">¶</a></h4>
-<dl class="function">
+<dl class="c function">
 <dt id="c.dla_register_driver">
-int32_t <code class="sig-name descname">dla_register_driver</code><span class="sig-paren">(</span>void<em> **engine_context</em>, void<em> *driver_context</em><span class="sig-paren">)</span><a class="headerlink" href="#c.dla_register_driver" title="Permalink to this definition">¶</a></dt>
+<span class="pre">int32_t</span> <code class="sig-name descname"><span class="pre">dla_register_driver</span></code><span class="sig-paren">(</span><span class="pre">void</span> <span class="pre">*</span><span class="pre">*</span><em><span class="pre">engine_context</span></em>, <span class="pre">void</span> <span class="pre">*</span><em><span class="pre">driver_context</span></em><span class="sig-paren">)</span><a class="headerlink" href="#c.dla_register_driver" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>This function must be called once during boot to initialize DLA engine scheduler and register driver with firmware before submitting any task. Pass pointer to driver context in &#64;param driver_context which is passed as param when firmware calls any function of portability layer. It also updates pointer to engine context which must be passed in any function call to firmware after this point.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -596,15 +595,15 @@ int32_t <code class="sig-name descname">dla_register_driver</code><span class="s
 </div>
 <div class="section" id="driver-submits-task-information-for-execution">
 <span id="task-execute"></span><h4>Driver submits task information for execution<a class="headerlink" href="#driver-submits-task-information-for-execution" title="Permalink to this headline">¶</a></h4>
-<dl class="type">
+<dl class="c type">
 <dt id="c.dla_task_descriptor">
-<code class="sig-name descname">dla_task_descriptor</code><a class="headerlink" href="#c.dla_task_descriptor" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">type</span> </em><code class="sig-name descname"><span class="pre">dla_task_descriptor</span></code><a class="headerlink" href="#c.dla_task_descriptor" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Task descriptor structure. This structure includes all the information required to execute a network such as number of layers, dependency graph address etc.</p>
 </dd></dl>
 
-<dl class="function">
+<dl class="c function">
 <dt id="c.dla_execute_task">
-int32_t <code class="sig-name descname">dla_execute_task</code><span class="sig-paren">(</span>void<em> *engine_context</em>, void<em> *task_data</em><span class="sig-paren">)</span><a class="headerlink" href="#c.dla_execute_task" title="Permalink to this definition">¶</a></dt>
+<span class="pre">int32_t</span> <code class="sig-name descname"><span class="pre">dla_execute_task</span></code><span class="sig-paren">(</span><span class="pre">void</span> <span class="pre">*</span><em><span class="pre">engine_context</span></em>, <span class="pre">void</span> <span class="pre">*</span><em><span class="pre">task_data</span></em><span class="sig-paren">)</span><a class="headerlink" href="#c.dla_execute_task" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>This function initializes sub-engines and starts task execution. Further programming and layer scheduling is triggered by events received from hardware.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -622,9 +621,9 @@ int32_t <code class="sig-name descname">dla_execute_task</code><span class="sig-
 </div>
 <div class="section" id="interrupt-received-from-hardware">
 <span id="isr-handler"></span><h4>Interrupt received from hardware<a class="headerlink" href="#interrupt-received-from-hardware" title="Permalink to this headline">¶</a></h4>
-<dl class="function">
+<dl class="c function">
 <dt id="c.dla_isr_handler">
-int32_t <code class="sig-name descname">dla_isr_handler</code><span class="sig-paren">(</span>void<em> *engine_context</em><span class="sig-paren">)</span><a class="headerlink" href="#c.dla_isr_handler" title="Permalink to this definition">¶</a></dt>
+<span class="pre">int32_t</span> <code class="sig-name descname"><span class="pre">dla_isr_handler</span></code><span class="sig-paren">(</span><span class="pre">void</span> <span class="pre">*</span><em><span class="pre">engine_context</span></em><span class="sig-paren">)</span><a class="headerlink" href="#c.dla_isr_handler" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>This function is called when DLA interrupt is received. Portability layer should register it’s own handler using the mechanism supported by that platform and call this function from the handler. Call to this function must be protected by lock to prevent handling interrupt when firmware is programming layers in process context.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -641,9 +640,9 @@ int32_t <code class="sig-name descname">dla_isr_handler</code><span class="sig-p
 </div>
 <div class="section" id="bottom-half-caller-to-process-events-after-interrupt">
 <span id="bottom-half"></span><h4>Bottom half caller to process events after interrupt<a class="headerlink" href="#bottom-half-caller-to-process-events-after-interrupt" title="Permalink to this headline">¶</a></h4>
-<dl class="function">
+<dl class="c function">
 <dt id="c.dla_process_events">
-int32_t <code class="sig-name descname">dla_process_events</code><span class="sig-paren">(</span>void<em> *engine_context</em>, uint32_t<em> *task_complete</em><span class="sig-paren">)</span><a class="headerlink" href="#c.dla_process_events" title="Permalink to this definition">¶</a></dt>
+<span class="pre">int32_t</span> <code class="sig-name descname"><span class="pre">dla_process_events</span></code><span class="sig-paren">(</span><span class="pre">void</span> <span class="pre">*</span><em><span class="pre">engine_context</span></em>, <span class="pre">uint32_t</span> <span class="pre">*</span><em><span class="pre">task_complete</span></em><span class="sig-paren">)</span><a class="headerlink" href="#c.dla_process_events" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Interrupt handler just records events and does not process those events. Portability layer must call this function in thread/process context after interrupt handler is done.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -661,9 +660,9 @@ int32_t <code class="sig-name descname">dla_process_events</code><span class="si
 </div>
 <div class="section" id="clean-task-and-engine-state">
 <span id="clean-task"></span><h4>Clean task and engine state<a class="headerlink" href="#clean-task-and-engine-state" title="Permalink to this headline">¶</a></h4>
-<dl class="function">
+<dl class="c function">
 <dt id="c.dla_clear_task">
-void <code class="sig-name descname">dla_clear_task</code><span class="sig-paren">(</span>void<em> *engine_context</em><span class="sig-paren">)</span><a class="headerlink" href="#c.dla_clear_task" title="Permalink to this definition">¶</a></dt>
+<span class="pre">void</span> <code class="sig-name descname"><span class="pre">dla_clear_task</span></code><span class="sig-paren">(</span><span class="pre">void</span> <span class="pre">*</span><em><span class="pre">engine_context</span></em><span class="sig-paren">)</span><a class="headerlink" href="#c.dla_clear_task" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>This function resets engine scheduler state including op descriptor cache, error values, sub-engine status, events etc and clears previous task state from firmware. This function can be called by portability layer after task completion. It is not mandatory to call it but calling it will ensure clean state before next task execution.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -686,9 +685,9 @@ void <code class="sig-name descname">dla_clear_task</code><span class="sig-paren
 </div></blockquote>
 <div class="section" id="firmware-programs-hardware-layer">
 <span id="driver-interface"></span><h4>Firmware programs hardware layer<a class="headerlink" href="#firmware-programs-hardware-layer" title="Permalink to this headline">¶</a></h4>
-<dl class="function">
+<dl class="c function">
 <dt id="c.dla_reg_read">
-uint32_t <code class="sig-name descname">dla_reg_read</code><span class="sig-paren">(</span>void<em> *driver_context</em>, uint32_t<em> addr</em><span class="sig-paren">)</span><a class="headerlink" href="#c.dla_reg_read" title="Permalink to this definition">¶</a></dt>
+<span class="pre">uint32_t</span> <code class="sig-name descname"><span class="pre">dla_reg_read</span></code><span class="sig-paren">(</span><span class="pre">void</span> <span class="pre">*</span><em><span class="pre">driver_context</span></em>, <span class="pre">uint32_t</span> <em><span class="pre">addr</span></em><span class="sig-paren">)</span><a class="headerlink" href="#c.dla_reg_read" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Read DLA HW register. Portability layer is responsible to use correct base address and for any IO mapping if required.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -703,9 +702,9 @@ uint32_t <code class="sig-name descname">dla_reg_read</code><span class="sig-par
 </dl>
 </dd></dl>
 
-<dl class="function">
+<dl class="c function">
 <dt id="c.dla_reg_write">
-void <code class="sig-name descname">dla_reg_write</code><span class="sig-paren">(</span>void<em> *driver_context</em>, uint32_t<em> addr</em>, uint32_t<em> reg</em><span class="sig-paren">)</span><a class="headerlink" href="#c.dla_reg_write" title="Permalink to this definition">¶</a></dt>
+<span class="pre">void</span> <code class="sig-name descname"><span class="pre">dla_reg_write</span></code><span class="sig-paren">(</span><span class="pre">void</span> <span class="pre">*</span><em><span class="pre">driver_context</span></em>, <span class="pre">uint32_t</span> <em><span class="pre">addr</span></em>, <span class="pre">uint32_t</span> <em><span class="pre">reg</span></em><span class="sig-paren">)</span><a class="headerlink" href="#c.dla_reg_write" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Write DLA HW registr. Portability layer is responsible to use correct base address and for any IO mapping if required.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -718,9 +717,9 @@ void <code class="sig-name descname">dla_reg_write</code><span class="sig-paren"
 </dl>
 </dd></dl>
 
-<dl class="function">
+<dl class="c function">
 <dt id="c.dla_read_dma_address">
-int32_t <code class="sig-name descname">dla_read_dma_address</code><span class="sig-paren">(</span>struct dla_task_desc<em> *task_desc</em>, int16_t<em> index</em>, void<em> *dst</em><span class="sig-paren">)</span><a class="headerlink" href="#c.dla_read_dma_address" title="Permalink to this definition">¶</a></dt>
+<span class="pre">int32_t</span> <code class="sig-name descname"><span class="pre">dla_read_dma_address</span></code><span class="sig-paren">(</span><em class="property"><span class="pre">struct</span></em> <span class="pre">dla_task_desc</span> <span class="pre">*</span><em><span class="pre">task_desc</span></em>, <span class="pre">int16_t</span> <em><span class="pre">index</span></em>, <span class="pre">void</span> <span class="pre">*</span><em><span class="pre">dst</span></em><span class="sig-paren">)</span><a class="headerlink" href="#c.dla_read_dma_address" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Read DMA address from address list at index specified. This function is used by functional block programming operations to read address for DMA engines in functional blocks.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -736,9 +735,9 @@ int32_t <code class="sig-name descname">dla_read_dma_address</code><span class="
 </dl>
 </dd></dl>
 
-<dl class="function">
+<dl class="c function">
 <dt id="c.dla_read_cpu_address">
-int32_t <code class="sig-name descname">dla_read_cpu_address</code><span class="sig-paren">(</span>struct dla_task_desc<em> *task_desc</em>, int16_t<em> index</em>, void<em> *dst</em><span class="sig-paren">)</span><a class="headerlink" href="#c.dla_read_cpu_address" title="Permalink to this definition">¶</a></dt>
+<span class="pre">int32_t</span> <code class="sig-name descname"><span class="pre">dla_read_cpu_address</span></code><span class="sig-paren">(</span><em class="property"><span class="pre">struct</span></em> <span class="pre">dla_task_desc</span> <span class="pre">*</span><em><span class="pre">task_desc</span></em>, <span class="pre">int16_t</span> <em><span class="pre">index</span></em>, <span class="pre">void</span> <span class="pre">*</span><em><span class="pre">dst</span></em><span class="sig-paren">)</span><a class="headerlink" href="#c.dla_read_cpu_address" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Read CPU accessible address from address list at index specified. This function is used by engine scheduler to read data from memory buffer. Address returned by this function must be accessible by processor running engine scheduler.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -754,9 +753,9 @@ int32_t <code class="sig-name descname">dla_read_cpu_address</code><span class="
 </dl>
 </dd></dl>
 
-<dl class="function">
+<dl class="c function">
 <dt id="c.dla_data_read">
-int32_t <code class="sig-name descname">dla_data_read</code><span class="sig-paren">(</span>void<em> *driver_context</em>, void<em> *task_data</em>, uint64_t<em> src</em>, void<em> *dst</em>, uint32_t<em> size</em>, uint64_t<em> offset</em><span class="sig-paren">)</span><a class="headerlink" href="#c.dla_data_read" title="Permalink to this definition">¶</a></dt>
+<span class="pre">int32_t</span> <code class="sig-name descname"><span class="pre">dla_data_read</span></code><span class="sig-paren">(</span><span class="pre">void</span> <span class="pre">*</span><em><span class="pre">driver_context</span></em>, <span class="pre">void</span> <span class="pre">*</span><em><span class="pre">task_data</span></em>, <span class="pre">uint64_t</span> <em><span class="pre">src</span></em>, <span class="pre">void</span> <span class="pre">*</span><em><span class="pre">dst</span></em>, <span class="pre">uint32_t</span> <em><span class="pre">size</span></em>, <span class="pre">uint64_t</span> <em><span class="pre">offset</span></em><span class="sig-paren">)</span><a class="headerlink" href="#c.dla_data_read" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>This function reads data from buffers passed by UMD in local memory. Addresses for buffers passed by are shared in address list and network descriptor contains index in address list for those buffers. Firmware reads this data from buffer shared by UMD into local buffer to consume the information.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -775,9 +774,9 @@ int32_t <code class="sig-name descname">dla_data_read</code><span class="sig-par
 </dl>
 </dd></dl>
 
-<dl class="function">
+<dl class="c function">
 <dt id="c.dla_data_write">
-int32_t <code class="sig-name descname">dla_data_write</code><span class="sig-paren">(</span>void<em> *driver_context</em>, void<em> *task_data</em>, void<em> *src</em>, uint64_t<em> dst</em>, uint32_t<em> size</em>, uint64_t<em> offset</em><span class="sig-paren">)</span><a class="headerlink" href="#c.dla_data_write" title="Permalink to this definition">¶</a></dt>
+<span class="pre">int32_t</span> <code class="sig-name descname"><span class="pre">dla_data_write</span></code><span class="sig-paren">(</span><span class="pre">void</span> <span class="pre">*</span><em><span class="pre">driver_context</span></em>, <span class="pre">void</span> <span class="pre">*</span><em><span class="pre">task_data</span></em>, <span class="pre">void</span> <span class="pre">*</span><em><span class="pre">src</span></em>, <span class="pre">uint64_t</span> <em><span class="pre">dst</span></em>, <span class="pre">uint32_t</span> <em><span class="pre">size</span></em>, <span class="pre">uint64_t</span> <em><span class="pre">offset</span></em><span class="sig-paren">)</span><a class="headerlink" href="#c.dla_data_write" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>This function writes data from local buffer to buffer passed by UMD. Addresses for buffers passed by are shared in address list and network descriptor contains index in address list for those buffers. Firmware writes this data to buffer shared by UMD from local buffer to update the information.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -796,21 +795,21 @@ int32_t <code class="sig-name descname">dla_data_write</code><span class="sig-pa
 </dl>
 </dd></dl>
 
-<dl class="macro">
+<dl class="c macro">
 <dt id="c.DESTINATION_PROCESSOR">
-<code class="sig-name descname">DESTINATION_PROCESSOR</code><a class="headerlink" href="#c.DESTINATION_PROCESSOR" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">DESTINATION_PROCESSOR</span></code><a class="headerlink" href="#c.DESTINATION_PROCESSOR" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Memory will be accessed by processor running firmware.</p>
 </dd></dl>
 
-<dl class="macro">
+<dl class="c macro">
 <dt id="c.DESTINATION_DMA">
-<code class="sig-name descname">DESTINATION_DMA</code><a class="headerlink" href="#c.DESTINATION_DMA" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">DESTINATION_DMA</span></code><a class="headerlink" href="#c.DESTINATION_DMA" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Memory will be accessed by NVDLA DMA engines</p>
 </dd></dl>
 
-<dl class="function">
+<dl class="c function">
 <dt id="c.dla_get_dma_address">
-int32_t <code class="sig-name descname">dla_get_dma_address</code><span class="sig-paren">(</span>void<em> *driver_context</em>, void<em> *task_data</em>, int16_t<em> index</em>, void<em> *dst_ptr</em>, uint32_t<em> destination</em><span class="sig-paren">)</span><a class="headerlink" href="#c.dla_get_dma_address" title="Permalink to this definition">¶</a></dt>
+<span class="pre">int32_t</span> <code class="sig-name descname"><span class="pre">dla_get_dma_address</span></code><span class="sig-paren">(</span><span class="pre">void</span> <span class="pre">*</span><em><span class="pre">driver_context</span></em>, <span class="pre">void</span> <span class="pre">*</span><em><span class="pre">task_data</span></em>, <span class="pre">int16_t</span> <em><span class="pre">index</span></em>, <span class="pre">void</span> <span class="pre">*</span><em><span class="pre">dst_ptr</span></em>, <span class="pre">uint32_t</span> <em><span class="pre">destination</span></em><span class="sig-paren">)</span><a class="headerlink" href="#c.dla_get_dma_address" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Some buffers shared by UMD are accessed by processor responsible for programming DLA HW. It would be companion micro-controller in case of headed config while main CPU in case of headless config. Also, some buffers are accessed by DLA DMA engines inside sub-engines. This function should return proper address accessible by destination user depending on config.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -825,9 +824,9 @@ int32_t <code class="sig-name descname">dla_get_dma_address</code><span class="s
 </dl>
 </dd></dl>
 
-<dl class="function">
+<dl class="c function">
 <dt id="c.dla_get_time_us">
-int64_t <code class="sig-name descname">dla_get_time_us</code><span class="sig-paren">(</span>void<span class="sig-paren">)</span><a class="headerlink" href="#c.dla_get_time_us" title="Permalink to this definition">¶</a></dt>
+<span class="pre">int64_t</span> <code class="sig-name descname"><span class="pre">dla_get_time_us</span></code><span class="sig-paren">(</span><span class="pre">void</span><span class="sig-paren">)</span><a class="headerlink" href="#c.dla_get_time_us" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Read system time in micro-seconds</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
@@ -836,9 +835,9 @@ int64_t <code class="sig-name descname">dla_get_time_us</code><span class="sig-p
 </dl>
 </dd></dl>
 
-<dl class="function">
+<dl class="c function">
 <dt id="c.dla_memset">
-void *<code class="sig-name descname">dla_memset</code><span class="sig-paren">(</span>void<em> *src</em>, int<em> ch</em>, uint64_t<em> len</em><span class="sig-paren">)</span><a class="headerlink" href="#c.dla_memset" title="Permalink to this definition">¶</a></dt>
+<span class="pre">void</span> <span class="pre">*</span><code class="sig-name descname"><span class="pre">dla_memset</span></code><span class="sig-paren">(</span><span class="pre">void</span> <span class="pre">*</span><em><span class="pre">src</span></em>, <span class="pre">int</span> <em><span class="pre">ch</span></em>, <span class="pre">uint64_t</span> <em><span class="pre">len</span></em><span class="sig-paren">)</span><a class="headerlink" href="#c.dla_memset" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Fills the first len bytes of the memory area pointed to by src with the constant byte ch.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -854,9 +853,9 @@ void *<code class="sig-name descname">dla_memset</code><span class="sig-paren">(
 </dl>
 </dd></dl>
 
-<dl class="function">
+<dl class="c function">
 <dt id="c.dla_memcpy">
-void *<code class="sig-name descname">dla_memcpy</code><span class="sig-paren">(</span>void<em> *dest</em>, const void<em> *src</em>, uint64_t<em> len</em><span class="sig-paren">)</span><a class="headerlink" href="#c.dla_memcpy" title="Permalink to this definition">¶</a></dt>
+<span class="pre">void</span> <span class="pre">*</span><code class="sig-name descname"><span class="pre">dla_memcpy</span></code><span class="sig-paren">(</span><span class="pre">void</span> <span class="pre">*</span><em><span class="pre">dest</span></em>, <em class="property"><span class="pre">const</span></em> <span class="pre">void</span> <span class="pre">*</span><em><span class="pre">src</span></em>, <span class="pre">uint64_t</span> <em><span class="pre">len</span></em><span class="sig-paren">)</span><a class="headerlink" href="#c.dla_memcpy" title="Permalink to this definition">¶</a><br /></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -871,9 +870,9 @@ void *<code class="sig-name descname">dla_memcpy</code><span class="sig-paren">(
 </dl>
 </dd></dl>
 
-<dl class="function">
+<dl class="c function">
 <dt id="c.dla_debug">
-void <code class="sig-name descname">dla_debug</code><span class="sig-paren">(</span>const char<em> *str</em>, ...<span class="sig-paren">)</span><a class="headerlink" href="#c.dla_debug" title="Permalink to this definition">¶</a></dt>
+<span class="pre">void</span> <code class="sig-name descname"><span class="pre">dla_debug</span></code><span class="sig-paren">(</span><em class="property"><span class="pre">const</span></em> <span class="pre">char</span> <span class="pre">*</span><em><span class="pre">str</span></em>, <span class="pre">...</span><span class="sig-paren">)</span><a class="headerlink" href="#c.dla_debug" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Print debug message to console</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -884,9 +883,9 @@ void <code class="sig-name descname">dla_debug</code><span class="sig-paren">(</
 </dl>
 </dd></dl>
 
-<dl class="function">
+<dl class="c function">
 <dt id="c.dla_info">
-void <code class="sig-name descname">dla_info</code><span class="sig-paren">(</span>const char<em> *str</em>, ...<span class="sig-paren">)</span><a class="headerlink" href="#c.dla_info" title="Permalink to this definition">¶</a></dt>
+<span class="pre">void</span> <code class="sig-name descname"><span class="pre">dla_info</span></code><span class="sig-paren">(</span><em class="property"><span class="pre">const</span></em> <span class="pre">char</span> <span class="pre">*</span><em><span class="pre">str</span></em>, <span class="pre">...</span><span class="sig-paren">)</span><a class="headerlink" href="#c.dla_info" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Print information message to console</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -897,9 +896,9 @@ void <code class="sig-name descname">dla_info</code><span class="sig-paren">(</s
 </dl>
 </dd></dl>
 
-<dl class="function">
+<dl class="c function">
 <dt id="c.dla_warn">
-void <code class="sig-name descname">dla_warn</code><span class="sig-paren">(</span>const char<em> *str</em>, ...<span class="sig-paren">)</span><a class="headerlink" href="#c.dla_warn" title="Permalink to this definition">¶</a></dt>
+<span class="pre">void</span> <code class="sig-name descname"><span class="pre">dla_warn</span></code><span class="sig-paren">(</span><em class="property"><span class="pre">const</span></em> <span class="pre">char</span> <span class="pre">*</span><em><span class="pre">str</span></em>, <span class="pre">...</span><span class="sig-paren">)</span><a class="headerlink" href="#c.dla_warn" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Print warning message to console</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -910,9 +909,9 @@ void <code class="sig-name descname">dla_warn</code><span class="sig-paren">(</s
 </dl>
 </dd></dl>
 
-<dl class="function">
+<dl class="c function">
 <dt id="c.dla_error">
-void <code class="sig-name descname">dla_error</code><span class="sig-paren">(</span>const char<em> *str</em>, ...<span class="sig-paren">)</span><a class="headerlink" href="#c.dla_error" title="Permalink to this definition">¶</a></dt>
+<span class="pre">void</span> <code class="sig-name descname"><span class="pre">dla_error</span></code><span class="sig-paren">(</span><em class="property"><span class="pre">const</span></em> <span class="pre">char</span> <span class="pre">*</span><em><span class="pre">str</span></em>, <span class="pre">...</span><span class="sig-paren">)</span><a class="headerlink" href="#c.dla_error" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Print error message to console</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -995,7 +994,7 @@ void <code class="sig-name descname">dla_error</code><span class="sig-paren">(</
     </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
         </div>
       </div>
         </div>
@@ -1024,10 +1023,10 @@ void <code class="sig-name descname">dla_error</code><span class="sig-paren">(</
 <div class="container">
 <div class="row">
 &#169; <a
-href="../copyright.html">Copyright</a> 2018, NVIDIA Corporation.
-<a href="http://www.nvidia.com/object/legal_info.html">Legal Information.</a>
-<a href="http://www.nvidia.com/object/privacy_policy.html">Privacy Policy.</a>
-Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.2.0.
+href="../copyright.html">Copyright</a> 2018 - 2024, NVIDIA Corporation.
+<a href="https://www.nvidia.com/object/legal_info.html">Legal Information.</a>
+<a href="https://www.nvidia.com/object/privacy_policy.html">Privacy Policy.</a>
+Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.5.4.
 </div>
 </div>
 </div>

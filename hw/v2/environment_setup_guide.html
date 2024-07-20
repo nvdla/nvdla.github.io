@@ -1,19 +1,18 @@
 
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>NVDLA Environment Setup Guide &#8212; NVDLA Documentation</title>
-    <link rel="stylesheet" href="../../_static/nvdla.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/nvdla.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles.css" />
-    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
-    <script type="text/javascript" src="../../_static/jquery.js"></script>
-    <script type="text/javascript" src="../../_static/underscore.js"></script>
-    <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <script type="text/javascript" src="../../_static/language_data.js"></script>
-    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="Integrator’s Manual" href="integration_guide.html" />
     <link rel="prev" title="Programming Guide" href="../v1/ias/programming_guide.html" />
@@ -54,7 +53,7 @@
   <div class="section" id="nvdla-environment-setup-guide">
 <h1><a class="toc-backref" href="#id1">NVDLA Environment Setup Guide</a><a class="headerlink" href="#nvdla-environment-setup-guide" title="Permalink to this headline">¶</a></h1>
 <div class="contents topic" id="contents">
-<p class="topic-title first">Contents</p>
+<p class="topic-title">Contents</p>
 <ul class="simple">
 <li><p><a class="reference internal" href="#nvdla-environment-setup-guide" id="id1">NVDLA Environment Setup Guide</a></p>
 <ul>
@@ -95,35 +94,35 @@ additionall coverage is necessary to get it to tapeout quality.</p>
 
 <span class="n">Enter</span> <span class="n">to</span> <span class="n">determine</span> <span class="n">designware_noexist</span> <span class="p">(</span><span class="n">Press</span> <span class="n">ENTER</span> <span class="mi">0</span> <span class="n">to</span> <span class="n">use</span> <span class="n">design</span> <span class="n">ware</span><span class="p">,</span> <span class="mi">1</span> <span class="n">to</span> <span class="ow">not</span> <span class="n">use</span> <span class="n">design</span> <span class="n">ware</span><span class="p">:</span> <span class="mi">1</span><span class="p">):</span>
 
-<span class="n">Enter</span> <span class="n">design</span> <span class="n">ware</span> <span class="n">path</span> <span class="p">(</span><span class="n">Press</span> <span class="n">ENTER</span> <span class="k">if</span> <span class="n">use</span><span class="p">:</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">tools</span><span class="o">/</span><span class="n">synopsys</span><span class="o">/</span><span class="n">syn_2011</span><span class="o">.</span><span class="mi">09</span><span class="o">/</span><span class="n">dw</span><span class="o">/</span><span class="n">sim_ver</span><span class="p">):</span>
+<span class="n">Enter</span> <span class="n">design</span> <span class="n">ware</span> <span class="n">path</span> <span class="p">(</span><span class="n">Press</span> <span class="n">ENTER</span> <span class="k">if</span> <span class="n">use</span><span class="p">:</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">tools</span><span class="o">/</span><span class="n">synopsys</span><span class="o">/</span><span class="n">syn_2011</span><span class="mf">.09</span><span class="o">/</span><span class="n">dw</span><span class="o">/</span><span class="n">sim_ver</span><span class="p">):</span>
 
 <span class="n">Enter</span> <span class="n">c</span> <span class="n">pre</span><span class="o">-</span><span class="n">process</span> <span class="n">path</span> <span class="p">(</span><span class="n">Press</span> <span class="n">ENTER</span> <span class="k">if</span> <span class="n">use</span><span class="p">:</span>
-<span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">utils</span><span class="o">/</span><span class="n">gcc</span><span class="o">-</span><span class="mf">4.8</span><span class="o">.</span><span class="mi">2</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">cpp</span><span class="p">):</span>
+<span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">utils</span><span class="o">/</span><span class="n">gcc</span><span class="o">-</span><span class="mf">4.8.2</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">cpp</span><span class="p">):</span>
 
-<span class="n">Enter</span> <span class="n">gcc</span> <span class="n">path</span> <span class="p">(</span><span class="n">Press</span> <span class="n">ENTER</span> <span class="k">if</span> <span class="n">use</span><span class="p">:</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">utils</span><span class="o">/</span><span class="n">gcc</span><span class="o">-</span><span class="mf">4.8</span><span class="o">.</span><span class="mi">2</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">gcc</span><span class="p">):</span>
+<span class="n">Enter</span> <span class="n">gcc</span> <span class="n">path</span> <span class="p">(</span><span class="n">Press</span> <span class="n">ENTER</span> <span class="k">if</span> <span class="n">use</span><span class="p">:</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">utils</span><span class="o">/</span><span class="n">gcc</span><span class="o">-</span><span class="mf">4.8.2</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">gcc</span><span class="p">):</span>
 
-<span class="n">Enter</span> <span class="n">g</span><span class="o">++</span> <span class="n">path</span> <span class="p">(</span><span class="n">Press</span> <span class="n">ENTER</span> <span class="k">if</span> <span class="n">use</span><span class="p">:</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">utils</span><span class="o">/</span><span class="n">gcc</span><span class="o">-</span><span class="mf">4.8</span><span class="o">.</span><span class="mi">2</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">g</span><span class="o">++</span><span class="p">):</span>
+<span class="n">Enter</span> <span class="n">g</span><span class="o">++</span> <span class="n">path</span> <span class="p">(</span><span class="n">Press</span> <span class="n">ENTER</span> <span class="k">if</span> <span class="n">use</span><span class="p">:</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">utils</span><span class="o">/</span><span class="n">gcc</span><span class="o">-</span><span class="mf">4.8.2</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">g</span><span class="o">++</span><span class="p">):</span>
 
 <span class="n">Enter</span> <span class="n">perl</span> <span class="n">path</span> <span class="p">(</span><span class="n">Press</span> <span class="n">ENTER</span> <span class="k">if</span> <span class="n">use</span><span class="p">:</span>
-<span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">utils</span><span class="o">/</span><span class="n">perl</span><span class="o">-</span><span class="mf">5.10</span><span class="o">/</span><span class="mf">5.10</span><span class="o">.</span><span class="mi">0</span><span class="o">-</span><span class="n">threads</span><span class="o">-</span><span class="mi">64</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">perl</span><span class="p">):</span>
+<span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">utils</span><span class="o">/</span><span class="n">perl</span><span class="o">-</span><span class="mf">5.10</span><span class="o">/</span><span class="mf">5.10.0</span><span class="o">-</span><span class="n">threads</span><span class="o">-</span><span class="mi">64</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">perl</span><span class="p">):</span>
 
 <span class="n">Enter</span> <span class="n">java</span> <span class="n">path</span> <span class="p">(</span><span class="n">Press</span> <span class="n">ENTER</span> <span class="k">if</span> <span class="n">use</span><span class="p">:</span>
-<span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">utils</span><span class="o">/</span><span class="n">java</span><span class="o">/</span><span class="n">jdk1</span><span class="o">.</span><span class="mf">8.0_131</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">java</span><span class="p">):</span>
+<span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">utils</span><span class="o">/</span><span class="n">java</span><span class="o">/</span><span class="n">jdk1</span><span class="mf">.8.0_131</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">java</span><span class="p">):</span>
 
 <span class="n">Enter</span> <span class="n">systemc</span> <span class="n">path</span> <span class="p">(</span><span class="n">Press</span> <span class="n">ENTER</span> <span class="k">if</span> <span class="n">use</span><span class="p">:</span>
-<span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">ip</span><span class="o">/</span><span class="n">shared</span><span class="o">/</span><span class="n">inf</span><span class="o">/</span><span class="n">SystemC</span><span class="o">/</span><span class="mf">1.0</span><span class="o">/</span><span class="mi">20151112</span><span class="o">/</span><span class="n">systemc</span><span class="o">-</span><span class="mf">2.3</span><span class="o">.</span><span class="mi">0</span><span class="o">/</span><span class="n">GCC472_64_DBG</span><span class="p">):</span>
+<span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">ip</span><span class="o">/</span><span class="n">shared</span><span class="o">/</span><span class="n">inf</span><span class="o">/</span><span class="n">SystemC</span><span class="o">/</span><span class="mf">1.0</span><span class="o">/</span><span class="mi">20151112</span><span class="o">/</span><span class="n">systemc</span><span class="o">-</span><span class="mf">2.3.0</span><span class="o">/</span><span class="n">GCC472_64_DBG</span><span class="p">):</span>
 
 <span class="n">Enter</span> <span class="n">python</span> <span class="n">path</span> <span class="p">(</span><span class="n">Press</span> <span class="n">ENTER</span> <span class="k">if</span> <span class="n">use</span><span class="p">:</span>
-<span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">tools</span><span class="o">/</span><span class="n">continuum</span><span class="o">/</span><span class="n">Anaconda3</span><span class="o">-</span><span class="mf">5.0</span><span class="o">.</span><span class="mi">1</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">python</span><span class="p">):</span>
+<span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">tools</span><span class="o">/</span><span class="n">continuum</span><span class="o">/</span><span class="n">Anaconda3</span><span class="o">-</span><span class="mf">5.0.1</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">python</span><span class="p">):</span>
 
 <span class="n">Enter</span> <span class="n">vcs_home</span> <span class="n">path</span> <span class="p">(</span><span class="n">Press</span> <span class="n">ENTER</span> <span class="k">if</span> <span class="n">use</span><span class="p">:</span>
 <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">tools</span><span class="o">/</span><span class="n">vcs</span><span class="o">/</span><span class="n">mx</span><span class="o">-</span><span class="mf">2016.06</span><span class="o">-</span><span class="n">SP2</span><span class="o">-</span><span class="mi">4</span><span class="p">):</span>
 
 <span class="n">Enter</span> <span class="n">novas_home</span> <span class="n">path</span> <span class="p">(</span><span class="n">Press</span> <span class="n">ENTER</span> <span class="k">if</span> <span class="n">use</span><span class="p">:</span>
-<span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">tools</span><span class="o">/</span><span class="n">debussy</span><span class="o">/</span><span class="n">verdi3_2016</span><span class="o">.</span><span class="mi">06</span><span class="o">-</span><span class="n">SP2</span><span class="o">-</span><span class="mi">9</span><span class="p">):</span>
+<span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">tools</span><span class="o">/</span><span class="n">debussy</span><span class="o">/</span><span class="n">verdi3_2016</span><span class="mf">.06</span><span class="o">-</span><span class="n">SP2</span><span class="o">-</span><span class="mi">9</span><span class="p">):</span>
 
 <span class="n">Enter</span> <span class="n">verdi_home</span> <span class="n">path</span> <span class="p">(</span><span class="n">Press</span> <span class="n">ENTER</span> <span class="k">if</span> <span class="n">use</span><span class="p">:</span>
-<span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">tools</span><span class="o">/</span><span class="n">debussy</span><span class="o">/</span><span class="n">verdi3_2016</span><span class="o">.</span><span class="mi">06</span><span class="o">-</span><span class="n">SP2</span><span class="o">-</span><span class="mi">9</span><span class="p">):</span>
+<span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">tools</span><span class="o">/</span><span class="n">debussy</span><span class="o">/</span><span class="n">verdi3_2016</span><span class="mf">.06</span><span class="o">-</span><span class="n">SP2</span><span class="o">-</span><span class="mi">9</span><span class="p">):</span>
 
 <span class="o">================================================================</span>
 
@@ -146,7 +145,7 @@ project name, only build nv_small:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">##=======================</span>
 <span class="c1">## Project Name Setup, multiple projects supported</span>
 <span class="c1">##=======================</span>
-<span class="n">PROJECTS</span> <span class="p">:</span><span class="o">=</span> <span class="n">nv_small</span>
+<span class="n">PROJECTS</span> <span class="o">:=</span> <span class="n">nv_small</span>
 </pre></div>
 </div>
 </div>
@@ -164,7 +163,7 @@ and simulation. They can be obtained directly from the EDA vendors.</p>
 an alternate implementation.  The design can be compiled to
 using the alternate implementation by setting the tree.make variable
 DESIGNWARE_NOEXIST to 1.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">DESIGNWARE_NOEXIST</span> <span class="p">:</span><span class="o">=</span> <span class="mi">1</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">DESIGNWARE_NOEXIST</span> <span class="o">:=</span> <span class="mi">1</span>
 </pre></div>
 </div>
 <p>If designware implementation is available, set the tree.make
@@ -173,8 +172,8 @@ the designware directory also needs up be added to tree.make with
 the DESIGNWARE_DIR variable.  This variable should point to a directory
 where the simulation version of the designware component is avaiable.
 Synthesis will pick up an internal optimized version.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">DESIGNWARE_NOEXIST</span> <span class="p">:</span><span class="o">=</span> <span class="mi">0</span>
-<span class="n">DESIGNWARE_DIR</span> <span class="p">:</span><span class="o">=</span> \<span class="o">&lt;</span><span class="n">PATH_TO_DESIGNWARE_DIRECTOTRY</span>\<span class="o">&gt;</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">DESIGNWARE_NOEXIST</span> <span class="o">:=</span> <span class="mi">0</span>
+<span class="n">DESIGNWARE_DIR</span> <span class="o">:=</span> \<span class="o">&lt;</span><span class="n">PATH_TO_DESIGNWARE_DIRECTOTRY</span>\<span class="o">&gt;</span>
 </pre></div>
 </div>
 </div>
@@ -283,7 +282,7 @@ be show in the last line:</p>
     </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
         </div>
       </div>
         </div>
@@ -312,10 +311,10 @@ be show in the last line:</p>
 <div class="container">
 <div class="row">
 &#169; <a
-href="../../copyright.html">Copyright</a> 2018, NVIDIA Corporation.
-<a href="http://www.nvidia.com/object/legal_info.html">Legal Information.</a>
-<a href="http://www.nvidia.com/object/privacy_policy.html">Privacy Policy.</a>
-Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.2.0.
+href="../../copyright.html">Copyright</a> 2018 - 2024, NVIDIA Corporation.
+<a href="https://www.nvidia.com/object/legal_info.html">Legal Information.</a>
+<a href="https://www.nvidia.com/object/privacy_policy.html">Privacy Policy.</a>
+Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.5.4.
 </div>
 </div>
 </div>

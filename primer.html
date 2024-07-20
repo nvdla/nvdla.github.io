@@ -1,19 +1,18 @@
 
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>NVDLA Primer &#8212; NVDLA Documentation</title>
-    <link rel="stylesheet" href="_static/nvdla.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/nvdla.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="_static/styles.css" />
-    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-    <script type="text/javascript" src="_static/jquery.js"></script>
-    <script type="text/javascript" src="_static/underscore.js"></script>
-    <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="_static/language_data.js"></script>
-    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Open Source Roadmap" href="roadmap.html" />
     <link rel="prev" title="NVDLA Index of Documentation" href="contents.html" />
@@ -252,7 +251,7 @@ data to the Single Data Point Processor, which can pass data to the Planar
 Data Processor, and in turn to the Cross-channel Data Processor).</p></li>
 </ul>
 <div class="figure align-center" id="id2">
-<span id="fig-core-diagram"></span><img alt="&quot;Headless NVDLA core&quot; architectural drawing.  A configuration interface block is connected to the outside world through the CSB/interrupt interface.  The memory interface block is connected outside with a DBB interface and a second, optional, DBB interface.  The memory interface connects to a convolution buffer, which connects to a convolution core; the memory interface also connects to the activation engine, the pooling engine, local response normalization engine, reshape engine, and bridge DMA engine.   The convolution core, activation engine, pooling engine, and local response normalization engine also form a pipeline." src="_images/nvdla-primer-core-diagram1.svg" /><p class="caption"><span class="caption-number">Fig. 2 </span><span class="caption-text">Internal architecture of NVDLA core.</span><a class="headerlink" href="#id2" title="Permalink to this image">¶</a></p>
+<span id="fig-core-diagram"></span><img alt="&quot;Headless NVDLA core&quot; architectural drawing.  A configuration interface block is connected to the outside world through the CSB/interrupt interface.  The memory interface block is connected outside with a DBB interface and a second, optional, DBB interface.  The memory interface connects to a convolution buffer, which connects to a convolution core; the memory interface also connects to the activation engine, the pooling engine, local response normalization engine, reshape engine, and bridge DMA engine.   The convolution core, activation engine, pooling engine, and local response normalization engine also form a pipeline." src="_images/nvdla-primer-core-diagram.svg" /><p class="caption"><span class="caption-number">Fig. 2 </span><span class="caption-text">Internal architecture of NVDLA core.</span><a class="headerlink" href="#id2" title="Permalink to this image">¶</a></p>
 </div>
 <div class="section" id="connections">
 <h3>Connections<a class="headerlink" href="#connections" title="Permalink to this headline">¶</a></h3>
@@ -436,7 +435,7 @@ conversion), and the <em>runtime environment</em> (run-time software to load and
 networks on NVDLA).  The general flow of this is as shown in the figure
 below; and each of these is described below.</p>
 <div class="figure align-center" id="id3">
-<span id="fig-sw-flow"></span><a class="reference internal image-reference" href="_images/nvdla-primer-sw-flow.svg"><img alt="DL training software produces a model, which the compilation tool takes and turns into a loadable, which is used by runtime environment. In runtime, UMD submits with ioctl()s to KMD, which is sent to NVDLA with register writes." src="_images/nvdla-primer-sw-flow.svg" /></a>
+<span id="fig-sw-flow"></span><a class="reference internal image-reference" href="_images/nvdla-primer-sw-flow.svg"><img alt="DL training software produces a model, which the compilation tool takes and turns into a loadable, which is used by runtime environment. In runtime, UMD submits with ioctl()s to KMD, which is sent to NVDLA with register writes." height="72" src="_images/nvdla-primer-sw-flow.svg" width="384" /></a>
 <p class="caption"><span class="caption-number">Fig. 3 </span><span class="caption-text">Dataflow diagram inside of NVDLA system software.</span><a class="headerlink" href="#id3" title="Permalink to this image">¶</a></p>
 </div>
 <div class="section" id="compilation-tools-model-creation-and-compilation">
@@ -473,7 +472,7 @@ is effectively divided into two layers:</p>
 <ul class="simple">
 <li><p><strong>User Mode Driver.</strong> The main interface with user-mode programs.
 After parsing the neural network compiler compiles network layer by layer and converts it
-into a file format called <a class="reference internal" href="glossary.html#term-nvdla-loadable"><span class="xref std std-term">NVDLA Loadable</span></a>. User mode runtime driver loads this
+into a file format called <a class="reference internal" href="glossary.html#term-NVDLA-Loadable"><span class="xref std std-term">NVDLA Loadable</span></a>. User mode runtime driver loads this
 loadable and submits inference job to <a class="reference internal" href="sw/runtime_environment.html#kernel-mode-driver"><span class="std std-ref">Kernel Mode Driver</span></a></p></li>
 <li><p><strong>Kernel Mode Driver.</strong> Consists of drivers and firmware that do the work of
 scheduling layer operations on NVDLA and programming the NVDLA registers
@@ -803,7 +802,7 @@ pertaining to Deep Learning and Convolutional Neural Networks. The following
 links have been provided as a means to begin or further an individual’s
 investigation into these topics, as needed.</p>
 <ul class="simple">
-<li><p><a class="reference external" href="http://info.nvidia.com/deep-learning-demystified.html">NVIDIA Webinar Series: Deep Learning Demystified</a></p></li>
+<li><p><a class="reference external" href="https://info.nvidia.com/deep-learning-demystified.html">NVIDIA Webinar Series: Deep Learning Demystified</a></p></li>
 <li><p>A Beginner’s Guide to Understanding Convolutional Neural Networks</p>
 <ul>
 <li><p><a class="reference external" href="https://adeshpande3.github.io/adeshpande3.github.io/A-Beginner's-Guide-To-Understanding-Convolutional-Neural-Networks/">Part 1</a></p></li>
@@ -811,9 +810,9 @@ investigation into these topics, as needed.</p>
 </ul>
 </li>
 <li><p><a class="reference external" href="https://devblogs.nvidia.com/parallelforall/inference-next-step-gpu-accelerated-deep-learning/">Inference: The Next Step in GPU-Accelerated Deep Learning</a></p></li>
-<li><p><a class="reference external" href="http://www.nvidia.com/content/tegra/embedded-systems/pdf/jetson_tx1_whitepaper.pdf">NVIDIA Whitepaper: GPU-Based Deep Learning Inference: A performance and Power Analysis</a></p></li>
+<li><p><a class="reference external" href="https://www.nvidia.com/content/tegra/embedded-systems/pdf/jetson_tx1_whitepaper.pdf">NVIDIA Whitepaper: GPU-Based Deep Learning Inference: A performance and Power Analysis</a></p></li>
 <li><p><a class="reference external" href="https://blogs.nvidia.com/blog/2016/08/22/difference-deep-learning-training-inference-ai/">Fundamentals of Deep Learning: What’s the Difference between Deep Learning Training and Inference?</a></p></li>
-<li><p><a class="reference external" href="http://www.cv-foundation.org/openaccess/content_cvpr_2015/papers/Szegedy_Going_Deeper_With_2015_CVPR_paper.pdf">Inception (GoogLeNet): Going Deeper with Convolutions</a></p></li>
+<li><p><a class="reference external" href="https://www.cv-foundation.org/openaccess/content_cvpr_2015/papers/Szegedy_Going_Deeper_With_2015_CVPR_paper.pdf">Inception (GoogLeNet): Going Deeper with Convolutions</a></p></li>
 <li><p><a class="reference external" href="https://arxiv.org/pdf/1512.03385v1.pdf">Microsoft ResNet: Deep Residual Learning for Image Recognition</a></p></li>
 <li><p><a class="reference external" href="https://papers.nips.cc/paper/4824-imagenet-classification-with-deep-convolutional-neural-networks.pdf">AlexNet: ImageNet Classification with Deep Convolutional Neural Networks</a></p></li>
 <li><p><a class="reference external" href="https://arxiv.org/pdf/1409.1556v6.pdf">VGG Net: Very Deep Convolutional Networks for Large-Scale Image Recognition</a></p></li>
@@ -903,7 +902,7 @@ investigation into these topics, as needed.</p>
     </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
         </div>
       </div>
         </div>
@@ -931,10 +930,10 @@ investigation into these topics, as needed.</p>
 <div class="container">
 <div class="row">
 &#169; <a
-href="copyright.html">Copyright</a> 2018, NVIDIA Corporation.
-<a href="http://www.nvidia.com/object/legal_info.html">Legal Information.</a>
-<a href="http://www.nvidia.com/object/privacy_policy.html">Privacy Policy.</a>
-Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.2.0.
+href="copyright.html">Copyright</a> 2018 - 2024, NVIDIA Corporation.
+<a href="https://www.nvidia.com/object/legal_info.html">Legal Information.</a>
+<a href="https://www.nvidia.com/object/privacy_policy.html">Privacy Policy.</a>
+Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.5.4.
 </div>
 </div>
 </div>

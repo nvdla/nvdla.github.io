@@ -1,19 +1,19 @@
 
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Hardware Architectural Specification &#8212; NVDLA Documentation</title>
-    <link rel="stylesheet" href="../../_static/nvdla.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/nvdla.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles.css" />
-    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
-    <script type="text/javascript" src="../../_static/jquery.js"></script>
-    <script type="text/javascript" src="../../_static/underscore.js"></script>
-    <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <script type="text/javascript" src="../../_static/language_data.js"></script>
-    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="In-memory data formats" href="../format.html" />
     <link rel="prev" title="Hardware Manual" href="../contents.html" />
@@ -577,11 +577,11 @@ attached to the NVDLA.</p></li>
 <p>Below, we present two examples of platforms that integrate an NVDLA, and how
 they attach these external connections to the rest of the system.</p>
 <div class="figure align-center" id="id7">
-<span id="fig-small-nvdla"></span><a class="reference internal image-reference" href="../../_images/nvdla-hwarch-small.svg"><img alt="../../_images/nvdla-hwarch-small.svg" src="../../_images/nvdla-hwarch-small.svg" /></a>
+<span id="fig-small-nvdla"></span><a class="reference internal image-reference" href="../../_images/nvdla-hwarch-small.svg"><img alt="../../_images/nvdla-hwarch-small.svg" height="224" src="../../_images/nvdla-hwarch-small.svg" width="224" /></a>
 <p class="caption"><span class="caption-number">Fig. 6 </span><span class="caption-text">Small NVDLA system.</span><a class="headerlink" href="#id7" title="Permalink to this image">¶</a></p>
 </div>
 <div class="figure align-center" id="id8">
-<span id="fig-large-nvdla"></span><a class="reference internal image-reference" href="../../_images/nvdla-hwarch-large.svg"><img alt="../../_images/nvdla-hwarch-large.svg" src="../../_images/nvdla-hwarch-large.svg" /></a>
+<span id="fig-large-nvdla"></span><a class="reference internal image-reference" href="../../_images/nvdla-hwarch-large.svg"><img alt="../../_images/nvdla-hwarch-large.svg" height="264" src="../../_images/nvdla-hwarch-large.svg" width="198" /></a>
 <p class="caption"><span class="caption-number">Fig. 7 </span><span class="caption-text">Large NVDLA system.</span><a class="headerlink" href="#id8" title="Permalink to this image">¶</a></p>
 </div>
 <p><a class="reference internal" href="#fig-small-nvdla"><span class="std std-numref">Fig. 6</span></a> shows a small system, for which NVDLA is directly
@@ -759,7 +759,7 @@ such, the host cannot back-pressure NVDLA on this interface.</p>
 transactions (2 writes, 2 reads) on the CSB bus between a requester and
 NVDLA.</p>
 <div class="figure align-center" id="id12">
-<span id="fig-timing-diagram"></span><a class="reference internal image-reference" href="../../_images/nvdla-hwarch-csb-timing.svg"><img alt="../../_images/nvdla-hwarch-csb-timing.svg" src="../../_images/nvdla-hwarch-csb-timing.svg" /></a>
+<span id="fig-timing-diagram"></span><a class="reference internal image-reference" href="../../_images/nvdla-hwarch-csb-timing.svg"><img alt="../../_images/nvdla-hwarch-csb-timing.svg" height="167" src="../../_images/nvdla-hwarch-csb-timing.svg" width="262" /></a>
 <p class="caption"><span class="caption-number">Fig. 8 </span><span class="caption-text">Interface timing example on the CSB.</span><a class="headerlink" href="#id12" title="Permalink to this image">¶</a></p>
 </div>
 </div>
@@ -3344,7 +3344,7 @@ their registers are not available either.  These registers are as noted below:</
     </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
         </div>
       </div>
         </div>
@@ -3373,10 +3373,10 @@ their registers are not available either.  These registers are as noted below:</
 <div class="container">
 <div class="row">
 &#169; <a
-href="../../copyright.html">Copyright</a> 2018, NVIDIA Corporation.
-<a href="http://www.nvidia.com/object/legal_info.html">Legal Information.</a>
-<a href="http://www.nvidia.com/object/privacy_policy.html">Privacy Policy.</a>
-Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.2.0.
+href="../../copyright.html">Copyright</a> 2018 - 2024, NVIDIA Corporation.
+<a href="https://www.nvidia.com/object/legal_info.html">Legal Information.</a>
+<a href="https://www.nvidia.com/object/privacy_policy.html">Privacy Policy.</a>
+Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.5.4.
 </div>
 </div>
 </div>
