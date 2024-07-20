@@ -1,19 +1,19 @@
 
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>In-memory data formats &#8212; NVDLA Documentation</title>
-    <link rel="stylesheet" href="../_static/nvdla.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/nvdla.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/styles.css" />
-    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-    <script type="text/javascript" src="../_static/jquery.js"></script>
-    <script type="text/javascript" src="../_static/underscore.js"></script>
-    <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="../_static/language_data.js"></script>
-    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Integrator’s Manual" href="v1/integration_guide.html" />
     <link rel="prev" title="Hardware Architectural Specification" href="v1/hwarch.html" />
@@ -906,7 +906,7 @@ operation mode:</p>
 </tbody>
 </table>
 <div class="figure align-center" id="id5">
-<span id="fig-original-weight-data"></span><a class="reference internal image-reference" href="../_images/format_original_weight_data.svg"><img alt="../_images/format_original_weight_data.svg" src="../_images/format_original_weight_data.svg" /></a>
+<span id="fig-original-weight-data"></span><a class="reference internal image-reference" href="../_images/format_original_weight_data.svg"><img alt="../_images/format_original_weight_data.svg" height="155" src="../_images/format_original_weight_data.svg" width="445" /></a>
 <p class="caption"><span class="caption-number">Fig. 12 </span><span class="caption-text">Original weight data</span><a class="headerlink" href="#id5" title="Permalink to this image">¶</a></p>
 </div>
 <div class="section" id="basic-weight-for-direct-convolution">
@@ -933,7 +933,7 @@ boundaries.</p></li>
 <p>Diagram below shows how a group of 3x3x192Byte kernel maps for direct
 convolution.</p>
 <div class="figure align-center" id="id6">
-<span id="fig-dc-weight-mapping"></span><a class="reference internal image-reference" href="../_images/format_dc_weight_mapping.svg"><img alt="../_images/format_dc_weight_mapping.svg" src="../_images/format_dc_weight_mapping.svg" /></a>
+<span id="fig-dc-weight-mapping"></span><a class="reference internal image-reference" href="../_images/format_dc_weight_mapping.svg"><img alt="../_images/format_dc_weight_mapping.svg" height="191" src="../_images/format_dc_weight_mapping.svg" width="442" /></a>
 <p class="caption"><span class="caption-number">Fig. 13 </span><span class="caption-text">Weight mapping for direct convolution inside one group</span><a class="headerlink" href="#id6" title="Permalink to this image">¶</a></p>
 </div>
 </div>
@@ -953,7 +953,7 @@ channel extension for Winograd convolution.</p>
 single channel. <a class="reference internal" href="#fig-dc-channel-extension-for-image-for-weight"><span class="std std-numref">Fig. 14</span></a>
 is a case for an int16 image input whose channel size is 3.</p>
 <div class="figure align-center" id="id7">
-<span id="fig-dc-channel-extension-for-image-for-weight"></span><a class="reference internal image-reference" href="../_images/format_dc_channel_extension_for_image_for_weight.svg"><img alt="../_images/format_dc_channel_extension_for_image_for_weight.svg" src="../_images/format_dc_channel_extension_for_image_for_weight.svg" /></a>
+<span id="fig-dc-channel-extension-for-image-for-weight"></span><a class="reference internal image-reference" href="../_images/format_dc_channel_extension_for_image_for_weight.svg"><img alt="../_images/format_dc_channel_extension_for_image_for_weight.svg" height="218" src="../_images/format_dc_channel_extension_for_image_for_weight.svg" width="349" /></a>
 <p class="caption"><span class="caption-number">Fig. 14 </span><span class="caption-text">Channel extension for image weight</span><a class="headerlink" href="#id7" title="Permalink to this image">¶</a></p>
 </div>
 <p>Channel pre-extension is the first step for image weight. Then all
@@ -1518,7 +1518,7 @@ wise</p></td>
     </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
         </div>
       </div>
         </div>
@@ -1547,10 +1547,10 @@ wise</p></td>
 <div class="container">
 <div class="row">
 &#169; <a
-href="../copyright.html">Copyright</a> 2018, NVIDIA Corporation.
-<a href="http://www.nvidia.com/object/legal_info.html">Legal Information.</a>
-<a href="http://www.nvidia.com/object/privacy_policy.html">Privacy Policy.</a>
-Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.2.0.
+href="../copyright.html">Copyright</a> 2018 - 2024, NVIDIA Corporation.
+<a href="https://www.nvidia.com/object/legal_info.html">Legal Information.</a>
+<a href="https://www.nvidia.com/object/privacy_policy.html">Privacy Policy.</a>
+Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.5.4.
 </div>
 </div>
 </div>

@@ -1,19 +1,19 @@
 
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Precision Preservation &#8212; NVDLA Documentation</title>
-    <link rel="stylesheet" href="../../../_static/nvdla.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/nvdla.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/styles.css" />
-    <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
-    <script type="text/javascript" src="../../../_static/jquery.js"></script>
-    <script type="text/javascript" src="../../../_static/underscore.js"></script>
-    <script type="text/javascript" src="../../../_static/doctools.js"></script>
-    <script type="text/javascript" src="../../../_static/language_data.js"></script>
-    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="search" title="Search" href="../../../search.html" />
     <link rel="next" title="LUT programming" href="lut-programming.html" />
     <link rel="prev" title="Integrator’s Manual" href="../integration_guide.html" />
@@ -60,7 +60,7 @@ performance/area.  At the same time, NVDLA adopts technologies to
 keep the precision loss under control.  Below, we give a diagram with an overview of NVDLA’s
 precision-preservation architecture.</p>
 <div class="figure align-center" id="id3">
-<span id="fig-image53-nvdla-precision"></span><img alt="../../../_images/ias_image53_nvdla_precision.svg" src="../../../_images/ias_image53_nvdla_precision.svg" /><p class="caption"><span class="caption-number">Fig. 32 </span><span class="caption-text">NVDLA precision-preservation architecture</span><a class="headerlink" href="#id3" title="Permalink to this image">¶</a></p>
+<span id="fig-image53-nvdla-precision"></span><img alt="../../../_images/ias_image53_nvdla_precision.svg" src="../../../_images/ias_image53_nvdla_precision.svg" /><p class="caption"><span class="caption-number">Fig. 31 </span><span class="caption-text">NVDLA precision-preservation architecture</span><a class="headerlink" href="#id3" title="Permalink to this image">¶</a></p>
 </div>
 <p>In total, there are four types of approaches to precision control in the NVDLA
 pipeline:</p>
@@ -97,7 +97,7 @@ results; it has the formula <span class="math notranslate nohighlight">\(y = sat
 <li><p>LUT:</p>
 <p>Look-up tables are used to deal with non-linear function in networks; these functions include
 sigmoid/tanh activation, or local response normalization as mentioned
-in <a class="reference external" href="http://nvdla.org/hw/format.html">Data Formats</a>.  We use an innovative 2 level hybrid LUT to mimic those
+in <a class="reference external" href="https://nvdla.org/hw/format.html">Data Formats</a>.  We use an innovative 2 level hybrid LUT to mimic those
 non-linear functions; for more detail, see <a class="reference internal" href="lut-programming.html"><span class="doc">LUT programming</span></a>.</p>
 </li>
 </ul>
@@ -196,7 +196,7 @@ parameters have different encodings:</p>
 <div class="section" id="convolution-convertors">
 <span id="id1"></span><h3>Convolution convertors<a class="headerlink" href="#convolution-convertors" title="Permalink to this headline">¶</a></h3>
 <p>The following is a list of place where convertors or truncation might be used for a convolution
-layer (please refer to <a class="reference internal" href="#fig-image53-nvdla-precision"><span class="std std-numref">Fig. 32</span></a> about
+layer (please refer to <a class="reference internal" href="#fig-image53-nvdla-precision"><span class="std std-numref">Fig. 31</span></a> about
 where’re the convertors in system):</p>
 <table class="docutils align-default">
 <colgroup>
@@ -350,7 +350,7 @@ X1/X2/Y in SDP.</p>
 <h3>SDP convertors<a class="headerlink" href="#sdp-convertors" title="Permalink to this headline">¶</a></h3>
 <p>SDP has kinds of use scenarios, table below lists how those use
 scenarios maps to SDP sub-modules (For the meaning of X/Y, please refer
-to <a class="reference internal" href="#fig-image53-nvdla-precision"><span class="std std-numref">Fig. 32</span></a>)</p>
+to <a class="reference internal" href="#fig-image53-nvdla-precision"><span class="std std-numref">Fig. 31</span></a>)</p>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 72%" />
@@ -759,7 +759,7 @@ during convertor. The overflow is defined as:</p>
     </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
         </div>
       </div>
         </div>
@@ -788,10 +788,10 @@ during convertor. The overflow is defined as:</p>
 <div class="container">
 <div class="row">
 &#169; <a
-href="../../../copyright.html">Copyright</a> 2018, NVIDIA Corporation.
-<a href="http://www.nvidia.com/object/legal_info.html">Legal Information.</a>
-<a href="http://www.nvidia.com/object/privacy_policy.html">Privacy Policy.</a>
-Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.2.0.
+href="../../../copyright.html">Copyright</a> 2018 - 2024, NVIDIA Corporation.
+<a href="https://www.nvidia.com/object/legal_info.html">Legal Information.</a>
+<a href="https://www.nvidia.com/object/privacy_policy.html">Privacy Policy.</a>
+Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.5.4.
 </div>
 </div>
 </div>

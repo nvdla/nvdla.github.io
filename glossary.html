@@ -1,19 +1,18 @@
 
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Glossary And Acronyms &#8212; NVDLA Documentation</title>
-    <link rel="stylesheet" href="_static/nvdla.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/nvdla.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="_static/styles.css" />
-    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-    <script type="text/javascript" src="_static/jquery.js"></script>
-    <script type="text/javascript" src="_static/underscore.js"></script>
-    <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="_static/language_data.js"></script>
-    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
     <link rel="search" title="Search" href="search.html" />
     <link rel="prev" title="Open NVDLA Code of Conduct" href="conduct.html" />
  
@@ -49,60 +48,56 @@
   <div class="section" id="glossary-and-acronyms">
 <h1>Glossary And Acronyms<a class="headerlink" href="#glossary-and-acronyms" title="Permalink to this headline">¶</a></h1>
 <dl class="glossary simple">
-<dt id="term-nvdla">NVDLA</dt><dd><p>NVIDIA Deep Learning Accelerator. Hardware logic implementing different function engines.</p>
+<dt id="term-NVDLA">NVDLA<a class="headerlink" href="#term-NVDLA" title="Permalink to this term">¶</a></dt><dd><p>NVIDIA Deep Learning Accelerator. Hardware logic implementing different function engines.</p>
 </dd>
-<dt id="term-dla">DLA</dt><dd><p>Deep Learning Accelerator</p>
+<dt id="term-DLA">DLA<a class="headerlink" href="#term-DLA" title="Permalink to this term">¶</a></dt><dd><p>Deep Learning Accelerator</p>
 </dd>
-<dt id="term-umd">UMD</dt><dd><p>User Mode Driver, software running in user space. It provides interfaces to user application</p>
+<dt id="term-UMD">UMD<a class="headerlink" href="#term-UMD" title="Permalink to this term">¶</a></dt><dd><p>User Mode Driver, software running in user space. It provides interfaces to user application</p>
 </dd>
-<dt id="term-kmd">KMD</dt><dd><p>Kernel Mode Driver, software running in kernel space. It implement low level functions such as hardware
+<dt id="term-KMD">KMD<a class="headerlink" href="#term-KMD" title="Permalink to this term">¶</a></dt><dd><p>Kernel Mode Driver, software running in kernel space. It implement low level functions such as hardware
 programming and provides interfaces to UMD</p>
 </dd>
-<dt id="term-nvdla-loadable">NVDLA Loadable</dt><dd><p>Format used to store compiled neural network.</p>
+<dt id="term-NVDLA-Loadable">NVDLA Loadable<a class="headerlink" href="#term-NVDLA-Loadable" title="Permalink to this term">¶</a></dt><dd><p>Format used to store compiled neural network.</p>
 </dd>
-<dt id="term-hw-layer">hw-layer</dt><dd><p>One complete hardware block processing. It starts with a set of register configuration with an
+<dt id="term-hw-layer">hw-layer<a class="headerlink" href="#term-hw-layer" title="Permalink to this term">¶</a></dt><dd><p>One complete hardware block processing. It starts with a set of register configuration with an
 enable field. When it is done, it triggers ONE interrupt.</p>
 </dd>
-<dt id="term-sdp">SDP</dt><dd><p>Single data processor, a functional sub unit in NVDLA engine</p>
+<dt id="term-SDP">SDP<a class="headerlink" href="#term-SDP" title="Permalink to this term">¶</a></dt><dd><p>Single data processor, a functional sub unit in NVDLA engine</p>
 </dd>
-<dt id="term-pdp">PDP</dt><dd><p>Planar data processor, a functional sub unit in NVDLA engine</p>
+<dt id="term-PDP">PDP<a class="headerlink" href="#term-PDP" title="Permalink to this term">¶</a></dt><dd><p>Planar data processor, a functional sub unit in NVDLA engine</p>
 </dd>
-<dt id="term-cdp">CDP</dt><dd><p>Channel data processor, a functional sub unit in NVDLA engine</p>
+<dt id="term-CDP">CDP<a class="headerlink" href="#term-CDP" title="Permalink to this term">¶</a></dt><dd><p>Channel data processor, a functional sub unit in NVDLA engine</p>
 </dd>
-<dt id="term-rubik">Rubik</dt><dd><p>Data operation processor. A functional sub unit in NVDLA engine to
+<dt id="term-Rubik">Rubik<a class="headerlink" href="#term-Rubik" title="Permalink to this term">¶</a></dt><dd><p>Data operation processor. A functional sub unit in NVDLA engine to
 support data layout transformation</p>
 </dd>
-<dt id="term-bdma">BDMA</dt><dd><p>Bridge DMA. BDMA transform data from CVSRAM to MC and vice versa</p>
+<dt id="term-BDMA">BDMA<a class="headerlink" href="#term-BDMA" title="Permalink to this term">¶</a></dt><dd><p>Bridge DMA. BDMA transform data from CVSRAM to MC and vice versa</p>
 </dd>
-<dt id="term-cdma">CDMA</dt><dd><p>Convolution DMA, responsible for load image/weight/feature data to convolution core</p>
+<dt id="term-CDMA">CDMA<a class="headerlink" href="#term-CDMA" title="Permalink to this term">¶</a></dt><dd><p>Convolution DMA, responsible for load image/weight/feature data to convolution core</p>
 </dd>
-<dt id="term-rdma">RDMA</dt><dd><p>Read DMA, instanced in SDP/CDP/PDP/Rubik engines which responsible for load
+<dt id="term-RDMA">RDMA<a class="headerlink" href="#term-RDMA" title="Permalink to this term">¶</a></dt><dd><p>Read DMA, instanced in SDP/CDP/PDP/Rubik engines which responsible for load
 input data from external memory (either MC or CVSRAM)</p>
 </dd>
-<dt id="term-wdma">WDMA</dt><dd><p>Write DMA, instanced in SDP/CDP/PDP/Rubik engines and responsible for write
+<dt id="term-WDMA">WDMA<a class="headerlink" href="#term-WDMA" title="Permalink to this term">¶</a></dt><dd><p>Write DMA, instanced in SDP/CDP/PDP/Rubik engines and responsible for write
 output data to external memory (either MC or CVSRAM)</p>
 </dd>
-<dt id="term-cbb">CBB</dt><dd><p>Control backbone. System control data path that connected to NVDLA</p>
+<dt id="term-CBB">CBB<a class="headerlink" href="#term-CBB" title="Permalink to this term">¶</a></dt><dd><p>Control backbone. System control data path that connected to NVDLA</p>
 </dd>
-<dt id="term-dbb">DBB</dt><dd><p>Data backbone. The memory system that to which NVDLA connects</p>
+<dt id="term-DBB">DBB<a class="headerlink" href="#term-DBB" title="Permalink to this term">¶</a></dt><dd><p>Data backbone. The path that NVDLA uses to perform DMA to system memory, such as the DRAM interface.</p>
 </dd>
-<dt id="term-amba">AMBA</dt><dd><p>ARM Advanced Microcontroller Bus Architecture. A set of ARM defined bus standards.</p>
+<dt id="term-AMBA">AMBA<a class="headerlink" href="#term-AMBA" title="Permalink to this term">¶</a></dt><dd><p>ARM Advanced Microcontroller Bus Architecture. A set of ARM defined bus standards.</p>
 </dd>
-<dt id="term-axi">AXI</dt><dd><p>Advanced eXtensible Interface. The third generation of AMBA interface defined in the AMBA 3 specification.</p>
+<dt id="term-AXI">AXI<a class="headerlink" href="#term-AXI" title="Permalink to this term">¶</a></dt><dd><p>Advanced eXtensible Interface. The third generation of AMBA interface defined in the AMBA 3 specification.</p>
 </dd>
-<dt id="term-cnn">CNN</dt><dd><p>Convolutional Neural Network. A class of artificial neural networks.</p>
+<dt id="term-CNN">CNN<a class="headerlink" href="#term-CNN" title="Permalink to this term">¶</a></dt><dd><p>Convolutional Neural Network. A class of artificial neural networks.</p>
 </dd>
-<dt id="term-csb">CSB</dt><dd><p>Configuration Space Bus.  (See <a class="reference internal" href="hw/v1/hwarch.html#external-interfaces"><span class="std std-ref">External Interfaces</span></a>.)</p>
+<dt id="term-CSB">CSB<a class="headerlink" href="#term-CSB" title="Permalink to this term">¶</a></dt><dd><p>Configuration Space Bus.  (See <a class="reference internal" href="hw/v1/hwarch.html#external-interfaces"><span class="std std-ref">External Interfaces</span></a>.)</p>
 </dd>
-<dt id="term-0">DBB</dt><dd><p>Data Back Bone – the path that NVDLA uses to perform DMA to system memory, such as the DRAM interface.</p>
+<dt id="term-DBBIF">DBBIF<a class="headerlink" href="#term-DBBIF" title="Permalink to this term">¶</a></dt><dd><p>The NVDLA interface to the DBB.  (See <a class="reference internal" href="hw/v1/hwarch.html#external-interfaces"><span class="std std-ref">External Interfaces</span></a>.)</p>
 </dd>
-<dt id="term-dbbif">DBBIF</dt><dd><p>The NVDLA interface to the DBB.  (See <a class="reference internal" href="hw/v1/hwarch.html#external-interfaces"><span class="std std-ref">External Interfaces</span></a>.)</p>
+<dt id="term-IRQ">IRQ<a class="headerlink" href="#term-IRQ" title="Permalink to this term">¶</a></dt><dd><p>Interrupt request.  (See <a class="reference internal" href="hw/v1/hwarch.html#external-interfaces"><span class="std std-ref">External Interfaces</span></a>.)</p>
 </dd>
-<dt id="term-irq">IRQ</dt><dd><p>Interrupt request.  (See <a class="reference internal" href="hw/v1/hwarch.html#external-interfaces"><span class="std std-ref">External Interfaces</span></a>.)</p>
-</dd>
-<dt id="term-1">NVDLA</dt><dd><p>NVIDIA Deep Learning Accelerator.</p>
-</dd>
-<dt id="term-sramif">SRAMIF</dt><dd><p>The NVDLA interface to an optional high-performance SRAM subsystem.</p>
+<dt id="term-SRAMIF">SRAMIF<a class="headerlink" href="#term-SRAMIF" title="Permalink to this term">¶</a></dt><dd><p>The NVDLA interface to an optional high-performance SRAM subsystem.</p>
 </dd>
 </dl>
 </div>
@@ -132,7 +127,7 @@ output data to external memory (either MC or CVSRAM)</p>
     </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
         </div>
       </div>
         </div>
@@ -157,10 +152,10 @@ output data to external memory (either MC or CVSRAM)</p>
 <div class="container">
 <div class="row">
 &#169; <a
-href="copyright.html">Copyright</a> 2018, NVIDIA Corporation.
-<a href="http://www.nvidia.com/object/legal_info.html">Legal Information.</a>
-<a href="http://www.nvidia.com/object/privacy_policy.html">Privacy Policy.</a>
-Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.2.0.
+href="copyright.html">Copyright</a> 2018 - 2024, NVIDIA Corporation.
+<a href="https://www.nvidia.com/object/legal_info.html">Legal Information.</a>
+<a href="https://www.nvidia.com/object/privacy_policy.html">Privacy Policy.</a>
+Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.5.4.
 </div>
 </div>
 </div>

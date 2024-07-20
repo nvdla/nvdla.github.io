@@ -1,19 +1,18 @@
 
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Compiler library &#8212; NVDLA Documentation</title>
-    <link rel="stylesheet" href="../_static/nvdla.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/nvdla.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/styles.css" />
-    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-    <script type="text/javascript" src="../_static/jquery.js"></script>
-    <script type="text/javascript" src="../_static/underscore.js"></script>
-    <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="../_static/language_data.js"></script>
-    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Runtime environment" href="runtime_environment.html" />
     <link rel="prev" title="Software Manual" href="contents.html" />
@@ -64,7 +63,7 @@
 <div class="section" id="compiler">
 <h2>Compiler<a class="headerlink" href="#compiler" title="Permalink to this headline">¶</a></h2>
 <p>Compiler takes the Parser’s output as its input, and converts (i.e. compiles) it into a set of hardware layers using the understanding of underlying hardware specification for NVDLA implementation. The Compiler can interpret the parsed network as a directed graph with nodes representing the network operations and the edges representing the intermediate tensors between the operations. The main job of the Compiler is to effectively map each network operation onto the targetted functional block of the NVDLA implementation, keeping in mind the specifications of the hardware. Knowing the hardware configuration allows the Compiler to generate appropriate operations for the features that are available. For example, this might include selecting between different convolution operation modes (such as Winograd convolution, or Basic convolution), or splitting certain operations into multiple smaller units depending on the available hardware buffer sizes, etc. Optimizations or features in compiler can be controlled through input parameters to compiler.</p>
-<p>In order to effectively execute the hardware layer, the Compiler is responsible to determine memory requirements for that layer. The choice of memory management can be flexible to the software implementation choice. This phase is also responsible for quantizing higher precision trained models (like 32-bit floating point) into lower precisions, such as 8-bit or 16-bit integer, or 16-bit floating point, and for determining memory allocations for the quantized weights during inferencing jobs. The output of the compiler is stored in a standardized file format called the <a class="reference internal" href="../glossary.html#term-nvdla-loadable"><span class="xref std std-term">NVDLA Loadable</span></a>.</p>
+<p>In order to effectively execute the hardware layer, the Compiler is responsible to determine memory requirements for that layer. The choice of memory management can be flexible to the software implementation choice. This phase is also responsible for quantizing higher precision trained models (like 32-bit floating point) into lower precisions, such as 8-bit or 16-bit integer, or 16-bit floating point, and for determining memory allocations for the quantized weights during inferencing jobs. The output of the compiler is stored in a standardized file format called the <a class="reference internal" href="../glossary.html#term-NVDLA-Loadable"><span class="xref std std-term">NVDLA Loadable</span></a>.</p>
 <p>The same Compiler tool can be used to generate a list of hardware layers for multiple different NVDLA configurations. These steps are performed offline and might also be performed on the device that contains the NVDLA implementation.</p>
 </div>
 </div>
@@ -106,7 +105,7 @@
     </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
         </div>
       </div>
         </div>
@@ -135,10 +134,10 @@
 <div class="container">
 <div class="row">
 &#169; <a
-href="../copyright.html">Copyright</a> 2018, NVIDIA Corporation.
-<a href="http://www.nvidia.com/object/legal_info.html">Legal Information.</a>
-<a href="http://www.nvidia.com/object/privacy_policy.html">Privacy Policy.</a>
-Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.2.0.
+href="../copyright.html">Copyright</a> 2018 - 2024, NVIDIA Corporation.
+<a href="https://www.nvidia.com/object/legal_info.html">Legal Information.</a>
+<a href="https://www.nvidia.com/object/privacy_policy.html">Privacy Policy.</a>
+Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.5.4.
 </div>
 </div>
 </div>

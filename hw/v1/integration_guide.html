@@ -1,19 +1,18 @@
 
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Integrator’s Manual &#8212; NVDLA Documentation</title>
-    <link rel="stylesheet" href="../../_static/nvdla.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/nvdla.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles.css" />
-    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
-    <script type="text/javascript" src="../../_static/jquery.js"></script>
-    <script type="text/javascript" src="../../_static/underscore.js"></script>
-    <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <script type="text/javascript" src="../../_static/language_data.js"></script>
-    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="Precision Preservation" href="ias/precision.html" />
     <link rel="prev" title="In-memory data formats" href="../format.html" />
@@ -289,7 +288,7 @@ will fail at runtime when compiled with those versions.</p>
 <p>The NVDLA repository supports the build of multiple configurations based on a feature
 specification file.  Each configuration of the NVDLA is defined by a spec file in
 he hw/spec/defs directory.  The filename is the name of the configuration with a “.spec”
-exension.  For the configurable release, there are currently two spec files included: “nv_large” which has 2048 INT8 MAC’s,
+extension.  For the configurable release, there are currently two spec files included: “nv_large” which has 2048 INT8 MAC’s,
 and “nv_small” which has 64 INT8 MAC’s plus some other reductions; the non-configurable
 release has a single spec file, “nv_full”, which has 2048 multi-precision MAC units.</p>
 <p>The file hw/tree.make specifies a list of configurations to build, as well as paths to tools
@@ -301,7 +300,7 @@ following command:</p>
 </div>
 <p>This command will prompt for the configuration and tool locations.  It will create a tree.make
 file in the hw directory containing the appropriate configuration and tool setup.
-For subsequent changes the tree.make file can be edited directory with a text editor.  Once
+For subsequent changes the tree.make file can be edited directly with a text editor.  Once
 tree.make setup is complete, the RTL can be built:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="n">hw</span>
 <span class="o">./</span><span class="n">tools</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">tmake</span> <span class="o">-</span><span class="n">build</span> <span class="n">vmod</span>
@@ -318,9 +317,9 @@ regression:</p>
 in the <code class="docutils literal notranslate"><span class="pre">cmod/</span></code> directory.  If building the Virtual Platform, or another
 application that uses the NVDLA Cmodel, the following command will build it
 and install it into <code class="docutils literal notranslate"><span class="pre">outdir/nv_full/cmod/release</span></code>:</p>
-<blockquote>
-<div><p>./tools/bin/tmake -build cmod_top</p>
-</div></blockquote>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">./</span><span class="n">tools</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">tmake</span> <span class="o">-</span><span class="n">build</span> <span class="n">cmod_top</span>
+</pre></div>
+</div>
 <div class="section" id="version-control-usage">
 <h3>Version control usage<a class="headerlink" href="#version-control-usage" title="Permalink to this headline">¶</a></h3>
 <p>NVDLA is developed in Git, on multiple branches.  It is important to use the
@@ -361,7 +360,7 @@ in the repository at hw/perf/DLA_OpenSource_Performance.xlsx.  The first tab in 
 <li><p>Hardware MAC utilization</p></li>
 <li><p>Network MAC utilization</p></li>
 </ul>
-<p>The tool can be used to look at the affect of different hardware configurations on network performance.</p>
+<p>The tool can be used to look at the easyffect of different hardware configurations on network performance.</p>
 </div>
 <div class="section" id="designware-components">
 <h2>Designware Components<a class="headerlink" href="#designware-components" title="Permalink to this headline">¶</a></h2>
@@ -544,11 +543,11 @@ A latch holds the read data whenever RE = ‘0’. There is no write through cap
 If the read address matches the write address, read out data may be corrupted.</p>
 <div class="figure align-center" id="id11">
 <span id="fig-ram-dp-read-timing"></span><a class="reference internal image-reference" href="../../_images/ig_sram_dp_read_timing.png"><img alt="Dual Port RAM Read Timing" src="../../_images/ig_sram_dp_read_timing.png" style="width: 706.0px; height: 354.0px;" /></a>
-<p class="caption"><span class="caption-number">Fig. 29 </span><span class="caption-text">Dual Port RAM Read Timing</span><a class="headerlink" href="#id11" title="Permalink to this image">¶</a></p>
+<p class="caption"><span class="caption-number">Fig. 28 </span><span class="caption-text">Dual Port RAM Read Timing</span><a class="headerlink" href="#id11" title="Permalink to this image">¶</a></p>
 </div>
 <div class="figure align-center" id="id12">
 <span id="fig-ram-dp-write-timing"></span><a class="reference internal image-reference" href="../../_images/ig_sram_dp_write_timing.png"><img alt="Dual Port RAM Write Timing" src="../../_images/ig_sram_dp_write_timing.png" style="width: 671.0px; height: 372.5px;" /></a>
-<p class="caption"><span class="caption-number">Fig. 30 </span><span class="caption-text">Dual Port RAM Write Timing</span><a class="headerlink" href="#id12" title="Permalink to this image">¶</a></p>
+<p class="caption"><span class="caption-number">Fig. 29 </span><span class="caption-text">Dual Port RAM Write Timing</span><a class="headerlink" href="#id12" title="Permalink to this image">¶</a></p>
 </div>
 <div class="line-block">
 <div class="line"><br /></div>
@@ -651,7 +650,7 @@ pins</p></td>
 </table>
 <div class="figure align-center" id="id13">
 <span id="fig-ram-pdp-timing"></span><a class="reference internal image-reference" href="../../_images/ig_sram_pdp_timing.png"><img alt="Pseudo Dual Port RAM Timing" src="../../_images/ig_sram_pdp_timing.png" style="width: 748.0px; height: 473.0px;" /></a>
-<p class="caption"><span class="caption-number">Fig. 31 </span><span class="caption-text">Pseudo Dual Port RAM Timing</span><a class="headerlink" href="#id13" title="Permalink to this image">¶</a></p>
+<p class="caption"><span class="caption-number">Fig. 30 </span><span class="caption-text">Pseudo Dual Port RAM Timing</span><a class="headerlink" href="#id13" title="Permalink to this image">¶</a></p>
 </div>
 <p>The RAMPDP behaves like a dual port RAM, but is created by double clocking a single port RAM.
 It can perform a ‘single read’ (1R), a ‘single write’ (1W) or a ‘read followed by write’ (1R+1W)
@@ -1699,7 +1698,7 @@ $finish called.
 <span id="id7"></span><h3>Verilator Testbench<a class="headerlink" href="#verilator-testbench" title="Permalink to this headline">¶</a></h3>
 <p>On an experimental basis, the NVDLA release now contains a limited
 Verilator-based testbench, enabling the NVDLA RTL to be built and tested
-entirely without non-commercial software.  The Verilator testbench is
+entirely without commercial software.  The Verilator testbench is
 expected to work, and is validated against the existing traces, but does not
 carry the same level of testing as the SystemVerilog testbench does when
 simulated by VCS.</p>
@@ -1726,7 +1725,7 @@ Verdi).</p>
 </div>
 <div class="section" id="running-a-test">
 <h4>Running a test<a class="headerlink" href="#running-a-test" title="Permalink to this headline">¶</a></h4>
-<p>The Verilated simulation can be run by <code class="docutils literal notranslate"><span class="pre">cd``ing</span> <span class="pre">into</span> <span class="pre">``verif/verilator</span></code>,
+<p>The Verilated simulation can be run by <code class="docutils literal notranslate"><span class="pre">cd</span></code> into <code class="docutils literal notranslate"><span class="pre">verif/verilator</span></code>,
 and running a command like:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="n">run</span> <span class="n">TEST</span><span class="o">=</span><span class="n">sanity0</span>
 </pre></div>
@@ -1872,7 +1871,7 @@ checking data from a simulated AXI memory).</p>
     </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
         </div>
       </div>
         </div>
@@ -1901,10 +1900,10 @@ checking data from a simulated AXI memory).</p>
 <div class="container">
 <div class="row">
 &#169; <a
-href="../../copyright.html">Copyright</a> 2018, NVIDIA Corporation.
-<a href="http://www.nvidia.com/object/legal_info.html">Legal Information.</a>
-<a href="http://www.nvidia.com/object/privacy_policy.html">Privacy Policy.</a>
-Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.2.0.
+href="../../copyright.html">Copyright</a> 2018 - 2024, NVIDIA Corporation.
+<a href="https://www.nvidia.com/object/legal_info.html">Legal Information.</a>
+<a href="https://www.nvidia.com/object/privacy_policy.html">Privacy Policy.</a>
+Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.5.4.
 </div>
 </div>
 </div>

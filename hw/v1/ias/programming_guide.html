@@ -1,19 +1,19 @@
 
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Programming Guide &#8212; NVDLA Documentation</title>
-    <link rel="stylesheet" href="../../../_static/nvdla.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/nvdla.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/styles.css" />
-    <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
-    <script type="text/javascript" src="../../../_static/jquery.js"></script>
-    <script type="text/javascript" src="../../../_static/underscore.js"></script>
-    <script type="text/javascript" src="../../../_static/doctools.js"></script>
-    <script type="text/javascript" src="../../../_static/language_data.js"></script>
-    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="search" title="Search" href="../../../search.html" />
     <link rel="next" title="NVDLA Environment Setup Guide" href="../../v2/environment_setup_guide.html" />
     <link rel="prev" title="Unit Description" href="unit_description.html" />
@@ -738,25 +738,25 @@ stride size configured for CDMA: D_CONV_STRIDE)</p></li>
 <ul class="simple">
 <li><p>CSC.D_ATOMICS: Hardware uses this register to decide stripe size:</p></li>
 </ul>
-<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span> <span class="nf">calc_stripe_size</span><span class="p">(</span><span class="kt">int</span> <span class="n">atomics</span><span class="p">,</span> <span class="kt">int</span> <span class="n">processed</span><span class="p">)</span>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span><span class="w"> </span><span class="nf">calc_stripe_size</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">atomics</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">processed</span><span class="p">)</span>
 <span class="p">{</span>
-    <span class="kt">int</span> <span class="n">stripe_size</span><span class="p">;</span>
-    <span class="kt">int</span> <span class="n">remain_atomics</span> <span class="o">=</span> <span class="n">atomics</span> <span class="o">-</span> <span class="n">processed</span><span class="p">;</span>
-    <span class="k">if</span> <span class="p">(</span> <span class="n">remain_atomics</span> <span class="o">&lt;</span> <span class="mi">32</span> <span class="o">&amp;&amp;</span> <span class="n">remain_atomics</span> <span class="o">&gt;=</span> <span class="mi">16</span> <span class="p">)</span> <span class="p">{</span>
-        <span class="n">stripe_size</span> <span class="o">=</span> <span class="n">remain_atomics</span><span class="p">;</span>
-    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-        <span class="n">assert</span><span class="p">(</span><span class="n">remain_atomics</span> <span class="o">&gt;</span> <span class="mi">16</span><span class="p">);</span>
-        <span class="n">stripe_size</span> <span class="o">=</span> <span class="mi">16</span><span class="p">;</span>
-    <span class="p">}</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">stripe_size</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">remain_atomics</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">atomics</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">processed</span><span class="p">;</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">remain_atomics</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">32</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">remain_atomics</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="mi">16</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">stripe_size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">remain_atomics</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">assert</span><span class="p">(</span><span class="n">remain_atomics</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">16</span><span class="p">);</span>
+<span class="w">        </span><span class="n">stripe_size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">16</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
 
-    <span class="k">return</span> <span class="n">stripe_size</span><span class="p">;</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">stripe_size</span><span class="p">;</span>
 <span class="p">}</span>
 </pre></div>
 </div>
 <p>The register value of D_ATOMICS itself is calculated by:</p>
-<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span> <span class="nf">calc_atomics</span><span class="p">(</span><span class="kt">int</span> <span class="n">out_width</span><span class="p">,</span> <span class="kt">int</span> <span class="n">out_height</span><span class="p">)</span>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span><span class="w"> </span><span class="nf">calc_atomics</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">out_width</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">out_height</span><span class="p">)</span>
 <span class="p">{</span>
-    <span class="k">return</span> <span class="n">out_width</span><span class="o">*</span><span class="n">out_height</span><span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">out_width</span><span class="o">*</span><span class="n">out_height</span><span class="mi">-1</span><span class="p">;</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -1196,24 +1196,24 @@ output width is a fixed number. (Refer to: 10.1.4:
 calculate_pdp_max_width)</p></li>
 <li><p>Calculate the actual pooling output:</p></li>
 </ul>
-<div class="highlight-c notranslate"><div class="highlight"><pre><span></span>pooled_width = static_cast&lt;int&gt;(ceil(static_cast&lt;float&gt;(width + pad_left + pad_right - kernel_w) / stride_w)) + 1;
-if ((pooled_width - 1) \* stride_w &gt;= width + pad_left) {
-    --pooled_width;
-}
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">pooled_width</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">static_cast</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">(</span><span class="n">ceil</span><span class="p">(</span><span class="n">static_cast</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span><span class="p">(</span><span class="n">width</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">pad_left</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">pad_right</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">kernel_w</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">stride_w</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<span class="k">if</span><span class="w"> </span><span class="p">((</span><span class="n">pooled_width</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">stride_w</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="n">width</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">pad_left</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="o">--</span><span class="n">pooled_width</span><span class="p">;</span>
+<span class="p">}</span>
 </pre></div>
 </div>
 <ul class="simple">
 <li><p>Decide working mode</p></li>
 </ul>
-<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">typedef</span> <span class="k">enum</span> <span class="p">{</span>
-    <span class="n">PDP_FLYING_MODE</span><span class="p">,</span>
-    <span class="n">PDP_OFFLINE_MODE</span><span class="p">,</span>
-<span class="p">}</span> <span class="n">pdp_mode</span><span class="p">;</span>
-<span class="k">static</span> <span class="n">pdp_mode</span> <span class="nf">get_pdp_mode</span><span class="p">(</span> <span class="kt">int</span> <span class="n">width_output</span><span class="p">,</span> <span class="kt">int</span> <span class="n">max_fly_width</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">is_full_conv</span> <span class="p">)</span>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">typedef</span><span class="w"> </span><span class="k">enum</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">PDP_FLYING_MODE</span><span class="p">,</span>
+<span class="w">    </span><span class="n">PDP_OFFLINE_MODE</span><span class="p">,</span>
+<span class="p">}</span><span class="w"> </span><span class="n">pdp_mode</span><span class="p">;</span>
+<span class="k">static</span><span class="w"> </span><span class="n">pdp_mode</span><span class="w"> </span><span class="nf">get_pdp_mode</span><span class="p">(</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">width_output</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">max_fly_width</span><span class="p">,</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="n">is_full_conv</span><span class="w"> </span><span class="p">)</span>
 <span class="p">{</span>
-    <span class="c1">// convolution mode should also be taking into consideration: If software split</span>
-    <span class="c1">// convolution layer into different hardware layers, PDP can&#39;t working on-the-fly</span>
-    <span class="k">return</span> <span class="p">(</span><span class="n">width_output</span> <span class="o">&lt;=</span> <span class="n">max_fly_width</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="n">is_full_conv</span> <span class="o">?</span> <span class="nl">PDP_FLYING_MODE</span> <span class="p">:</span> <span class="n">PDP_OFFLINE_MODE</span><span class="p">;</span>
+<span class="w">    </span><span class="c1">// convolution mode should also be taking into consideration: If software split</span>
+<span class="w">    </span><span class="c1">// convolution layer into different hardware layers, PDP can&#39;t working on-the-fly</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="p">(</span><span class="n">width_output</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">max_fly_width</span><span class="p">)</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">is_full_conv</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="n">PDP_FLYING_MODE</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">PDP_OFFLINE_MODE</span><span class="p">;</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -2019,7 +2019,7 @@ aligned for planar data(output of split mode, input of merge mode)</p></li>
     </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
         </div>
       </div>
         </div>
@@ -2048,10 +2048,10 @@ aligned for planar data(output of split mode, input of merge mode)</p></li>
 <div class="container">
 <div class="row">
 &#169; <a
-href="../../../copyright.html">Copyright</a> 2018, NVIDIA Corporation.
-<a href="http://www.nvidia.com/object/legal_info.html">Legal Information.</a>
-<a href="http://www.nvidia.com/object/privacy_policy.html">Privacy Policy.</a>
-Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.2.0.
+href="../../../copyright.html">Copyright</a> 2018 - 2024, NVIDIA Corporation.
+<a href="https://www.nvidia.com/object/legal_info.html">Legal Information.</a>
+<a href="https://www.nvidia.com/object/privacy_policy.html">Privacy Policy.</a>
+Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.5.4.
 </div>
 </div>
 </div>

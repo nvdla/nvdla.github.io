@@ -1,19 +1,18 @@
 
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Virtual Platform On AWS FPGA &#8212; NVDLA Documentation</title>
-    <link rel="stylesheet" href="_static/nvdla.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/nvdla.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="_static/styles.css" />
-    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-    <script type="text/javascript" src="_static/jquery.js"></script>
-    <script type="text/javascript" src="_static/underscore.js"></script>
-    <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="_static/language_data.js"></script>
-    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Open NVDLA Repository Updates" href="updates.html" />
     <link rel="prev" title="Virtual Platform" href="vp.html" />
@@ -54,9 +53,9 @@
 <h1>Virtual Platform On AWS FPGA<a class="headerlink" href="#virtual-platform-on-aws-fpga" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="overview">
 <h2>1. Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
-<p>Virtual Platform (<a class="reference internal" href="vp.html#overview"><span class="std std-ref">1. Overview</span></a>) can run on Amazon Web Services (AWS) FPGA platform. <a class="reference internal" href="#fig-vp-fpga"><span class="std std-numref">Fig. 90</span></a> below shows the top level diagram of the NVDLA virtual simulator on AWS FPGA platform.</p>
+<p>Virtual Platform (<a class="reference internal" href="vp.html#overview"><span class="std std-ref">1. Overview</span></a>) can run on Amazon Web Services (AWS) FPGA platform. <a class="reference internal" href="#fig-vp-fpga"><span class="std std-numref">Fig. 82</span></a> below shows the top level diagram of the NVDLA virtual simulator on AWS FPGA platform.</p>
 <div class="figure align-center" id="id3">
-<span id="fig-vp-fpga"></span><img alt="NVDLA Virtual Platform FPGA Diagram." src="_images/nvdla-vp-fpga.svg" /><p class="caption"><span class="caption-number">Fig. 90 </span><span class="caption-text">NVDLA Virtual Platform on AWS FPGA platform.</span><a class="headerlink" href="#id3" title="Permalink to this image">¶</a></p>
+<span id="fig-vp-fpga"></span><img alt="NVDLA Virtual Platform FPGA Diagram." src="_images/nvdla-vp-fpga.svg" /><p class="caption"><span class="caption-number">Fig. 82 </span><span class="caption-text">NVDLA Virtual Platform on AWS FPGA platform.</span><a class="headerlink" href="#id3" title="Permalink to this image">¶</a></p>
 </div>
 <p>To launch an instance which is a virtual server in the cloud, Amazon Machine Image (AMI) is required. Virtual simulator can run on the instance with FPGA board connected. The following sections describe how virtual simulator runs on different AMIs.</p>
 <ul class="simple">
@@ -105,35 +104,35 @@
 </ul>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>You can also connect via SSH or PuTTY, <a class="reference external" href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AccessingInstances.html">click here</a> to learn more.</p>
+<p>You can also connect via SSH or PuTTY, <a class="reference external" href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AccessingInstances.html">click here</a> to learn more.</p>
 </div>
 </div>
 </div>
 <div class="section" id="setup-aws-sdk">
 <h3>2.2 Setup AWS SDK<a class="headerlink" href="#setup-aws-sdk" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> clone https://github.com/aws/aws-fpga.git                <span class="c1"># Pull AWS SDK</span>
-<span class="gp">$</span> git checkout v1.4.0                                      <span class="c1"># Use tag v1.4.0 version of AWS SDK for NVIDIA AMI</span>
-<span class="gp">$</span> <span class="nb">cd</span> <span class="o">[</span>aws-fpga prefix<span class="o">]</span> <span class="o">&amp;&amp;</span> <span class="nb">source</span> sdk_setup.sh              <span class="c1"># Setup AWS SDK</span>
-<span class="gp">$</span> lsmod <span class="p">|</span> grep edma                                        <span class="c1"># Check if the edma driver is intalled</span>
-<span class="gp">$</span> <span class="nb">cd</span> <span class="nv">$SDK_DIR</span>/linux_kernel_drivers/edma                    <span class="c1"># If nothing shows up, following the instructions below to install it</span>
-<span class="gp">$</span> make
-<span class="gp">$</span> <span class="nb">echo</span> <span class="s1">&#39;edma&#39;</span> <span class="p">|</span> sudo tee --append /lib/modules-load.d/edma.conf
-<span class="gp">$</span> sudo cp edma-drv.ko /lib/modules/<span class="sb">`</span>uname -r<span class="sb">`</span>/
-<span class="gp">$</span> sudo depmod
-<span class="gp">$</span> sudo modprobe edma-drv
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>clone<span class="w"> </span>https://github.com/aws/aws-fpga.git<span class="w">                </span><span class="c1"># Pull AWS SDK</span>
+<span class="gp">$ </span>git<span class="w"> </span>checkout<span class="w"> </span>v1.4.0<span class="w">                                      </span><span class="c1"># Use tag v1.4.0 version of AWS SDK for NVIDIA AMI</span>
+<span class="gp">$ </span><span class="nb">cd</span><span class="w"> </span><span class="o">[</span>aws-fpga<span class="w"> </span>prefix<span class="o">]</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">source</span><span class="w"> </span>sdk_setup.sh<span class="w">              </span><span class="c1"># Setup AWS SDK</span>
+<span class="gp">$ </span>lsmod<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>edma<span class="w">                                        </span><span class="c1"># Check if the edma driver is intalled</span>
+<span class="gp">$ </span><span class="nb">cd</span><span class="w"> </span><span class="nv">$SDK_DIR</span>/linux_kernel_drivers/edma<span class="w">                    </span><span class="c1"># If nothing shows up, following the instructions below to install it</span>
+<span class="gp">$ </span>make
+<span class="gp">$ </span><span class="nb">echo</span><span class="w"> </span><span class="s1">&#39;edma&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>sudo<span class="w"> </span>tee<span class="w"> </span>--append<span class="w"> </span>/lib/modules-load.d/edma.conf
+<span class="gp">$ </span>sudo<span class="w"> </span>cp<span class="w"> </span>edma-drv.ko<span class="w"> </span>/lib/modules/<span class="sb">`</span>uname<span class="w"> </span>-r<span class="sb">`</span>/
+<span class="gp">$ </span>sudo<span class="w"> </span>depmod
+<span class="gp">$ </span>sudo<span class="w"> </span>modprobe<span class="w"> </span>edma-drv
 </pre></div>
 </div>
 </div>
 <div class="section" id="load-aws-fpga-image">
 <h3>2.3 Load AWS FPGA image<a class="headerlink" href="#load-aws-fpga-image" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> sudo fpga-clear-local-image -S <span class="m">0</span>
-<span class="gp">$</span> sudo fpga-load-local-image -S <span class="m">0</span> -I agfi-09c2a21805a8b9257     <span class="c1"># Load MSI-X interrupt fixed AFI</span>
-<span class="gp">$</span> sudo fpga-clear-local-image -S <span class="m">0</span>
-<span class="gp">$</span> sudo fpga-describe-local-image -S <span class="m">0</span> -H
-<span class="gp">$</span> sudo fpga-load-local-image -S <span class="m">0</span> -I &lt;your-image-afi-global-id&gt; <span class="c1"># Load the image</span>
-<span class="gp">$</span> sudo fpga-describe-local-image -S <span class="m">0</span> -R -H
-<span class="gp">$</span> sudo rmmod edma-drv                                           <span class="c1"># Only needed if edma driver has been installed</span>
-<span class="gp">$</span> sudo insmod <span class="nv">$SDK_DIR</span>/linux_kernel_drivers/edma/edma-drv.ko    <span class="c1"># Re-install the edma driver to make sure the MSI is registered to /dev/fpga0_event0</span>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>sudo<span class="w"> </span>fpga-clear-local-image<span class="w"> </span>-S<span class="w"> </span><span class="m">0</span>
+<span class="gp">$ </span>sudo<span class="w"> </span>fpga-load-local-image<span class="w"> </span>-S<span class="w"> </span><span class="m">0</span><span class="w"> </span>-I<span class="w"> </span>agfi-09c2a21805a8b9257<span class="w">     </span><span class="c1"># Load MSI-X interrupt fixed AFI</span>
+<span class="gp">$ </span>sudo<span class="w"> </span>fpga-clear-local-image<span class="w"> </span>-S<span class="w"> </span><span class="m">0</span>
+<span class="gp">$ </span>sudo<span class="w"> </span>fpga-describe-local-image<span class="w"> </span>-S<span class="w"> </span><span class="m">0</span><span class="w"> </span>-H
+<span class="gp">$ </span>sudo<span class="w"> </span>fpga-load-local-image<span class="w"> </span>-S<span class="w"> </span><span class="m">0</span><span class="w"> </span>-I<span class="w"> </span>&lt;your-image-afi-global-id&gt;<span class="w"> </span><span class="c1"># Load the image</span>
+<span class="gp">$ </span>sudo<span class="w"> </span>fpga-describe-local-image<span class="w"> </span>-S<span class="w"> </span><span class="m">0</span><span class="w"> </span>-R<span class="w"> </span>-H
+<span class="gp">$ </span>sudo<span class="w"> </span>rmmod<span class="w"> </span>edma-drv<span class="w">                                           </span><span class="c1"># Only needed if edma driver has been installed</span>
+<span class="gp">$ </span>sudo<span class="w"> </span>insmod<span class="w"> </span><span class="nv">$SDK_DIR</span>/linux_kernel_drivers/edma/edma-drv.ko<span class="w">    </span><span class="c1"># Re-install the edma driver to make sure the MSI is registered to /dev/fpga0_event0</span>
 </pre></div>
 </div>
 <p>AFI <em>agfi-09c2a21805a8b9257</em> is necessary for MSI-X interrupts issue.</p>
@@ -142,8 +141,8 @@
 </div>
 <div class="section" id="running-virtual-simulator">
 <h3>2.4 Running Virtual Simulator<a class="headerlink" href="#running-virtual-simulator" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> <span class="nb">cd</span> /usr/local/nvdla
-<span class="gp">$</span> sudo ./aarch64_toplevel -c aarch64_nvdla.lua --fpga
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span><span class="nb">cd</span><span class="w"> </span>/usr/local/nvdla
+<span class="gp">$ </span>sudo<span class="w"> </span>./aarch64_toplevel<span class="w"> </span>-c<span class="w"> </span>aarch64_nvdla.lua<span class="w"> </span>--fpga
 <span class="go">Login the kernel with account &#39;root&#39; and password &#39;nvdla&#39;</span>
 </pre></div>
 </div>
@@ -152,11 +151,11 @@
 <div class="section" id="running-software-sanity-test">
 <h3>2.5 Running software sanity test<a class="headerlink" href="#running-software-sanity-test" title="Permalink to this headline">¶</a></h3>
 <p>After login the kenerl system, you can run one software sanity test for NVDLA small configure.</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> mount -t 9p -o <span class="nv">trans</span><span class="o">=</span>virtio r /mnt
-<span class="gp">#</span> <span class="nb">cd</span> /mnt/sw/prebuilt/linux/
-<span class="gp">#</span> insmod drm.ko
-<span class="gp">#</span> insmod opendla_small.ko
-<span class="gp">#</span> ./nvdla_runtime --loadable kmd/CDP/CDP_L0_0_small_fbuf
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp"># </span>mount<span class="w"> </span>-t<span class="w"> </span>9p<span class="w"> </span>-o<span class="w"> </span><span class="nv">trans</span><span class="o">=</span>virtio<span class="w"> </span>r<span class="w"> </span>/mnt
+<span class="gp"># </span><span class="nb">cd</span><span class="w"> </span>/mnt/sw/prebuilt/linux/
+<span class="gp"># </span>insmod<span class="w"> </span>drm.ko
+<span class="gp"># </span>insmod<span class="w"> </span>opendla_small.ko
+<span class="gp"># </span>./nvdla_runtime<span class="w"> </span>--loadable<span class="w"> </span>kmd/CDP/CDP_L0_0_small_fbuf
 </pre></div>
 </div>
 <p>You should be able to see ‘Test pass’ printed in the screen at the end of test. You are now ready to try out the NVDLA software in the virtual simulator on FPGA! Please refer to <a class="reference internal" href="sw/contents.html"><span class="doc">Software Manual</span></a> for details.</p>
@@ -177,7 +176,7 @@
 </div>
 <div class="section" id="download-nvdla-aws-fpga-custom-logic-cl">
 <h4>3.2.2 Download NVDLA AWS FPGA Custom Logic (CL)<a class="headerlink" href="#download-nvdla-aws-fpga-custom-logic-cl" title="Permalink to this headline">¶</a></h4>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> git clone https://github.com/nvdla/vp_awsfpga.git
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/nvdla/vp_awsfpga.git
 </pre></div>
 </div>
 </div>
@@ -187,73 +186,73 @@
 <div class="section" id="install-required-tools-and-libraries">
 <h4>3.3.1 Install required tools and libraries<a class="headerlink" href="#install-required-tools-and-libraries" title="Permalink to this headline">¶</a></h4>
 <p>For CentOS:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> sudo yum install cmake swig glib2-devel git pixman-devel boost-devel libattr-devel libpcap-devel <span class="s1">&#39;perl(Data::Dumper)&#39;</span> <span class="s1">&#39;perl(YAML)&#39;</span> <span class="s1">&#39;perl(Capture::Tiny)&#39;</span> <span class="s1">&#39;perl(XML::Simple)&#39;</span> java-1.7.0-openjdk-devel.x86_64 libtermcap-devel ncurses-devel libevent-devel readline-devel python-devel
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>sudo<span class="w"> </span>yum<span class="w"> </span>install<span class="w"> </span>cmake<span class="w"> </span>swig<span class="w"> </span>glib2-devel<span class="w"> </span>git<span class="w"> </span>pixman-devel<span class="w"> </span>boost-devel<span class="w"> </span>libattr-devel<span class="w"> </span>libpcap-devel<span class="w"> </span><span class="s1">&#39;perl(Data::Dumper)&#39;</span><span class="w"> </span><span class="s1">&#39;perl(YAML)&#39;</span><span class="w"> </span><span class="s1">&#39;perl(Capture::Tiny)&#39;</span><span class="w"> </span><span class="s1">&#39;perl(XML::Simple)&#39;</span><span class="w"> </span>java-1.7.0-openjdk-devel.x86_64<span class="w"> </span>libtermcap-devel<span class="w"> </span>ncurses-devel<span class="w"> </span>libevent-devel<span class="w"> </span>readline-devel<span class="w"> </span>python-devel
 </pre></div>
 </div>
 <p>For Ubuntu:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> sudo apt-get update
-<span class="gp">$</span> sudo apt-get install g++ cmake libboost-dev git lua5.2 python-dev libglib2.0-dev libpixman-1-dev liblua5.2-dev swig libcap-dev libattr1-dev libconfig-yaml-perl openjdk-7-jre-headless libxml-simple-perl libcapture-tiny-perl
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>sudo<span class="w"> </span>apt-get<span class="w"> </span>update
+<span class="gp">$ </span>sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>g++<span class="w"> </span>cmake<span class="w"> </span>libboost-dev<span class="w"> </span>git<span class="w"> </span>lua5.2<span class="w"> </span>python-dev<span class="w"> </span>libglib2.0-dev<span class="w"> </span>libpixman-1-dev<span class="w"> </span>liblua5.2-dev<span class="w"> </span>swig<span class="w"> </span>libcap-dev<span class="w"> </span>libattr1-dev<span class="w"> </span>libconfig-yaml-perl<span class="w"> </span>openjdk-7-jre-headless<span class="w"> </span>libxml-simple-perl<span class="w"> </span>libcapture-tiny-perl
 </pre></div>
 </div>
 </div>
 <div class="section" id="download-and-install-systemc-2-3-0">
 <h4>3.3.2 Download and install SystemC 2.3.0<a class="headerlink" href="#download-and-install-systemc-2-3-0" title="Permalink to this headline">¶</a></h4>
 <p>Please be noted that SystemC 2.3.1/2.3.2 is currently not supported currently</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> wget -O systemc-2.3.0a.tar.gz http://www.accellera.org/images/downloads/standards/systemc/systemc-2.3.0a.tar.gz
-<span class="gp">$</span> tar -xzvf systemc-2.3.0a.tar.gz
-<span class="gp">$</span> <span class="nb">cd</span> systemc-2.3.0a
-<span class="gp">$</span> sudo mkdir -p /usr/local/systemc-2.3.0/
-<span class="gp">$</span> mkdir objdir
-<span class="gp">$</span> <span class="nb">cd</span> objdir
-<span class="gp">$</span> ../configure --prefix<span class="o">=</span>/usr/local/systemc-2.3.0
-<span class="gp">$</span> make
-<span class="gp">$</span> sudo make install
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>wget<span class="w"> </span>-O<span class="w"> </span>systemc-2.3.0a.tar.gz<span class="w"> </span>https://www.accellera.org/images/downloads/standards/systemc/systemc-2.3.0a.tar.gz
+<span class="gp">$ </span>tar<span class="w"> </span>-xzvf<span class="w"> </span>systemc-2.3.0a.tar.gz
+<span class="gp">$ </span><span class="nb">cd</span><span class="w"> </span>systemc-2.3.0a
+<span class="gp">$ </span>sudo<span class="w"> </span>mkdir<span class="w"> </span>-p<span class="w"> </span>/usr/local/systemc-2.3.0/
+<span class="gp">$ </span>mkdir<span class="w"> </span>objdir
+<span class="gp">$ </span><span class="nb">cd</span><span class="w"> </span>objdir
+<span class="gp">$ </span>../configure<span class="w"> </span>--prefix<span class="o">=</span>/usr/local/systemc-2.3.0
+<span class="gp">$ </span>make
+<span class="gp">$ </span>sudo<span class="w"> </span>make<span class="w"> </span>install
 </pre></div>
 </div>
 </div>
 <div class="section" id="download-and-install-lua-5-3-2-for-centos">
 <h4>3.3.3 Download and install Lua 5.3.2 (For CentOS)<a class="headerlink" href="#download-and-install-lua-5-3-2-for-centos" title="Permalink to this headline">¶</a></h4>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> curl -R -O http://www.lua.org/ftp/lua-5.3.2.tar.gz
-<span class="gp">$</span> tar zxf lua-5.3.2.tar.gz
-<span class="gp">$</span> <span class="nb">cd</span> lua-5.3.2
-<span class="gp">$</span> make linux <span class="nv">CFLAGS</span><span class="o">=</span><span class="s2">&quot;-fPIC -DLUA_USE_LINUX&quot;</span> <span class="nb">test</span>
-<span class="gp">$</span> sudo make install
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>curl<span class="w"> </span>-R<span class="w"> </span>-O<span class="w"> </span>https://www.lua.org/ftp/lua-5.3.2.tar.gz
+<span class="gp">$ </span>tar<span class="w"> </span>zxf<span class="w"> </span>lua-5.3.2.tar.gz
+<span class="gp">$ </span><span class="nb">cd</span><span class="w"> </span>lua-5.3.2
+<span class="gp">$ </span>make<span class="w"> </span>linux<span class="w"> </span><span class="nv">CFLAGS</span><span class="o">=</span><span class="s2">&quot;-fPIC -DLUA_USE_LINUX&quot;</span><span class="w"> </span><span class="nb">test</span>
+<span class="gp">$ </span>sudo<span class="w"> </span>make<span class="w"> </span>install
 </pre></div>
 </div>
 </div>
 <div class="section" id="download-and-install-perl-package-required">
 <h4>3.3.4 Download and install perl package required<a class="headerlink" href="#download-and-install-perl-package-required" title="Permalink to this headline">¶</a></h4>
 <p>We need to install perl package YAML.pm and Tee.pm to build NVDLA CMOD.</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> wget -O YAML-1.24.tar.gz http://search.cpan.org/CPAN/authors/id/T/TI/TINITA/YAML-1.24.tar.gz
-<span class="gp">$</span> tar -xzvf YAML-1.24.tar.gz
-<span class="gp">$</span> <span class="nb">cd</span> YAML-1.24
-<span class="gp">$</span> perl Makefile.PL
-<span class="gp">$</span> make
-<span class="gp">$</span> sudo make install
-<span class="gp">$</span> wget -O IO-Tee-0.65.tar.gz http://search.cpan.org/CPAN/authors/id/N/NE/NEILB/IO-Tee-0.65.tar.gz
-<span class="gp">$</span> tar -xzvf IO-Tee-0.65.tar.gz
-<span class="gp">$</span> <span class="nb">cd</span> IO-Tee-0.65
-<span class="gp">$</span> perl Makefile.PL
-<span class="gp">$</span> make
-<span class="gp">$</span> sudo make install
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>wget<span class="w"> </span>-O<span class="w"> </span>YAML-1.24.tar.gz<span class="w"> </span>https://search.cpan.org/CPAN/authors/id/T/TI/TINITA/YAML-1.24.tar.gz
+<span class="gp">$ </span>tar<span class="w"> </span>-xzvf<span class="w"> </span>YAML-1.24.tar.gz
+<span class="gp">$ </span><span class="nb">cd</span><span class="w"> </span>YAML-1.24
+<span class="gp">$ </span>perl<span class="w"> </span>Makefile.PL
+<span class="gp">$ </span>make
+<span class="gp">$ </span>sudo<span class="w"> </span>make<span class="w"> </span>install
+<span class="gp">$ </span>wget<span class="w"> </span>-O<span class="w"> </span>IO-Tee-0.65.tar.gz<span class="w"> </span>https://search.cpan.org/CPAN/authors/id/N/NE/NEILB/IO-Tee-0.65.tar.gz
+<span class="gp">$ </span>tar<span class="w"> </span>-xzvf<span class="w"> </span>IO-Tee-0.65.tar.gz
+<span class="gp">$ </span><span class="nb">cd</span><span class="w"> </span>IO-Tee-0.65
+<span class="gp">$ </span>perl<span class="w"> </span>Makefile.PL
+<span class="gp">$ </span>make
+<span class="gp">$ </span>sudo<span class="w"> </span>make<span class="w"> </span>install
 </pre></div>
 </div>
 </div>
 <div class="section" id="download-and-build-nvdla-cmod-and-vmod">
 <h4>3.3.5 Download and build NVDLA CMOD and VMOD<a class="headerlink" href="#download-and-build-nvdla-cmod-and-vmod" title="Permalink to this headline">¶</a></h4>
 <p>Please refer to <a class="reference internal" href="hw/v1/integration_guide.html#tree-build"><span class="std std-ref">Tree Build</span></a> for details on building the NVDLA hardware tree, and make sure the required tools listed in <a class="reference internal" href="hw/v1/integration_guide.html#env-setup"><span class="std std-ref">Environment Setup</span></a> are installed first.</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> git clone https://github.com/nvdla/hw.git
-<span class="gp">$</span> <span class="nb">cd</span> hw
-<span class="gp">$</span> git reset --hard &lt;HW verion index&gt;    <span class="c1"># HW versison must be matched with virtual simulator, refer to section &#39;HW verion index&#39; of README.md in nvdla/vp</span>
-<span class="gp">$</span> make
-<span class="gp">$</span> tools/bin/tmake -build cmod_top -build vmod
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/nvdla/hw.git
+<span class="gp">$ </span><span class="nb">cd</span><span class="w"> </span>hw
+<span class="gp">$ </span>git<span class="w"> </span>reset<span class="w"> </span>--hard<span class="w"> </span>&lt;HW<span class="w"> </span>verion<span class="w"> </span>index&gt;<span class="w">    </span><span class="c1"># HW versison must be matched with virtual simulator, refer to section &#39;HW verion index&#39; of README.md in nvdla/vp</span>
+<span class="gp">$ </span>make
+<span class="gp">$ </span>tools/bin/tmake<span class="w"> </span>-build<span class="w"> </span>cmod_top<span class="w"> </span>-build<span class="w"> </span>vmod
 </pre></div>
 </div>
 <p>The header files and library will be generated in <em>hw/outdir/&lt;project&gt;/cmod/release</em> and <em>hw/outdir/&lt;project&gt;/vmod/release</em>.</p>
 <p>&lt;HW verion index&gt; must be matched with virtual simulator, refer to <a class="reference external" href="https://github.com/nvdla/vp/blob/master/README.md">VP README</a> for details.</p>
 <p>If you need to run the random HW regression tests on FPGA, please run the below commands to build tests for random HW regression.</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> ./tools/bin/tmake -build verif_trace_generator
-<span class="gp">$</span> ./verif/tools/run_plan.py -P nv_small -tp nv_small -otag L10 L11 -l_num<span class="o">=</span><span class="m">4</span> -r_num<span class="o">=</span><span class="m">10</span> -timeout <span class="m">500</span> -monitor --dump_trace_only
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>./tools/bin/tmake<span class="w"> </span>-build<span class="w"> </span>verif_trace_generator
+<span class="gp">$ </span>./verif/tools/run_plan.py<span class="w"> </span>-P<span class="w"> </span>nv_small<span class="w"> </span>-tp<span class="w"> </span>nv_small<span class="w"> </span>-otag<span class="w"> </span>L10<span class="w"> </span>L11<span class="w"> </span>-l_num<span class="o">=</span><span class="m">4</span><span class="w"> </span>-r_num<span class="o">=</span><span class="m">10</span><span class="w"> </span>-timeout<span class="w"> </span><span class="m">500</span><span class="w"> </span>-monitor<span class="w"> </span>--dump_trace_only
 </pre></div>
 </div>
 <p>After build finish, there will be nv_small_XXXX folder in hw tree and trace tests are generated in nv_small_XXXX/nvdla_utb.
@@ -265,8 +264,8 @@ L11 -l_num=4 -r_num=10 -timeout 500 -monitor –dump_trace_only”.</p>
 <h3>3.4 Build and Install the Virtual Simulator with NVDLA FPGA<a class="headerlink" href="#build-and-install-the-virtual-simulator-with-nvdla-fpga" title="Permalink to this headline">¶</a></h3>
 <div class="section" id="download-aws-ec2-fpga-hardware-and-software-development-kit">
 <h4>3.4.1 Download AWS EC2 FPGA Hardware and Software Development Kit<a class="headerlink" href="#download-aws-ec2-fpga-hardware-and-software-development-kit" title="Permalink to this headline">¶</a></h4>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> git clone https://github.com/aws/aws-fpga.git
-<span class="gp">$</span> git checkout v1.4.0
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/aws/aws-fpga.git
+<span class="gp">$ </span>git<span class="w"> </span>checkout<span class="w"> </span>v1.4.0
 </pre></div>
 </div>
 <div class="admonition note">
@@ -276,14 +275,14 @@ L11 -l_num=4 -r_num=10 -timeout 500 -monitor –dump_trace_only”.</p>
 </div>
 <div class="section" id="setup-aws-sdk-and-edma-driver">
 <h4>3.4.2 Setup AWS SDK and edma driver<a class="headerlink" href="#setup-aws-sdk-and-edma-driver" title="Permalink to this headline">¶</a></h4>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> <span class="nb">cd</span> <span class="o">[</span>aws-fpga prefix<span class="o">]</span> <span class="o">&amp;&amp;</span> <span class="nb">source</span> sdk_setup.sh              <span class="c1"># Setup AWS SDK</span>
-<span class="gp">$</span> lsmod <span class="p">|</span> grep edma                                        <span class="c1"># Check if the edma driver is intalled</span>
-<span class="gp">$</span> <span class="nb">cd</span> <span class="nv">$SDK_DIR</span>/linux_kernel_drivers/edma                    <span class="c1"># If nothing shows up, following the instructions below to install it</span>
-<span class="gp">$</span> make
-<span class="gp">$</span> <span class="nb">echo</span> <span class="s1">&#39;edma&#39;</span> <span class="p">|</span> sudo tee --append /etc/modules-load.d/edma.conf
-<span class="gp">$</span> sudo cp edma-drv.ko /lib/modules/<span class="sb">`</span>uname -r<span class="sb">`</span>/
-<span class="gp">$</span> sudo depmod
-<span class="gp">$</span> sudo modprobe edma-drv
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span><span class="nb">cd</span><span class="w"> </span><span class="o">[</span>aws-fpga<span class="w"> </span>prefix<span class="o">]</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">source</span><span class="w"> </span>sdk_setup.sh<span class="w">              </span><span class="c1"># Setup AWS SDK</span>
+<span class="gp">$ </span>lsmod<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>edma<span class="w">                                        </span><span class="c1"># Check if the edma driver is intalled</span>
+<span class="gp">$ </span><span class="nb">cd</span><span class="w"> </span><span class="nv">$SDK_DIR</span>/linux_kernel_drivers/edma<span class="w">                    </span><span class="c1"># If nothing shows up, following the instructions below to install it</span>
+<span class="gp">$ </span>make
+<span class="gp">$ </span><span class="nb">echo</span><span class="w"> </span><span class="s1">&#39;edma&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>sudo<span class="w"> </span>tee<span class="w"> </span>--append<span class="w"> </span>/etc/modules-load.d/edma.conf
+<span class="gp">$ </span>sudo<span class="w"> </span>cp<span class="w"> </span>edma-drv.ko<span class="w"> </span>/lib/modules/<span class="sb">`</span>uname<span class="w"> </span>-r<span class="sb">`</span>/
+<span class="gp">$ </span>sudo<span class="w"> </span>depmod
+<span class="gp">$ </span>sudo<span class="w"> </span>modprobe<span class="w"> </span>edma-drv
 </pre></div>
 </div>
 <p><em>aws-fpga prefix</em> is the local aws repository.</p>
@@ -295,28 +294,28 @@ L11 -l_num=4 -r_num=10 -timeout 500 -monitor –dump_trace_only”.</p>
 <div class="section" id="cmake-build-under-the-vp-repository-directory">
 <h4>3.4.4 Cmake build under the vp repository directory<a class="headerlink" href="#cmake-build-under-the-vp-repository-directory" title="Permalink to this headline">¶</a></h4>
 <p>For CentOS:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> cmake -DCMAKE_INSTALL_PREFIX<span class="o">=[</span>install dir<span class="o">]</span> -DSYSTEMC_PREFIX<span class="o">=[</span>systemc prefix<span class="o">]</span> -DNVDLA_HW_PREFIX<span class="o">=[</span>nvdla_hw prefix<span class="o">]</span> -DNVDLA_HW_PROJECT<span class="o">=[</span>nvdla_hw project name<span class="o">]</span> -DAWS_FPGA_PRESENT<span class="o">=</span><span class="m">1</span> -DAWS_SDK_PREFIX<span class="o">=[</span>aws sdk prefix<span class="o">]</span> -DLUA_INCLUDE_DIR<span class="o">=</span>/usr/local/include -DLUA_LIBRARIES<span class="o">=</span>/usr/local/lib/liblua.a
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>cmake<span class="w"> </span>-DCMAKE_INSTALL_PREFIX<span class="o">=[</span>install<span class="w"> </span>dir<span class="o">]</span><span class="w"> </span>-DSYSTEMC_PREFIX<span class="o">=[</span>systemc<span class="w"> </span>prefix<span class="o">]</span><span class="w"> </span>-DNVDLA_HW_PREFIX<span class="o">=[</span>nvdla_hw<span class="w"> </span>prefix<span class="o">]</span><span class="w"> </span>-DNVDLA_HW_PROJECT<span class="o">=[</span>nvdla_hw<span class="w"> </span>project<span class="w"> </span>name<span class="o">]</span><span class="w"> </span>-DAWS_FPGA_PRESENT<span class="o">=</span><span class="m">1</span><span class="w"> </span>-DAWS_SDK_PREFIX<span class="o">=[</span>aws<span class="w"> </span>sdk<span class="w"> </span>prefix<span class="o">]</span><span class="w"> </span>-DLUA_INCLUDE_DIR<span class="o">=</span>/usr/local/include<span class="w"> </span>-DLUA_LIBRARIES<span class="o">=</span>/usr/local/lib/liblua.a
 </pre></div>
 </div>
 <p>For Ubuntu:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> cmake -DCMAKE_INSTALL_PREFIX<span class="o">=[</span>install dir<span class="o">]</span> -DSYSTEMC_PREFIX<span class="o">=[</span>systemc prefix<span class="o">]</span> -DNVDLA_HW_PREFIX<span class="o">=[</span>nvdla_hw prefix<span class="o">]</span> -DNVDLA_HW_PROJECT<span class="o">=[</span>nvdla_hw project name<span class="o">]</span> -DAWS_FPGA_PRESENT<span class="o">=</span><span class="m">1</span> -DAWS_SDK_PREFIX<span class="o">=[</span>aws sdk prefix<span class="o">]</span>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>cmake<span class="w"> </span>-DCMAKE_INSTALL_PREFIX<span class="o">=[</span>install<span class="w"> </span>dir<span class="o">]</span><span class="w"> </span>-DSYSTEMC_PREFIX<span class="o">=[</span>systemc<span class="w"> </span>prefix<span class="o">]</span><span class="w"> </span>-DNVDLA_HW_PREFIX<span class="o">=[</span>nvdla_hw<span class="w"> </span>prefix<span class="o">]</span><span class="w"> </span>-DNVDLA_HW_PROJECT<span class="o">=[</span>nvdla_hw<span class="w"> </span>project<span class="w"> </span>name<span class="o">]</span><span class="w"> </span>-DAWS_FPGA_PRESENT<span class="o">=</span><span class="m">1</span><span class="w"> </span>-DAWS_SDK_PREFIX<span class="o">=[</span>aws<span class="w"> </span>sdk<span class="w"> </span>prefix<span class="o">]</span>
 </pre></div>
 </div>
 <p><em>install dir</em> is where you would like to install the virtual simulator, <em>systemc prefix</em> is the SystemC installation directory, <em>nvdla_hw prefix</em> is the local NVDLA HW repository, <em>nvdla_hw project name</em> is the NVDLA HW project name and <em>aws sdk prefix</em> is the AWS sdk directory</p>
 <p>Example:</p>
 <p>For CentOS:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> cmake -DCMAKE_INSTALL_PREFIX<span class="o">=</span>build -DSYSTEMC_PREFIX<span class="o">=</span>/usr/local/systemc-2.3.0/ -DNVDLA_HW_PREFIX<span class="o">=</span>/usr/local/nvdla/hw -DNVDLA_HW_PROJECT<span class="o">=</span>nv_small -DAWS_FPGA_PRESENT<span class="o">=</span><span class="m">1</span> -DAWS_SDK_PREFIX<span class="o">=</span>/usr/local/aws-fpga/sdk -DLUA_INCLUDE_DIR<span class="o">=</span>/usr/local/include -DLUA_LIBRARIES<span class="o">=</span>/usr/local/lib/liblua.a
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>cmake<span class="w"> </span>-DCMAKE_INSTALL_PREFIX<span class="o">=</span>build<span class="w"> </span>-DSYSTEMC_PREFIX<span class="o">=</span>/usr/local/systemc-2.3.0/<span class="w"> </span>-DNVDLA_HW_PREFIX<span class="o">=</span>/usr/local/nvdla/hw<span class="w"> </span>-DNVDLA_HW_PROJECT<span class="o">=</span>nv_small<span class="w"> </span>-DAWS_FPGA_PRESENT<span class="o">=</span><span class="m">1</span><span class="w"> </span>-DAWS_SDK_PREFIX<span class="o">=</span>/usr/local/aws-fpga/sdk<span class="w"> </span>-DLUA_INCLUDE_DIR<span class="o">=</span>/usr/local/include<span class="w"> </span>-DLUA_LIBRARIES<span class="o">=</span>/usr/local/lib/liblua.a
 </pre></div>
 </div>
 <p>For Ubuntu:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> cmake -DCMAKE_INSTALL_PREFIX<span class="o">=</span>build -DSYSTEMC_PREFIX<span class="o">=</span>/usr/local/systemc-2.3.0/ -DNVDLA_HW_PREFIX<span class="o">=</span>/usr/local/nvdla/hw -DNVDLA_HW_PROJECT<span class="o">=</span>nv_small -DAWS_FPGA_PRESENT<span class="o">=</span><span class="m">1</span> -DAWS_SDK_PREFIX<span class="o">=</span>/usr/local/aws-fpga/sdk
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>cmake<span class="w"> </span>-DCMAKE_INSTALL_PREFIX<span class="o">=</span>build<span class="w"> </span>-DSYSTEMC_PREFIX<span class="o">=</span>/usr/local/systemc-2.3.0/<span class="w"> </span>-DNVDLA_HW_PREFIX<span class="o">=</span>/usr/local/nvdla/hw<span class="w"> </span>-DNVDLA_HW_PROJECT<span class="o">=</span>nv_small<span class="w"> </span>-DAWS_FPGA_PRESENT<span class="o">=</span><span class="m">1</span><span class="w"> </span>-DAWS_SDK_PREFIX<span class="o">=</span>/usr/local/aws-fpga/sdk
 </pre></div>
 </div>
 </div>
 <div class="section" id="compile-and-install">
 <h4>3.4.5 Compile and install:<a class="headerlink" href="#compile-and-install" title="Permalink to this headline">¶</a></h4>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> make
-<span class="gp">$</span> make install
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>make
+<span class="gp">$ </span>make<span class="w"> </span>install
 </pre></div>
 </div>
 </div>
@@ -325,9 +324,9 @@ L11 -l_num=4 -r_num=10 -timeout 500 -monitor –dump_trace_only”.</p>
 <h3>3.5 Running HW regression tests on FPGA<a class="headerlink" href="#running-hw-regression-tests-on-fpga" title="Permalink to this headline">¶</a></h3>
 <div class="section" id="run-nvdla-l0-1-2-tests">
 <h4>3.5.1 Run NVDLA L0/1/2 tests<a class="headerlink" href="#run-nvdla-l0-1-2-tests" title="Permalink to this headline">¶</a></h4>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> <span class="nb">cd</span> <span class="o">[</span>vp_awsfpga prefix<span class="o">]</span>/cl_nvdla/verif/regression
-<span class="gp">$</span> make <span class="nv">AWS_FPGA</span><span class="o">=</span><span class="m">1</span> <span class="nv">NVDLA_HW_ROOT</span><span class="o">=[</span>nvdla_hw prefix<span class="o">]</span>
-<span class="gp">$</span> make check    <span class="c1"># Check last regression status</span>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span><span class="nb">cd</span><span class="w"> </span><span class="o">[</span>vp_awsfpga<span class="w"> </span>prefix<span class="o">]</span>/cl_nvdla/verif/regression
+<span class="gp">$ </span>make<span class="w"> </span><span class="nv">AWS_FPGA</span><span class="o">=</span><span class="m">1</span><span class="w"> </span><span class="nv">NVDLA_HW_ROOT</span><span class="o">=[</span>nvdla_hw<span class="w"> </span>prefix<span class="o">]</span>
+<span class="gp">$ </span>make<span class="w"> </span>check<span class="w">    </span><span class="c1"># Check last regression status</span>
 </pre></div>
 </div>
 <p><em>nvdla_hw prefix</em> is the local NVDLA HW repository, <em>vp_awsfpga prefix</em> is the local nvdla aws fpga CL repository.</p>
@@ -335,9 +334,9 @@ L11 -l_num=4 -r_num=10 -timeout 500 -monitor –dump_trace_only”.</p>
 <div class="section" id="run-nvdla-random-regression-tests">
 <h4>3.5.2 Run NVDLA random regression tests<a class="headerlink" href="#run-nvdla-random-regression-tests" title="Permalink to this headline">¶</a></h4>
 <p>You can run NVDLA random regression tests which has HW full coverage with below commands.</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> <span class="nb">cd</span> <span class="o">[</span>vp_awsfpga prefix<span class="o">]</span>/cl_nvdla/verif/regression
-<span class="gp">$</span> make <span class="nv">AWS_FPGA</span><span class="o">=</span><span class="m">1</span> <span class="nv">NVDLA_HW_ROOT</span><span class="o">=[</span>nvdla_hw prefix<span class="o">]</span> <span class="nv">NVDLA_HW_TRACE_LIST</span><span class="o">=</span>nv_small_random <span class="nv">NVDLA_HW_TRACE_ROOT</span><span class="o">=[</span>nvdla_hw prefix<span class="o">]</span>/nv_small_XXXX/nvdla_utb <span class="nv">RANDOM_TEST</span><span class="o">=</span><span class="m">1</span>
-<span class="gp">$</span> make check <span class="nv">NVDLA_HW_TRACE_LIST</span><span class="o">=</span>nv_small_random <span class="c1"># Check last regression status</span>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span><span class="nb">cd</span><span class="w"> </span><span class="o">[</span>vp_awsfpga<span class="w"> </span>prefix<span class="o">]</span>/cl_nvdla/verif/regression
+<span class="gp">$ </span>make<span class="w"> </span><span class="nv">AWS_FPGA</span><span class="o">=</span><span class="m">1</span><span class="w"> </span><span class="nv">NVDLA_HW_ROOT</span><span class="o">=[</span>nvdla_hw<span class="w"> </span>prefix<span class="o">]</span><span class="w"> </span><span class="nv">NVDLA_HW_TRACE_LIST</span><span class="o">=</span>nv_small_random<span class="w"> </span><span class="nv">NVDLA_HW_TRACE_ROOT</span><span class="o">=[</span>nvdla_hw<span class="w"> </span>prefix<span class="o">]</span>/nv_small_XXXX/nvdla_utb<span class="w"> </span><span class="nv">RANDOM_TEST</span><span class="o">=</span><span class="m">1</span>
+<span class="gp">$ </span>make<span class="w"> </span>check<span class="w"> </span><span class="nv">NVDLA_HW_TRACE_LIST</span><span class="o">=</span>nv_small_random<span class="w"> </span><span class="c1"># Check last regression status</span>
 </pre></div>
 </div>
 <p><em>nvdla_hw prefix</em> is the local NVDLA HW repository, <em>vp prefix</em> is the local nvdla aws fpga CL repository.</p>
@@ -358,14 +357,14 @@ L11 -l_num=4 -r_num=10 -timeout 500 -monitor –dump_trace_only”.</p>
 <div class="section" id="running-kernel-image-in-the-virtual-simulator">
 <h4>3.6.3 Running Kernel Image In the Virtual Simulator<a class="headerlink" href="#running-kernel-image-in-the-virtual-simulator" title="Permalink to this headline">¶</a></h4>
 <p>Start the virtual simulator:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> sudo ./build/bin/aarch64_toplevel -c conf/aarch64_nvdla.lua --fpga
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>sudo<span class="w"> </span>./build/bin/aarch64_toplevel<span class="w"> </span>-c<span class="w"> </span>conf/aarch64_nvdla.lua<span class="w"> </span>--fpga
 <span class="go">Login the kernel. The demo image uses account &#39;root&#39; and password &#39;nvdla&#39;.</span>
 </pre></div>
 </div>
 <p>Some demo tests are provided in the <em>tests</em> directory, you can run them after login as root:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> mount -t 9p -o <span class="nv">trans</span><span class="o">=</span>virtio r /mnt
-<span class="gp">#</span> <span class="nb">cd</span> /mnt/tests/hello
-<span class="gp">#</span> ./aarch64_hello
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp"># </span>mount<span class="w"> </span>-t<span class="w"> </span>9p<span class="w"> </span>-o<span class="w"> </span><span class="nv">trans</span><span class="o">=</span>virtio<span class="w"> </span>r<span class="w"> </span>/mnt
+<span class="gp"># </span><span class="nb">cd</span><span class="w"> </span>/mnt/tests/hello
+<span class="gp"># </span>./aarch64_hello
 </pre></div>
 </div>
 <p>You should be able to see ‘Hello World!’ printed in the screen. You are now ready to try out the NVDLA software in the virtual simulator! Please refer to <a class="reference internal" href="sw/contents.html"><span class="doc">Software Manual</span></a> for details.</p>
@@ -396,9 +395,9 @@ L11 -l_num=4 -r_num=10 -timeout 500 -monitor –dump_trace_only”.</p>
 </div>
 <div class="section" id="build-nvdla-rtl">
 <h3>4.3 Build NVDLA RTL<a class="headerlink" href="#build-nvdla-rtl" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> <span class="nb">cd</span> <span class="o">[</span>nvdla_hw prefix<span class="o">]</span>
-<span class="gp">$</span> make
-<span class="gp">$</span> ./tools/bin/tmake -build vmod
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span><span class="nb">cd</span><span class="w"> </span><span class="o">[</span>nvdla_hw<span class="w"> </span>prefix<span class="o">]</span>
+<span class="gp">$ </span>make
+<span class="gp">$ </span>./tools/bin/tmake<span class="w"> </span>-build<span class="w"> </span>vmod
 </pre></div>
 </div>
 <p>Please refer to <a class="reference internal" href="hw/v1/integration_guide.html#tree-build"><span class="std std-ref">Tree Build</span></a> for details on building the NVDLA hardware tree, and make sure the required tools listed in <a class="reference internal" href="hw/v1/integration_guide.html#env-setup"><span class="std std-ref">Environment Setup</span></a> are installed first.</p>
@@ -418,7 +417,7 @@ NVDLA source distribution because of licensing restrictions.</p>
 </div>
 <div class="section" id="start-xilinx-tool-in-aws-ec2-instance">
 <h4>4.4.1 Start Xilinx tool in AWS EC2 instance<a class="headerlink" href="#start-xilinx-tool-in-aws-ec2-instance" title="Permalink to this headline">¶</a></h4>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> vivado
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>vivado
 </pre></div>
 </div>
 </div>
@@ -534,7 +533,7 @@ NVDLA source distribution because of licensing restrictions.</p>
 </div>
 <div class="section" id="install-aws-cli">
 <h3>4.5 Install AWS CLI<a class="headerlink" href="#install-aws-cli" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> aws configure         <span class="c1"># to set your credentials (found in your console.aws.amazon.com page) and default region</span>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>aws<span class="w"> </span>configure<span class="w">         </span><span class="c1"># to set your credentials (found in your console.aws.amazon.com page) and default region</span>
 </pre></div>
 </div>
 <div class="admonition note">
@@ -544,31 +543,31 @@ NVDLA source distribution because of licensing restrictions.</p>
 </div>
 <div class="section" id="generate-design-checkpoint-dcp">
 <h3>4.6 Generate design checkpoint (DCP)<a class="headerlink" href="#generate-design-checkpoint-dcp" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> <span class="nb">cd</span> <span class="o">[</span>aws fpga prefix<span class="o">]</span> <span class="o">&amp;&amp;</span> <span class="nb">source</span> hdk_setup.sh
-<span class="gp">$</span> <span class="nb">export</span> <span class="nv">CL_DIR</span><span class="o">=[</span>vp_awsfpga prefix<span class="o">]</span>/cl_nvdla
-<span class="gp">$</span> <span class="nb">export</span> <span class="nv">NV_HW_ROOT</span><span class="o">=[</span>nvdla_hw prefix<span class="o">]</span>
-<span class="gp">$</span> <span class="nb">cd</span> <span class="nv">$CL_DIR</span>/build/scripts
-<span class="gp">$</span> ./filelist.sh
-<span class="gp">$</span> <span class="nv">$HDK_DIR</span>/common/shell_stable/build/scripts/aws_build_dcp_from_cl.sh -foreground -clock_recipe_a A2    <span class="c1"># Create DCP with 15.625M</span>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span><span class="nb">cd</span><span class="w"> </span><span class="o">[</span>aws<span class="w"> </span>fpga<span class="w"> </span>prefix<span class="o">]</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">source</span><span class="w"> </span>hdk_setup.sh
+<span class="gp">$ </span><span class="nb">export</span><span class="w"> </span><span class="nv">CL_DIR</span><span class="o">=[</span>vp_awsfpga<span class="w"> </span>prefix<span class="o">]</span>/cl_nvdla
+<span class="gp">$ </span><span class="nb">export</span><span class="w"> </span><span class="nv">NV_HW_ROOT</span><span class="o">=[</span>nvdla_hw<span class="w"> </span>prefix<span class="o">]</span>
+<span class="gp">$ </span><span class="nb">cd</span><span class="w"> </span><span class="nv">$CL_DIR</span>/build/scripts
+<span class="gp">$ </span>./filelist.sh
+<span class="gp">$ </span><span class="nv">$HDK_DIR</span>/common/shell_stable/build/scripts/aws_build_dcp_from_cl.sh<span class="w"> </span>-foreground<span class="w"> </span>-clock_recipe_a<span class="w"> </span>A2<span class="w">    </span><span class="c1"># Create DCP with 15.625M</span>
 </pre></div>
 </div>
 <p>The DCP generation process could take hours to finish, you should not stop the EC2 instance during this process. After the DCP is generated successfully, a tarball file should be generated under [vp_awsfpga prefix]/cl_nvdla/build/checkpoints/to_aws.</p>
 </div>
 <div class="section" id="generate-afi">
 <h3>4.7 Generate AFI<a class="headerlink" href="#generate-afi" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> aws s3 mb s3://&lt;your-bucket-name&gt; --region &lt;region&gt;        <span class="c1"># Create an S3 bucket (choose a unique bucket name)</span>
-<span class="gp">$</span> aws s3 mb s3://&lt;your-bucket-name&gt;/&lt;your-dcp-folder-name&gt;   <span class="c1"># Create folder for your tarball files</span>
-<span class="gp">$</span> aws s3 cp <span class="nv">$CL_DIR</span>/build/checkpoints/to_aws/&lt;your-dcp-tallball&gt; s3://&lt;your-bucket-name&gt;/&lt;your-dcp-folder-name&gt;/     <span class="c1"># Upload the file to S3</span>
-<span class="gp">$</span> aws s3 mb s3://&lt;your-bucket-name&gt;/&lt;your-logs-folder-name&gt;  <span class="c1"># Create a folder to keep your logs</span>
-<span class="gp">$</span> touch LOGS_FILES_GO_HERE.txt                               <span class="c1"># Create a temp file</span>
-<span class="gp">$</span> aws s3 cp LOGS_FILES_GO_HERE.txt s3://&lt;your-bucket-name&gt;/&lt;your-logs-folder-name&gt;/  <span class="c1"># Which creates the folder on S3</span>
-<span class="gp">$</span> aws ec2 create-fpga-image --name &lt;your-afi-name&gt; --description &lt;your-afi-description&gt; --input-storage-location <span class="nv">Bucket</span><span class="o">=</span>&lt;your-bucket-name&gt;,Key<span class="o">=</span>&lt;your-dcp-folder-name&gt;/&lt;your-dcp-tallball&gt; --logs-storage-location <span class="nv">Bucket</span><span class="o">=</span>&lt;your-bucket-name&gt;,Key<span class="o">=</span>&lt;your-logs-folder-name&gt;     <span class="c1"># create AFI</span>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>aws<span class="w"> </span>s3<span class="w"> </span>mb<span class="w"> </span>s3://&lt;your-bucket-name&gt;<span class="w"> </span>--region<span class="w"> </span>&lt;region&gt;<span class="w">        </span><span class="c1"># Create an S3 bucket (choose a unique bucket name)</span>
+<span class="gp">$ </span>aws<span class="w"> </span>s3<span class="w"> </span>mb<span class="w"> </span>s3://&lt;your-bucket-name&gt;/&lt;your-dcp-folder-name&gt;<span class="w">   </span><span class="c1"># Create folder for your tarball files</span>
+<span class="gp">$ </span>aws<span class="w"> </span>s3<span class="w"> </span>cp<span class="w"> </span><span class="nv">$CL_DIR</span>/build/checkpoints/to_aws/&lt;your-dcp-tallball&gt;<span class="w"> </span>s3://&lt;your-bucket-name&gt;/&lt;your-dcp-folder-name&gt;/<span class="w">     </span><span class="c1"># Upload the file to S3</span>
+<span class="gp">$ </span>aws<span class="w"> </span>s3<span class="w"> </span>mb<span class="w"> </span>s3://&lt;your-bucket-name&gt;/&lt;your-logs-folder-name&gt;<span class="w">  </span><span class="c1"># Create a folder to keep your logs</span>
+<span class="gp">$ </span>touch<span class="w"> </span>LOGS_FILES_GO_HERE.txt<span class="w">                               </span><span class="c1"># Create a temp file</span>
+<span class="gp">$ </span>aws<span class="w"> </span>s3<span class="w"> </span>cp<span class="w"> </span>LOGS_FILES_GO_HERE.txt<span class="w"> </span>s3://&lt;your-bucket-name&gt;/&lt;your-logs-folder-name&gt;/<span class="w">  </span><span class="c1"># Which creates the folder on S3</span>
+<span class="gp">$ </span>aws<span class="w"> </span>ec2<span class="w"> </span>create-fpga-image<span class="w"> </span>--name<span class="w"> </span>&lt;your-afi-name&gt;<span class="w"> </span>--description<span class="w"> </span>&lt;your-afi-description&gt;<span class="w"> </span>--input-storage-location<span class="w"> </span><span class="nv">Bucket</span><span class="o">=</span>&lt;your-bucket-name&gt;,Key<span class="o">=</span>&lt;your-dcp-folder-name&gt;/&lt;your-dcp-tallball&gt;<span class="w"> </span>--logs-storage-location<span class="w"> </span><span class="nv">Bucket</span><span class="o">=</span>&lt;your-bucket-name&gt;,Key<span class="o">=</span>&lt;your-logs-folder-name&gt;<span class="w">     </span><span class="c1"># create AFI</span>
 
 <span class="go">NOTE: The trailing &#39;/&#39; is required after &lt;dcp-folder-name&gt;</span>
 </pre></div>
 </div>
 <p>You will get a unique AFI ID and global AFI ID for your fpga image. You do not need to keep the EC2 instance running during this process. You can check the status using:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> aws ec2 describe-fpga-images --fpga-image-ids &lt;your-image-afi-id&gt;
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>aws<span class="w"> </span>ec2<span class="w"> </span>describe-fpga-images<span class="w"> </span>--fpga-image-ids<span class="w"> </span>&lt;your-image-afi-id&gt;
 </pre></div>
 </div>
 <p>More details please refer to <a class="reference external" href="https://github.com/aws/aws-fpga/blob/master/hdk/cl/examples/README.md#3-submit-the-design-checkpoint-to-aws-to-create-the-afi">How to submit checkpoint to aws</a></p>
@@ -683,7 +682,7 @@ NVDLA source distribution because of licensing restrictions.</p>
     </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
         </div>
       </div>
         </div>
@@ -711,10 +710,10 @@ NVDLA source distribution because of licensing restrictions.</p>
 <div class="container">
 <div class="row">
 &#169; <a
-href="copyright.html">Copyright</a> 2018, NVIDIA Corporation.
-<a href="http://www.nvidia.com/object/legal_info.html">Legal Information.</a>
-<a href="http://www.nvidia.com/object/privacy_policy.html">Privacy Policy.</a>
-Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.2.0.
+href="copyright.html">Copyright</a> 2018 - 2024, NVIDIA Corporation.
+<a href="https://www.nvidia.com/object/legal_info.html">Legal Information.</a>
+<a href="https://www.nvidia.com/object/privacy_policy.html">Privacy Policy.</a>
+Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.5.4.
 </div>
 </div>
 </div>

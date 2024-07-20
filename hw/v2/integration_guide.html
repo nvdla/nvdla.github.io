@@ -1,19 +1,18 @@
 
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Integrator’s Manual &#8212; NVDLA Documentation</title>
-    <link rel="stylesheet" href="../../_static/nvdla.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/nvdla.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles.css" />
-    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
-    <script type="text/javascript" src="../../_static/jquery.js"></script>
-    <script type="text/javascript" src="../../_static/underscore.js"></script>
-    <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <script type="text/javascript" src="../../_static/language_data.js"></script>
-    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="Scalability parameters and ConfigROM" href="scalability.html" />
     <link rel="prev" title="NVDLA Environment Setup Guide" href="environment_setup_guide.html" />
@@ -54,7 +53,7 @@
   <div class="section" id="integrator-s-manual">
 <h1><a class="toc-backref" href="#id13">Integrator’s Manual</a><a class="headerlink" href="#integrator-s-manual" title="Permalink to this headline">¶</a></h1>
 <div class="contents topic" id="contents">
-<p class="topic-title first">Contents</p>
+<p class="topic-title">Contents</p>
 <ul class="simple">
 <li><p><a class="reference internal" href="#integrator-s-manual" id="id13">Integrator’s Manual</a></p>
 <ul>
@@ -429,11 +428,11 @@ A latch holds the read data whenever RE = ‘0’. There is no write through cap
 If the read address matches the write address, read out data may be corrupted.</p>
 <div class="figure align-center" id="id5">
 <a class="reference internal image-reference" href="../../_images/ig_sram_dp_read_timing1.png"><img alt="Dual Port RAM Read Timing" src="../../_images/ig_sram_dp_read_timing1.png" style="width: 706.0px; height: 354.0px;" /></a>
-<p class="caption"><span class="caption-number">Fig. 83 </span><span class="caption-text">Dual Port RAM Read Timing</span><a class="headerlink" href="#id5" title="Permalink to this image">¶</a></p>
+<p class="caption"><span class="caption-number">Fig. 78 </span><span class="caption-text">Dual Port RAM Read Timing</span><a class="headerlink" href="#id5" title="Permalink to this image">¶</a></p>
 </div>
 <div class="figure align-center" id="id6">
 <a class="reference internal image-reference" href="../../_images/ig_sram_dp_write_timing1.png"><img alt="Dual Port RAM Write Timing" src="../../_images/ig_sram_dp_write_timing1.png" style="width: 671.0px; height: 372.5px;" /></a>
-<p class="caption"><span class="caption-number">Fig. 84 </span><span class="caption-text">Dual Port RAM Write Timing</span><a class="headerlink" href="#id6" title="Permalink to this image">¶</a></p>
+<p class="caption"><span class="caption-number">Fig. 79 </span><span class="caption-text">Dual Port RAM Write Timing</span><a class="headerlink" href="#id6" title="Permalink to this image">¶</a></p>
 </div>
 <div class="line-block">
 <div class="line"><br /></div>
@@ -536,7 +535,7 @@ pins</p></td>
 </table>
 <div class="figure align-center" id="id7">
 <a class="reference internal image-reference" href="../../_images/ig_sram_pdp_timing1.png"><img alt="Pseudo Dual Port RAM Timing" src="../../_images/ig_sram_pdp_timing1.png" style="width: 748.0px; height: 473.0px;" /></a>
-<p class="caption"><span class="caption-number">Fig. 85 </span><span class="caption-text">Pseudo Dual Port RAM Timing</span><a class="headerlink" href="#id7" title="Permalink to this image">¶</a></p>
+<p class="caption"><span class="caption-number">Fig. 80 </span><span class="caption-text">Pseudo Dual Port RAM Timing</span><a class="headerlink" href="#id7" title="Permalink to this image">¶</a></p>
 </div>
 <p>The RAMPDP behaves like a dual port RAM, but is created by double clocking a single port RAM.
 It can perform a ‘single read’ (1R), a ‘single write’ (1W) or a ‘read followed by write’ (1R+1W)
@@ -1068,7 +1067,7 @@ ${NVDLA_ROOT}/syn/dc/scripts/syn_launch.sh -mode de -config /path/to/config.sh
     </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
         </div>
       </div>
         </div>
@@ -1097,10 +1096,10 @@ ${NVDLA_ROOT}/syn/dc/scripts/syn_launch.sh -mode de -config /path/to/config.sh
 <div class="container">
 <div class="row">
 &#169; <a
-href="../../copyright.html">Copyright</a> 2018, NVIDIA Corporation.
-<a href="http://www.nvidia.com/object/legal_info.html">Legal Information.</a>
-<a href="http://www.nvidia.com/object/privacy_policy.html">Privacy Policy.</a>
-Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.2.0.
+href="../../copyright.html">Copyright</a> 2018 - 2024, NVIDIA Corporation.
+<a href="https://www.nvidia.com/object/legal_info.html">Legal Information.</a>
+<a href="https://www.nvidia.com/object/privacy_policy.html">Privacy Policy.</a>
+Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.5.4.
 </div>
 </div>
 </div>
