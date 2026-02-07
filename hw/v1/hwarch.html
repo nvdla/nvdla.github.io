@@ -1,19 +1,18 @@
-
 <!DOCTYPE html>
 
-<html>
+<html lang="en" data-content_root="../../">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
     <title>Hardware Architectural Specification &#8212; NVDLA Documentation</title>
-    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../../_static/nvdla.css" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/styles.css" />
-    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
-    <script src="../../_static/jquery.js"></script>
-    <script src="../../_static/underscore.js"></script>
-    <script src="../../_static/doctools.js"></script>
-    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../_static/nvdla.css?v=907781f7" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles.css?v=af91e327" />
+    <script src="../../_static/documentation_options.js?v=7026087e"></script>
+    <script src="../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="In-memory data formats" href="../format.html" />
     <link rel="prev" title="Hardware Manual" href="../contents.html" />
@@ -26,7 +25,7 @@
     max-width: 100% !important;
   }
 </style>
-<script src="//assets.adobedtm.com/b92787824f2e0e9b68dc2e993f9bd995339fe417/satelliteLib-30c8ffcc8ece089156fd5590fbcf390ffc296f51.js"></script>
+<script src="https://assets.adobedtm.com/5d4962a43b79/814eb6e9b4e1/launch-4bc07f1e0b0b.min.js"></script>
 <!-- OneTrust Cookies Consent Notice start for nvidia.com -->
 <script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" data-document-language="true" type="text/javascript" charset="UTF-8" data-domain-script="3e2b62ff-7ae7-4ac5-87c8-d5949ecafff5-test" ></script>
 <script type="text/javascript">
@@ -69,21 +68,23 @@ function OptanonWrapper() {
       <div class="row">
         <div class="col-xs-12 col-md-9">
           
-  <div class="section" id="hardware-architectural-specification">
-<h1>Hardware Architectural Specification<a class="headerlink" href="#hardware-architectural-specification" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="introduction">
-<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+  <section id="hardware-architectural-specification">
+<h1>Hardware Architectural Specification<a class="headerlink" href="#hardware-architectural-specification" title="Link to this heading">¶</a></h1>
+<section id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Link to this heading">¶</a></h2>
 <p>The NVIDIA® Deep Learning Accelerator (NVDLA) is a configurable fixed function hardware accelerator targeting inference operations in deep learning applications. It provides full hardware acceleration for a convolutional neural network (CNN) by exposing individual building blocks that accelerate operations associated with each CNN layer (e.g., convolution, deconvolution, fully-connected, activation, pooling, local response normalization, etc.). Maintaining separate and independently configurable blocks means that the NVDLA can be sized appropriatley for many smaller applications where inferencing was previously not feasible due to cost, area, or power constraints. This modular architecture enables a highly configurable solution that readily scales to meet specific inferencing needs.</p>
 <p><strong>About This Document</strong></p>
 <p>This document focuses on the logical organization and control of the NVIDIA Deep Learning Accelerator. It provides information for those blocks and interfaces that control fundamental operations. The blocks detailed in this document include a functional overview, configuration options, and register listings for that block.  All features and functions of all blocks may not be present in every NVDLA implementation.</p>
-</div>
-<div class="section" id="functional-description">
-<h2>Functional Description<a class="headerlink" href="#functional-description" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="functional-description">
+<h2>Functional Description<a class="headerlink" href="#functional-description" title="Link to this heading">¶</a></h2>
 <p>NVDLA operation begins with the management processor (either a microcontroller or the main CPU) sending down the configuration of one hardware layer, along with an “activate” command. If data dependencies do not preclude this, multiple hardware layers can be sent down to different blocks and activated at the same time (i.e., if there exists another layer whose inputs do not depend on the output from the previous layer). Because every block has a double-buffer for its configuration registers, it can also capture a second layer’s configuration to begin immediately processing when the active layer has completed. Once a hardware engine finishes its active task, it will issue an interrupt to the management processor to report the completion, and the management processor will then begin the process again. This command-execute-interrupt flow repeats until inference on the entire network is complete.</p>
 <p>NVDLA has two modes of operation: independent mode and fused mode. Independent operation refers to each individual block being configured for when and what it executes, with each block working on its assigned task. Independent operation begins and ends with the assigned block performing memory-to-memory operations, in and out of main system memory or dedicated SRAM memory. Fused operation is similar to independent operation, however, some blocks can be assembled as a pipeline; this improves performance by bypassing the round trip through memory, instead having blocks communicate with each other through small FIFOs (i.e., the convolution core can pass data to the Single Data Point Processor, which can pass data to the Planar Data Processor, and in turn to the Cross-channel Data Processor without performing memory-to-memory operations in between).</p>
-<div class="figure align-center" id="id6">
-<span id="fig-arch-nvdla-block-diagram"></span><img alt="&quot;Headless NVDLA core&quot; architectural drawing.  A configuration interface block is connected to the outside world through the CSB/interrupt interface.  The memory interface block is connected outside with a DBB interface and a second, optional, DBB interface.  The memory interface connects to a convolution buffer, which connects to a convolution core; the memory interface also connects to the activation engine, the pooling engine, local response normalization engine, reshape engine, and bridge DMA engine.   The convolution core, activation engine, pooling engine, and local response normalization engine also form a pipeline." src="../../_images/nvdla-primer-core-diagram.svg" /><p class="caption"><span class="caption-number">Fig. 5 </span><span class="caption-text">NVDLA Core Block Diagram.</span><a class="headerlink" href="#id6" title="Permalink to this image">¶</a></p>
-</div>
+<figure class="align-center" id="id6">
+<span id="fig-arch-nvdla-block-diagram"></span><img alt="&quot;Headless NVDLA core&quot; architectural drawing.  A configuration interface block is connected to the outside world through the CSB/interrupt interface.  The memory interface block is connected outside with a DBB interface and a second, optional, DBB interface.  The memory interface connects to a convolution buffer, which connects to a convolution core; the memory interface also connects to the activation engine, the pooling engine, local response normalization engine, reshape engine, and bridge DMA engine.   The convolution core, activation engine, pooling engine, and local response normalization engine also form a pipeline." src="../../_images/nvdla-primer-core-diagram.svg" /><figcaption>
+<p><span class="caption-number">Fig. 5 </span><span class="caption-text">NVDLA Core Block Diagram.</span><a class="headerlink" href="#id6" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
 <p>Each block in the NVDLA architecture exists to support specific operations integral to inference on deep neural networks. Inference operations are divided into five groups:</p>
 <ul class="simple">
 <li><p>Convolution operations (Convolution core and buffer blocks)</p></li>
@@ -97,8 +98,8 @@ function OptanonWrapper() {
 <p class="admonition-title">Note</p>
 <p>The descriptions in the following sections contain references to or identify various hardware paramters and settings that might influence performance. Refer to the Hardware Paramters sections of this document for more information.</p>
 </div>
-<div class="section" id="convolution-operations">
-<h3>Convolution Operations<a class="headerlink" href="#convolution-operations" title="Permalink to this headline">¶</a></h3>
+<section id="convolution-operations">
+<h3>Convolution Operations<a class="headerlink" href="#convolution-operations" title="Link to this heading">¶</a></h3>
 <p>Convolution operations work on two sets of data: one set of offline-trained “weights” (which remain constant between each run of inference), and one set of input “feature” data (which varies with the network’s input). The NVDLA Convolution Engine exposes parameters that enable several different modes of operation. Each of these modes include optimizations that improve performance over a naive convolution implementation:</p>
 <ul class="simple">
 <li><p>Direct</p></li>
@@ -107,8 +108,8 @@ function OptanonWrapper() {
 <li><p>Batching</p></li>
 </ul>
 <p>Enabling different modes of operation allows for the ability to map many different sizes of convolutions onto the hardware with higher efficiency. Support for sparse weight compression saves memory bandwidth. Built-in Winograd convolution support improves compute efficiency for certain sizes of filters. Batching convolution, can save additional memory bandwidth by reusing weights when running multiple inferences in parallel. To avoid repeated accesses to system memory, the NVDLA convolution engine has an internal RAM reserved for weight and input feature storage, referred to as the “convolution buffer”.  This design greatly improves memory efficiency over sending a request to the system memory controller for each independent time a weight or feature is needed.</p>
-<div class="section" id="direct-convolution-mode">
-<span id="direct-convolution"></span><h4>Direct Convolution Mode<a class="headerlink" href="#direct-convolution-mode" title="Permalink to this headline">¶</a></h4>
+<section id="direct-convolution-mode">
+<span id="direct-convolution"></span><h4>Direct Convolution Mode<a class="headerlink" href="#direct-convolution-mode" title="Link to this heading">¶</a></h4>
 <p>Direct convolution mode is the basic mode of operation. NVDLA incorporates a wide multiply–accumulate (MAC) pipeline to support efficient parallel direct convolutional operation. There are two key factors that impact convolution function performance: Memory bandwidth and MAC efficiency.</p>
 <p>NVDLA supports two memory bandwidth optimization features that can significantly help to reduce memory bandwidth requirements for CNN layer(s) that require huge data exchange, e.g. fully-connected layers.</p>
 <ul class="simple">
@@ -124,9 +125,9 @@ function OptanonWrapper() {
 <li><p>Feature supporting – Compression</p></li>
 <li><p>Feature supporting – Second Memory Bus</p></li>
 </ul>
-</div>
-<div class="section" id="image-input-convolution-mode">
-<h4>Image-Input Convolution Mode<a class="headerlink" href="#image-input-convolution-mode" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="image-input-convolution-mode">
+<h4>Image-Input Convolution Mode<a class="headerlink" href="#image-input-convolution-mode" title="Link to this heading">¶</a></h4>
 <p>Image-input mode is a special direct convolution mode for the first layer, which contains the input feature data from an image surface. Considering that the image surface format is quite different from the normal feature data format, feature data fetching operations follow a different path from direct convolution operations.  Normally the first layer only has 3 channels for image input, additional logic was added here to enhance MAC utilization. Even though the first layer has 3 (or even 1) channel, a channel extension feature maintains average MAC utilization close to 50%, even if Atomic-C
 setting is large (e.g., 16).</p>
 <p>Hardware Parameters:</p>
@@ -134,9 +135,9 @@ setting is large (e.g., 16).</p>
 <li><p>All from Direct Convolution mode +</p></li>
 <li><p>Image input support</p></li>
 </ul>
-</div>
-<div class="section" id="winograd-convolution-mode">
-<span id="winograd"></span><h4>Winograd Convolution Mode<a class="headerlink" href="#winograd-convolution-mode" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="winograd-convolution-mode">
+<span id="winograd"></span><h4>Winograd Convolution Mode<a class="headerlink" href="#winograd-convolution-mode" title="Link to this heading">¶</a></h4>
 <p>Winograd convolution refers to an optional algorithm used to optimize the performance of direct convolution. The Winograd convolution reduces the number of
 multiplications, while increasing the adders to deal with the additional
 transformation. As the number of additions for both pre-calculation and
@@ -160,9 +161,9 @@ another fixed matrix operation after normal direct convolutional MAC array.</p>
 <ul class="simple">
 <li><p>Feature supporting – Winograd</p></li>
 </ul>
-</div>
-<div class="section" id="batching-convolution-mode">
-<span id="batching"></span><h4>Batching Convolution Mode<a class="headerlink" href="#batching-convolution-mode" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="batching-convolution-mode">
+<span id="batching"></span><h4>Batching Convolution Mode<a class="headerlink" href="#batching-convolution-mode" title="Link to this heading">¶</a></h4>
 <p>The NVDLA batching feature supports processing of multiple sets of input activations (from multiple images) at a time.  This re-uses weights and saves significant memory bandwidth, improving performance and power. The memory bandwidth requirement for fully-connected layers is much larger than the calculation resource. The size of weight data in fully-connected layers is significant and is only used a single time in MAC functions (this is one of the leading causes of bottlenecks in memory bandwidth). Allowing multiple sets of activations to share the same weight data means they can run at the same
 time (reducing overall run-time). The run-time for a single batch is close to that for a single-layer; overall performance is close to [batching_size] X [single-layer performance].</p>
 <div class="admonition note">
@@ -174,9 +175,9 @@ time (reducing overall run-time). The run-time for a single batch is close to th
 <li><p>Feature batch support</p></li>
 <li><p>Max batch number</p></li>
 </ul>
-</div>
-<div class="section" id="convolution-buffer">
-<h4>Convolution Buffer<a class="headerlink" href="#convolution-buffer" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="convolution-buffer">
+<h4>Convolution Buffer<a class="headerlink" href="#convolution-buffer" title="Link to this heading">¶</a></h4>
 <p>The Convolution buffer is one pipeline stage of the Convolution core. It
 contains both the weight data and the feature data for the convolution
 function. The ratio of weight data size to feature data size varies
@@ -203,18 +204,18 @@ is required.</p>
 <li><p>BUFF bank #</p></li>
 <li><p>BUFF bank size</p></li>
 </ul>
-</div>
-</div>
-<div class="section" id="single-data-point-operations">
-<h3>Single Data Point Operations<a class="headerlink" href="#single-data-point-operations" title="Permalink to this headline">¶</a></h3>
+</section>
+</section>
+<section id="single-data-point-operations">
+<h3>Single Data Point Operations<a class="headerlink" href="#single-data-point-operations" title="Link to this heading">¶</a></h3>
 <p>The Single Data Point Processor (SDP) allows for the application of both linear and non-linear functions onto individual data points.  This is commonly used immediately after convolution in CNN systems.  The SDP provides native support for linear functions (e.g., simple bias and scaling) and uses lookup tables (LUTs) to implement non-linear functions. This combination supports most common activation functions as well as other element-wise operations including: ReLU, PReLU, precision scaling, batch normalization, bias addition, or other complex non-linear functions, such as a sigmoid or a hyperbolic tangent.</p>
 <p>Hardware Parameters:</p>
 <ul class="simple">
 <li><p>SDP function support</p></li>
 <li><p>SDP throughput</p></li>
 </ul>
-<div class="section" id="linear-functions">
-<h4>Linear Functions<a class="headerlink" href="#linear-functions" title="Permalink to this headline">¶</a></h4>
+<section id="linear-functions">
+<h4>Linear Functions<a class="headerlink" href="#linear-functions" title="Link to this heading">¶</a></h4>
 <p>NVDLA supports multiple instances of linear functions (which are mostly scaling functions). There are several methods that can be used for of setting the scaling factor and bias: 1) CNN setting - the scaling factor and bias are the same throughout the whole CNN, this scaling factor are comes from a register configuration; 2) Channel setting - the scaling factor and bias are the same within a single planar (i.e., the same channel value), these scaling factors  come from the memory interface; 3) Per pixel setting - the scaling factor and bias are different for every single feature, the factors and bias will come from the memory interface.</p>
 <ul class="simple">
 <li><p><strong>Precision Scaling.</strong>  Control memory bandwidth throughout the full inference process; feature data can be scaled to its full range before chunking into lower precision and writing to memory . Scale key resources (e.g., MAC array) to support full range for best inference result (other linear functions may be applied). Revert input data before any of the non-linear functions (i.e., keep input data of non-linear functions as original data).</p></li>
@@ -222,9 +223,9 @@ is required.</p>
 <li><p><strong>Bias Addition.</strong> Some layers require the bias function at the output side, which means that they need to provide an offset (either from a per-layer setting or per-channel memory surface or per-feature memory surface) to the final result.</p></li>
 <li><p><strong>Element-Wise Operation.</strong> The element-wise layer (used in some CNN) refers to a type of operation between two feature data cubes which have the same W, H and C size. These two W x H x C feature data cubes do element-wise addition, multiplication or max/min comparison operation and output one W x H x C feature data cube. NVDLA supports common operations in element-wise operations (e.g., add, sub, multiply, max).</p></li>
 </ul>
-</div>
-<div class="section" id="non-linear-functions">
-<h4>Non-Linear Functions<a class="headerlink" href="#non-linear-functions" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="non-linear-functions">
+<h4>Non-Linear Functions<a class="headerlink" href="#non-linear-functions" title="Link to this heading">¶</a></h4>
 <p>There are several non-linear functions that are required to support Deep Learning algorithms. Some of these are supported using dedicated hardware logic while more complex functions incorporate the use of a dedicated Look-Up-Table.</p>
 <ul>
 <li><p>ReLU, for an input <span class="math notranslate nohighlight">\(x\)</span>, the output is <span class="math notranslate nohighlight">\(\textrm{max}(x, 0)\)</span>.</p></li>
@@ -236,10 +237,10 @@ is required.</p>
 <span class="math notranslate nohighlight">\(\frac{1-e^{-2x}}{1+e^{-2x}}\)</span></p></li>
 <li><p>And more…</p></li>
 </ul>
-</div>
-</div>
-<div class="section" id="planar-data-operations">
-<h3>Planar Data Operations<a class="headerlink" href="#planar-data-operations" title="Permalink to this headline">¶</a></h3>
+</section>
+</section>
+<section id="planar-data-operations">
+<h3>Planar Data Operations<a class="headerlink" href="#planar-data-operations" title="Link to this heading">¶</a></h3>
 <p>The Planar Data Processor (PDP) supports specific spatial operations that are common in CNN applications.  It is configurable at runtime to support different pool group sizes, and supports three pooling functions:</p>
 <ul class="simple">
 <li><p>maximum-pooling – get maximum value from pooling window.</p></li>
@@ -251,9 +252,9 @@ is required.</p>
 <ul class="simple">
 <li><p>PDP throughput</p></li>
 </ul>
-</div>
-<div class="section" id="multi-plane-operations">
-<h3>Multi-Plane Operations<a class="headerlink" href="#multi-plane-operations" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="multi-plane-operations">
+<h3>Multi-Plane Operations<a class="headerlink" href="#multi-plane-operations" title="Link to this heading">¶</a></h3>
 <p>The Cross-channel Data Processor (CDP) is a specialized unit built to apply the local response normalization (LRN) function - a special normalization function that operates on channel dimensions, as opposed to the spatial dimensions.</p>
 <div class="math notranslate nohighlight">
 \[Result_{w,h,c} =
@@ -265,19 +266,19 @@ is required.</p>
 <ul class="simple">
 <li><p>CDP throughput</p></li>
 </ul>
-</div>
-<div class="section" id="data-memory-and-reshape-operations">
-<h3>Data Memory and Reshape Operations<a class="headerlink" href="#data-memory-and-reshape-operations" title="Permalink to this headline">¶</a></h3>
-<div class="section" id="bridge-dma">
-<h4>Bridge DMA<a class="headerlink" href="#bridge-dma" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="data-memory-and-reshape-operations">
+<h3>Data Memory and Reshape Operations<a class="headerlink" href="#data-memory-and-reshape-operations" title="Link to this heading">¶</a></h3>
+<section id="bridge-dma">
+<h4>Bridge DMA<a class="headerlink" href="#bridge-dma" title="Link to this heading">¶</a></h4>
 <p>The bridge DMA (BDMA) module provides a data copy engine to move data between the system DRAM and a dedicated high-performance memory interface, where present. Provides an accelerated path to move data between these two non-connected memory systems.</p>
 <p>Hardware Parameters:</p>
 <ul class="simple">
 <li><p>BDMA function support</p></li>
 </ul>
-</div>
-<div class="section" id="data-reshape-engine">
-<span id="rubik"></span><h4>Data Reshape Engine<a class="headerlink" href="#data-reshape-engine" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="data-reshape-engine">
+<span id="rubik"></span><h4>Data Reshape Engine<a class="headerlink" href="#data-reshape-engine" title="Link to this heading">¶</a></h4>
 <p>The data reshape engine performs data format transformations (e.g., splitting or slicing, merging, contraction, reshape-transpose). Data in memory often needs to be reconfigured or reshaped in the process of performing inferencing on a convolutional network.  For example: “slice” operations may be used to separate out different features or spatial regions of an image; “reshape-transpose” operations (common in deconvolutional networks) create output data with larger dimensions than the input dataset.</p>
 <p>The Rubik function transforms data mapping format without any data calculations. It supports three working modes:</p>
 <ul class="simple">
@@ -288,37 +289,37 @@ is required.</p>
 <ul class="simple">
 <li><p>Rubik function support</p></li>
 </ul>
-</div>
-</div>
-</div>
-<div class="section" id="hardware-parameters">
-<span id="scalability"></span><h2>Hardware Parameters<a class="headerlink" href="#hardware-parameters" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+</section>
+<section id="hardware-parameters">
+<span id="scalability"></span><h2>Hardware Parameters<a class="headerlink" href="#hardware-parameters" title="Link to this heading">¶</a></h2>
 <p>Different deep learning applications require different inference operations. For example, the workload of real image segmentation is very different from
 that of face-detection.  As a result, performance, area, and power requirements for any given NVDLA design will vary. NVDLA addresses this with a set of configurable hardware parameters that are used to create an implementation that fits the application needs.</p>
 <p>Hardware parameters provide the basis for creating an NVDLA hardware design specification. The design specification identifies the supported features and performance characteristics for an NVDLA implementation. There are two categories of hardware parameters: Feature Selection and Design Sizing. A given NVDLA implementation is defined by the parameters and settings selected.</p>
-<div class="section" id="feature-selection">
-<h3>Feature Selection<a class="headerlink" href="#feature-selection" title="Permalink to this headline">¶</a></h3>
+<section id="feature-selection">
+<h3>Feature Selection<a class="headerlink" href="#feature-selection" title="Link to this heading">¶</a></h3>
 <p>Feature parameters identify which individual features an NVDLA implementation will support. Configurable options include:</p>
-<div class="section" id="data-type">
-<h4>Data Type<a class="headerlink" href="#data-type" title="Permalink to this headline">¶</a></h4>
+<section id="data-type">
+<h4>Data Type<a class="headerlink" href="#data-type" title="Link to this heading">¶</a></h4>
 <p>NVDLA can support one data type for specific network, or support multiple data types for more general purpose. NVDLA hardware architecture can make proper sharing between the different data types for both area cost and power efficiency consideration.</p>
 <ul class="simple">
 <li><p>Parameter:  Data type supporting</p></li>
 <li><p>Values:  Binary/INT4/INT8/INT16/INT32/FP16/FP32/FP64</p></li>
 <li><p>Affected operations: All</p></li>
 </ul>
-</div>
-<div class="section" id="id1">
-<h4>Winograd<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="id1">
+<h4>Winograd<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h4>
 <p>Winograd is an optimization feature for the convolutional function. It can improve performance by increasing MAC efficiency, and it can also help with the overall power efficiency.  See <a class="reference internal" href="#winograd"><span class="std std-ref">Winograd Convolution Mode</span></a> for more information.</p>
 <ul class="simple">
 <li><p>Parameter:  Feature supporting – Winograd</p></li>
 <li><p>Possible values: Yes/No</p></li>
 <li><p>Affected operations: Convolution</p></li>
 </ul>
-</div>
-<div class="section" id="id2">
-<h4>Batching<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="id2">
+<h4>Batching<a class="headerlink" href="#id2" title="Link to this heading">¶</a></h4>
 <p>Batching is an optimization feature for convolution. It improves
 performance by both increasing MAC efficiency and saving memory traffic.
 See <a class="reference internal" href="#batching"><span class="std std-ref">Batching Convolution Mode</span></a> for more information.</p>
@@ -327,9 +328,9 @@ See <a class="reference internal" href="#batching"><span class="std std-ref">Bat
 <li><p>Possible values: Yes/No</p></li>
 <li><p>Affected operations: Convolution</p></li>
 </ul>
-</div>
-<div class="section" id="sparse-compression">
-<h4>Sparse Compression<a class="headerlink" href="#sparse-compression" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="sparse-compression">
+<h4>Sparse Compression<a class="headerlink" href="#sparse-compression" title="Link to this heading">¶</a></h4>
 <p>Sparse compression is an optimization feature for convolution. It can
 reduce the total amount of memory traffic and thus improve performance and
 save power. See <a class="reference internal" href="#direct-convolution"><span class="std std-ref">Direct Convolution Mode</span></a> for more information.</p>
@@ -338,9 +339,9 @@ save power. See <a class="reference internal" href="#direct-convolution"><span c
 <li><p>Possible values: Weight/Feature/Neither/Both</p></li>
 <li><p>Affected operations: Convolution</p></li>
 </ul>
-</div>
-<div class="section" id="second-memory-bus">
-<h4>Second Memory Bus<a class="headerlink" href="#second-memory-bus" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="second-memory-bus">
+<h4>Second Memory Bus<a class="headerlink" href="#second-memory-bus" title="Link to this heading">¶</a></h4>
 <p>NVDLA always has a basic interface to external memory over its DBBIF.
 Besides that, NVDLA can also support a second memory bus interface names
 SRAMIF. This interface can connect to on-chip SRAM or other
@@ -350,9 +351,9 @@ high-bandwidth low-latency buses to improve the overall performance.</p>
 <li><p>Possible values: Yes/No</p></li>
 <li><p>Affected operations: All</p></li>
 </ul>
-</div>
-<div class="section" id="image-input">
-<h4>Image Input<a class="headerlink" href="#image-input" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="image-input">
+<h4>Image Input<a class="headerlink" href="#image-input" title="Link to this heading">¶</a></h4>
 <p>Planar image data is an important input resource to Deep Learning, and there
 are a large number of image surface formats.  So, the supported formats for
 NVDLA input can be very important for the first hardware layer of NVDLA.</p>
@@ -361,9 +362,9 @@ NVDLA input can be very important for the first hardware layer of NVDLA.</p>
 <li><p>Possible values: combinations of 8-bit/16-bit/both; RGB/YUV/both; non-planar/semi-planar/full-planar</p></li>
 <li><p>Affected operations: Convolution</p></li>
 </ul>
-</div>
-<div class="section" id="single-data-point-support">
-<h4>Single Data Point Support<a class="headerlink" href="#single-data-point-support" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="single-data-point-support">
+<h4>Single Data Point Support<a class="headerlink" href="#single-data-point-support" title="Link to this heading">¶</a></h4>
 <p>There are many nonlinear curves used as activation functions for Deep
 Learning, including (P)ReLU, tanh, sigmoid, and more.  Some of these, such
 as ReLU, are very simple and can be implemented trivially with scaling
@@ -374,9 +375,9 @@ lookup table.</p>
 <li><p>Possible values:  Scaling/LUT</p></li>
 <li><p>Affected operations: Single Data Point</p></li>
 </ul>
-</div>
-<div class="section" id="bridge-dma-support">
-<h4>Bridge DMA Support<a class="headerlink" href="#bridge-dma-support" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="bridge-dma-support">
+<h4>Bridge DMA Support<a class="headerlink" href="#bridge-dma-support" title="Link to this heading">¶</a></h4>
 <p>In case that NVDLA supports second memory interface, the Bridge DMA (BDMA) unit can
 do data copy between the main memory interface an second memory
 interface.</p>
@@ -385,9 +386,9 @@ interface.</p>
 <li><p>Possible values: Yes/No</p></li>
 <li><p>Affected operations:  MISC</p></li>
 </ul>
-</div>
-<div class="section" id="data-reshape-engine-support">
-<h4>Data Reshape Engine Support<a class="headerlink" href="#data-reshape-engine-support" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="data-reshape-engine-support">
+<h4>Data Reshape Engine Support<a class="headerlink" href="#data-reshape-engine-support" title="Link to this heading">¶</a></h4>
 <p>The Rubik function transforms data mapping format without any data calculations. See
 <a class="reference internal" href="#rubik"><span class="std std-ref">Data Reshape Engine</span></a> for more information.</p>
 <ul class="simple">
@@ -395,15 +396,15 @@ interface.</p>
 <li><p>Possible values: Yes/No</p></li>
 <li><p>Affected operations:  MISC</p></li>
 </ul>
-</div>
-</div>
-<div class="section" id="design-sizing">
-<h3>Design Sizing<a class="headerlink" href="#design-sizing" title="Permalink to this headline">¶</a></h3>
+</section>
+</section>
+<section id="design-sizing">
+<h3>Design Sizing<a class="headerlink" href="#design-sizing" title="Link to this heading">¶</a></h3>
 <p>Design sizing parameters indicate the parallelism that is supported in the
 NVDLA Hardware.  A larger value usually means higher performance but with an
 associated higher area and/or power cost.</p>
-<div class="section" id="atomicc">
-<h4>Atomic–C<a class="headerlink" href="#atomicc" title="Permalink to this headline">¶</a></h4>
+<section id="atomicc">
+<h4>Atomic–C<a class="headerlink" href="#atomicc" title="Link to this heading">¶</a></h4>
 <p>This value indicates the parallel MAC operation in input feature channel
 dimension. This parameter impacts total MAC number, convolutional buffer
 read bandwidth.</p>
@@ -412,9 +413,9 @@ read bandwidth.</p>
 <li><p>Values: 16~128</p></li>
 <li><p>Affected operations: Convolution</p></li>
 </ul>
-</div>
-<div class="section" id="atomick">
-<h4>Atomic–K<a class="headerlink" href="#atomick" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="atomick">
+<h4>Atomic–K<a class="headerlink" href="#atomick" title="Link to this heading">¶</a></h4>
 <p>This value indicates the parallel MAC operation at output feature
 channel dimension. This parameter impacts total MAC number, accumulator
 instance number, convolutional write-back bandwidth.</p>
@@ -429,9 +430,9 @@ instance number, convolutional write-back bandwidth.</p>
 <p class="admonition-title">Note</p>
 <p>Both Atomic-C and Atomic-K parameters are referring to the lowest precision, the higher precision may be reduced accordingly. For example, if NVDLA supports both INT8 and INT16, then the Atomic-C and Atomic-K parameters are referring to INT8 case, INT16 is expected to have lower parallel.</p>
 </div>
-</div>
-<div class="section" id="single-data-point-throughput">
-<h4>Single Data Point Throughput<a class="headerlink" href="#single-data-point-throughput" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="single-data-point-throughput">
+<h4>Single Data Point Throughput<a class="headerlink" href="#single-data-point-throughput" title="Link to this heading">¶</a></h4>
 <p>The Single Data Point (SDP) throughput indicates the number of instances of SDP pipelines.
 The number of SDP pipelines determines the number of output features
 that can be generated each cycle.</p>
@@ -440,9 +441,9 @@ that can be generated each cycle.</p>
 <li><p>Range of values: 1~16</p></li>
 <li><p>Affected scope: SDP</p></li>
 </ul>
-</div>
-<div class="section" id="planar-data-processor-throughput">
-<h4>Planar Data Processor Throughput<a class="headerlink" href="#planar-data-processor-throughput" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="planar-data-processor-throughput">
+<h4>Planar Data Processor Throughput<a class="headerlink" href="#planar-data-processor-throughput" title="Link to this heading">¶</a></h4>
 <p>The Planar Data Processor (PDP) throughput indicates the number of output features that can be
 generated each cycle. A value of 0 indicates that no PDP blocks will be
 included and the planar data processor operation will not be supported.</p>
@@ -451,9 +452,9 @@ included and the planar data processor operation will not be supported.</p>
 <li><p>Range of values: 0~4</p></li>
 <li><p>Affected operations: PDP</p></li>
 </ul>
-</div>
-<div class="section" id="cross-channel-data-processor-throughput">
-<h4>Cross-Channel Data Processor Throughput<a class="headerlink" href="#cross-channel-data-processor-throughput" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="cross-channel-data-processor-throughput">
+<h4>Cross-Channel Data Processor Throughput<a class="headerlink" href="#cross-channel-data-processor-throughput" title="Link to this heading">¶</a></h4>
 <p>The CDP throughput indicates the number of output features that can be
 generated every cycle. A value of 0 indicates that no CDP block will be
 included and multi-plane operations will not be supported by the
@@ -463,9 +464,9 @@ resulting implementation</p>
 <li><p>Range of values: 0~4</p></li>
 <li><p>Affected operations: CDP</p></li>
 </ul>
-</div>
-<div class="section" id="convolution-buffer-banks">
-<h4>Convolution Buffer Banks<a class="headerlink" href="#convolution-buffer-banks" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="convolution-buffer-banks">
+<h4>Convolution Buffer Banks<a class="headerlink" href="#convolution-buffer-banks" title="Link to this heading">¶</a></h4>
 <p>This value indicates the number of convolutional buffer banks. The
 number of banks defines the granularity of CBUF storage allocation
 between weights and activations. Together with the bank size parameter,
@@ -475,9 +476,9 @@ they determine the size of overall convolutional buffer.</p>
 <li><p>Range of values: 2~32</p></li>
 <li><p>Affected operations: Convolution</p></li>
 </ul>
-</div>
-<div class="section" id="convolution-buffer-bank-size">
-<h4>Convolution Buffer Bank Size<a class="headerlink" href="#convolution-buffer-bank-size" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="convolution-buffer-bank-size">
+<h4>Convolution Buffer Bank Size<a class="headerlink" href="#convolution-buffer-bank-size" title="Link to this heading">¶</a></h4>
 <p>This value indicates the size of a single convolutional buffer bank.
 Together with the bank number parameter, they determine the size of
 overall convolutional buffer.</p>
@@ -486,9 +487,9 @@ overall convolutional buffer.</p>
 <li><p>Range of values: 4KB~32KB</p></li>
 <li><p>Affected operations: Convolution</p></li>
 </ul>
-</div>
-<div class="section" id="convolution-batching">
-<h4>Convolution Batching<a class="headerlink" href="#convolution-batching" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="convolution-batching">
+<h4>Convolution Batching<a class="headerlink" href="#convolution-batching" title="Link to this heading">¶</a></h4>
 <p>This value indicates the maximum batching number that convolution
 function can support. Usually larger value of this parameter has area
 impact as more buffering is required at accumulator side.</p>
@@ -497,32 +498,32 @@ impact as more buffering is required at accumulator side.</p>
 <li><p>Range of values: 1~32</p></li>
 <li><p>Affected operations: Convolution</p></li>
 </ul>
-</div>
-</div>
-<div class="section" id="data-types-and-precision">
-<h3>Data Types and Precision<a class="headerlink" href="#data-types-and-precision" title="Permalink to this headline">¶</a></h3>
+</section>
+</section>
+<section id="data-types-and-precision">
+<h3>Data Types and Precision<a class="headerlink" href="#data-types-and-precision" title="Link to this heading">¶</a></h3>
 <p>NVDLA supports multiple data type inference based on different workloads. Use of these parameters can be used to improve network accuracy for a given power and performance constraint. Floating point data has a high precision (FP64/FP32/FP16); integer data type (INT16/INT8/INT4), or even single bit binary can be used for lower precision applications.</p>
-<div class="section" id="precision-scaling-convertor">
-<h4>Precision Scaling Convertor<a class="headerlink" href="#precision-scaling-convertor" title="Permalink to this headline">¶</a></h4>
+<section id="precision-scaling-convertor">
+<h4>Precision Scaling Convertor<a class="headerlink" href="#precision-scaling-convertor" title="Link to this heading">¶</a></h4>
 <p>The precision scaling convertors are normally used before some very critical limited resources, like before writing data to memory or before entering MAC array.</p>
 <p>The formula for convertor is: <span class="math notranslate nohighlight">\(y = \textrm{saturation} ((x -
 \textrm{offset}) * \textrm{scaling} &gt;&gt; \textrm{shifter})\)</span>.</p>
-</div>
-<div class="section" id="precision-shifter">
-<h4>Precision Shifter<a class="headerlink" href="#precision-shifter" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="precision-shifter">
+<h4>Precision Shifter<a class="headerlink" href="#precision-shifter" title="Link to this heading">¶</a></h4>
 <p>A shifter is mostly used at the bits adjustment in the middle of the pipeline.
 For example, the accumulator bit width is far more than the input data, so
 before data sent out to SDP, we need to chunk it by a shifter.</p>
 <p>Shifter is a simplified convertor, formula as: <span class="math notranslate nohighlight">\(y = \textrm{saturate}(x &lt;&lt;
 \textrm{shifter})\)</span>.</p>
-</div>
-<div class="section" id="look-up-table">
-<h4>Look Up Table<a class="headerlink" href="#look-up-table" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="look-up-table">
+<h4>Look Up Table<a class="headerlink" href="#look-up-table" title="Link to this heading">¶</a></h4>
 <p>LUT are used to deal with non-linear function in a network such as sigmoid and tanh activation functions or for local response normalization.</p>
-</div>
-</div>
-<div class="section" id="small-nvdla-implementation-example">
-<h3>Small NVDLA Implementation Example<a class="headerlink" href="#small-nvdla-implementation-example" title="Permalink to this headline">¶</a></h3>
+</section>
+</section>
+<section id="small-nvdla-implementation-example">
+<h3>Small NVDLA Implementation Example<a class="headerlink" href="#small-nvdla-implementation-example" title="Link to this heading">¶</a></h3>
 <p>Small sized NVDLA implementations target smaller workloads, as such, these implementations only need to have very basic support.  Because of the light workload, 64 INT8 MACs with Atomic-C=16 and Atomic-K=4 should be good enough. All other optimization features can be removed to save area.  For image input format, supporting a basic format like A8R8G8B8 is likley good enough.  If pooling and normalization functions are required, it is possible to limit throughput.  As to the convolutional buffer, 4 banks each with 8KB size (totally 32KB size) can support.</p>
 <p><strong>Example hardware parameter settings:</strong></p>
 <ul class="simple">
@@ -542,9 +543,9 @@ before data sent out to SDP, we need to chunk it by a shifter.</p>
 <li><p>BUFF bank # = 32</p></li>
 <li><p>BUFF bank size = 4KB</p></li>
 </ul>
-</div>
-<div class="section" id="large-nvdla-implementation-example">
-<h3>Large NVDLA Implementation Example<a class="headerlink" href="#large-nvdla-implementation-example" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="large-nvdla-implementation-example">
+<h3>Large NVDLA Implementation Example<a class="headerlink" href="#large-nvdla-implementation-example" title="Link to this heading">¶</a></h3>
 <p>Larger NVDLA implementations target heavier workloads. This model serves as a better choice when the primary emphasis is on higher performance and versatility. Increasing the Atomic-C and Atomic-K to 64/16 increases NVDLA performance to a maximum of 2K operations every cycle; enabling all other optimizations increases real operations further.  Other post-processing throughput also needs to increase (e.g., PDP and CDP throughput changed to 4). When targeting a larger CNN, set a larger convolution buffer (e.g., 32KB * 16 = 512KB).</p>
 <p><strong>Example hardware parameter settings:</strong></p>
 <ul class="simple">
@@ -564,10 +565,10 @@ before data sent out to SDP, we need to chunk it by a shifter.</p>
 <li><p>BUFF bank # = 16</p></li>
 <li><p>BUFF bank size = 32KB</p></li>
 </ul>
-</div>
-</div>
-<div class="section" id="external-interfaces">
-<span id="id3"></span><h2>External Interfaces<a class="headerlink" href="#external-interfaces" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+<section id="external-interfaces">
+<span id="id3"></span><h2>External Interfaces<a class="headerlink" href="#external-interfaces" title="Link to this heading">¶</a></h2>
 <p>The NVDLA has four interfaces to the system as a whole.  These are:</p>
 <ul class="simple">
 <li><p><strong>Configuration space bus (“CSB”).</strong> The host system accesses and
@@ -594,14 +595,18 @@ attached to the NVDLA.</p></li>
 </ul>
 <p>Below, we present two examples of platforms that integrate an NVDLA, and how
 they attach these external connections to the rest of the system.</p>
-<div class="figure align-center" id="id7">
+<figure class="align-center" id="id7">
 <span id="fig-small-nvdla"></span><a class="reference internal image-reference" href="../../_images/nvdla-hwarch-small.svg"><img alt="../../_images/nvdla-hwarch-small.svg" height="224" src="../../_images/nvdla-hwarch-small.svg" width="224" /></a>
-<p class="caption"><span class="caption-number">Fig. 6 </span><span class="caption-text">Small NVDLA system.</span><a class="headerlink" href="#id7" title="Permalink to this image">¶</a></p>
-</div>
-<div class="figure align-center" id="id8">
+<figcaption>
+<p><span class="caption-number">Fig. 6 </span><span class="caption-text">Small NVDLA system.</span><a class="headerlink" href="#id7" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
+<figure class="align-center" id="id8">
 <span id="fig-large-nvdla"></span><a class="reference internal image-reference" href="../../_images/nvdla-hwarch-large.svg"><img alt="../../_images/nvdla-hwarch-large.svg" height="264" src="../../_images/nvdla-hwarch-large.svg" width="198" /></a>
-<p class="caption"><span class="caption-number">Fig. 7 </span><span class="caption-text">Large NVDLA system.</span><a class="headerlink" href="#id8" title="Permalink to this image">¶</a></p>
-</div>
+<figcaption>
+<p><span class="caption-number">Fig. 7 </span><span class="caption-text">Large NVDLA system.</span><a class="headerlink" href="#id8" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
 <p><a class="reference internal" href="#fig-small-nvdla"><span class="std std-numref">Fig. 6</span></a> shows a small system, for which NVDLA is directly
 connected to the main CPU.  The small system has no NVDLA-dedicated SRAM,
 and all accesses hit the main system memory.  By comparison,
@@ -612,8 +617,8 @@ servicing low-level NVDLA interrupts).  The latter system also integrates a
 SRAM, attached to NVDLA.  (Other units on the system may also have
 connections to this SRAM, and share it for their own needs; this is not
 shown in the diagram.)</p>
-<div class="section" id="configuration-space-bus">
-<h3>Configuration space bus<a class="headerlink" href="#configuration-space-bus" title="Permalink to this headline">¶</a></h3>
+<section id="configuration-space-bus">
+<h3>Configuration space bus<a class="headerlink" href="#configuration-space-bus" title="Link to this heading">¶</a></h3>
 <p>The CPU uses the CSB (Configuration Space Bus) interface to access NVDLA
 registers.  The CSB interface is intentionally extremely simple, and
 low-performance; as such, it should be simple to build an adapter between
@@ -621,13 +626,13 @@ the CSB and any other system bus that may be supported on a platform.  The
 CSB bus consists of three channels: the request channel, the read data
 channel, and the write response channel.  These channels are as described
 below.</p>
-<div class="section" id="clock-and-reset">
-<h4>Clock and reset<a class="headerlink" href="#clock-and-reset" title="Permalink to this headline">¶</a></h4>
+<section id="clock-and-reset">
+<h4>Clock and reset<a class="headerlink" href="#clock-and-reset" title="Link to this heading">¶</a></h4>
 <p>The CSB interface uses a single clock domain, shared between NVDLA and the
 requester.</p>
-</div>
-<div class="section" id="request-channel">
-<h4>Request channel<a class="headerlink" href="#request-channel" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="request-channel">
+<h4>Request channel<a class="headerlink" href="#request-channel" title="Link to this heading">¶</a></h4>
 <p>The request channel follows a valid/ready protocol; a data transaction
 occurs on the request channel when and only when the <code class="docutils literal notranslate"><span class="pre">valid</span></code> signal (from
 the host) and the <code class="docutils literal notranslate"><span class="pre">ready</span></code> signal (from NVDLA) are both asserted in the
@@ -635,13 +640,13 @@ same clock cycle.  Each request to CSB has a fixed request size of 32 bits
 of data, and has a fixed 16bit address size.  CSB does not support any form
 of burst requests; each packet sent down the request channel is independent
 from any other packet.</p>
-<span id="tab-csb-request-channel"></span><table class="colwidths-given docutils align-default" id="id9">
-<caption><span class="caption-number">Table 1 </span><span class="caption-text">Request channel signal description</span><a class="headerlink" href="#id9" title="Permalink to this table">¶</a></caption>
+<span id="tab-csb-request-channel"></span><table class="docutils align-default" id="id9">
+<caption><span class="caption-number">Table 1 </span><span class="caption-text">Request channel signal description</span><a class="headerlink" href="#id9" title="Link to this table">¶</a></caption>
 <colgroup>
-<col style="width: 25%" />
-<col style="width: 13%" />
-<col style="width: 13%" />
-<col style="width: 50%" />
+<col style="width: 25.0%" />
+<col style="width: 12.5%" />
+<col style="width: 12.5%" />
+<col style="width: 50.0%" />
 </colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Data field</p></th>
@@ -696,9 +701,9 @@ from receiver.</p>
 </tr>
 </tbody>
 </table>
-</div>
-<div class="section" id="read-data-channel">
-<h4>Read data channel<a class="headerlink" href="#read-data-channel" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="read-data-channel">
+<h4>Read data channel<a class="headerlink" href="#read-data-channel" title="Link to this heading">¶</a></h4>
 <p>The read data response channel is described in the below table.  NVDLA
 returns read-response data to the host in strict request order; that is to
 say, each request packet (above) for which “write” is set to 0 will have
@@ -710,13 +715,13 @@ cannot apply back-pressure to the NVDLA on this interface.</p>
 <p class="admonition-title">Note</p>
 <p>NVDLA does not support error reporting from the CSB.  Illegal reads (e.g. reads directed at an address hole) will return zeroes.</p>
 </div>
-<span id="tab-csb-read-data-channel"></span><table class="colwidths-given docutils align-default" id="id10">
-<caption><span class="caption-number">Table 2 </span><span class="caption-text">Read data channel signal description</span><a class="headerlink" href="#id10" title="Permalink to this table">¶</a></caption>
+<span id="tab-csb-read-data-channel"></span><table class="docutils align-default" id="id10">
+<caption><span class="caption-number">Table 2 </span><span class="caption-text">Read data channel signal description</span><a class="headerlink" href="#id10" title="Link to this table">¶</a></caption>
 <colgroup>
-<col style="width: 25%" />
-<col style="width: 13%" />
-<col style="width: 13%" />
-<col style="width: 50%" />
+<col style="width: 25.0%" />
+<col style="width: 12.5%" />
+<col style="width: 12.5%" />
+<col style="width: 50.0%" />
 </colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Data field</p></th>
@@ -739,21 +744,21 @@ error.</p></td>
 </tr>
 </tbody>
 </table>
-</div>
-<div class="section" id="write-response-channel">
-<h4>Write response channel<a class="headerlink" href="#write-response-channel" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="write-response-channel">
+<h4>Write response channel<a class="headerlink" href="#write-response-channel" title="Link to this heading">¶</a></h4>
 <p>The signals associated with the write response channel are described in the
 below table. NVDLA will return write completion to the host in request order
 for every non-posted write.</p>
 <p>The write completion channel also follows a valid-only protocol, and as
 such, the host cannot back-pressure NVDLA on this interface.</p>
-<span id="tab-csb-write-response-channel"></span><table class="colwidths-given docutils align-default" id="id11">
-<caption><span class="caption-number">Table 3 </span><span class="caption-text">Write completion channel signal description</span><a class="headerlink" href="#id11" title="Permalink to this table">¶</a></caption>
+<span id="tab-csb-write-response-channel"></span><table class="docutils align-default" id="id11">
+<caption><span class="caption-number">Table 3 </span><span class="caption-text">Write completion channel signal description</span><a class="headerlink" href="#id11" title="Link to this table">¶</a></caption>
 <colgroup>
-<col style="width: 25%" />
-<col style="width: 13%" />
-<col style="width: 13%" />
-<col style="width: 50%" />
+<col style="width: 25.0%" />
+<col style="width: 12.5%" />
+<col style="width: 12.5%" />
+<col style="width: 50.0%" />
 </colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Data field</p></th>
@@ -770,20 +775,22 @@ such, the host cannot back-pressure NVDLA on this interface.</p>
 </tr>
 </tbody>
 </table>
-</div>
-<div class="section" id="interface-timing">
-<h4>Interface timing<a class="headerlink" href="#interface-timing" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="interface-timing">
+<h4>Interface timing<a class="headerlink" href="#interface-timing" title="Link to this heading">¶</a></h4>
 <p>The timing diagram in <a class="reference internal" href="#fig-timing-diagram"><span class="std std-numref">Fig. 8</span></a> illustrates 4
 transactions (2 writes, 2 reads) on the CSB bus between a requester and
 NVDLA.</p>
-<div class="figure align-center" id="id12">
+<figure class="align-center" id="id12">
 <span id="fig-timing-diagram"></span><a class="reference internal image-reference" href="../../_images/nvdla-hwarch-csb-timing.svg"><img alt="../../_images/nvdla-hwarch-csb-timing.svg" height="167" src="../../_images/nvdla-hwarch-csb-timing.svg" width="262" /></a>
-<p class="caption"><span class="caption-number">Fig. 8 </span><span class="caption-text">Interface timing example on the CSB.</span><a class="headerlink" href="#id12" title="Permalink to this image">¶</a></p>
-</div>
-</div>
-</div>
-<div class="section" id="host-interrupt">
-<h3>Host interrupt<a class="headerlink" href="#host-interrupt" title="Permalink to this headline">¶</a></h3>
+<figcaption>
+<p><span class="caption-number">Fig. 8 </span><span class="caption-text">Interface timing example on the CSB.</span><a class="headerlink" href="#id12" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
+</section>
+</section>
+<section id="host-interrupt">
+<h3>Host interrupt<a class="headerlink" href="#host-interrupt" title="Link to this heading">¶</a></h3>
 <p>Along with the configuration space bus, NVDLA provides an asynchronous
 (interrupt-driven) return channel to deliver event notifications to the CPU.
 The interrupt signal is a level-driven interrupt that is asserted high as
@@ -791,13 +798,13 @@ long as the NVDLA core has interrupts pending.  Interrupts are pending if
 any bits are set in GLB’s <code class="docutils literal notranslate"><span class="pre">INTR_STATUS</span></code> register that are also not masked
 out (i.e., set to zero) in the <code class="docutils literal notranslate"><span class="pre">INTR_MASK</span></code> register.  The NVDLA interrupt
 signal is on the same clock domain as the CSB interface.</p>
-<span id="tab-host-interrupt-channel"></span><table class="colwidths-given docutils align-default" id="id13">
-<caption><span class="caption-number">Table 4 </span><span class="caption-text">Host interrupt interface</span><a class="headerlink" href="#id13" title="Permalink to this table">¶</a></caption>
+<span id="tab-host-interrupt-channel"></span><table class="docutils align-default" id="id13">
+<caption><span class="caption-number">Table 4 </span><span class="caption-text">Host interrupt interface</span><a class="headerlink" href="#id13" title="Link to this table">¶</a></caption>
 <colgroup>
-<col style="width: 25%" />
-<col style="width: 13%" />
-<col style="width: 13%" />
-<col style="width: 50%" />
+<col style="width: 25.0%" />
+<col style="width: 12.5%" />
+<col style="width: 12.5%" />
+<col style="width: 50.0%" />
 </colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Data field</p></th>
@@ -814,9 +821,9 @@ signal is on the same clock domain as the CSB interface.</p>
 </tr>
 </tbody>
 </table>
-</div>
-<div class="section" id="system-interconnect-dbbif">
-<h3>System interconnect: DBBIF<a class="headerlink" href="#system-interconnect-dbbif" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="system-interconnect-dbbif">
+<h3>System interconnect: DBBIF<a class="headerlink" href="#system-interconnect-dbbif" title="Link to this heading">¶</a></h3>
 <p>NVDLA has two major interfaces to interact with the memory system, these are
 called the DBBIF (which is referred to as <code class="docutils literal notranslate"><span class="pre">core2dbb</span></code> in signal naming) and
 the SRAMIF (which is referred to as <code class="docutils literal notranslate"><span class="pre">core2sram</span></code> in signal naming).  The
@@ -841,24 +848,24 @@ assumptions to simplify the interface protocol.</p>
 <li><p>Write acknowledge must be returned in write request order</p></li>
 <li><p>Read data must be returned in read request order</p></li>
 </ul>
-<div class="section" id="id4">
-<h4>Clock and reset<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h4>
+<section id="id4">
+<h4>Clock and reset<a class="headerlink" href="#id4" title="Link to this heading">¶</a></h4>
 <p>The NVDLA DBBIF assumes synchronized data backbone interface with single
 clock domain and reset.  Therefore, all NVDLA DBBIF ports are part of the
 main NVDLA core clock domain.  Synchronization to the SOC data backbone will
 need to be done outside the NVDLA core.</p>
-</div>
-<div class="section" id="aw-write-request-channel">
-<h4>AW (Write request) channel<a class="headerlink" href="#aw-write-request-channel" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="aw-write-request-channel">
+<h4>AW (Write request) channel<a class="headerlink" href="#aw-write-request-channel" title="Link to this heading">¶</a></h4>
 <p>The table below lists all signals on AW channel, with an implied prefix of
 <code class="docutils literal notranslate"><span class="pre">nvdla_core2dbb_aw_</span></code>.</p>
-<span id="tab-dbbif-aw-channel"></span><table class="colwidths-given docutils align-default" id="id14">
-<caption><span class="caption-number">Table 5 </span><span class="caption-text">Data backbone interface signal description – AW channel</span><a class="headerlink" href="#id14" title="Permalink to this table">¶</a></caption>
+<span id="tab-dbbif-aw-channel"></span><table class="docutils align-default" id="id14">
+<caption><span class="caption-number">Table 5 </span><span class="caption-text">Data backbone interface signal description – AW channel</span><a class="headerlink" href="#id14" title="Link to this table">¶</a></caption>
 <colgroup>
-<col style="width: 25%" />
-<col style="width: 13%" />
-<col style="width: 13%" />
-<col style="width: 50%" />
+<col style="width: 25.0%" />
+<col style="width: 12.5%" />
+<col style="width: 12.5%" />
+<col style="width: 50.0%" />
 </colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Data field</p></th>
@@ -895,18 +902,18 @@ need to be done outside the NVDLA core.</p>
 </tr>
 </tbody>
 </table>
-</div>
-<div class="section" id="ar-read-request-channel">
-<h4>AR (Read request) channel<a class="headerlink" href="#ar-read-request-channel" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="ar-read-request-channel">
+<h4>AR (Read request) channel<a class="headerlink" href="#ar-read-request-channel" title="Link to this heading">¶</a></h4>
 <p>The table below lists all signals on the AR channel, with an implied prefix
 of <code class="docutils literal notranslate"><span class="pre">nvdla_core2dbb_ar_</span></code>.</p>
-<span id="tab-dbbif-ar-channel"></span><table class="colwidths-given docutils align-default" id="id15">
-<caption><span class="caption-number">Table 6 </span><span class="caption-text">Data backbone interface signal description – AR channel</span><a class="headerlink" href="#id15" title="Permalink to this table">¶</a></caption>
+<span id="tab-dbbif-ar-channel"></span><table class="docutils align-default" id="id15">
+<caption><span class="caption-number">Table 6 </span><span class="caption-text">Data backbone interface signal description – AR channel</span><a class="headerlink" href="#id15" title="Link to this table">¶</a></caption>
 <colgroup>
-<col style="width: 25%" />
-<col style="width: 13%" />
-<col style="width: 13%" />
-<col style="width: 50%" />
+<col style="width: 25.0%" />
+<col style="width: 12.5%" />
+<col style="width: 12.5%" />
+<col style="width: 50.0%" />
 </colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Data field</p></th>
@@ -943,18 +950,18 @@ of <code class="docutils literal notranslate"><span class="pre">nvdla_core2dbb_a
 </tr>
 </tbody>
 </table>
-</div>
-<div class="section" id="w-write-data-channel">
-<h4>W (Write data) channel<a class="headerlink" href="#w-write-data-channel" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="w-write-data-channel">
+<h4>W (Write data) channel<a class="headerlink" href="#w-write-data-channel" title="Link to this heading">¶</a></h4>
 <p>The table below lists all signals on the W channel, with an implied prefix
 of <code class="docutils literal notranslate"><span class="pre">nvdla_core2dbb_w_</span></code>.</p>
-<span id="tab-dbbif-w-channel"></span><table class="colwidths-given docutils align-default" id="id16">
-<caption><span class="caption-number">Table 7 </span><span class="caption-text">Data backbone interface signal description – W channel</span><a class="headerlink" href="#id16" title="Permalink to this table">¶</a></caption>
+<span id="tab-dbbif-w-channel"></span><table class="docutils align-default" id="id16">
+<caption><span class="caption-number">Table 7 </span><span class="caption-text">Data backbone interface signal description – W channel</span><a class="headerlink" href="#id16" title="Link to this table">¶</a></caption>
 <colgroup>
-<col style="width: 25%" />
-<col style="width: 13%" />
-<col style="width: 13%" />
-<col style="width: 50%" />
+<col style="width: 25.0%" />
+<col style="width: 12.5%" />
+<col style="width: 12.5%" />
+<col style="width: 50.0%" />
 </colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Data field</p></th>
@@ -996,18 +1003,18 @@ corresponding to data width.</p>
 </tr>
 </tbody>
 </table>
-</div>
-<div class="section" id="b-write-response-channel">
-<h4>B (Write response) channel<a class="headerlink" href="#b-write-response-channel" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="b-write-response-channel">
+<h4>B (Write response) channel<a class="headerlink" href="#b-write-response-channel" title="Link to this heading">¶</a></h4>
 <p>The table below lists all signals on the B channel, with an implied prefix
 of <code class="docutils literal notranslate"><span class="pre">nvdla_core2dbb_b_</span></code>.</p>
-<span id="tab-dbbif-b-channel"></span><table class="colwidths-given docutils align-default" id="id17">
-<caption><span class="caption-number">Table 8 </span><span class="caption-text">Data backbone interface signal description – B channel</span><a class="headerlink" href="#id17" title="Permalink to this table">¶</a></caption>
+<span id="tab-dbbif-b-channel"></span><table class="docutils align-default" id="id17">
+<caption><span class="caption-number">Table 8 </span><span class="caption-text">Data backbone interface signal description – B channel</span><a class="headerlink" href="#id17" title="Link to this table">¶</a></caption>
 <colgroup>
-<col style="width: 25%" />
-<col style="width: 13%" />
-<col style="width: 13%" />
-<col style="width: 50%" />
+<col style="width: 25.0%" />
+<col style="width: 12.5%" />
+<col style="width: 12.5%" />
+<col style="width: 50.0%" />
 </colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Data field</p></th>
@@ -1034,18 +1041,18 @@ of <code class="docutils literal notranslate"><span class="pre">nvdla_core2dbb_b
 </tr>
 </tbody>
 </table>
-</div>
-<div class="section" id="r-read-data-channel">
-<h4>R (Read data) channel<a class="headerlink" href="#r-read-data-channel" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="r-read-data-channel">
+<h4>R (Read data) channel<a class="headerlink" href="#r-read-data-channel" title="Link to this heading">¶</a></h4>
 <p>The table below lists all signals on the R channel, with an implied prefix
 of <code class="docutils literal notranslate"><span class="pre">nvdla_core2dbb_r_</span></code>.</p>
-<span id="tab-dbbif-r-channel"></span><table class="colwidths-given docutils align-default" id="id18">
-<caption><span class="caption-number">Table 9 </span><span class="caption-text">Data backbone interface signal description – R channel</span><a class="headerlink" href="#id18" title="Permalink to this table">¶</a></caption>
+<span id="tab-dbbif-r-channel"></span><table class="docutils align-default" id="id18">
+<caption><span class="caption-number">Table 9 </span><span class="caption-text">Data backbone interface signal description – R channel</span><a class="headerlink" href="#id18" title="Link to this table">¶</a></caption>
 <colgroup>
-<col style="width: 25%" />
-<col style="width: 13%" />
-<col style="width: 13%" />
-<col style="width: 50%" />
+<col style="width: 25.0%" />
+<col style="width: 12.5%" />
+<col style="width: 12.5%" />
+<col style="width: 50.0%" />
 </colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Data field</p></th>
@@ -1082,10 +1089,10 @@ of <code class="docutils literal notranslate"><span class="pre">nvdla_core2dbb_r
 </tr>
 </tbody>
 </table>
-</div>
-</div>
-<div class="section" id="on-chip-sram-interface-sramif">
-<h3>On-Chip SRAM Interface - SRAMIF<a class="headerlink" href="#on-chip-sram-interface-sramif" title="Permalink to this headline">¶</a></h3>
+</section>
+</section>
+<section id="on-chip-sram-interface-sramif">
+<h3>On-Chip SRAM Interface - SRAMIF<a class="headerlink" href="#on-chip-sram-interface-sramif" title="Link to this heading">¶</a></h3>
 <p>The optional NVDLA SRAM interface is used when there is an on-chip SRAM for
 the benefit of lower latency and higher throughput.  The SRAM interface
 protocol is exactly the same as DBBIF interface, but signals have been
@@ -1094,15 +1101,15 @@ w, b and r channels respectively.
 The return order between write acknowledges from SRAMIF and DBBIF is not restricted.
 For example, there are two BDMA layers, layer0 and alyer1. Layer0 writes to DBBIF and layer1 writes to SRAMIF.
 Layer1 may receive write acknowledge from SRAMIF before layer0 which receive write acknowledge from DBBIF.</p>
-</div>
-</div>
-<div class="section" id="register-interface">
-<h2>Register Interface<a class="headerlink" href="#register-interface" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+<section id="register-interface">
+<h2>Register Interface<a class="headerlink" href="#register-interface" title="Link to this heading">¶</a></h2>
 <p>This section describes the register address space and register definitions.
 For each sub-unit, there are status registers, configuration registers,
 command registers and profiling registers.</p>
-<div class="section" id="ping-pong-synchronization-mechanism">
-<h3>Ping-pong Synchronization Mechanism<a class="headerlink" href="#ping-pong-synchronization-mechanism" title="Permalink to this headline">¶</a></h3>
+<section id="ping-pong-synchronization-mechanism">
+<h3>Ping-pong Synchronization Mechanism<a class="headerlink" href="#ping-pong-synchronization-mechanism" title="Link to this heading">¶</a></h3>
 <p>One traditional procedure to program hardware is as follows: first, the CPU
 configures registers on an engine, then it sets the engine’s “enable” bit,
 then it waits for the hardware to produce a “done” interrupt, and finally it
@@ -1150,11 +1157,13 @@ to handle hardware layers in whole or in part.  These pipeline stages are:</p>
 <p>The first five pipeline stages are part of the <em>convolution core</em> pipeline;
 all of these pipeline stages (except for CBUF and CMAC) use linked ping-pong
 buffers in order to work together to form HW layers.</p>
-<div class="section" id="implementation">
-<h4>Implementation<a class="headerlink" href="#implementation" title="Permalink to this headline">¶</a></h4>
-<div class="figure align-center" id="id19">
-<span id="fig-regfile"></span><img alt="../../_images/nvdla-hwarch-regfile.svg" src="../../_images/nvdla-hwarch-regfile.svg" /><p class="caption"><span class="caption-number">Fig. 9 </span><span class="caption-text">Implementation overview of ping-pong register file.</span><a class="headerlink" href="#id19" title="Permalink to this image">¶</a></p>
-</div>
+<section id="implementation">
+<h4>Implementation<a class="headerlink" href="#implementation" title="Link to this heading">¶</a></h4>
+<figure class="align-center" id="id19">
+<span id="fig-regfile"></span><img alt="../../_images/nvdla-hwarch-regfile.svg" src="../../_images/nvdla-hwarch-regfile.svg" /><figcaption>
+<p><span class="caption-number">Fig. 9 </span><span class="caption-text">Implementation overview of ping-pong register file.</span><a class="headerlink" href="#id19" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
 <p>Each pipeline stage has the ping-pong mechanism built into its register
 file, as shown in <a class="reference internal" href="#fig-regfile"><span class="std std-numref">Fig. 9</span></a>.  In detail, each register file
 implementation has three register groups; the two ping-pong groups
@@ -1187,9 +1196,9 @@ single group; the <code class="docutils literal notranslate"><span class="pre">C
 the CPU can check to determine which ping-pong group the datapath has
 selected, and the <code class="docutils literal notranslate"><span class="pre">PRODUCER</span></code> pointer is fully controleld by the CPU, and
 should be set to the correct group before programming a hardware layer.</p>
-</div>
-<div class="section" id="programming-sequence">
-<h4>Programming sequence<a class="headerlink" href="#programming-sequence" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="programming-sequence">
+<h4>Programming sequence<a class="headerlink" href="#programming-sequence" title="Link to this heading">¶</a></h4>
 <p>The following is an example sequence for how to program an NVDLA subunit.
 Each NVDLA subunit has the same ping-pong register design; in this sequence,
 we choose the CDMA submodule as the example unit that we will program.</p>
@@ -1231,10 +1240,10 @@ As such, the CPU is responsible for ensuring that if a layer depends on the
 output of a previous layer, the consuming layer is not scheduled until the
 producing layer has finished executing.</p>
 </div>
-</div>
-</div>
-<div class="section" id="address-space-layout">
-<h3>Address space layout<a class="headerlink" href="#address-space-layout" title="Permalink to this headline">¶</a></h3>
+</section>
+</section>
+<section id="address-space-layout">
+<h3>Address space layout<a class="headerlink" href="#address-space-layout" title="Link to this heading">¶</a></h3>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>This address space layout is not final, and should be expected to change
@@ -1256,13 +1265,7 @@ registers are not accessible.</p>
 each NVDLA implementation.</p>
 </div>
 <table class="docutils align-default" id="tab-address-space">
-<caption><span class="caption-number">Table 10 </span><span class="caption-text">NVDLA address space.</span><a class="headerlink" href="#tab-address-space" title="Permalink to this table">¶</a></caption>
-<colgroup>
-<col style="width: 25%" />
-<col style="width: 25%" />
-<col style="width: 25%" />
-<col style="width: 25%" />
-</colgroup>
+<caption><span class="caption-number">Table 10 </span><span class="caption-text">NVDLA address space.</span><a class="headerlink" href="#tab-address-space" title="Link to this table">¶</a></caption>
 <thead>
 <tr class="row-odd"><th class="head"><p>DLA sub-unit</p></th>
 <th class="head"><p>Start Address</p></th>
@@ -1363,15 +1366,10 @@ each NVDLA implementation.</p>
 </tr>
 </tbody>
 </table>
-<div class="section" id="glb">
-<h4>GLB<a class="headerlink" href="#glb" title="Permalink to this headline">¶</a></h4>
+<section id="glb">
+<h4>GLB<a class="headerlink" href="#glb" title="Link to this heading">¶</a></h4>
 <table class="docutils align-default" id="tab-glb-registers">
-<caption><span class="caption-number">Table 11 </span><span class="caption-text">GLB registers.</span><a class="headerlink" href="#tab-glb-registers" title="Permalink to this table">¶</a></caption>
-<colgroup>
-<col style="width: 20%" />
-<col style="width: 16%" />
-<col style="width: 64%" />
-</colgroup>
+<caption><span class="caption-number">Table 11 </span><span class="caption-text">GLB registers.</span><a class="headerlink" href="#tab-glb-registers" title="Link to this table">¶</a></caption>
 <thead>
 <tr class="row-odd"><th class="head"><p>Name</p></th>
 <th class="head"><p>Address</p></th>
@@ -1397,16 +1395,11 @@ each NVDLA implementation.</p>
 </tr>
 </tbody>
 </table>
-</div>
-<div class="section" id="mcif">
-<h4>MCIF<a class="headerlink" href="#mcif" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="mcif">
+<h4>MCIF<a class="headerlink" href="#mcif" title="Link to this heading">¶</a></h4>
 <table class="docutils align-default" id="tab-mcif-registers">
-<caption><span class="caption-number">Table 12 </span><span class="caption-text">MCIF registers.</span><a class="headerlink" href="#tab-mcif-registers" title="Permalink to this table">¶</a></caption>
-<colgroup>
-<col style="width: 25%" />
-<col style="width: 16%" />
-<col style="width: 59%" />
-</colgroup>
+<caption><span class="caption-number">Table 12 </span><span class="caption-text">MCIF registers.</span><a class="headerlink" href="#tab-mcif-registers" title="Link to this table">¶</a></caption>
 <thead>
 <tr class="row-odd"><th class="head"><p>Name</p></th>
 <th class="head"><p>Address</p></th>
@@ -1444,16 +1437,11 @@ each NVDLA implementation.</p>
 </tr>
 </tbody>
 </table>
-</div>
-<div class="section" id="sramif">
-<h4>SRAMIF<a class="headerlink" href="#sramif" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="sramif">
+<h4>SRAMIF<a class="headerlink" href="#sramif" title="Link to this heading">¶</a></h4>
 <table class="docutils align-default" id="tab-cvif-registers">
-<caption><span class="caption-number">Table 13 </span><span class="caption-text">SRAMIF registers.</span><a class="headerlink" href="#tab-cvif-registers" title="Permalink to this table">¶</a></caption>
-<colgroup>
-<col style="width: 25%" />
-<col style="width: 16%" />
-<col style="width: 59%" />
-</colgroup>
+<caption><span class="caption-number">Table 13 </span><span class="caption-text">SRAMIF registers.</span><a class="headerlink" href="#tab-cvif-registers" title="Link to this table">¶</a></caption>
 <thead>
 <tr class="row-odd"><th class="head"><p>Name</p></th>
 <th class="head"><p>Address</p></th>
@@ -1491,16 +1479,11 @@ each NVDLA implementation.</p>
 </tr>
 </tbody>
 </table>
-</div>
-<div class="section" id="bdma">
-<h4>BDMA<a class="headerlink" href="#bdma" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="bdma">
+<h4>BDMA<a class="headerlink" href="#bdma" title="Link to this heading">¶</a></h4>
 <table class="docutils align-default" id="tab-bdma-registers">
-<caption><span class="caption-number">Table 14 </span><span class="caption-text">BDMA registers.</span><a class="headerlink" href="#tab-bdma-registers" title="Permalink to this table">¶</a></caption>
-<colgroup>
-<col style="width: 29%" />
-<col style="width: 15%" />
-<col style="width: 56%" />
-</colgroup>
+<caption><span class="caption-number">Table 14 </span><span class="caption-text">BDMA registers.</span><a class="headerlink" href="#tab-bdma-registers" title="Link to this table">¶</a></caption>
 <thead>
 <tr class="row-odd"><th class="head"><p>Name</p></th>
 <th class="head"><p>Address</p></th>
@@ -1594,16 +1577,11 @@ each NVDLA implementation.</p>
 </tr>
 </tbody>
 </table>
-</div>
-<div class="section" id="cdma">
-<h4>CDMA<a class="headerlink" href="#cdma" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="cdma">
+<h4>CDMA<a class="headerlink" href="#cdma" title="Link to this heading">¶</a></h4>
 <table class="docutils align-default" id="tab-cdma-registers">
-<caption><span class="caption-number">Table 15 </span><span class="caption-text">CDMA registers.</span><a class="headerlink" href="#tab-cdma-registers" title="Permalink to this table">¶</a></caption>
-<colgroup>
-<col style="width: 19%" />
-<col style="width: 10%" />
-<col style="width: 71%" />
-</colgroup>
+<caption><span class="caption-number">Table 15 </span><span class="caption-text">CDMA registers.</span><a class="headerlink" href="#tab-cdma-registers" title="Link to this table">¶</a></caption>
 <thead>
 <tr class="row-odd"><th class="head"><p>Name</p></th>
 <th class="head"><p>Address</p></th>
@@ -1854,8 +1832,8 @@ each NVDLA implementation.</p>
 <p>Note that some registers in the CDMA unit are only used in certain modes; if
 these modes are not shown as available in the hardware capability registers,
 their registers are not available either.  These registers are as noted below:</p>
-<table class="colwidths-auto docutils align-default" id="tab-cdma-feature-registers">
-<caption><span class="caption-number">Table 16 </span><span class="caption-text">CDMA registers that are feature-specific.</span><a class="headerlink" href="#tab-cdma-feature-registers" title="Permalink to this table">¶</a></caption>
+<table class="docutils align-default" id="tab-cdma-feature-registers">
+<caption><span class="caption-number">Table 16 </span><span class="caption-text">CDMA registers that are feature-specific.</span><a class="headerlink" href="#tab-cdma-feature-registers" title="Link to this table">¶</a></caption>
 <thead>
 <tr class="row-odd"><th class="head"><p>Feature</p></th>
 <th class="head"><p>Registers</p></th>
@@ -1873,11 +1851,11 @@ their registers are not available either.  These registers are as noted below:</
 </tr>
 </tbody>
 </table>
-</div>
-<div class="section" id="csc">
-<h4>CSC<a class="headerlink" href="#csc" title="Permalink to this headline">¶</a></h4>
-<table class="colwidths-auto docutils align-default" id="tab-csc-registers">
-<caption><span class="caption-number">Table 17 </span><span class="caption-text">CSC registers.</span><a class="headerlink" href="#tab-csc-registers" title="Permalink to this table">¶</a></caption>
+</section>
+<section id="csc">
+<h4>CSC<a class="headerlink" href="#csc" title="Link to this heading">¶</a></h4>
+<table class="docutils align-default" id="tab-csc-registers">
+<caption><span class="caption-number">Table 17 </span><span class="caption-text">CSC registers.</span><a class="headerlink" href="#tab-csc-registers" title="Link to this table">¶</a></caption>
 <thead>
 <tr class="row-odd"><th class="head"><p>Name</p></th>
 <th class="head"><p>Address</p></th>
@@ -1990,8 +1968,8 @@ their registers are not available either.  These registers are as noted below:</
 <p>Note that some registers in the CSC unit are only used in certain modes; if
 these modes are not shown as available in the hardware capability registers,
 their registers are not available either.  These registers are as noted below:</p>
-<table class="colwidths-auto docutils align-default" id="tab-csc-feature-registers">
-<caption><span class="caption-number">Table 18 </span><span class="caption-text">CSC registers that are feature-specific.</span><a class="headerlink" href="#tab-csc-feature-registers" title="Permalink to this table">¶</a></caption>
+<table class="docutils align-default" id="tab-csc-feature-registers">
+<caption><span class="caption-number">Table 18 </span><span class="caption-text">CSC registers that are feature-specific.</span><a class="headerlink" href="#tab-csc-feature-registers" title="Link to this table">¶</a></caption>
 <thead>
 <tr class="row-odd"><th class="head"><p>Feature</p></th>
 <th class="head"><p>Registers</p></th>
@@ -2006,11 +1984,11 @@ their registers are not available either.  These registers are as noted below:</
 </tr>
 </tbody>
 </table>
-</div>
-<div class="section" id="cmac-a">
-<h4>CMAC_A<a class="headerlink" href="#cmac-a" title="Permalink to this headline">¶</a></h4>
-<table class="colwidths-auto docutils align-default" id="tab-cmac-a-registers">
-<caption><span class="caption-number">Table 19 </span><span class="caption-text">CMAC_A registers.</span><a class="headerlink" href="#tab-cmac-a-registers" title="Permalink to this table">¶</a></caption>
+</section>
+<section id="cmac-a">
+<h4>CMAC_A<a class="headerlink" href="#cmac-a" title="Link to this heading">¶</a></h4>
+<table class="docutils align-default" id="tab-cmac-a-registers">
+<caption><span class="caption-number">Table 19 </span><span class="caption-text">CMAC_A registers.</span><a class="headerlink" href="#tab-cmac-a-registers" title="Link to this table">¶</a></caption>
 <thead>
 <tr class="row-odd"><th class="head"><p>Name</p></th>
 <th class="head"><p>Address</p></th>
@@ -2036,11 +2014,11 @@ their registers are not available either.  These registers are as noted below:</
 </tr>
 </tbody>
 </table>
-</div>
-<div class="section" id="cmac-b">
-<h4>CMAC_B<a class="headerlink" href="#cmac-b" title="Permalink to this headline">¶</a></h4>
-<table class="colwidths-auto docutils align-default" id="tab-cmac-b-registers">
-<caption><span class="caption-number">Table 20 </span><span class="caption-text">CMAC_B registers.</span><a class="headerlink" href="#tab-cmac-b-registers" title="Permalink to this table">¶</a></caption>
+</section>
+<section id="cmac-b">
+<h4>CMAC_B<a class="headerlink" href="#cmac-b" title="Link to this heading">¶</a></h4>
+<table class="docutils align-default" id="tab-cmac-b-registers">
+<caption><span class="caption-number">Table 20 </span><span class="caption-text">CMAC_B registers.</span><a class="headerlink" href="#tab-cmac-b-registers" title="Link to this table">¶</a></caption>
 <thead>
 <tr class="row-odd"><th class="head"><p>Name</p></th>
 <th class="head"><p>Address</p></th>
@@ -2066,11 +2044,11 @@ their registers are not available either.  These registers are as noted below:</
 </tr>
 </tbody>
 </table>
-</div>
-<div class="section" id="cacc">
-<h4>CACC<a class="headerlink" href="#cacc" title="Permalink to this headline">¶</a></h4>
-<table class="colwidths-auto docutils align-default" id="tab-cacc-registers">
-<caption><span class="caption-number">Table 21 </span><span class="caption-text">CACC registers.</span><a class="headerlink" href="#tab-cacc-registers" title="Permalink to this table">¶</a></caption>
+</section>
+<section id="cacc">
+<h4>CACC<a class="headerlink" href="#cacc" title="Link to this heading">¶</a></h4>
+<table class="docutils align-default" id="tab-cacc-registers">
+<caption><span class="caption-number">Table 21 </span><span class="caption-text">CACC registers.</span><a class="headerlink" href="#tab-cacc-registers" title="Link to this table">¶</a></caption>
 <thead>
 <tr class="row-odd"><th class="head"><p>Name</p></th>
 <th class="head"><p>Address</p></th>
@@ -2132,11 +2110,11 @@ their registers are not available either.  These registers are as noted below:</
 </tr>
 </tbody>
 </table>
-</div>
-<div class="section" id="sdp-rdma">
-<h4>SDP_RDMA<a class="headerlink" href="#sdp-rdma" title="Permalink to this headline">¶</a></h4>
-<table class="colwidths-auto docutils align-default" id="tab-sdp-rdma-registers">
-<caption><span class="caption-number">Table 22 </span><span class="caption-text">SDP_RDMA registers.</span><a class="headerlink" href="#tab-sdp-rdma-registers" title="Permalink to this table">¶</a></caption>
+</section>
+<section id="sdp-rdma">
+<h4>SDP_RDMA<a class="headerlink" href="#sdp-rdma" title="Link to this heading">¶</a></h4>
+<table class="docutils align-default" id="tab-sdp-rdma-registers">
+<caption><span class="caption-number">Table 22 </span><span class="caption-text">SDP_RDMA registers.</span><a class="headerlink" href="#tab-sdp-rdma-registers" title="Link to this table">¶</a></caption>
 <thead>
 <tr class="row-odd"><th class="head"><p>Name</p></th>
 <th class="head"><p>Address</p></th>
@@ -2294,11 +2272,11 @@ their registers are not available either.  These registers are as noted below:</
 </tr>
 </tbody>
 </table>
-</div>
-<div class="section" id="sdp">
-<h4>SDP<a class="headerlink" href="#sdp" title="Permalink to this headline">¶</a></h4>
-<table class="colwidths-auto docutils align-default" id="tab-sdp-registers">
-<caption><span class="caption-number">Table 23 </span><span class="caption-text">SDP registers.</span><a class="headerlink" href="#tab-sdp-registers" title="Permalink to this table">¶</a></caption>
+</section>
+<section id="sdp">
+<h4>SDP<a class="headerlink" href="#sdp" title="Link to this heading">¶</a></h4>
+<table class="docutils align-default" id="tab-sdp-registers">
+<caption><span class="caption-number">Table 23 </span><span class="caption-text">SDP registers.</span><a class="headerlink" href="#tab-sdp-registers" title="Link to this table">¶</a></caption>
 <thead>
 <tr class="row-odd"><th class="head"><p>Name</p></th>
 <th class="head"><p>Address</p></th>
@@ -2560,11 +2538,11 @@ their registers are not available either.  These registers are as noted below:</
 </tr>
 </tbody>
 </table>
-</div>
-<div class="section" id="pdp-rdma">
-<h4>PDP_RDMA<a class="headerlink" href="#pdp-rdma" title="Permalink to this headline">¶</a></h4>
-<table class="colwidths-auto docutils align-default" id="tab-pdp-rdma-registers">
-<caption><span class="caption-number">Table 24 </span><span class="caption-text">PDP_RDMA registers.</span><a class="headerlink" href="#tab-pdp-rdma-registers" title="Permalink to this table">¶</a></caption>
+</section>
+<section id="pdp-rdma">
+<h4>PDP_RDMA<a class="headerlink" href="#pdp-rdma" title="Link to this heading">¶</a></h4>
+<table class="docutils align-default" id="tab-pdp-rdma-registers">
+<caption><span class="caption-number">Table 24 </span><span class="caption-text">PDP_RDMA registers.</span><a class="headerlink" href="#tab-pdp-rdma-registers" title="Link to this table">¶</a></caption>
 <thead>
 <tr class="row-odd"><th class="head"><p>Name</p></th>
 <th class="head"><p>Address</p></th>
@@ -2650,11 +2628,11 @@ their registers are not available either.  These registers are as noted below:</
 </tr>
 </tbody>
 </table>
-</div>
-<div class="section" id="pdp">
-<h4>PDP<a class="headerlink" href="#pdp" title="Permalink to this headline">¶</a></h4>
-<table class="colwidths-auto docutils align-default" id="tab-pdp-registers">
-<caption><span class="caption-number">Table 25 </span><span class="caption-text">PDP registers.</span><a class="headerlink" href="#tab-pdp-registers" title="Permalink to this table">¶</a></caption>
+</section>
+<section id="pdp">
+<h4>PDP<a class="headerlink" href="#pdp" title="Link to this heading">¶</a></h4>
+<table class="docutils align-default" id="tab-pdp-registers">
+<caption><span class="caption-number">Table 25 </span><span class="caption-text">PDP registers.</span><a class="headerlink" href="#tab-pdp-registers" title="Link to this table">¶</a></caption>
 <thead>
 <tr class="row-odd"><th class="head"><p>Name</p></th>
 <th class="head"><p>Address</p></th>
@@ -2820,11 +2798,11 @@ their registers are not available either.  These registers are as noted below:</
 </tr>
 </tbody>
 </table>
-</div>
-<div class="section" id="cdp-rdma">
-<h4>CDP_RDMA<a class="headerlink" href="#cdp-rdma" title="Permalink to this headline">¶</a></h4>
-<table class="colwidths-auto docutils align-default" id="tab-cdp-rdma-registers">
-<caption><span class="caption-number">Table 26 </span><span class="caption-text">CDP_RDMA registers.</span><a class="headerlink" href="#tab-cdp-rdma-registers" title="Permalink to this table">¶</a></caption>
+</section>
+<section id="cdp-rdma">
+<h4>CDP_RDMA<a class="headerlink" href="#cdp-rdma" title="Link to this heading">¶</a></h4>
+<table class="docutils align-default" id="tab-cdp-rdma-registers">
+<caption><span class="caption-number">Table 26 </span><span class="caption-text">CDP_RDMA registers.</span><a class="headerlink" href="#tab-cdp-rdma-registers" title="Link to this table">¶</a></caption>
 <thead>
 <tr class="row-odd"><th class="head"><p>Name</p></th>
 <th class="head"><p>Address</p></th>
@@ -2898,11 +2876,11 @@ their registers are not available either.  These registers are as noted below:</
 </tr>
 </tbody>
 </table>
-</div>
-<div class="section" id="cdp">
-<h4>CDP<a class="headerlink" href="#cdp" title="Permalink to this headline">¶</a></h4>
-<table class="colwidths-auto docutils align-default" id="tab-cdp-registers">
-<caption><span class="caption-number">Table 27 </span><span class="caption-text">CDP registers.</span><a class="headerlink" href="#tab-cdp-registers" title="Permalink to this table">¶</a></caption>
+</section>
+<section id="cdp">
+<h4>CDP<a class="headerlink" href="#cdp" title="Link to this heading">¶</a></h4>
+<table class="docutils align-default" id="tab-cdp-registers">
+<caption><span class="caption-number">Table 27 </span><span class="caption-text">CDP registers.</span><a class="headerlink" href="#tab-cdp-registers" title="Link to this table">¶</a></caption>
 <thead>
 <tr class="row-odd"><th class="head"><p>Name</p></th>
 <th class="head"><p>Address</p></th>
@@ -3096,11 +3074,11 @@ their registers are not available either.  These registers are as noted below:</
 </tr>
 </tbody>
 </table>
-</div>
-<div class="section" id="id5">
-<h4>RUBIK<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h4>
-<table class="colwidths-auto docutils align-default" id="tab-rubik-registers">
-<caption><span class="caption-number">Table 28 </span><span class="caption-text">RUBIK registers.</span><a class="headerlink" href="#tab-rubik-registers" title="Permalink to this table">¶</a></caption>
+</section>
+<section id="id5">
+<h4>RUBIK<a class="headerlink" href="#id5" title="Link to this heading">¶</a></h4>
+<table class="docutils align-default" id="tab-rubik-registers">
+<caption><span class="caption-number">Table 28 </span><span class="caption-text">RUBIK registers.</span><a class="headerlink" href="#tab-rubik-registers" title="Link to this table">¶</a></caption>
 <thead>
 <tr class="row-odd"><th class="head"><p>Name</p></th>
 <th class="head"><p>Address</p></th>
@@ -3215,10 +3193,10 @@ their registers are not available either.  These registers are as noted below:</
 </tr>
 </tbody>
 </table>
-</div>
-</div>
-</div>
-</div>
+</section>
+</section>
+</section>
+</section>
 
 
         </div>
@@ -3226,8 +3204,9 @@ their registers are not available either.  These registers are as noted below:</
           
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="../../contents.html">Table of Contents</a></h3>
-  <ul>
+  <div>
+    <h3><a href="../../contents.html">Table of Contents</a></h3>
+    <ul>
 <li><a class="reference internal" href="#">Hardware Architectural Specification</a><ul>
 <li><a class="reference internal" href="#introduction">Introduction</a></li>
 <li><a class="reference internal" href="#functional-description">Functional Description</a><ul>
@@ -3340,12 +3319,17 @@ their registers are not available either.  These registers are as noted below:</
 </li>
 </ul>
 
-  <h4>Previous topic</h4>
-  <p class="topless"><a href="../contents.html"
-                        title="previous chapter">Hardware Manual</a></p>
-  <h4>Next topic</h4>
-  <p class="topless"><a href="../format.html"
-                        title="next chapter">In-memory data formats</a></p>
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="../contents.html"
+                          title="previous chapter">Hardware Manual</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="../format.html"
+                          title="next chapter">In-memory data formats</a></p>
+  </div>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
@@ -3357,12 +3341,12 @@ their registers are not available either.  These registers are as noted below:</
   <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="../../search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
       <input type="submit" value="Go" />
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script>document.getElementById('searchbox').style.display = "block"</script>
         </div>
       </div>
         </div>
@@ -3391,10 +3375,10 @@ their registers are not available either.  These registers are as noted below:</
 <div class="container">
 <div class="row">
 &#169; <a
-href="../../copyright.html">Copyright</a> 2018 - 2024, NVIDIA Corporation.
+href="../../copyright.html">Copyright</a> 2018 - 2026, NVIDIA Corporation.
 <a href="https://www.nvidia.com/object/legal_info.html">Legal Information.</a>
 <a href="https://www.nvidia.com/object/privacy_policy.html">Privacy Policy.</a>
-Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.5.4.
+Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
 </div>
 </div>
 </div>

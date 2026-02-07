@@ -1,18 +1,17 @@
-
 <!DOCTYPE html>
 
-<html>
+<html lang="en" data-content_root="./">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
     <title>Virtual Platform On AWS FPGA &#8212; NVDLA Documentation</title>
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="_static/nvdla.css" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="_static/styles.css" />
-    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-    <script src="_static/jquery.js"></script>
-    <script src="_static/underscore.js"></script>
-    <script src="_static/doctools.js"></script>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="_static/nvdla.css?v=907781f7" />
+    <link rel="stylesheet" type="text/css" href="_static/styles.css?v=af91e327" />
+    <script src="_static/documentation_options.js?v=7026087e"></script>
+    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Open NVDLA Repository Updates" href="updates.html" />
     <link rel="prev" title="Virtual Platform" href="vp.html" />
@@ -25,7 +24,7 @@
     max-width: 100% !important;
   }
 </style>
-<script src="//assets.adobedtm.com/b92787824f2e0e9b68dc2e993f9bd995339fe417/satelliteLib-30c8ffcc8ece089156fd5590fbcf390ffc296f51.js"></script>
+<script src="https://assets.adobedtm.com/5d4962a43b79/814eb6e9b4e1/launch-4bc07f1e0b0b.min.js"></script>
 <!-- OneTrust Cookies Consent Notice start for nvidia.com -->
 <script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" data-document-language="true" type="text/javascript" charset="UTF-8" data-domain-script="3e2b62ff-7ae7-4ac5-87c8-d5949ecafff5-test" ></script>
 <script type="text/javascript">
@@ -67,39 +66,41 @@ function OptanonWrapper() {
       <div class="row">
         <div class="col-xs-12 col-md-9">
           
-  <div class="section" id="virtual-platform-on-aws-fpga">
-<h1>Virtual Platform On AWS FPGA<a class="headerlink" href="#virtual-platform-on-aws-fpga" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="overview">
-<h2>1. Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+  <section id="virtual-platform-on-aws-fpga">
+<h1>Virtual Platform On AWS FPGA<a class="headerlink" href="#virtual-platform-on-aws-fpga" title="Link to this heading">¶</a></h1>
+<section id="overview">
+<h2>1. Overview<a class="headerlink" href="#overview" title="Link to this heading">¶</a></h2>
 <p>Virtual Platform (<a class="reference internal" href="vp.html#overview"><span class="std std-ref">1. Overview</span></a>) can run on Amazon Web Services (AWS) FPGA platform. <a class="reference internal" href="#fig-vp-fpga"><span class="std std-numref">Fig. 82</span></a> below shows the top level diagram of the NVDLA virtual simulator on AWS FPGA platform.</p>
-<div class="figure align-center" id="id3">
-<span id="fig-vp-fpga"></span><img alt="NVDLA Virtual Platform FPGA Diagram." src="_images/nvdla-vp-fpga.svg" /><p class="caption"><span class="caption-number">Fig. 82 </span><span class="caption-text">NVDLA Virtual Platform on AWS FPGA platform.</span><a class="headerlink" href="#id3" title="Permalink to this image">¶</a></p>
-</div>
+<figure class="align-center" id="id3">
+<span id="fig-vp-fpga"></span><img alt="NVDLA Virtual Platform FPGA Diagram." src="_images/nvdla-vp-fpga.svg" /><figcaption>
+<p><span class="caption-number">Fig. 82 </span><span class="caption-text">NVDLA Virtual Platform on AWS FPGA platform.</span><a class="headerlink" href="#id3" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
 <p>To launch an instance which is a virtual server in the cloud, Amazon Machine Image (AMI) is required. Virtual simulator can run on the instance with FPGA board connected. The following sections describe how virtual simulator runs on different AMIs.</p>
 <ul class="simple">
 <li><p><a class="reference internal" href="#using-the-virtual-simulator-on-nvidia-ami">2. Using the Virtual Simulator on NVIDIA AMI</a>: NVIDIA provides NVDLA AMI (ubuntu14.04 based) included all necessary system requirements which allow users to run virtual simulator without any additional operation.</p></li>
 <li><p><a class="reference internal" href="#using-the-virtual-simulator-on-aws-ami">3. Using the Virtual Simulator on AWS AMI</a>: Virtual simulator can run on basic ubuntu/centos AMI delivered by AWS. This section shows how to run virtual simulator on basic AMI step by step.</p></li>
 <li><p><a class="reference internal" href="#generating-the-afi-on-aws-fpga-ami">4. Generating the AFI on AWS FPGA AMI</a>: Amazon FPGA Image (AFI) is necessary for AWS FPGA platform. Before running virtual simulator on AWS FPGA platform, AFI needs to be registered and loaded to AWS. NVIDIA provides one demo AFI which has been verified. Users also can develop their own FPGA design, when design completes, users can generate AFI with FPGA AWS AMI pre-built included FPGA development and run-time tools. This section shows how to generate AFI on AWS FPGA AMI step by step.</p></li>
 </ul>
-</div>
-<div class="section" id="using-the-virtual-simulator-on-nvidia-ami">
-<h2>2. Using the Virtual Simulator on NVIDIA AMI<a class="headerlink" href="#using-the-virtual-simulator-on-nvidia-ami" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="setup-aws-ec2-instance-machine">
-<h3>2.1 Setup AWS EC2 instance machine<a class="headerlink" href="#setup-aws-ec2-instance-machine" title="Permalink to this headline">¶</a></h3>
-<div class="section" id="set-up-and-log-into-your-aws-account">
-<h4>2.1.1 Set up and log into your AWS account<a class="headerlink" href="#set-up-and-log-into-your-aws-account" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="using-the-virtual-simulator-on-nvidia-ami">
+<h2>2. Using the Virtual Simulator on NVIDIA AMI<a class="headerlink" href="#using-the-virtual-simulator-on-nvidia-ami" title="Link to this heading">¶</a></h2>
+<section id="setup-aws-ec2-instance-machine">
+<h3>2.1 Setup AWS EC2 instance machine<a class="headerlink" href="#setup-aws-ec2-instance-machine" title="Link to this heading">¶</a></h3>
+<section id="set-up-and-log-into-your-aws-account">
+<h4>2.1.1 Set up and log into your AWS account<a class="headerlink" href="#set-up-and-log-into-your-aws-account" title="Link to this heading">¶</a></h4>
 <p>Log into the <a class="reference external" href="https://console.aws.amazon.com/">AWS Management Console</a> and set up your root account.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Please set your aws region to US East (N.Virginia) since each AWS region is independent.</p>
 </div>
-</div>
-<div class="section" id="launch-an-amazon-ec2-instance">
-<h4>2.1.2 Launch an Amazon EC2 instance<a class="headerlink" href="#launch-an-amazon-ec2-instance" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="launch-an-amazon-ec2-instance">
+<h4>2.1.2 Launch an Amazon EC2 instance<a class="headerlink" href="#launch-an-amazon-ec2-instance" title="Link to this heading">¶</a></h4>
 <p>In the <a class="reference external" href="https://us-west-2.console.aws.amazon.com/ec2/v2/home?region=us-west-2">Amazon EC2 Dashboard</a>, choose “Launch Instance” to create and configure your virtual machine.</p>
-</div>
-<div class="section" id="configure-your-instance">
-<h4>2.1.3 Configure your instance<a class="headerlink" href="#configure-your-instance" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="configure-your-instance">
+<h4>2.1.3 Configure your instance<a class="headerlink" href="#configure-your-instance" title="Link to this heading">¶</a></h4>
 <p>In this tutorial, you have the option to configure your instance features. Below are some guidelines on setting up your first instance.</p>
 <ul class="simple">
 <li><p><strong>Choose an Amazon Machine Image (AMI)</strong>: we recommend the <em>“nvdla_vp_fpga_ami_ubuntu”</em></p></li>
@@ -111,9 +112,9 @@ function OptanonWrapper() {
 <p class="admonition-title">Note</p>
 <p>It may take a few minutes to initialize your instance.</p>
 </div>
-</div>
-<div class="section" id="connect-to-your-instance">
-<h4>2.1.4 Connect to your instance<a class="headerlink" href="#connect-to-your-instance" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="connect-to-your-instance">
+<h4>2.1.4 Connect to your instance<a class="headerlink" href="#connect-to-your-instance" title="Link to this heading">¶</a></h4>
 <p>After you launch your instance, you can connect to it and use it the way that you’d use a computer sitting in front of you. To connect from the console, follow the steps below:</p>
 <ul class="simple">
 <li><p>Select the EC2 instance you created and choose “Connect”.</p></li>
@@ -124,10 +125,10 @@ function OptanonWrapper() {
 <p class="admonition-title">Note</p>
 <p>You can also connect via SSH or PuTTY, <a class="reference external" href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AccessingInstances.html">click here</a> to learn more.</p>
 </div>
-</div>
-</div>
-<div class="section" id="setup-aws-sdk">
-<h3>2.2 Setup AWS SDK<a class="headerlink" href="#setup-aws-sdk" title="Permalink to this headline">¶</a></h3>
+</section>
+</section>
+<section id="setup-aws-sdk">
+<h3>2.2 Setup AWS SDK<a class="headerlink" href="#setup-aws-sdk" title="Link to this heading">¶</a></h3>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>clone<span class="w"> </span>https://github.com/aws/aws-fpga.git<span class="w">                </span><span class="c1"># Pull AWS SDK</span>
 <span class="gp">$ </span>git<span class="w"> </span>checkout<span class="w"> </span>v1.4.0<span class="w">                                      </span><span class="c1"># Use tag v1.4.0 version of AWS SDK for NVIDIA AMI</span>
 <span class="gp">$ </span><span class="nb">cd</span><span class="w"> </span><span class="o">[</span>aws-fpga<span class="w"> </span>prefix<span class="o">]</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">source</span><span class="w"> </span>sdk_setup.sh<span class="w">              </span><span class="c1"># Setup AWS SDK</span>
@@ -140,9 +141,9 @@ function OptanonWrapper() {
 <span class="gp">$ </span>sudo<span class="w"> </span>modprobe<span class="w"> </span>edma-drv
 </pre></div>
 </div>
-</div>
-<div class="section" id="load-aws-fpga-image">
-<h3>2.3 Load AWS FPGA image<a class="headerlink" href="#load-aws-fpga-image" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="load-aws-fpga-image">
+<h3>2.3 Load AWS FPGA image<a class="headerlink" href="#load-aws-fpga-image" title="Link to this heading">¶</a></h3>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>sudo<span class="w"> </span>fpga-clear-local-image<span class="w"> </span>-S<span class="w"> </span><span class="m">0</span>
 <span class="gp">$ </span>sudo<span class="w"> </span>fpga-load-local-image<span class="w"> </span>-S<span class="w"> </span><span class="m">0</span><span class="w"> </span>-I<span class="w"> </span>agfi-09c2a21805a8b9257<span class="w">     </span><span class="c1"># Load MSI-X interrupt fixed AFI</span>
 <span class="gp">$ </span>sudo<span class="w"> </span>fpga-clear-local-image<span class="w"> </span>-S<span class="w"> </span><span class="m">0</span>
@@ -156,18 +157,18 @@ function OptanonWrapper() {
 <p>AFI <em>agfi-09c2a21805a8b9257</em> is necessary for MSI-X interrupts issue.</p>
 <p>You can generate your own AWS FPGA Image (AFI) by <a class="reference internal" href="#generating-the-afi-on-aws-fpga-ami">4. Generating the AFI on AWS FPGA AMI</a> Or can use NVIDIA Sample AFI (refer to <a class="reference external" href="https://github.com/nvdla/vp_awsfpga/blob/master/README.md">VP AWS FPGA README</a>) if just want to run tests on AWS FPGA platform.</p>
 <p>More details please refer to <a class="reference external" href="https://aws.amazon.com/ec2/getting-started/">AWS Getting Started</a>.</p>
-</div>
-<div class="section" id="running-virtual-simulator">
-<h3>2.4 Running Virtual Simulator<a class="headerlink" href="#running-virtual-simulator" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="running-virtual-simulator">
+<h3>2.4 Running Virtual Simulator<a class="headerlink" href="#running-virtual-simulator" title="Link to this heading">¶</a></h3>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span><span class="nb">cd</span><span class="w"> </span>/usr/local/nvdla
 <span class="gp">$ </span>sudo<span class="w"> </span>./aarch64_toplevel<span class="w"> </span>-c<span class="w"> </span>aarch64_nvdla.lua<span class="w"> </span>--fpga
 <span class="go">Login the kernel with account &#39;root&#39; and password &#39;nvdla&#39;</span>
 </pre></div>
 </div>
 <p>You should be able to find the string <em>“Initialize AWS FPGA with slot_id=0, pci_vendor_id=0x1d0f, pci_device_id=0xf001”</em> from output if virtual simulator is running on FPGA platform.</p>
-</div>
-<div class="section" id="running-software-sanity-test">
-<h3>2.5 Running software sanity test<a class="headerlink" href="#running-software-sanity-test" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="running-software-sanity-test">
+<h3>2.5 Running software sanity test<a class="headerlink" href="#running-software-sanity-test" title="Link to this heading">¶</a></h3>
 <p>After login the kenerl system, you can run one software sanity test for NVDLA small configure.</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp"># </span>mount<span class="w"> </span>-t<span class="w"> </span>9p<span class="w"> </span>-o<span class="w"> </span><span class="nv">trans</span><span class="o">=</span>virtio<span class="w"> </span>r<span class="w"> </span>/mnt
 <span class="gp"># </span><span class="nb">cd</span><span class="w"> </span>/mnt/sw/prebuilt/linux/
@@ -178,31 +179,31 @@ function OptanonWrapper() {
 </div>
 <p>You should be able to see ‘Test pass’ printed in the screen at the end of test. You are now ready to try out the NVDLA software in the virtual simulator on FPGA! Please refer to <a class="reference internal" href="sw/contents.html"><span class="doc">Software Manual</span></a> for details.</p>
 <p>If you want to exit the virtual simulator, press ‘ctrl+a x’.</p>
-</div>
-</div>
-<div class="section" id="using-the-virtual-simulator-on-aws-ami">
-<h2>3. Using the Virtual Simulator on AWS AMI<a class="headerlink" href="#using-the-virtual-simulator-on-aws-ami" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="setup-aws-ec2-instance-machine-on-aws-ami">
-<h3>3.1 Setup AWS EC2 instance machine on AWS AMI<a class="headerlink" href="#setup-aws-ec2-instance-machine-on-aws-ami" title="Permalink to this headline">¶</a></h3>
+</section>
+</section>
+<section id="using-the-virtual-simulator-on-aws-ami">
+<h2>3. Using the Virtual Simulator on AWS AMI<a class="headerlink" href="#using-the-virtual-simulator-on-aws-ami" title="Link to this heading">¶</a></h2>
+<section id="setup-aws-ec2-instance-machine-on-aws-ami">
+<h3>3.1 Setup AWS EC2 instance machine on AWS AMI<a class="headerlink" href="#setup-aws-ec2-instance-machine-on-aws-ami" title="Link to this heading">¶</a></h3>
 <p>Please refer to <a class="reference internal" href="#setup-aws-ec2-instance-machine">2.1 Setup AWS EC2 instance machine</a> and the AMI we recommend to choose <em>“ami-38708b45”</em> (Ubuntu) or <em>“FPGA Developer AMI”</em> (CentOS)</p>
-</div>
-<div class="section" id="download-the-virtual-simulator">
-<h3>3.2 Download the Virtual Simulator<a class="headerlink" href="#download-the-virtual-simulator" title="Permalink to this headline">¶</a></h3>
-<div class="section" id="download-virtual-simulator">
-<h4>3.2.1 Download Virtual Simulator<a class="headerlink" href="#download-virtual-simulator" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="download-the-virtual-simulator">
+<h3>3.2 Download the Virtual Simulator<a class="headerlink" href="#download-the-virtual-simulator" title="Link to this heading">¶</a></h3>
+<section id="download-virtual-simulator">
+<h4>3.2.1 Download Virtual Simulator<a class="headerlink" href="#download-virtual-simulator" title="Link to this heading">¶</a></h4>
 <p>Please refer to <a class="reference internal" href="vp.html#download-the-virtual-simulator"><span class="std std-ref">2.2 Download the Virtual Simulator</span></a></p>
-</div>
-<div class="section" id="download-nvdla-aws-fpga-custom-logic-cl">
-<h4>3.2.2 Download NVDLA AWS FPGA Custom Logic (CL)<a class="headerlink" href="#download-nvdla-aws-fpga-custom-logic-cl" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="download-nvdla-aws-fpga-custom-logic-cl">
+<h4>3.2.2 Download NVDLA AWS FPGA Custom Logic (CL)<a class="headerlink" href="#download-nvdla-aws-fpga-custom-logic-cl" title="Link to this heading">¶</a></h4>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/nvdla/vp_awsfpga.git
 </pre></div>
 </div>
-</div>
-</div>
-<div class="section" id="install-dependencies">
-<h3>3.3 Install Dependencies<a class="headerlink" href="#install-dependencies" title="Permalink to this headline">¶</a></h3>
-<div class="section" id="install-required-tools-and-libraries">
-<h4>3.3.1 Install required tools and libraries<a class="headerlink" href="#install-required-tools-and-libraries" title="Permalink to this headline">¶</a></h4>
+</section>
+</section>
+<section id="install-dependencies">
+<h3>3.3 Install Dependencies<a class="headerlink" href="#install-dependencies" title="Link to this heading">¶</a></h3>
+<section id="install-required-tools-and-libraries">
+<h4>3.3.1 Install required tools and libraries<a class="headerlink" href="#install-required-tools-and-libraries" title="Link to this heading">¶</a></h4>
 <p>For CentOS:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>sudo<span class="w"> </span>yum<span class="w"> </span>install<span class="w"> </span>cmake<span class="w"> </span>swig<span class="w"> </span>glib2-devel<span class="w"> </span>git<span class="w"> </span>pixman-devel<span class="w"> </span>boost-devel<span class="w"> </span>libattr-devel<span class="w"> </span>libpcap-devel<span class="w"> </span><span class="s1">&#39;perl(Data::Dumper)&#39;</span><span class="w"> </span><span class="s1">&#39;perl(YAML)&#39;</span><span class="w"> </span><span class="s1">&#39;perl(Capture::Tiny)&#39;</span><span class="w"> </span><span class="s1">&#39;perl(XML::Simple)&#39;</span><span class="w"> </span>java-1.7.0-openjdk-devel.x86_64<span class="w"> </span>libtermcap-devel<span class="w"> </span>ncurses-devel<span class="w"> </span>libevent-devel<span class="w"> </span>readline-devel<span class="w"> </span>python-devel
 </pre></div>
@@ -212,9 +213,9 @@ function OptanonWrapper() {
 <span class="gp">$ </span>sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>g++<span class="w"> </span>cmake<span class="w"> </span>libboost-dev<span class="w"> </span>git<span class="w"> </span>lua5.2<span class="w"> </span>python-dev<span class="w"> </span>libglib2.0-dev<span class="w"> </span>libpixman-1-dev<span class="w"> </span>liblua5.2-dev<span class="w"> </span>swig<span class="w"> </span>libcap-dev<span class="w"> </span>libattr1-dev<span class="w"> </span>libconfig-yaml-perl<span class="w"> </span>openjdk-7-jre-headless<span class="w"> </span>libxml-simple-perl<span class="w"> </span>libcapture-tiny-perl
 </pre></div>
 </div>
-</div>
-<div class="section" id="download-and-install-systemc-2-3-0">
-<h4>3.3.2 Download and install SystemC 2.3.0<a class="headerlink" href="#download-and-install-systemc-2-3-0" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="download-and-install-systemc-2-3-0">
+<h4>3.3.2 Download and install SystemC 2.3.0<a class="headerlink" href="#download-and-install-systemc-2-3-0" title="Link to this heading">¶</a></h4>
 <p>Please be noted that SystemC 2.3.1/2.3.2 is currently not supported currently</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>wget<span class="w"> </span>-O<span class="w"> </span>systemc-2.3.0a.tar.gz<span class="w"> </span>https://www.accellera.org/images/downloads/standards/systemc/systemc-2.3.0a.tar.gz
 <span class="gp">$ </span>tar<span class="w"> </span>-xzvf<span class="w"> </span>systemc-2.3.0a.tar.gz
@@ -227,9 +228,9 @@ function OptanonWrapper() {
 <span class="gp">$ </span>sudo<span class="w"> </span>make<span class="w"> </span>install
 </pre></div>
 </div>
-</div>
-<div class="section" id="download-and-install-lua-5-3-2-for-centos">
-<h4>3.3.3 Download and install Lua 5.3.2 (For CentOS)<a class="headerlink" href="#download-and-install-lua-5-3-2-for-centos" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="download-and-install-lua-5-3-2-for-centos">
+<h4>3.3.3 Download and install Lua 5.3.2 (For CentOS)<a class="headerlink" href="#download-and-install-lua-5-3-2-for-centos" title="Link to this heading">¶</a></h4>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>curl<span class="w"> </span>-R<span class="w"> </span>-O<span class="w"> </span>https://www.lua.org/ftp/lua-5.3.2.tar.gz
 <span class="gp">$ </span>tar<span class="w"> </span>zxf<span class="w"> </span>lua-5.3.2.tar.gz
 <span class="gp">$ </span><span class="nb">cd</span><span class="w"> </span>lua-5.3.2
@@ -237,9 +238,9 @@ function OptanonWrapper() {
 <span class="gp">$ </span>sudo<span class="w"> </span>make<span class="w"> </span>install
 </pre></div>
 </div>
-</div>
-<div class="section" id="download-and-install-perl-package-required">
-<h4>3.3.4 Download and install perl package required<a class="headerlink" href="#download-and-install-perl-package-required" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="download-and-install-perl-package-required">
+<h4>3.3.4 Download and install perl package required<a class="headerlink" href="#download-and-install-perl-package-required" title="Link to this heading">¶</a></h4>
 <p>We need to install perl package YAML.pm and Tee.pm to build NVDLA CMOD.</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>wget<span class="w"> </span>-O<span class="w"> </span>YAML-1.24.tar.gz<span class="w"> </span>https://search.cpan.org/CPAN/authors/id/T/TI/TINITA/YAML-1.24.tar.gz
 <span class="gp">$ </span>tar<span class="w"> </span>-xzvf<span class="w"> </span>YAML-1.24.tar.gz
@@ -255,9 +256,9 @@ function OptanonWrapper() {
 <span class="gp">$ </span>sudo<span class="w"> </span>make<span class="w"> </span>install
 </pre></div>
 </div>
-</div>
-<div class="section" id="download-and-build-nvdla-cmod-and-vmod">
-<h4>3.3.5 Download and build NVDLA CMOD and VMOD<a class="headerlink" href="#download-and-build-nvdla-cmod-and-vmod" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="download-and-build-nvdla-cmod-and-vmod">
+<h4>3.3.5 Download and build NVDLA CMOD and VMOD<a class="headerlink" href="#download-and-build-nvdla-cmod-and-vmod" title="Link to this heading">¶</a></h4>
 <p>Please refer to <a class="reference internal" href="hw/v1/integration_guide.html#tree-build"><span class="std std-ref">Tree Build</span></a> for details on building the NVDLA hardware tree, and make sure the required tools listed in <a class="reference internal" href="hw/v1/integration_guide.html#env-setup"><span class="std std-ref">Environment Setup</span></a> are installed first.</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/nvdla/hw.git
 <span class="gp">$ </span><span class="nb">cd</span><span class="w"> </span>hw
@@ -276,12 +277,12 @@ function OptanonWrapper() {
 <p>After build finish, there will be nv_small_XXXX folder in hw tree and trace tests are generated in nv_small_XXXX/nvdla_utb.
 You can also generate random HW regression tests for other configurations like nv_large by command “./verif/tools/run_plan.py -P nv_large -tp nv_large -otag L10
 L11 -l_num=4 -r_num=10 -timeout 500 -monitor –dump_trace_only”.</p>
-</div>
-</div>
-<div class="section" id="build-and-install-the-virtual-simulator-with-nvdla-fpga">
-<h3>3.4 Build and Install the Virtual Simulator with NVDLA FPGA<a class="headerlink" href="#build-and-install-the-virtual-simulator-with-nvdla-fpga" title="Permalink to this headline">¶</a></h3>
-<div class="section" id="download-aws-ec2-fpga-hardware-and-software-development-kit">
-<h4>3.4.1 Download AWS EC2 FPGA Hardware and Software Development Kit<a class="headerlink" href="#download-aws-ec2-fpga-hardware-and-software-development-kit" title="Permalink to this headline">¶</a></h4>
+</section>
+</section>
+<section id="build-and-install-the-virtual-simulator-with-nvdla-fpga">
+<h3>3.4 Build and Install the Virtual Simulator with NVDLA FPGA<a class="headerlink" href="#build-and-install-the-virtual-simulator-with-nvdla-fpga" title="Link to this heading">¶</a></h3>
+<section id="download-aws-ec2-fpga-hardware-and-software-development-kit">
+<h4>3.4.1 Download AWS EC2 FPGA Hardware and Software Development Kit<a class="headerlink" href="#download-aws-ec2-fpga-hardware-and-software-development-kit" title="Link to this heading">¶</a></h4>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/aws/aws-fpga.git
 <span class="gp">$ </span>git<span class="w"> </span>checkout<span class="w"> </span>v1.4.0
 </pre></div>
@@ -290,9 +291,9 @@ L11 -l_num=4 -r_num=10 -timeout 500 -monitor –dump_trace_only”.</p>
 <p class="admonition-title">Note</p>
 <p>Always sync latest version for AWS EC2 FPGA Hardware and Software Development Kits. Please sync aws repository to specified version (refer to <a class="reference external" href="https://github.com/nvdla/vp_awsfpga/blob/master/README.md">VP AWS FPGA README</a>) which was verified with any issue.</p>
 </div>
-</div>
-<div class="section" id="setup-aws-sdk-and-edma-driver">
-<h4>3.4.2 Setup AWS SDK and edma driver<a class="headerlink" href="#setup-aws-sdk-and-edma-driver" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="setup-aws-sdk-and-edma-driver">
+<h4>3.4.2 Setup AWS SDK and edma driver<a class="headerlink" href="#setup-aws-sdk-and-edma-driver" title="Link to this heading">¶</a></h4>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span><span class="nb">cd</span><span class="w"> </span><span class="o">[</span>aws-fpga<span class="w"> </span>prefix<span class="o">]</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">source</span><span class="w"> </span>sdk_setup.sh<span class="w">              </span><span class="c1"># Setup AWS SDK</span>
 <span class="gp">$ </span>lsmod<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>edma<span class="w">                                        </span><span class="c1"># Check if the edma driver is intalled</span>
 <span class="gp">$ </span><span class="nb">cd</span><span class="w"> </span><span class="nv">$SDK_DIR</span>/linux_kernel_drivers/edma<span class="w">                    </span><span class="c1"># If nothing shows up, following the instructions below to install it</span>
@@ -304,13 +305,13 @@ L11 -l_num=4 -r_num=10 -timeout 500 -monitor –dump_trace_only”.</p>
 </pre></div>
 </div>
 <p><em>aws-fpga prefix</em> is the local aws repository.</p>
-</div>
-<div class="section" id="id1">
-<h4>3.4.3 Load AWS FPGA image<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="id1">
+<h4>3.4.3 Load AWS FPGA image<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h4>
 <p>Please refer to <a class="reference internal" href="#load-aws-fpga-image">2.3 Load AWS FPGA image</a>.</p>
-</div>
-<div class="section" id="cmake-build-under-the-vp-repository-directory">
-<h4>3.4.4 Cmake build under the vp repository directory<a class="headerlink" href="#cmake-build-under-the-vp-repository-directory" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="cmake-build-under-the-vp-repository-directory">
+<h4>3.4.4 Cmake build under the vp repository directory<a class="headerlink" href="#cmake-build-under-the-vp-repository-directory" title="Link to this heading">¶</a></h4>
 <p>For CentOS:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>cmake<span class="w"> </span>-DCMAKE_INSTALL_PREFIX<span class="o">=[</span>install<span class="w"> </span>dir<span class="o">]</span><span class="w"> </span>-DSYSTEMC_PREFIX<span class="o">=[</span>systemc<span class="w"> </span>prefix<span class="o">]</span><span class="w"> </span>-DNVDLA_HW_PREFIX<span class="o">=[</span>nvdla_hw<span class="w"> </span>prefix<span class="o">]</span><span class="w"> </span>-DNVDLA_HW_PROJECT<span class="o">=[</span>nvdla_hw<span class="w"> </span>project<span class="w"> </span>name<span class="o">]</span><span class="w"> </span>-DAWS_FPGA_PRESENT<span class="o">=</span><span class="m">1</span><span class="w"> </span>-DAWS_SDK_PREFIX<span class="o">=[</span>aws<span class="w"> </span>sdk<span class="w"> </span>prefix<span class="o">]</span><span class="w"> </span>-DLUA_INCLUDE_DIR<span class="o">=</span>/usr/local/include<span class="w"> </span>-DLUA_LIBRARIES<span class="o">=</span>/usr/local/lib/liblua.a
 </pre></div>
@@ -329,28 +330,28 @@ L11 -l_num=4 -r_num=10 -timeout 500 -monitor –dump_trace_only”.</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>cmake<span class="w"> </span>-DCMAKE_INSTALL_PREFIX<span class="o">=</span>build<span class="w"> </span>-DSYSTEMC_PREFIX<span class="o">=</span>/usr/local/systemc-2.3.0/<span class="w"> </span>-DNVDLA_HW_PREFIX<span class="o">=</span>/usr/local/nvdla/hw<span class="w"> </span>-DNVDLA_HW_PROJECT<span class="o">=</span>nv_small<span class="w"> </span>-DAWS_FPGA_PRESENT<span class="o">=</span><span class="m">1</span><span class="w"> </span>-DAWS_SDK_PREFIX<span class="o">=</span>/usr/local/aws-fpga/sdk
 </pre></div>
 </div>
-</div>
-<div class="section" id="compile-and-install">
-<h4>3.4.5 Compile and install:<a class="headerlink" href="#compile-and-install" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="compile-and-install">
+<h4>3.4.5 Compile and install:<a class="headerlink" href="#compile-and-install" title="Link to this heading">¶</a></h4>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>make
 <span class="gp">$ </span>make<span class="w"> </span>install
 </pre></div>
 </div>
-</div>
-</div>
-<div class="section" id="running-hw-regression-tests-on-fpga">
-<h3>3.5 Running HW regression tests on FPGA<a class="headerlink" href="#running-hw-regression-tests-on-fpga" title="Permalink to this headline">¶</a></h3>
-<div class="section" id="run-nvdla-l0-1-2-tests">
-<h4>3.5.1 Run NVDLA L0/1/2 tests<a class="headerlink" href="#run-nvdla-l0-1-2-tests" title="Permalink to this headline">¶</a></h4>
+</section>
+</section>
+<section id="running-hw-regression-tests-on-fpga">
+<h3>3.5 Running HW regression tests on FPGA<a class="headerlink" href="#running-hw-regression-tests-on-fpga" title="Link to this heading">¶</a></h3>
+<section id="run-nvdla-l0-1-2-tests">
+<h4>3.5.1 Run NVDLA L0/1/2 tests<a class="headerlink" href="#run-nvdla-l0-1-2-tests" title="Link to this heading">¶</a></h4>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span><span class="nb">cd</span><span class="w"> </span><span class="o">[</span>vp_awsfpga<span class="w"> </span>prefix<span class="o">]</span>/cl_nvdla/verif/regression
 <span class="gp">$ </span>make<span class="w"> </span><span class="nv">AWS_FPGA</span><span class="o">=</span><span class="m">1</span><span class="w"> </span><span class="nv">NVDLA_HW_ROOT</span><span class="o">=[</span>nvdla_hw<span class="w"> </span>prefix<span class="o">]</span>
 <span class="gp">$ </span>make<span class="w"> </span>check<span class="w">    </span><span class="c1"># Check last regression status</span>
 </pre></div>
 </div>
 <p><em>nvdla_hw prefix</em> is the local NVDLA HW repository, <em>vp_awsfpga prefix</em> is the local nvdla aws fpga CL repository.</p>
-</div>
-<div class="section" id="run-nvdla-random-regression-tests">
-<h4>3.5.2 Run NVDLA random regression tests<a class="headerlink" href="#run-nvdla-random-regression-tests" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="run-nvdla-random-regression-tests">
+<h4>3.5.2 Run NVDLA random regression tests<a class="headerlink" href="#run-nvdla-random-regression-tests" title="Link to this heading">¶</a></h4>
 <p>You can run NVDLA random regression tests which has HW full coverage with below commands.</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span><span class="nb">cd</span><span class="w"> </span><span class="o">[</span>vp_awsfpga<span class="w"> </span>prefix<span class="o">]</span>/cl_nvdla/verif/regression
 <span class="gp">$ </span>make<span class="w"> </span><span class="nv">AWS_FPGA</span><span class="o">=</span><span class="m">1</span><span class="w"> </span><span class="nv">NVDLA_HW_ROOT</span><span class="o">=[</span>nvdla_hw<span class="w"> </span>prefix<span class="o">]</span><span class="w"> </span><span class="nv">NVDLA_HW_TRACE_LIST</span><span class="o">=</span>nv_small_random<span class="w"> </span><span class="nv">NVDLA_HW_TRACE_ROOT</span><span class="o">=[</span>nvdla_hw<span class="w"> </span>prefix<span class="o">]</span>/nv_small_XXXX/nvdla_utb<span class="w"> </span><span class="nv">RANDOM_TEST</span><span class="o">=</span><span class="m">1</span>
@@ -358,22 +359,22 @@ L11 -l_num=4 -r_num=10 -timeout 500 -monitor –dump_trace_only”.</p>
 </pre></div>
 </div>
 <p><em>nvdla_hw prefix</em> is the local NVDLA HW repository, <em>vp prefix</em> is the local nvdla aws fpga CL repository.</p>
-</div>
-</div>
-<div class="section" id="running-the-virtual-simulator">
-<h3>3.6 Running the Virtual Simulator<a class="headerlink" href="#running-the-virtual-simulator" title="Permalink to this headline">¶</a></h3>
-<div class="section" id="prepare-kernel-image">
-<h4>3.6.1 Prepare Kernel Image<a class="headerlink" href="#prepare-kernel-image" title="Permalink to this headline">¶</a></h4>
+</section>
+</section>
+<section id="running-the-virtual-simulator">
+<h3>3.6 Running the Virtual Simulator<a class="headerlink" href="#running-the-virtual-simulator" title="Link to this heading">¶</a></h3>
+<section id="prepare-kernel-image">
+<h4>3.6.1 Prepare Kernel Image<a class="headerlink" href="#prepare-kernel-image" title="Link to this heading">¶</a></h4>
 <p>A demo linux kernel image is provided in the github release. You can run this image in the virtual simulator, and run the NVDLA KMD/UMD inside it.</p>
 <p>If you would like to build a linux kernel on your own, please refer to <a class="reference internal" href="vp.html#building-linux-kernel"><span class="std std-ref">3. Building Linux Kernel for NVDLA Virtual Simulator</span></a>.</p>
 <p>After the image is ready, modify the <em>conf/aarch64_nvdla.lua</em> for the image and rootfs file location.</p>
-</div>
-<div class="section" id="standard-qemu-arguments">
-<h4>3.6.2 Standard QEMU Arguments<a class="headerlink" href="#standard-qemu-arguments" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="standard-qemu-arguments">
+<h4>3.6.2 Standard QEMU Arguments<a class="headerlink" href="#standard-qemu-arguments" title="Link to this heading">¶</a></h4>
 <p>The configuration of the virtual simulator is defined in <em>conf/aarch64_nvdla.lua</em>. You can change the standard QEMU arguments in <em>extra_arguments</em> inside the lua file.</p>
-</div>
-<div class="section" id="running-kernel-image-in-the-virtual-simulator">
-<h4>3.6.3 Running Kernel Image In the Virtual Simulator<a class="headerlink" href="#running-kernel-image-in-the-virtual-simulator" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="running-kernel-image-in-the-virtual-simulator">
+<h4>3.6.3 Running Kernel Image In the Virtual Simulator<a class="headerlink" href="#running-kernel-image-in-the-virtual-simulator" title="Link to this heading">¶</a></h4>
 <p>Start the virtual simulator:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>sudo<span class="w"> </span>./build/bin/aarch64_toplevel<span class="w"> </span>-c<span class="w"> </span>conf/aarch64_nvdla.lua<span class="w"> </span>--fpga
 <span class="go">Login the kernel. The demo image uses account &#39;root&#39; and password &#39;nvdla&#39;.</span>
@@ -387,41 +388,41 @@ L11 -l_num=4 -r_num=10 -timeout 500 -monitor –dump_trace_only”.</p>
 </div>
 <p>You should be able to see ‘Hello World!’ printed in the screen. You are now ready to try out the NVDLA software in the virtual simulator! Please refer to <a class="reference internal" href="sw/contents.html"><span class="doc">Software Manual</span></a> for details.</p>
 <p>If you want to exit the virtual simulator, press ‘ctrl+a x’.</p>
-</div>
-</div>
-<div class="section" id="debugging-the-virtual-simulator">
-<h3>3.7 Debugging the Virtual Simulator<a class="headerlink" href="#debugging-the-virtual-simulator" title="Permalink to this headline">¶</a></h3>
+</section>
+</section>
+<section id="debugging-the-virtual-simulator">
+<h3>3.7 Debugging the Virtual Simulator<a class="headerlink" href="#debugging-the-virtual-simulator" title="Link to this heading">¶</a></h3>
 <p>Refer to <a class="reference internal" href="vp.html#debugging-the-virtual-simulator"><span class="std std-ref">2.7 Debugging the Virtual Simulator</span></a> to debug virtual simulator</p>
-</div>
-</div>
-<div class="section" id="generating-the-afi-on-aws-fpga-ami">
-<h2>4. Generating the AFI on AWS FPGA AMI<a class="headerlink" href="#generating-the-afi-on-aws-fpga-ami" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="setup-aws-ec2-instance-machine-on-fpga-ami">
-<h3>4.1 Setup AWS EC2 instance machine on FPGA AMI<a class="headerlink" href="#setup-aws-ec2-instance-machine-on-fpga-ami" title="Permalink to this headline">¶</a></h3>
+</section>
+</section>
+<section id="generating-the-afi-on-aws-fpga-ami">
+<h2>4. Generating the AFI on AWS FPGA AMI<a class="headerlink" href="#generating-the-afi-on-aws-fpga-ami" title="Link to this heading">¶</a></h2>
+<section id="setup-aws-ec2-instance-machine-on-fpga-ami">
+<h3>4.1 Setup AWS EC2 instance machine on FPGA AMI<a class="headerlink" href="#setup-aws-ec2-instance-machine-on-fpga-ami" title="Link to this heading">¶</a></h3>
 <ul class="simple">
 <li><p><a class="reference internal" href="#setup-aws-ec2-instance-machine">2.1 Setup AWS EC2 instance machine</a>: we recommend to choose <em>“FPGA Developer AMI”</em> (CentOS)</p></li>
 <li><p><a class="reference internal" href="#install-dependencies">3.3 Install Dependencies</a>: Follow the CentOS steps.</p></li>
 </ul>
-</div>
-<div class="section" id="download-source-code">
-<h3>4.2 Download source code<a class="headerlink" href="#download-source-code" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="download-source-code">
+<h3>4.2 Download source code<a class="headerlink" href="#download-source-code" title="Link to this heading">¶</a></h3>
 <ul class="simple">
 <li><p><a class="reference internal" href="#download-nvdla-aws-fpga-custom-logic-cl">Download NVDLA AWS FPGA Custom Logic (CL)</a></p></li>
 <li><p><a class="reference internal" href="#download-and-build-nvdla-cmod-and-vmod">Download and build NVDLA</a></p></li>
 <li><p><a class="reference internal" href="#download-aws-ec2-fpga-hardware-and-software-development-kit">AWS EC2 FPGA Hardware and Software Development Kits</a></p></li>
 </ul>
-</div>
-<div class="section" id="build-nvdla-rtl">
-<h3>4.3 Build NVDLA RTL<a class="headerlink" href="#build-nvdla-rtl" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="build-nvdla-rtl">
+<h3>4.3 Build NVDLA RTL<a class="headerlink" href="#build-nvdla-rtl" title="Link to this heading">¶</a></h3>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span><span class="nb">cd</span><span class="w"> </span><span class="o">[</span>nvdla_hw<span class="w"> </span>prefix<span class="o">]</span>
 <span class="gp">$ </span>make
 <span class="gp">$ </span>./tools/bin/tmake<span class="w"> </span>-build<span class="w"> </span>vmod
 </pre></div>
 </div>
 <p>Please refer to <a class="reference internal" href="hw/v1/integration_guide.html#tree-build"><span class="std std-ref">Tree Build</span></a> for details on building the NVDLA hardware tree, and make sure the required tools listed in <a class="reference internal" href="hw/v1/integration_guide.html#env-setup"><span class="std std-ref">Environment Setup</span></a> are installed first.</p>
-</div>
-<div class="section" id="generate-vivado-ip">
-<h3>4.4 Generate Vivado IP<a class="headerlink" href="#generate-vivado-ip" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="generate-vivado-ip">
+<h3>4.4 Generate Vivado IP<a class="headerlink" href="#generate-vivado-ip" title="Link to this heading">¶</a></h3>
 <p>Before generate NVDLA AFI, users need to generate some necessary Xilinx
 Vivado IP in AWS EC2 instance.  The generated IP is not distributed with the
 NVDLA source distribution because of licensing restrictions.</p>
@@ -433,14 +434,14 @@ NVDLA source distribution because of licensing restrictions.</p>
 <li><p>For IP location, we recommend to use [vp_awsfpga prefix]/common/design/xilinx_ip/</p></li>
 </ul>
 </div>
-<div class="section" id="start-xilinx-tool-in-aws-ec2-instance">
-<h4>4.4.1 Start Xilinx tool in AWS EC2 instance<a class="headerlink" href="#start-xilinx-tool-in-aws-ec2-instance" title="Permalink to this headline">¶</a></h4>
+<section id="start-xilinx-tool-in-aws-ec2-instance">
+<h4>4.4.1 Start Xilinx tool in AWS EC2 instance<a class="headerlink" href="#start-xilinx-tool-in-aws-ec2-instance" title="Link to this heading">¶</a></h4>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>vivado
 </pre></div>
 </div>
-</div>
-<div class="section" id="configure-ip-setting">
-<h4>4.4.2 Configure IP setting<a class="headerlink" href="#configure-ip-setting" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="configure-ip-setting">
+<h4>4.4.2 Configure IP setting<a class="headerlink" href="#configure-ip-setting" title="Link to this heading">¶</a></h4>
 <ul class="simple">
 <li><p>Click “Manage IP”</p></li>
 <li><p>Click “New IP Location”</p></li>
@@ -448,9 +449,9 @@ NVDLA source distribution because of licensing restrictions.</p>
 <li><p>Configure the Manage IP Settings page, set “part” to “xcvu9p-flgb2104-2-i”</p></li>
 <li><p>Click “Finish”</p></li>
 </ul>
-</div>
-<div class="section" id="generate-ip-axi2apb">
-<h4>4.4.3 Generate IP axi2apb<a class="headerlink" href="#generate-ip-axi2apb" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="generate-ip-axi2apb">
+<h4>4.4.3 Generate IP axi2apb<a class="headerlink" href="#generate-ip-axi2apb" title="Link to this heading">¶</a></h4>
 <ul class="simple">
 <li><p>In the IP catalog, search axi_apb</p></li>
 <li><p>Double click “AXI APB Bridge”</p></li>
@@ -460,9 +461,9 @@ NVDLA source distribution because of licensing restrictions.</p>
 <li><p>Click “Generate”</p></li>
 <li><p>Click “OK” and wait the task in “Design Runs” panel to finish</p></li>
 </ul>
-</div>
-<div class="section" id="generate-ip-axi-interconnect-nvdla-64b">
-<h4>4.4.4 Generate IP axi_interconnect_nvdla_64b<a class="headerlink" href="#generate-ip-axi-interconnect-nvdla-64b" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="generate-ip-axi-interconnect-nvdla-64b">
+<h4>4.4.4 Generate IP axi_interconnect_nvdla_64b<a class="headerlink" href="#generate-ip-axi-interconnect-nvdla-64b" title="Link to this heading">¶</a></h4>
 <ul class="simple">
 <li><p>In the IP catalog, expand “AXI_Infrastructure”, double click “AXI Interconnect RTL”</p></li>
 <li><p>Set “Component Name” to “axi_interconnect_nvdla_64b”</p></li>
@@ -482,9 +483,9 @@ NVDLA source distribution because of licensing restrictions.</p>
 <li><p>Click “Generate”</p></li>
 <li><p>Click “OK” and wait the task in “Design Runs” panel to finish</p></li>
 </ul>
-</div>
-<div class="section" id="generate-ip-axi-interconnect-nvdla-512b">
-<h4>4.4.5 Generate IP axi_interconnect_nvdla_512b<a class="headerlink" href="#generate-ip-axi-interconnect-nvdla-512b" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="generate-ip-axi-interconnect-nvdla-512b">
+<h4>4.4.5 Generate IP axi_interconnect_nvdla_512b<a class="headerlink" href="#generate-ip-axi-interconnect-nvdla-512b" title="Link to this heading">¶</a></h4>
 <ul class="simple">
 <li><p>In the IP catalog, expand “AXI_Infrastructure”, double click “AXI Interconnect RTL”</p></li>
 <li><p>Set “Component Name” to “axi_interconnect_nvdla_512b”</p></li>
@@ -502,9 +503,9 @@ NVDLA source distribution because of licensing restrictions.</p>
 <li><p>Click “Generate”</p></li>
 <li><p>Click “OK” and wait the task in “Design Runs” panel to finish</p></li>
 </ul>
-</div>
-<div class="section" id="generate-ip-axi-interconnect-nvdla-256b">
-<h4>4.4.6 Generate IP axi_interconnect_nvdla_256b<a class="headerlink" href="#generate-ip-axi-interconnect-nvdla-256b" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="generate-ip-axi-interconnect-nvdla-256b">
+<h4>4.4.6 Generate IP axi_interconnect_nvdla_256b<a class="headerlink" href="#generate-ip-axi-interconnect-nvdla-256b" title="Link to this heading">¶</a></h4>
 <ul class="simple">
 <li><p>In the IP catalog, expand “AXI_Infrastructure”, double click “AXI Interconnect RTL”</p></li>
 <li><p>Set “Component Name” to “axi_interconnect_nvdla_256b”</p></li>
@@ -522,9 +523,9 @@ NVDLA source distribution because of licensing restrictions.</p>
 <li><p>Click “Generate”</p></li>
 <li><p>Click “OK” and wait the task in “Design Runs” panel to finish</p></li>
 </ul>
-</div>
-<div class="section" id="generate-ip-axi-protocol-converter-axi-to-axil">
-<h4>4.4.7 Generate IP axi_protocol_converter_axi_to_axil<a class="headerlink" href="#generate-ip-axi-protocol-converter-axi-to-axil" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="generate-ip-axi-protocol-converter-axi-to-axil">
+<h4>4.4.7 Generate IP axi_protocol_converter_axi_to_axil<a class="headerlink" href="#generate-ip-axi-protocol-converter-axi-to-axil" title="Link to this heading">¶</a></h4>
 <ul class="simple">
 <li><p>In the IP catalog, expand “AXI_Infrastructure”, double click “AXI Protocol Converter”</p></li>
 <li><p>Set “Component Name” to “axi_protocol_converter_axi_to_axil”</p></li>
@@ -534,9 +535,9 @@ NVDLA source distribution because of licensing restrictions.</p>
 <li><p>Click “Generate”</p></li>
 <li><p>Click “OK” and wait the task in “Design Runs” panel to finish</p></li>
 </ul>
-</div>
-<div class="section" id="generate-ip-axi-dwidth-converter-512b-to-64b">
-<h4>4.4.8 Generate IP axi_dwidth_converter_512b_to_64b<a class="headerlink" href="#generate-ip-axi-dwidth-converter-512b-to-64b" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="generate-ip-axi-dwidth-converter-512b-to-64b">
+<h4>4.4.8 Generate IP axi_dwidth_converter_512b_to_64b<a class="headerlink" href="#generate-ip-axi-dwidth-converter-512b-to-64b" title="Link to this heading">¶</a></h4>
 <ul class="simple">
 <li><p>In the IP catalog, expand “AXI_Infrastructure”, double click “AXI Data Width Converter”</p></li>
 <li><p>Set “Component Name” to “axi_dwidth_converter_512b_to_64b”</p></li>
@@ -547,10 +548,10 @@ NVDLA source distribution because of licensing restrictions.</p>
 <li><p>Click “Generate”</p></li>
 <li><p>Click “OK” and wait the task in “Design Runs” panel to finish</p></li>
 </ul>
-</div>
-</div>
-<div class="section" id="install-aws-cli">
-<h3>4.5 Install AWS CLI<a class="headerlink" href="#install-aws-cli" title="Permalink to this headline">¶</a></h3>
+</section>
+</section>
+<section id="install-aws-cli">
+<h3>4.5 Install AWS CLI<a class="headerlink" href="#install-aws-cli" title="Link to this heading">¶</a></h3>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>aws<span class="w"> </span>configure<span class="w">         </span><span class="c1"># to set your credentials (found in your console.aws.amazon.com page) and default region</span>
 </pre></div>
 </div>
@@ -558,9 +559,9 @@ NVDLA source distribution because of licensing restrictions.</p>
 <p class="admonition-title">Note</p>
 <p>You need to setup access keys for your AWS account, please refer to <a class="reference external" href="https://docs.aws.amazon.com/general/latest/gr/managing-aws-access-keys.html">Managing Access Keys for Your AWS Account</a></p>
 </div>
-</div>
-<div class="section" id="generate-design-checkpoint-dcp">
-<h3>4.6 Generate design checkpoint (DCP)<a class="headerlink" href="#generate-design-checkpoint-dcp" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="generate-design-checkpoint-dcp">
+<h3>4.6 Generate design checkpoint (DCP)<a class="headerlink" href="#generate-design-checkpoint-dcp" title="Link to this heading">¶</a></h3>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span><span class="nb">cd</span><span class="w"> </span><span class="o">[</span>aws<span class="w"> </span>fpga<span class="w"> </span>prefix<span class="o">]</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">source</span><span class="w"> </span>hdk_setup.sh
 <span class="gp">$ </span><span class="nb">export</span><span class="w"> </span><span class="nv">CL_DIR</span><span class="o">=[</span>vp_awsfpga<span class="w"> </span>prefix<span class="o">]</span>/cl_nvdla
 <span class="gp">$ </span><span class="nb">export</span><span class="w"> </span><span class="nv">NV_HW_ROOT</span><span class="o">=[</span>nvdla_hw<span class="w"> </span>prefix<span class="o">]</span>
@@ -570,9 +571,9 @@ NVDLA source distribution because of licensing restrictions.</p>
 </pre></div>
 </div>
 <p>The DCP generation process could take hours to finish, you should not stop the EC2 instance during this process. After the DCP is generated successfully, a tarball file should be generated under [vp_awsfpga prefix]/cl_nvdla/build/checkpoints/to_aws.</p>
-</div>
-<div class="section" id="generate-afi">
-<h3>4.7 Generate AFI<a class="headerlink" href="#generate-afi" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="generate-afi">
+<h3>4.7 Generate AFI<a class="headerlink" href="#generate-afi" title="Link to this heading">¶</a></h3>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>aws<span class="w"> </span>s3<span class="w"> </span>mb<span class="w"> </span>s3://&lt;your-bucket-name&gt;<span class="w"> </span>--region<span class="w"> </span>&lt;region&gt;<span class="w">        </span><span class="c1"># Create an S3 bucket (choose a unique bucket name)</span>
 <span class="gp">$ </span>aws<span class="w"> </span>s3<span class="w"> </span>mb<span class="w"> </span>s3://&lt;your-bucket-name&gt;/&lt;your-dcp-folder-name&gt;<span class="w">   </span><span class="c1"># Create folder for your tarball files</span>
 <span class="gp">$ </span>aws<span class="w"> </span>s3<span class="w"> </span>cp<span class="w"> </span><span class="nv">$CL_DIR</span>/build/checkpoints/to_aws/&lt;your-dcp-tallball&gt;<span class="w"> </span>s3://&lt;your-bucket-name&gt;/&lt;your-dcp-folder-name&gt;/<span class="w">     </span><span class="c1"># Upload the file to S3</span>
@@ -589,9 +590,9 @@ NVDLA source distribution because of licensing restrictions.</p>
 </pre></div>
 </div>
 <p>More details please refer to <a class="reference external" href="https://github.com/aws/aws-fpga/blob/master/hdk/cl/examples/README.md#3-submit-the-design-checkpoint-to-aws-to-create-the-afi">How to submit checkpoint to aws</a></p>
-</div>
-</div>
-</div>
+</section>
+</section>
+</section>
 
 
         </div>
@@ -599,8 +600,9 @@ NVDLA source distribution because of licensing restrictions.</p>
           
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="contents.html">Table of Contents</a></h3>
-  <ul>
+  <div>
+    <h3><a href="contents.html">Table of Contents</a></h3>
+    <ul>
 <li><a class="reference internal" href="#">Virtual Platform On AWS FPGA</a><ul>
 <li><a class="reference internal" href="#overview">1. Overview</a></li>
 <li><a class="reference internal" href="#using-the-virtual-simulator-on-nvidia-ami">2. Using the Virtual Simulator on NVIDIA AMI</a><ul>
@@ -678,12 +680,17 @@ NVDLA source distribution because of licensing restrictions.</p>
 </li>
 </ul>
 
-  <h4>Previous topic</h4>
-  <p class="topless"><a href="vp.html"
-                        title="previous chapter">Virtual Platform</a></p>
-  <h4>Next topic</h4>
-  <p class="topless"><a href="updates.html"
-                        title="next chapter">Open NVDLA Repository Updates</a></p>
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="vp.html"
+                          title="previous chapter">Virtual Platform</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="updates.html"
+                          title="next chapter">Open NVDLA Repository Updates</a></p>
+  </div>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
@@ -695,12 +702,12 @@ NVDLA source distribution because of licensing restrictions.</p>
   <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
       <input type="submit" value="Go" />
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script>document.getElementById('searchbox').style.display = "block"</script>
         </div>
       </div>
         </div>
@@ -728,10 +735,10 @@ NVDLA source distribution because of licensing restrictions.</p>
 <div class="container">
 <div class="row">
 &#169; <a
-href="copyright.html">Copyright</a> 2018 - 2024, NVIDIA Corporation.
+href="copyright.html">Copyright</a> 2018 - 2026, NVIDIA Corporation.
 <a href="https://www.nvidia.com/object/legal_info.html">Legal Information.</a>
 <a href="https://www.nvidia.com/object/privacy_policy.html">Privacy Policy.</a>
-Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.5.4.
+Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
 </div>
 </div>
 </div>

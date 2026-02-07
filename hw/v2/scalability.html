@@ -1,18 +1,17 @@
-
 <!DOCTYPE html>
 
-<html>
+<html lang="en" data-content_root="../../">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
     <title>Scalability parameters and ConfigROM &#8212; NVDLA Documentation</title>
-    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../../_static/nvdla.css" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/styles.css" />
-    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
-    <script src="../../_static/jquery.js"></script>
-    <script src="../../_static/underscore.js"></script>
-    <script src="../../_static/doctools.js"></script>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../_static/nvdla.css?v=907781f7" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles.css?v=af91e327" />
+    <script src="../../_static/documentation_options.js?v=7026087e"></script>
+    <script src="../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="NVDLA Verification Suite User Guide" href="verif_guide.html" />
     <link rel="prev" title="Integrator’s Manual" href="integration_guide.html" />
@@ -25,7 +24,7 @@
     max-width: 100% !important;
   }
 </style>
-<script src="//assets.adobedtm.com/b92787824f2e0e9b68dc2e993f9bd995339fe417/satelliteLib-30c8ffcc8ece089156fd5590fbcf390ffc296f51.js"></script>
+<script src="https://assets.adobedtm.com/5d4962a43b79/814eb6e9b4e1/launch-4bc07f1e0b0b.min.js"></script>
 <!-- OneTrust Cookies Consent Notice start for nvidia.com -->
 <script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" data-document-language="true" type="text/javascript" charset="UTF-8" data-domain-script="3e2b62ff-7ae7-4ac5-87c8-d5949ecafff5-test" ></script>
 <script type="text/javascript">
@@ -68,20 +67,14 @@ function OptanonWrapper() {
       <div class="row">
         <div class="col-xs-12 col-md-9">
           
-  <div class="section" id="scalability-parameters-and-configrom">
-<h1>Scalability parameters and ConfigROM<a class="headerlink" href="#scalability-parameters-and-configrom" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="scalability-parameters">
-<h2>Scalability parameters<a class="headerlink" href="#scalability-parameters" title="Permalink to this headline">¶</a></h2>
+  <section id="scalability-parameters-and-configrom">
+<h1>Scalability parameters and ConfigROM<a class="headerlink" href="#scalability-parameters-and-configrom" title="Link to this heading">¶</a></h1>
+<section id="scalability-parameters">
+<h2>Scalability parameters<a class="headerlink" href="#scalability-parameters" title="Link to this heading">¶</a></h2>
 <p>Note that the current source code has only been tested for the nv_small
 configuration, and while the nv_small configuration passes many tests,
 additionall coverage is necessary to get it to tapeout quality.</p>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 25%" />
-<col style="width: 25%" />
-<col style="width: 25%" />
-<col style="width: 25%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p><strong>Scalability
 Parameter</strong></p></th>
@@ -433,43 +426,39 @@ interface</p></td>
 </tr>
 </tbody>
 </table>
-<div class="section" id="more-details">
-<h3>More Details<a class="headerlink" href="#more-details" title="Permalink to this headline">¶</a></h3>
-<div class="section" id="nvdla-mac-atomic-c-size-and-nvdla-mac-atomic-k-size">
-<h4>NVDLA_MAC_ATOMIC_C_SIZE and NVDLA_MAC_ATOMIC_K_SIZE<a class="headerlink" href="#nvdla-mac-atomic-c-size-and-nvdla-mac-atomic-k-size" title="Permalink to this headline">¶</a></h4>
+<section id="more-details">
+<h3>More Details<a class="headerlink" href="#more-details" title="Link to this heading">¶</a></h3>
+<section id="nvdla-mac-atomic-c-size-and-nvdla-mac-atomic-k-size">
+<h4>NVDLA_MAC_ATOMIC_C_SIZE and NVDLA_MAC_ATOMIC_K_SIZE<a class="headerlink" href="#nvdla-mac-atomic-c-size-and-nvdla-mac-atomic-k-size" title="Link to this heading">¶</a></h4>
 <p>These two parameters affect determine the number of mac cells and number of multipliers in each mac cell.
 The total number of multipliers is NVDLA_MAC_ATOMI C_C_SIZE * NVDLA_MAC_ATOMI C_K_SIZE.
 The number of kernels in one kernel group is NVDLA_MAC_ATOMI C_K_SIZE.</p>
-</div>
-<div class="section" id="nvdla-memory-atomic-size">
-<h4>NVDLA_MEMORY_ATOMIC_SIZE<a class="headerlink" href="#nvdla-memory-atomic-size" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="nvdla-memory-atomic-size">
+<h4>NVDLA_MEMORY_ATOMIC_SIZE<a class="headerlink" href="#nvdla-memory-atomic-size" title="Link to this heading">¶</a></h4>
 <p>This parameter determines the size of one atomic cube which is 1x1xNVDLA_MEMORY_ATOMIC_SIZE.
 Feature, Weight, Bias, PReLU, Batch Normalization and Element-Wise data cubes are split into atomic cubes before loaded or stored into memory.
 In nvdlav1 and nv_large configurations, size of atomic cbue is 1x1x32. In nv_small configuration, it’s 1x1x8.
 Line stride and surface stride should also align to NVDLA_MEMORY_ATOMIC_SIZE.</p>
-</div>
-<div class="section" id="nvdla-cbuf-bank-number-nvdla-cbuf-bank-width-and-nvdla-cbuf-bank-depth">
-<h4>NVDLA_CBUF_BANK_NUMBER, NVDLA_CBUF_BANK_WIDTH and NVDLA_CBUF_BANK_DEPTH<a class="headerlink" href="#nvdla-cbuf-bank-number-nvdla-cbuf-bank-width-and-nvdla-cbuf-bank-depth" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="nvdla-cbuf-bank-number-nvdla-cbuf-bank-width-and-nvdla-cbuf-bank-depth">
+<h4>NVDLA_CBUF_BANK_NUMBER, NVDLA_CBUF_BANK_WIDTH and NVDLA_CBUF_BANK_DEPTH<a class="headerlink" href="#nvdla-cbuf-bank-number-nvdla-cbuf-bank-width-and-nvdla-cbuf-bank-depth" title="Link to this heading">¶</a></h4>
 <p>These parameters determine the size of cbuf. (NVDLA_CBUF_BANK_NUMBER * NVDLA_CBUF_BANK_WIDTH * NVDLA_CBUF_BANK_DEPTH)
 For nv_small, the size is 32*8*512 = 128KB.
 For nv_small_256, the size is 32*32*128 = 128KB.</p>
-</div>
-</div>
-<div class="section" id="config-nv-small-256">
-<h3>Config nv_small_256<a class="headerlink" href="#config-nv-small-256" title="Permalink to this headline">¶</a></h3>
+</section>
+</section>
+<section id="config-nv-small-256">
+<h3>Config nv_small_256<a class="headerlink" href="#config-nv-small-256" title="Link to this heading">¶</a></h3>
 <p>This config is created for higher convolution performance than nv_small.
 Comparing with nv_small, the difference is that CMAC has 256 multipliers, not 64.
 In this configuration NVDLA_MAC_ATOMIC_C_SIZE is 32 and NVDLA_MAC_ATOMI C_K_SIZE is 8.
 Accordingly, NVDLA_CBUF_BANK _WIDTH is 32 and NVDLA_CBUF_BANK _DEPTH is 128.</p>
-</div>
-</div>
-<div class="section" id="sub-unit-identifier-table">
-<h2>Sub-unit identifier table<a class="headerlink" href="#sub-unit-identifier-table" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+<section id="sub-unit-identifier-table">
+<h2>Sub-unit identifier table<a class="headerlink" href="#sub-unit-identifier-table" title="Link to this heading">¶</a></h2>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 57%" />
-<col style="width: 43%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p><strong>Sub-unit Identifier</strong></p></th>
 <th class="head"><p><strong>Sub-unit Name</strong></p></th>
@@ -532,21 +521,14 @@ Accordingly, NVDLA_CBUF_BANK _WIDTH is 32 and NVDLA_CBUF_BANK _DEPTH is 128.</p>
 <li><p>There are two CMACs in nv_small and nv_large. (CMAC_A and CMAC_B)</p></li>
 <li><p>CBUF doesn’t have registers.</p></li>
 </ol>
-</div>
-<div class="section" id="descriptors-and-payloads-of-sub-units-in-configrom">
-<h2>Descriptors and payloads of sub-units in ConfigROM<a class="headerlink" href="#descriptors-and-payloads-of-sub-units-in-configrom" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="descriptors-and-payloads-of-sub-units-in-configrom">
+<h2>Descriptors and payloads of sub-units in ConfigROM<a class="headerlink" href="#descriptors-and-payloads-of-sub-units-in-configrom" title="Link to this heading">¶</a></h2>
 <p>The reg offset in bellow tables are the relative offset to the beginning
 of current descriptor.</p>
-<div class="section" id="glb">
-<h3>GLB<a class="headerlink" href="#glb" title="Permalink to this headline">¶</a></h3>
+<section id="glb">
+<h3>GLB<a class="headerlink" href="#glb" title="Link to this heading">¶</a></h3>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 20%" />
-<col style="width: 20%" />
-<col style="width: 20%" />
-<col style="width: 20%" />
-<col style="width: 20%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Reg offset
 (in Byte)</p></th>
@@ -574,19 +556,10 @@ length.</p>
 </tr>
 </tbody>
 </table>
-</div>
-<div class="section" id="cif">
-<h3>CIF<a class="headerlink" href="#cif" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="cif">
+<h3>CIF<a class="headerlink" href="#cif" title="Link to this heading">¶</a></h3>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 14%" />
-<col style="width: 14%" />
-<col style="width: 14%" />
-<col style="width: 14%" />
-<col style="width: 14%" />
-<col style="width: 14%" />
-<col style="width: 14%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"></th>
 <th class="head"><p>Reg
@@ -742,18 +715,10 @@ width</p></td>
 </tr>
 </tbody>
 </table>
-</div>
-<div class="section" id="cdma">
-<h3>CDMA<a class="headerlink" href="#cdma" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="cdma">
+<h3>CDMA<a class="headerlink" href="#cdma" title="Link to this heading">¶</a></h3>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 17%" />
-<col style="width: 17%" />
-<col style="width: 17%" />
-<col style="width: 17%" />
-<col style="width: 17%" />
-<col style="width: 17%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"></th>
 <th class="head"><p>Reg
@@ -966,18 +931,10 @@ formats</p></td>
 </tr>
 </tbody>
 </table>
-</div>
-<div class="section" id="cbuf">
-<h3>CBUF<a class="headerlink" href="#cbuf" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="cbuf">
+<h3>CBUF<a class="headerlink" href="#cbuf" title="Link to this heading">¶</a></h3>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 17%" />
-<col style="width: 17%" />
-<col style="width: 17%" />
-<col style="width: 17%" />
-<col style="width: 17%" />
-<col style="width: 17%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"></th>
 <th class="head"><p>Reg
@@ -1079,18 +1036,10 @@ D</p></td>
 </tr>
 </tbody>
 </table>
-</div>
-<div class="section" id="csc">
-<h3>CSC<a class="headerlink" href="#csc" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="csc">
+<h3>CSC<a class="headerlink" href="#csc" title="Link to this heading">¶</a></h3>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 17%" />
-<col style="width: 17%" />
-<col style="width: 17%" />
-<col style="width: 17%" />
-<col style="width: 17%" />
-<col style="width: 17%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"></th>
 <th class="head"><p>Reg
@@ -1277,21 +1226,13 @@ h</p></td>
 </tr>
 </tbody>
 </table>
-</div>
-<div class="section" id="cmac">
-<h3>CMAC<a class="headerlink" href="#cmac" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="cmac">
+<h3>CMAC<a class="headerlink" href="#cmac" title="Link to this heading">¶</a></h3>
 <p>There are two CMAC (CMAC_A and CMAC_B) in NVDLA nv_small and nv_large
 design. Their descriptors and payloads are same. They use different
 slots of address space.</p>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 17%" />
-<col style="width: 17%" />
-<col style="width: 17%" />
-<col style="width: 17%" />
-<col style="width: 17%" />
-<col style="width: 17%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"></th>
 <th class="head"><p>Reg
@@ -1400,18 +1341,10 @@ D</p></td>
 </tr>
 </tbody>
 </table>
-</div>
-<div class="section" id="cacc">
-<h3>CACC<a class="headerlink" href="#cacc" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="cacc">
+<h3>CACC<a class="headerlink" href="#cacc" title="Link to this heading">¶</a></h3>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 17%" />
-<col style="width: 17%" />
-<col style="width: 17%" />
-<col style="width: 17%" />
-<col style="width: 17%" />
-<col style="width: 17%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"></th>
 <th class="head"><p>Reg
@@ -1552,18 +1485,10 @@ h</p></td>
 </tr>
 </tbody>
 </table>
-</div>
-<div class="section" id="sdp-rdma">
-<h3>SDP_RDMA<a class="headerlink" href="#sdp-rdma" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="sdp-rdma">
+<h3>SDP_RDMA<a class="headerlink" href="#sdp-rdma" title="Link to this heading">¶</a></h3>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 17%" />
-<col style="width: 17%" />
-<col style="width: 17%" />
-<col style="width: 17%" />
-<col style="width: 17%" />
-<col style="width: 17%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"></th>
 <th class="head"><p>Reg
@@ -1650,18 +1575,10 @@ sdp)</p></td>
 </tr>
 </tbody>
 </table>
-</div>
-<div class="section" id="sdp">
-<h3>SDP<a class="headerlink" href="#sdp" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="sdp">
+<h3>SDP<a class="headerlink" href="#sdp" title="Link to this heading">¶</a></h3>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 17%" />
-<col style="width: 17%" />
-<col style="width: 17%" />
-<col style="width: 17%" />
-<col style="width: 17%" />
-<col style="width: 17%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"></th>
 <th class="head"><p>Reg
@@ -1803,18 +1720,10 @@ ghput</p></td>
 </tr>
 </tbody>
 </table>
-</div>
-<div class="section" id="pdp-rdma">
-<h3>PDP_RDMA<a class="headerlink" href="#pdp-rdma" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="pdp-rdma">
+<h3>PDP_RDMA<a class="headerlink" href="#pdp-rdma" title="Link to this heading">¶</a></h3>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 17%" />
-<col style="width: 17%" />
-<col style="width: 17%" />
-<col style="width: 17%" />
-<col style="width: 17%" />
-<col style="width: 17%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"></th>
 <th class="head"><p>Reg
@@ -1903,18 +1812,10 @@ pdp)</p></td>
 </tr>
 </tbody>
 </table>
-</div>
-<div class="section" id="pdp">
-<h3>PDP<a class="headerlink" href="#pdp" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="pdp">
+<h3>PDP<a class="headerlink" href="#pdp" title="Link to this heading">¶</a></h3>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 17%" />
-<col style="width: 17%" />
-<col style="width: 17%" />
-<col style="width: 17%" />
-<col style="width: 17%" />
-<col style="width: 17%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"></th>
 <th class="head"><p>Reg
@@ -2000,18 +1901,10 @@ ut</p></td>
 </tr>
 </tbody>
 </table>
-</div>
-<div class="section" id="cdp-rdma">
-<h3>CDP_RDMA<a class="headerlink" href="#cdp-rdma" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="cdp-rdma">
+<h3>CDP_RDMA<a class="headerlink" href="#cdp-rdma" title="Link to this heading">¶</a></h3>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 17%" />
-<col style="width: 17%" />
-<col style="width: 17%" />
-<col style="width: 17%" />
-<col style="width: 17%" />
-<col style="width: 17%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"></th>
 <th class="head"><p>Reg
@@ -2098,18 +1991,10 @@ cdp)</p></td>
 </tr>
 </tbody>
 </table>
-</div>
-<div class="section" id="cdp">
-<h3>CDP<a class="headerlink" href="#cdp" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="cdp">
+<h3>CDP<a class="headerlink" href="#cdp" title="Link to this heading">¶</a></h3>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 17%" />
-<col style="width: 17%" />
-<col style="width: 17%" />
-<col style="width: 17%" />
-<col style="width: 17%" />
-<col style="width: 17%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"></th>
 <th class="head"><p>Reg
@@ -2195,17 +2080,10 @@ ut</p></td>
 </tr>
 </tbody>
 </table>
-</div>
-<div class="section" id="bdma">
-<h3>BDMA<a class="headerlink" href="#bdma" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="bdma">
+<h3>BDMA<a class="headerlink" href="#bdma" title="Link to this heading">¶</a></h3>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 20%" />
-<col style="width: 20%" />
-<col style="width: 20%" />
-<col style="width: 20%" />
-<col style="width: 20%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Reg offset
 (in Byte)</p></th>
@@ -2233,17 +2111,10 @@ length.</p>
 </tr>
 </tbody>
 </table>
-</div>
-<div class="section" id="rubik">
-<h3>RUBIK<a class="headerlink" href="#rubik" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="rubik">
+<h3>RUBIK<a class="headerlink" href="#rubik" title="Link to this heading">¶</a></h3>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 20%" />
-<col style="width: 20%" />
-<col style="width: 20%" />
-<col style="width: 20%" />
-<col style="width: 20%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Reg offset
 (in Byte)</p></th>
@@ -2271,15 +2142,11 @@ length.</p>
 </tr>
 </tbody>
 </table>
-</div>
-<div class="section" id="supported-data-types-or-weight-types">
-<h3>Supported data types or weight types<a class="headerlink" href="#supported-data-types-or-weight-types" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="supported-data-types-or-weight-types">
+<h3>Supported data types or weight types<a class="headerlink" href="#supported-data-types-or-weight-types" title="Link to this heading">¶</a></h3>
 <p>Below table lists the fields of registers of supported data types or weight types in above sections</p>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 16%" />
-<col style="width: 84%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Bit</p></th>
 <th class="head"><p>Data type or Weight type</p></th>
@@ -2324,15 +2191,11 @@ length.</p>
 </tr>
 </tbody>
 </table>
-</div>
-<div class="section" id="supported-packed-image-formats">
-<h3>Supported packed image formats<a class="headerlink" href="#supported-packed-image-formats" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="supported-packed-image-formats">
+<h3>Supported packed image formats<a class="headerlink" href="#supported-packed-image-formats" title="Link to this heading">¶</a></h3>
 <p>Below table lists the fields of registers of supported packed image formats in above sections</p>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 16%" />
-<col style="width: 84%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Bit</p></th>
 <th class="head"><p>Image format</p></th>
@@ -2425,15 +2288,11 @@ length.</p>
 </tr>
 </tbody>
 </table>
-</div>
-<div class="section" id="supported-semi-planar-image-formats">
-<h3>Supported semi-planar image formats<a class="headerlink" href="#supported-semi-planar-image-formats" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="supported-semi-planar-image-formats">
+<h3>Supported semi-planar image formats<a class="headerlink" href="#supported-semi-planar-image-formats" title="Link to this heading">¶</a></h3>
 <p>Below table lists the fields of registers of supported semi-planar image formats in above sections</p>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 16%" />
-<col style="width: 84%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Bit</p></th>
 <th class="head"><p>Image format</p></th>
@@ -2466,26 +2325,26 @@ length.</p>
 </tr>
 </tbody>
 </table>
-</div>
-</div>
-<div class="section" id="address-space-layout">
-<h2>Address space layout<a class="headerlink" href="#address-space-layout" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+<section id="address-space-layout">
+<h2>Address space layout<a class="headerlink" href="#address-space-layout" title="Link to this heading">¶</a></h2>
 <p>In the address space layout, the order of sub-units is same as the order
 of the descriptors in Configuration ROM. The size of one slot is 4KB.</p>
-<div class="section" id="nv-small">
-<h3>nv_small:<a class="headerlink" href="#nv-small" title="Permalink to this headline">¶</a></h3>
-<div class="figure align-center" id="fig-nv-small-address-space">
+<section id="nv-small">
+<h3>nv_small:<a class="headerlink" href="#nv-small" title="Link to this heading">¶</a></h3>
+<figure class="align-center" id="fig-nv-small-address-space">
 <img alt="../../_images/scalability_nv_small.png" src="../../_images/scalability_nv_small.png" />
-</div>
-</div>
-<div class="section" id="nv-large">
-<h3>nv_large:<a class="headerlink" href="#nv-large" title="Permalink to this headline">¶</a></h3>
-<div class="figure align-center" id="fig-nv-large-address-space">
+</figure>
+</section>
+<section id="nv-large">
+<h3>nv_large:<a class="headerlink" href="#nv-large" title="Link to this heading">¶</a></h3>
+<figure class="align-center" id="fig-nv-large-address-space">
 <img alt="../../_images/scalability_nv_large.png" src="../../_images/scalability_nv_large.png" />
-</div>
-</div>
-</div>
-</div>
+</figure>
+</section>
+</section>
+</section>
 
 
         </div>
@@ -2493,8 +2352,9 @@ of the descriptors in Configuration ROM. The size of one slot is 4KB.</p>
           
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="../../contents.html">Table of Contents</a></h3>
-  <ul>
+  <div>
+    <h3><a href="../../contents.html">Table of Contents</a></h3>
+    <ul>
 <li><a class="reference internal" href="#">Scalability parameters and ConfigROM</a><ul>
 <li><a class="reference internal" href="#scalability-parameters">Scalability parameters</a><ul>
 <li><a class="reference internal" href="#more-details">More Details</a><ul>
@@ -2537,12 +2397,17 @@ of the descriptors in Configuration ROM. The size of one slot is 4KB.</p>
 </li>
 </ul>
 
-  <h4>Previous topic</h4>
-  <p class="topless"><a href="integration_guide.html"
-                        title="previous chapter">Integrator’s Manual</a></p>
-  <h4>Next topic</h4>
-  <p class="topless"><a href="verif_guide.html"
-                        title="next chapter">NVDLA Verification Suite User Guide</a></p>
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="integration_guide.html"
+                          title="previous chapter">Integrator’s Manual</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="verif_guide.html"
+                          title="next chapter">NVDLA Verification Suite User Guide</a></p>
+  </div>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
@@ -2554,12 +2419,12 @@ of the descriptors in Configuration ROM. The size of one slot is 4KB.</p>
   <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="../../search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
       <input type="submit" value="Go" />
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script>document.getElementById('searchbox').style.display = "block"</script>
         </div>
       </div>
         </div>
@@ -2588,10 +2453,10 @@ of the descriptors in Configuration ROM. The size of one slot is 4KB.</p>
 <div class="container">
 <div class="row">
 &#169; <a
-href="../../copyright.html">Copyright</a> 2018 - 2024, NVIDIA Corporation.
+href="../../copyright.html">Copyright</a> 2018 - 2026, NVIDIA Corporation.
 <a href="https://www.nvidia.com/object/legal_info.html">Legal Information.</a>
 <a href="https://www.nvidia.com/object/privacy_policy.html">Privacy Policy.</a>
-Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.5.4.
+Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
 </div>
 </div>
 </div>

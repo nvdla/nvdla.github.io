@@ -1,18 +1,17 @@
-
 <!DOCTYPE html>
 
-<html>
+<html lang="en" data-content_root="./">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
     <title>Virtual Platform &#8212; NVDLA Documentation</title>
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="_static/nvdla.css" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="_static/styles.css" />
-    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-    <script src="_static/jquery.js"></script>
-    <script src="_static/underscore.js"></script>
-    <script src="_static/doctools.js"></script>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="_static/nvdla.css?v=907781f7" />
+    <link rel="stylesheet" type="text/css" href="_static/styles.css?v=af91e327" />
+    <script src="_static/documentation_options.js?v=7026087e"></script>
+    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Virtual Platform On AWS FPGA" href="vp_fpga.html" />
     <link rel="prev" title="Test applications" href="sw/test_application.html" />
@@ -25,7 +24,7 @@
     max-width: 100% !important;
   }
 </style>
-<script src="//assets.adobedtm.com/b92787824f2e0e9b68dc2e993f9bd995339fe417/satelliteLib-30c8ffcc8ece089156fd5590fbcf390ffc296f51.js"></script>
+<script src="https://assets.adobedtm.com/5d4962a43b79/814eb6e9b4e1/launch-4bc07f1e0b0b.min.js"></script>
 <!-- OneTrust Cookies Consent Notice start for nvidia.com -->
 <script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" data-document-language="true" type="text/javascript" charset="UTF-8" data-domain-script="3e2b62ff-7ae7-4ac5-87c8-d5949ecafff5-test" ></script>
 <script type="text/javascript">
@@ -67,20 +66,22 @@ function OptanonWrapper() {
       <div class="row">
         <div class="col-xs-12 col-md-9">
           
-  <div class="section" id="virtual-platform">
-<h1>Virtual Platform<a class="headerlink" href="#virtual-platform" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="overview">
-<span id="id1"></span><h2>1. Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+  <section id="virtual-platform">
+<h1>Virtual Platform<a class="headerlink" href="#virtual-platform" title="Link to this heading">¶</a></h1>
+<section id="overview">
+<span id="id1"></span><h2>1. Overview<a class="headerlink" href="#overview" title="Link to this heading">¶</a></h2>
 <p>The NVDLA virtual platform provides a register-accurate system on which software can be quickly developed and debugged. The virtual platform is based on GreenSocs <a class="reference external" href="https://git.greensocs.com/qemu/qbox">QBOX</a>, a solution for co-simulation with QEMU and SystemC. <a class="reference internal" href="#fig-vp-top"><span class="std std-numref">Fig. 81</span></a> below shows the top level diagram of the NVDLA virtual simulator. A QEMU emulator of ARMv8 ‘virt’ SoC board is included to provide high performance CPU emulation and generic devices. The emulator is wrapped inside a standard SystemC module with a set of TLM-2.0 interfaces to interact with other SystemC modules.</p>
-<div class="figure align-center" id="id8">
-<span id="fig-vp-top"></span><img alt="NVDLA Virtual Platform Top Level Diagram." src="_images/nvdla-vp-top.svg" /><p class="caption"><span class="caption-number">Fig. 81 </span><span class="caption-text">NVDLA Virtual Platform.</span><a class="headerlink" href="#id8" title="Permalink to this image">¶</a></p>
-</div>
-</div>
-<div class="section" id="using-the-virtual-simulator">
-<h2>2. Using the Virtual Simulator<a class="headerlink" href="#using-the-virtual-simulator" title="Permalink to this headline">¶</a></h2>
+<figure class="align-center" id="id8">
+<span id="fig-vp-top"></span><img alt="NVDLA Virtual Platform Top Level Diagram." src="_images/nvdla-vp-top.svg" /><figcaption>
+<p><span class="caption-number">Fig. 81 </span><span class="caption-text">NVDLA Virtual Platform.</span><a class="headerlink" href="#id8" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
+</section>
+<section id="using-the-virtual-simulator">
+<h2>2. Using the Virtual Simulator<a class="headerlink" href="#using-the-virtual-simulator" title="Link to this heading">¶</a></h2>
 <p>It is recommended that you use the pre-built virtual simulator binary included in the <a class="reference external" href="https://hub.docker.com/r/nvdla">docker</a> image. The <a class="reference internal" href="#running-the-virtual-simulator-from-docker">2.6 Running the Virtual Simulator From Docker</a> section describes the detail. You are also welcome to build the virtual simulator from source code and use that.</p>
-<div class="section" id="system-requirements">
-<span id="id2"></span><h3>2.1 System Requirements<a class="headerlink" href="#system-requirements" title="Permalink to this headline">¶</a></h3>
+<section id="system-requirements">
+<span id="id2"></span><h3>2.1 System Requirements<a class="headerlink" href="#system-requirements" title="Link to this heading">¶</a></h3>
 <p>It is recommended to build the virtual simulator in a system that meets the following requirements:</p>
 <ul class="simple">
 <li><p>OS: Ubuntu 14.04</p></li>
@@ -102,27 +103,27 @@ function OptanonWrapper() {
 <p>virtual simulator also can run with CentOS 7, details refer to <a class="reference internal" href="vp_fpga.html"><span class="doc">Virtual Platform On AWS FPGA</span></a></p>
 </div>
 <p>Several tools like Java and Perl are also required to build the NVDLA hardware tree. Please refer to <a class="reference internal" href="hw/v1/integration_guide.html#env-setup"><span class="std std-ref">Environment Setup</span></a> for details.</p>
-</div>
-<div class="section" id="download-the-virtual-simulator">
-<span id="id3"></span><h3>2.2 Download the Virtual Simulator<a class="headerlink" href="#download-the-virtual-simulator" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="download-the-virtual-simulator">
+<span id="id3"></span><h3>2.2 Download the Virtual Simulator<a class="headerlink" href="#download-the-virtual-simulator" title="Link to this heading">¶</a></h3>
 <p>The NVDLA virtual simulator source code can be downloaded from <a class="reference external" href="https://github.com/nvdla/vp">github</a>.</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/nvdla/vp.git
 <span class="gp">$ </span><span class="nb">cd</span><span class="w"> </span>vp
 <span class="gp">$ </span>git<span class="w"> </span>submodule<span class="w"> </span>update<span class="w"> </span>--init<span class="w"> </span>--recursive
 </pre></div>
 </div>
-</div>
-<div class="section" id="install-dependencies">
-<span id="id4"></span><h3>2.3 Install Dependencies<a class="headerlink" href="#install-dependencies" title="Permalink to this headline">¶</a></h3>
-<div class="section" id="install-required-tools-and-libraries">
-<h4>2.3.1 Install required tools and libraries<a class="headerlink" href="#install-required-tools-and-libraries" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="install-dependencies">
+<span id="id4"></span><h3>2.3 Install Dependencies<a class="headerlink" href="#install-dependencies" title="Link to this heading">¶</a></h3>
+<section id="install-required-tools-and-libraries">
+<h4>2.3.1 Install required tools and libraries<a class="headerlink" href="#install-required-tools-and-libraries" title="Link to this heading">¶</a></h4>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>sudo<span class="w"> </span>apt-get<span class="w"> </span>update
 <span class="gp">$ </span>sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>g++<span class="w"> </span>cmake<span class="w"> </span>libboost-dev<span class="w"> </span>python-dev<span class="w"> </span>libglib2.0-dev<span class="w"> </span>libpixman-1-dev<span class="w"> </span>liblua5.2-dev<span class="w"> </span>swig<span class="w"> </span>libcap-dev<span class="w"> </span>libattr1-dev
 </pre></div>
 </div>
-</div>
-<div class="section" id="download-and-install-systemc-2-3-0">
-<h4>2.3.2 Download and install SystemC 2.3.0<a class="headerlink" href="#download-and-install-systemc-2-3-0" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="download-and-install-systemc-2-3-0">
+<h4>2.3.2 Download and install SystemC 2.3.0<a class="headerlink" href="#download-and-install-systemc-2-3-0" title="Link to this heading">¶</a></h4>
 <p>Please be noted that SystemC 2.3.1/2.3.2 is not supported currently.</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>wget<span class="w"> </span>-O<span class="w"> </span>systemc-2.3.0a.tar.gz<span class="w"> </span>https://www.accellera.org/images/downloads/standards/systemc/systemc-2.3.0a.tar.gz
 <span class="gp">$ </span>tar<span class="w"> </span>-xzvf<span class="w"> </span>systemc-2.3.0a.tar.gz
@@ -135,9 +136,9 @@ function OptanonWrapper() {
 <span class="gp">$ </span>sudo<span class="w"> </span>make<span class="w"> </span>install
 </pre></div>
 </div>
-</div>
-<div class="section" id="download-and-install-perl-package-required">
-<h4>2.3.3 Download and install perl package required<a class="headerlink" href="#download-and-install-perl-package-required" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="download-and-install-perl-package-required">
+<h4>2.3.3 Download and install perl package required<a class="headerlink" href="#download-and-install-perl-package-required" title="Link to this heading">¶</a></h4>
 <p>We need to install perl package YAML.pm and Tee.pm to build NVDLA CMOD.</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>wget<span class="w"> </span>-O<span class="w"> </span>YAML-1.24.tar.gz<span class="w"> </span>https://search.cpan.org/CPAN/authors/id/T/TI/TINITA/YAML-1.24.tar.gz
 <span class="gp">$ </span>tar<span class="w"> </span>-xzvf<span class="w"> </span>YAML-1.24.tar.gz
@@ -153,9 +154,9 @@ function OptanonWrapper() {
 <span class="gp">$ </span>sudo<span class="w"> </span>make<span class="w"> </span>install
 </pre></div>
 </div>
-</div>
-<div class="section" id="download-and-build-nvdla-cmod">
-<span id="id5"></span><h4>2.3.4 Download and build NVDLA CMOD<a class="headerlink" href="#download-and-build-nvdla-cmod" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="download-and-build-nvdla-cmod">
+<span id="id5"></span><h4>2.3.4 Download and build NVDLA CMOD<a class="headerlink" href="#download-and-build-nvdla-cmod" title="Link to this heading">¶</a></h4>
 <p>Please refer to <a class="reference internal" href="hw/v1/integration_guide.html#tree-build"><span class="std std-ref">Tree Build</span></a> for details on building the NVDLA hardware tree, and make sure the required tools listed in <a class="reference internal" href="hw/v1/integration_guide.html#env-setup"><span class="std std-ref">Environment Setup</span></a> are installed first.</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/nvdla/hw.git
 <span class="gp">$ </span><span class="nb">cd</span><span class="w"> </span>hw
@@ -164,12 +165,12 @@ function OptanonWrapper() {
 </pre></div>
 </div>
 <p>The header files and library will be generated in <em>hw/outdir/&lt;project&gt;/cmod/release</em>.</p>
-</div>
-</div>
-<div class="section" id="build-and-install-the-virtual-simulator">
-<h3>2.4 Build and Install the Virtual Simulator<a class="headerlink" href="#build-and-install-the-virtual-simulator" title="Permalink to this headline">¶</a></h3>
-<div class="section" id="cmake-build-under-the-vp-repository-directory">
-<h4>2.4.1 Cmake build under the vp repository directory<a class="headerlink" href="#cmake-build-under-the-vp-repository-directory" title="Permalink to this headline">¶</a></h4>
+</section>
+</section>
+<section id="build-and-install-the-virtual-simulator">
+<h3>2.4 Build and Install the Virtual Simulator<a class="headerlink" href="#build-and-install-the-virtual-simulator" title="Link to this heading">¶</a></h3>
+<section id="cmake-build-under-the-vp-repository-directory">
+<h4>2.4.1 Cmake build under the vp repository directory<a class="headerlink" href="#cmake-build-under-the-vp-repository-directory" title="Link to this heading">¶</a></h4>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>cmake<span class="w"> </span>-DCMAKE_INSTALL_PREFIX<span class="o">=[</span>install<span class="w"> </span>dir<span class="o">]</span><span class="w"> </span>-DSYSTEMC_PREFIX<span class="o">=[</span>systemc<span class="w"> </span>prefix<span class="o">]</span><span class="w"> </span>-DNVDLA_HW_PREFIX<span class="o">=[</span>nvdla_hw<span class="w"> </span>prefix<span class="o">]</span><span class="w"> </span>-DNVDLA_HW_PROJECT<span class="o">=[</span>nvdla_hw<span class="w"> </span>project<span class="w"> </span>name<span class="o">]</span>
 </pre></div>
 </div>
@@ -178,29 +179,29 @@ function OptanonWrapper() {
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>cmake<span class="w"> </span>-DCMAKE_INSTALL_PREFIX<span class="o">=</span>build<span class="w"> </span>-DSYSTEMC_PREFIX<span class="o">=</span>/usr/local/systemc-2.3.0/<span class="w"> </span>-DNVDLA_HW_PREFIX<span class="o">=</span>/usr/local/nvdla/hw<span class="w"> </span>-DNVDLA_HW_PROJECT<span class="o">=</span>nv_small
 </pre></div>
 </div>
-</div>
-<div class="section" id="compile-and-install">
-<h4>2.4.2 Compile and install<a class="headerlink" href="#compile-and-install" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="compile-and-install">
+<h4>2.4.2 Compile and install<a class="headerlink" href="#compile-and-install" title="Link to this heading">¶</a></h4>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>make
 <span class="gp">$ </span>make<span class="w"> </span>install
 </pre></div>
 </div>
-</div>
-</div>
-<div class="section" id="running-the-virtual-simulator">
-<span id="id6"></span><h3>2.5 Running the Virtual Simulator<a class="headerlink" href="#running-the-virtual-simulator" title="Permalink to this headline">¶</a></h3>
-<div class="section" id="prepare-kernel-image">
-<h4>2.5.1 Prepare Kernel Image<a class="headerlink" href="#prepare-kernel-image" title="Permalink to this headline">¶</a></h4>
+</section>
+</section>
+<section id="running-the-virtual-simulator">
+<span id="id6"></span><h3>2.5 Running the Virtual Simulator<a class="headerlink" href="#running-the-virtual-simulator" title="Link to this heading">¶</a></h3>
+<section id="prepare-kernel-image">
+<h4>2.5.1 Prepare Kernel Image<a class="headerlink" href="#prepare-kernel-image" title="Link to this heading">¶</a></h4>
 <p>A demo linux kernel image is provided in the github release. You can run this image in the virtual simulator, and run the NVDLA KMD/UMD inside it.</p>
 <p>If you would like to build a linux kernel on your own, please refer to <a class="reference internal" href="#building-linux-kernel-for-nvdla-virtual-simulator">3. Building Linux Kernel for NVDLA Virtual Simulator</a>.</p>
 <p>After the image is ready, modify the <em>conf/aarch64_nvdla.lua</em> for the image and rootfs file location.</p>
-</div>
-<div class="section" id="standard-qemu-arguments">
-<h4>2.5.2 Standard QEMU Arguments<a class="headerlink" href="#standard-qemu-arguments" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="standard-qemu-arguments">
+<h4>2.5.2 Standard QEMU Arguments<a class="headerlink" href="#standard-qemu-arguments" title="Link to this heading">¶</a></h4>
 <p>The configuration of the virtual simulator is defined in <em>conf/aarch64_nvdla.lua</em>. You can change the standard QEMU arguments in <em>extra_arguments</em> inside the lua file.</p>
-</div>
-<div class="section" id="running-kernel-image-in-the-virtual-simulator">
-<h4>2.5.3 Running Kernel Image In the Virtual Simulator<a class="headerlink" href="#running-kernel-image-in-the-virtual-simulator" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="running-kernel-image-in-the-virtual-simulator">
+<h4>2.5.3 Running Kernel Image In the Virtual Simulator<a class="headerlink" href="#running-kernel-image-in-the-virtual-simulator" title="Link to this heading">¶</a></h4>
 <p>Start the virtual simulator. Pay attention that the environment variable ‘SC_SIGNAL_WRITE_CHECK’ should be set to ‘DISABLE’ before we run the virtual simulator.</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span><span class="nb">export</span><span class="w"> </span><span class="nv">SC_SIGNAL_WRITE_CHECK</span><span class="o">=</span>DISABLE
 <span class="gp">$ </span>./build/bin/aarch64_toplevel<span class="w"> </span>-c<span class="w"> </span>conf/aarch64_nvdla.lua
@@ -215,10 +216,10 @@ function OptanonWrapper() {
 </div>
 <p>You should be able to see ‘Hello World!’ printed in the screen. You are now ready to try out the NVDLA software in the virtual simulator! Please refer to <a class="reference internal" href="sw/contents.html"><span class="doc">Software Manual</span></a> for details.</p>
 <p>If you want to exit the virtual simulator, press ‘ctrl+a x’.</p>
-</div>
-</div>
-<div class="section" id="running-the-virtual-simulator-from-docker">
-<h3>2.6 Running the Virtual Simulator From Docker<a class="headerlink" href="#running-the-virtual-simulator-from-docker" title="Permalink to this headline">¶</a></h3>
+</section>
+</section>
+<section id="running-the-virtual-simulator-from-docker">
+<h3>2.6 Running the Virtual Simulator From Docker<a class="headerlink" href="#running-the-virtual-simulator-from-docker" title="Link to this heading">¶</a></h3>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>docker<span class="w"> </span>pull<span class="w"> </span>nvdla/vp
 <span class="gp">$ </span>docker<span class="w"> </span>run<span class="w"> </span>-it<span class="w"> </span>-v<span class="w"> </span>/home:/home<span class="w"> </span>nvdla/vp
 <span class="gp">$ </span><span class="nb">cd</span><span class="w"> </span>/usr/local/nvdla
@@ -227,17 +228,17 @@ function OptanonWrapper() {
 </pre></div>
 </div>
 <p>The NVDLA software is also provided in the docker image, please refer to <a class="reference internal" href="sw/contents.html"><span class="doc">Software Manual</span></a> on how to run the NVDLA software.</p>
-</div>
-<div class="section" id="debugging-the-virtual-simulator">
-<span id="id7"></span><h3>2.7 Debugging the Virtual Simulator<a class="headerlink" href="#debugging-the-virtual-simulator" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="debugging-the-virtual-simulator">
+<span id="id7"></span><h3>2.7 Debugging the Virtual Simulator<a class="headerlink" href="#debugging-the-virtual-simulator" title="Link to this heading">¶</a></h3>
 <p>Before debugging the virtual simulator, you need to build the debug version of the simulator:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>cmake<span class="w"> </span>-DCMAKE_INSTALL_PREFIX<span class="o">=[</span>install<span class="w"> </span>dir<span class="o">]</span><span class="w"> </span>-DSYSTEMC_PREFIX<span class="o">=[</span>systemc<span class="w"> </span>prefix<span class="o">]</span><span class="w"> </span>-DNVDLA_HW_PREFIX<span class="o">=[</span>nvdla_hw<span class="w"> </span>prefix<span class="o">]</span><span class="w"> </span>-DNVDLA_HW_PROJECT<span class="o">=[</span>nvdla_hw<span class="w"> </span>project<span class="w"> </span>name<span class="o">]</span><span class="w"> </span>-DCMAKE_BUILD_TYPE<span class="o">=</span>Debug
 <span class="gp">$ </span>make
 <span class="gp">$ </span>make<span class="w"> </span>install
 </pre></div>
 </div>
-<div class="section" id="log-output-control">
-<h4>2.7.1 Log Output Control<a class="headerlink" href="#log-output-control" title="Permalink to this headline">¶</a></h4>
+<section id="log-output-control">
+<h4>2.7.1 Log Output Control<a class="headerlink" href="#log-output-control" title="Link to this heading">¶</a></h4>
 <p>The log output of SystemC simulator is controled by a configuration string that can be set in two ways:</p>
 <ul class="simple">
 <li><p>The command line option ‘-s <em>control_string</em>’ or ‘–sc_log <em>control_string</em>’</p></li>
@@ -262,26 +263,26 @@ function OptanonWrapper() {
 <span class="go">Info: nvdla.dbb_adaptor: GP: iswrite=1 addr=0xc0001e80 len=64 data=0x abcd01b0 abcd01b1 abcd01b2 abcd01b3 abcd01b4 abcd01b5 abcd01b6 abcd01b7 abcd01b8 abcd01b9 abcd01ba abcd01bb abcd01bc abcd01bd abcd01be abcd01bf resp=TLM_OK_RESPONSE</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="gdb">
-<h4>2.7.2 GDB<a class="headerlink" href="#gdb" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="gdb">
+<h4>2.7.2 GDB<a class="headerlink" href="#gdb" title="Link to this heading">¶</a></h4>
 <p>You can also use GDB to debug the virtual simulator. First run the simulator, then get the PID of the process and use GDB to attach to it.</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>ps<span class="w"> </span>-ef<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>aarch64_toplevel
 <span class="gp">$ </span>gdb<span class="w"> </span>attach<span class="w"> </span>&lt;PID&gt;
 </pre></div>
 </div>
-</div>
-</div>
-</div>
-<div class="section" id="building-linux-kernel-for-nvdla-virtual-simulator">
-<span id="building-linux-kernel"></span><h2>3. Building Linux Kernel for NVDLA Virtual Simulator<a class="headerlink" href="#building-linux-kernel-for-nvdla-virtual-simulator" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+</section>
+<section id="building-linux-kernel-for-nvdla-virtual-simulator">
+<span id="building-linux-kernel"></span><h2>3. Building Linux Kernel for NVDLA Virtual Simulator<a class="headerlink" href="#building-linux-kernel-for-nvdla-virtual-simulator" title="Link to this heading">¶</a></h2>
 <p>The NVDLA virtual platform is based on QEMU aarch64 virt machine, so building a linux kernel is the same as building one for QEMU aarch64 virt machine. Here’s an example of using buildroot to build a linux kernel for NVDLA virtual platform.</p>
-<div class="section" id="download">
-<h3>3.1 Download<a class="headerlink" href="#download" title="Permalink to this headline">¶</a></h3>
+<section id="download">
+<h3>3.1 Download<a class="headerlink" href="#download" title="Link to this heading">¶</a></h3>
 <p>Download the buildroot from <a class="reference external" href="https://buildroot.org/download.html">https://buildroot.org/download.html</a>. This example uses the version buildroot-2017.11-rc1.</p>
-</div>
-<div class="section" id="configure">
-<h3>3.2 Configure<a class="headerlink" href="#configure" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="configure">
+<h3>3.2 Configure<a class="headerlink" href="#configure" title="Link to this heading">¶</a></h3>
 <p>Use <em>qemu_aarch64_virt_defconfig</em> as base config, then set the customized configurations:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>make<span class="w"> </span>qemu_aarch64_virt_defconfig
 <span class="gp">$ </span>make<span class="w"> </span>menuconfig
@@ -299,16 +300,16 @@ function OptanonWrapper() {
 <span class="go">* Target Packages -&gt; Networking applications -&gt; openssh -&gt; Y</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="build">
-<h3>3.3 Build<a class="headerlink" href="#build" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="build">
+<h3>3.3 Build<a class="headerlink" href="#build" title="Link to this heading">¶</a></h3>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>make<span class="w"> </span>-j4
 </pre></div>
 </div>
 <p>When it’s done, you can find the kernel image and rootfs in <em>output/image</em>.</p>
-</div>
-</div>
-</div>
+</section>
+</section>
+</section>
 
 
         </div>
@@ -316,8 +317,9 @@ function OptanonWrapper() {
           
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="contents.html">Table of Contents</a></h3>
-  <ul>
+  <div>
+    <h3><a href="contents.html">Table of Contents</a></h3>
+    <ul>
 <li><a class="reference internal" href="#">Virtual Platform</a><ul>
 <li><a class="reference internal" href="#overview">1. Overview</a></li>
 <li><a class="reference internal" href="#using-the-virtual-simulator">2. Using the Virtual Simulator</a><ul>
@@ -359,12 +361,17 @@ function OptanonWrapper() {
 </li>
 </ul>
 
-  <h4>Previous topic</h4>
-  <p class="topless"><a href="sw/test_application.html"
-                        title="previous chapter">Test applications</a></p>
-  <h4>Next topic</h4>
-  <p class="topless"><a href="vp_fpga.html"
-                        title="next chapter">Virtual Platform On AWS FPGA</a></p>
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="sw/test_application.html"
+                          title="previous chapter">Test applications</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="vp_fpga.html"
+                          title="next chapter">Virtual Platform On AWS FPGA</a></p>
+  </div>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
@@ -376,12 +383,12 @@ function OptanonWrapper() {
   <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
       <input type="submit" value="Go" />
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script>document.getElementById('searchbox').style.display = "block"</script>
         </div>
       </div>
         </div>
@@ -409,10 +416,10 @@ function OptanonWrapper() {
 <div class="container">
 <div class="row">
 &#169; <a
-href="copyright.html">Copyright</a> 2018 - 2024, NVIDIA Corporation.
+href="copyright.html">Copyright</a> 2018 - 2026, NVIDIA Corporation.
 <a href="https://www.nvidia.com/object/legal_info.html">Legal Information.</a>
 <a href="https://www.nvidia.com/object/privacy_policy.html">Privacy Policy.</a>
-Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.5.4.
+Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
 </div>
 </div>
 </div>

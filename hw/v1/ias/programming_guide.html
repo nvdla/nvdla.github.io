@@ -1,19 +1,18 @@
-
 <!DOCTYPE html>
 
-<html>
+<html lang="en" data-content_root="../../../">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
     <title>Programming Guide &#8212; NVDLA Documentation</title>
-    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../../../_static/nvdla.css" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/styles.css" />
-    <script id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
-    <script src="../../../_static/jquery.js"></script>
-    <script src="../../../_static/underscore.js"></script>
-    <script src="../../../_static/doctools.js"></script>
-    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/nvdla.css?v=907781f7" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles.css?v=af91e327" />
+    <script src="../../../_static/documentation_options.js?v=7026087e"></script>
+    <script src="../../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="search" title="Search" href="../../../search.html" />
     <link rel="next" title="NVDLA Environment Setup Guide" href="../../v2/environment_setup_guide.html" />
     <link rel="prev" title="Unit Description" href="unit_description.html" />
@@ -26,7 +25,7 @@
     max-width: 100% !important;
   }
 </style>
-<script src="//assets.adobedtm.com/b92787824f2e0e9b68dc2e993f9bd995339fe417/satelliteLib-30c8ffcc8ece089156fd5590fbcf390ffc296f51.js"></script>
+<script src="https://assets.adobedtm.com/5d4962a43b79/814eb6e9b4e1/launch-4bc07f1e0b0b.min.js"></script>
 <!-- OneTrust Cookies Consent Notice start for nvidia.com -->
 <script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" data-document-language="true" type="text/javascript" charset="UTF-8" data-domain-script="3e2b62ff-7ae7-4ac5-87c8-d5949ecafff5-test" ></script>
 <script type="text/javascript">
@@ -69,22 +68,18 @@ function OptanonWrapper() {
       <div class="row">
         <div class="col-xs-12 col-md-9">
           
-  <div class="section" id="programming-guide">
-<h1>Programming Guide<a class="headerlink" href="#programming-guide" title="Permalink to this headline">¶</a></h1>
+  <section id="programming-guide">
+<h1>Programming Guide<a class="headerlink" href="#programming-guide" title="Link to this heading">¶</a></h1>
 <p>(Notice: This version of <em>Unit Description</em> is only for nvdlav1 release.
 Please refer to <em>Scalability parameters and ConfigROM</em> for other configurations)</p>
-<div class="section" id="bdma-programming">
-<h2>BDMA programming<a class="headerlink" href="#bdma-programming" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="background">
-<h3>Background<a class="headerlink" href="#background" title="Permalink to this headline">¶</a></h3>
+<section id="bdma-programming">
+<h2>BDMA programming<a class="headerlink" href="#bdma-programming" title="Link to this heading">¶</a></h2>
+<section id="background">
+<h3>Background<a class="headerlink" href="#background" title="Link to this heading">¶</a></h3>
 <p>We suggest NVDLA memory accesses are based on internal SRAM to achieve best
 performance and we designed BDMA for this purpose.</p>
 <p>The supported memory transfers are:</p>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 45%" />
-<col style="width: 55%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Source type</p></th>
 <th class="head"><p>Destination type</p></th>
@@ -105,9 +100,9 @@ performance and we designed BDMA for this purpose.</p>
 </tr>
 </tbody>
 </table>
-</div>
-<div class="section" id="programming">
-<h3>Programming<a class="headerlink" href="#programming" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="programming">
+<h3>Programming<a class="headerlink" href="#programming" title="Link to this heading">¶</a></h3>
 <p>The programming model for BDMA is different from others due to special
 use scenario on BDMA. Take convolution as an example, in order to make a
 convolution layer operation happen, BDMA has to transfer
@@ -164,16 +159,12 @@ generated.</p></li>
 </ul>
 <p>For below section, if there’s no special declaration, all address refers
 to data address in SRAM.</p>
-</div>
-<div class="section" id="buffer-allocation">
-<h3>Buffer allocation<a class="headerlink" href="#buffer-allocation" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="buffer-allocation">
+<h3>Buffer allocation<a class="headerlink" href="#buffer-allocation" title="Link to this heading">¶</a></h3>
 <p>Before introduce buffer allocation formula, we need to understand the
 related register definition:</p>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 50%" />
-<col style="width: 50%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Register</p></th>
 <th class="head"><p>Description</p></th>
@@ -221,17 +212,13 @@ are:</p>
 \[dst\_cube\_size = CFG\_DST\_SURF * CFG\_DST\_REPEAT\]</div>
 <p>The formula for actual bytes transferred is:
 .. math:: actual_size = (CFG_LINE - 1) * 32 * CFG_LINE_REPEAT * CFG_SURF_REPEAT</p>
-</div>
-</div>
-<div class="section" id="rubik-programming">
-<h2>Rubik programming<a class="headerlink" href="#rubik-programming" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="features">
-<h3>Features<a class="headerlink" href="#features" title="Permalink to this headline">¶</a></h3>
+</section>
+</section>
+<section id="rubik-programming">
+<h2>Rubik programming<a class="headerlink" href="#rubik-programming" title="Link to this heading">¶</a></h2>
+<section id="features">
+<h3>Features<a class="headerlink" href="#features" title="Link to this heading">¶</a></h3>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 50%" />
-<col style="width: 50%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Mode</p></th>
 <th class="head"><p>Description</p></th>
@@ -253,11 +240,11 @@ feature format.</p></td>
 </tr>
 </tbody>
 </table>
-</div>
-<div class="section" id="id1">
-<h3>Programming<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
-<div class="section" id="contract">
-<h4>Contract<a class="headerlink" href="#contract" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="id1">
+<h3>Programming<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h3>
+<section id="contract">
+<h4>Contract<a class="headerlink" href="#contract" title="Link to this heading">¶</a></h4>
 <ol class="arabic">
 <li><p>Config the RUBIK_MODE= CONTRACT</p></li>
 <li><p>Configure the input cube information:</p>
@@ -269,10 +256,6 @@ feature format.</p></td>
 <li><p>Configure the output cube information:</p></li>
 </ol>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 50%" />
-<col style="width: 50%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Register</p></th>
 <th class="head"><p>Value</p></th>
@@ -309,9 +292,9 @@ deconvolution stride.</p>
 </li>
 <li><p>Configure the op_en to kick-off the hardware layer;</p></li>
 </ol>
-</div>
-<div class="section" id="split-merge">
-<h4>Split/Merge<a class="headerlink" href="#split-merge" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="split-merge">
+<h4>Split/Merge<a class="headerlink" href="#split-merge" title="Link to this heading">¶</a></h4>
 <p>Most of the configurations are the same as Contract mode except:</p>
 <ol class="arabic">
 <li><p>RUBIK_MODE should be SPLIT/MERGE;</p></li>
@@ -331,21 +314,17 @@ deconvolution stride.</p>
 </ol>
 <p>For split mode, DATAOUT_CHANNEL is used to specify number of channels
 needs to split thus it equals to output planar number.</p>
-</div>
-</div>
-</div>
-<div class="section" id="convolution-pipeline-programming">
-<h2>Convolution pipeline programming<a class="headerlink" href="#convolution-pipeline-programming" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="id2">
-<h3>Features<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+</section>
+</section>
+</section>
+<section id="convolution-pipeline-programming">
+<h2>Convolution pipeline programming<a class="headerlink" href="#convolution-pipeline-programming" title="Link to this heading">¶</a></h2>
+<section id="id2">
+<h3>Features<a class="headerlink" href="#id2" title="Link to this heading">¶</a></h3>
 <p>From algorithm wise, convolution pipeline in NVDLA supports algorithm
 features below:</p>
 <table class="docutils align-default" id="tab-algorithm-features-cc">
-<caption><span class="caption-number">Table 58 </span><span class="caption-text">List of algorithm features supported by convolution pipeline</span><a class="headerlink" href="#tab-algorithm-features-cc" title="Permalink to this table">¶</a></caption>
-<colgroup>
-<col style="width: 50%" />
-<col style="width: 50%" />
-</colgroup>
+<caption><span class="caption-number">Table 58 </span><span class="caption-text">List of algorithm features supported by convolution pipeline</span><a class="headerlink" href="#tab-algorithm-features-cc" title="Link to this table">¶</a></caption>
 <thead>
 <tr class="row-odd"><th class="head"><p>Feature</p></th>
 <th class="head"><p>Description</p></th>
@@ -386,11 +365,7 @@ element be calculated</p></td>
 <p>From performance wise, convolution pipeline implements features below to
 accelerate convolution process:</p>
 <table class="docutils align-default" id="tab-performance-features-cc">
-<caption><span class="caption-number">Table 59 </span><span class="caption-text">List of performance features supported by convolution pipeline</span><a class="headerlink" href="#tab-performance-features-cc" title="Permalink to this table">¶</a></caption>
-<colgroup>
-<col style="width: 50%" />
-<col style="width: 50%" />
-</colgroup>
+<caption><span class="caption-number">Table 59 </span><span class="caption-text">List of performance features supported by convolution pipeline</span><a class="headerlink" href="#tab-performance-features-cc" title="Link to this table">¶</a></caption>
 <thead>
 <tr class="row-odd"><th class="head"><p>Feature</p></th>
 <th class="head"><p>Description</p></th>
@@ -425,11 +400,7 @@ loading bandwidth.</p></td>
 <p>Besides hardware features, different working modes will impact
 performance as well:</p>
 <table class="docutils align-default" id="tab-working-modes-cc">
-<caption><span class="caption-number">Table 60 </span><span class="caption-text">List of working modes supported by convolution pipeline</span><a class="headerlink" href="#tab-working-modes-cc" title="Permalink to this table">¶</a></caption>
-<colgroup>
-<col style="width: 50%" />
-<col style="width: 50%" />
-</colgroup>
+<caption><span class="caption-number">Table 60 </span><span class="caption-text">List of working modes supported by convolution pipeline</span><a class="headerlink" href="#tab-working-modes-cc" title="Link to this table">¶</a></caption>
 <thead>
 <tr class="row-odd"><th class="head"><p>Working mode</p></th>
 <th class="head"><p>Description</p></th>
@@ -505,9 +476,9 @@ software has to split the big input cube into smaller cubes in vertical
 direction. This mechanism called “Split H mode”.</p>
 <p>Be noticed that there must be max(R-stride_y, 0) overlapped lines between 2 consecutive
 cube to make sure the convolution results are expected.</p>
-</div>
-<div class="section" id="strategy-selection">
-<h3>Strategy selection<a class="headerlink" href="#strategy-selection" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="strategy-selection">
+<h3>Strategy selection<a class="headerlink" href="#strategy-selection" title="Link to this heading">¶</a></h3>
 <p>Convolution pipeline has different features/working modes, we should
 follow the rule below to mapping the network parameter into hardware
 layers:</p>
@@ -531,11 +502,11 @@ available CONV_BUF banks. The priority is: “Full weight&amp;input” &gt; “F
 input &amp; Partial weight” &gt; “Split H”. When split H mode used, it’s better
 split H into smaller one to make sure weight are all kept in CONV_BUF
 thus weight can be re-used.</p>
-</div>
-<div class="section" id="id3">
-<h3>Programming<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
-<div class="section" id="register-definition">
-<h4>Register definition<a class="headerlink" href="#register-definition" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="id3">
+<h3>Programming<a class="headerlink" href="#id3" title="Link to this heading">¶</a></h3>
+<section id="register-definition">
+<h4>Register definition<a class="headerlink" href="#register-definition" title="Link to this heading">¶</a></h4>
 <p>Before introduce the convolution pipeline programming, it’s necessary to
 explain the meaning of the registers and how they’re calculated.</p>
 <p>CC has 5 pipelines, each pipeline stage has its own registers. For any
@@ -625,9 +596,6 @@ introduced.</p></li>
 </li>
 </ul>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 100%" />
-</colgroup>
 <tbody>
 <tr class="row-odd"><td><p>D_DAIN_ADDR_HIGH/LOW_0 = roi_address &amp;(~0x1F); // The nearest 32bytes
 aligned address;</p>
@@ -639,21 +607,15 @@ should be in the same line</p>
 </tr>
 </tbody>
 </table>
-<div class="figure align-center" id="fig-image116-pitch-linear-roi">
+<figure class="align-center" id="fig-image116-pitch-linear-roi">
 <img alt="../../../_images/ias_image116_pitch_linear_roi.png" src="../../../_images/ias_image116_pitch_linear_roi.png" />
-</div>
+</figure>
 <ul class="simple">
 <li><p>CSC.WEIGHT/DATAIN_SIZE_EXT: The input weight/feature cube size seen
 from CSC. SW should configure those values based on formula below:</p></li>
 </ul>
 <p>DATAIN_SIZE_EXT: (W/H/C is the width/height/channel of input data cube)</p>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 25%" />
-<col style="width: 25%" />
-<col style="width: 25%" />
-<col style="width: 25%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Mode</p></th>
 <th class="head"><p>Width</p></th>
@@ -686,12 +648,6 @@ de_y</p></td>
 and let C’ be 32bytes aligned version of C, which means: C’=ceil(C, 16)
 for INT/FP16 and C’=ceil(C, 32)):</p>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 24%" />
-<col style="width: 24%" />
-<col style="width: 24%" />
-<col style="width: 27%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Mode</p></th>
 <th class="head"><p>Width</p></th>
@@ -727,11 +683,6 @@ ide_y</p></td>
 stride size configured for CDMA: D_CONV_STRIDE)</p></li>
 </ul>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 39%" />
-<col style="width: 30%" />
-<col style="width: 30%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Mode</p></th>
 <th class="head"><p>Stride_X</p></th>
@@ -795,11 +746,6 @@ more operation;</p>
 the configuration of this register should follow the table
 below:</p>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 43%" />
-<col style="width: 28%" />
-<col style="width: 28%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Configure</p></th>
 <th class="head"><p>Line_Packed</p></th>
@@ -831,11 +777,6 @@ below:</p>
 </li>
 </ul>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 17%" />
-<col style="width: 41%" />
-<col style="width: 42%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>CONV_MODE</p></th>
 <th class="head"><p>DATAOUT_WIDTH</p></th>
@@ -861,10 +802,10 @@ below:</p>
 </tr>
 </tbody>
 </table>
-</div>
-</div>
-<div class="section" id="deconvolution">
-<h3>Deconvolution<a class="headerlink" href="#deconvolution" title="Permalink to this headline">¶</a></h3>
+</section>
+</section>
+<section id="deconvolution">
+<h3>Deconvolution<a class="headerlink" href="#deconvolution" title="Link to this heading">¶</a></h3>
 <p>Deconvolution is a software feature, but it’s necessary to mention the
 basic flow here to help user understand how it’s supported.</p>
 <p>There’re 2 phases:</p>
@@ -906,19 +847,13 @@ hardware layers is: (stride_x + 1)*stride_y;</p></li>
 method a) vs b). It shows b) is (stride_x*stride_y-1)*t1 quicker than
 a).</p></li>
 </ol>
-<div class="figure align-center" id="fig-image117-deconv-scheduling">
-<img alt="../../../_images/ias_image117_deconv_schedluing.svg" src="../../../_images/ias_image117_deconv_schedluing.svg" /></div>
+<figure class="align-center" id="fig-image117-deconv-scheduling">
+<img alt="../../../_images/ias_image117_deconv_schedluing.svg" src="../../../_images/ias_image117_deconv_schedluing.svg" /></figure>
 <ol class="arabic simple" start="2">
 <li><p>Method b) has smaller memory footprint requirement (W’, H’ are the
 output width/height of each convolution hardware layer).</p></li>
 </ol>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 22%" />
-<col style="width: 26%" />
-<col style="width: 26%" />
-<col style="width: 26%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Method</p></th>
 <th class="head"><p>Convolution
@@ -953,15 +888,15 @@ x*(stride_y+2)</p></td>
 </tbody>
 </table>
 <p>For most case, stride_y&gt;2 thus method b) has smaller memory requirement.</p>
-</div>
-</div>
-<div class="section" id="sdp-programming">
-<h2>SDP programming<a class="headerlink" href="#sdp-programming" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+<section id="sdp-programming">
+<h2>SDP programming<a class="headerlink" href="#sdp-programming" title="Link to this heading">¶</a></h2>
 <p>Not all the use scenarios in <a class="reference internal" href="unit_description.html#tab-sdp-supported-use-scenarios"><span class="std std-numref">Table 51</span></a> are necessary to explain, we’ll
 discuss bias addition/batch-norm/element-wise operations below (other
 features are precision related which already covered by <a class="reference internal" href="precision.html"><span class="doc">Precision Preservation</span></a>):</p>
-<div class="section" id="bias-addition">
-<h3>Bias addition<a class="headerlink" href="#bias-addition" title="Permalink to this headline">¶</a></h3>
+<section id="bias-addition">
+<h3>Bias addition<a class="headerlink" href="#bias-addition" title="Link to this heading">¶</a></h3>
 <p>As mentioned in <a class="reference internal" href="unit_description.html#tab-sdp-supported-use-scenarios"><span class="std std-numref">Table 51</span></a>, bias addition can be done by any of SDP
 sub-module, let’s take using X1 sub-module for bias addition as an
 example to explain the programming sequence:</p>
@@ -994,9 +929,9 @@ highlights bias specific registers only ):</p>
 </ol>
 </li>
 </ul>
-</div>
-<div class="section" id="batch-normalization">
-<h3>Batch normalization<a class="headerlink" href="#batch-normalization" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="batch-normalization">
+<h3>Batch normalization<a class="headerlink" href="#batch-normalization" title="Link to this heading">¶</a></h3>
 <p>Batch normalization can be realized by any of X/Y, let’s still use
 X1 sub-module as an example to show the steps to program batch
 normalization:</p>
@@ -1036,10 +971,6 @@ per-kernel/element)</p>
 <p>For any case when both MUL/ALU are used, we can support combinations
 below:</p>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 50%" />
-<col style="width: 50%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>ALU</p></th>
 <th class="head"><p>MUL</p></th>
@@ -1063,9 +994,9 @@ below:</p>
 </tr>
 </tbody>
 </table>
-</div>
-<div class="section" id="element-wise">
-<h3>Element-wise<a class="headerlink" href="#element-wise" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="element-wise">
+<h3>Element-wise<a class="headerlink" href="#element-wise" title="Link to this heading">¶</a></h3>
 <p>Element-wise can be realized by any of SDP sub-unit, again, let’s still
 use X1 module as an example about the element-wise configuration steps:</p>
 <ul>
@@ -1099,18 +1030,14 @@ operation, it should be MUL, otherwise, use ALU;</p></li>
 </ol>
 </li>
 </ul>
-</div>
-<div class="section" id="compare-mode">
-<h3>Compare mode<a class="headerlink" href="#compare-mode" title="Permalink to this headline">¶</a></h3>
-<div class="section" id="normal-comparision">
-<h4>Normal comparision<a class="headerlink" href="#normal-comparision" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="compare-mode">
+<h3>Compare mode<a class="headerlink" href="#compare-mode" title="Link to this heading">¶</a></h3>
+<section id="normal-comparision">
+<h4>Normal comparision<a class="headerlink" href="#normal-comparision" title="Link to this heading">¶</a></h4>
 <p>SDP implemented compare mode in Y module to support software based
 redundant computing.</p>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 50%" />
-<col style="width: 50%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Use scenarios</p></th>
 <th class="head"><p>Description</p></th>
@@ -1144,9 +1071,9 @@ as:</p>
 whether difference found.</p>
 <p><strong>NOTE: When SDP EQL mode is enabled, D_FEATURE_MODE_CFG.WINOGAD has to
 be OFF and D_FEATURE_MODE_CFG.BATCH_NUMBER has to be 0</strong></p>
-</div>
-<div class="section" id="batch-mode-comparison">
-<h4>Batch mode comparison<a class="headerlink" href="#batch-mode-comparison" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="batch-mode-comparison">
+<h4>Batch mode comparison<a class="headerlink" href="#batch-mode-comparison" title="Link to this heading">¶</a></h4>
 <p>Batch mode is a special case of offline/offline comparison, as SDP_Y
 RDMA doesn’t support load multiple data cubes in one HWL, batch mode has
 to be handled in a special way. There’re 2 cases: In order to facilitate
@@ -1170,18 +1097,14 @@ further discussion, we denote symbols below:</p>
 <p>As there’re bubbles between each data cube and the contents of those
 bubbles are un-determistic, we have to compare those cube one by one
 thus N HWL are necessary.</p>
-</div>
-</div>
-</div>
-<div class="section" id="pdp-programming">
-<h2>PDP programming<a class="headerlink" href="#pdp-programming" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+</section>
+<section id="pdp-programming">
+<h2>PDP programming<a class="headerlink" href="#pdp-programming" title="Link to this heading">¶</a></h2>
 <p>The most complex logic for PDP programming is deciding which working
 mode can be used. PDP supports 3 different working modes:</p>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 50%" />
-<col style="width: 50%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Mode</p></th>
 <th class="head"><p>Attribute</p></th>
@@ -1244,8 +1167,8 @@ starting address (in/out or both) of each splitted band be 256 align,
 this will greatly improve NVDLA memory throughput.</p>
 </li>
 </ul>
-<div class="section" id="on-the-fly-processing">
-<h3>On-the-fly processing<a class="headerlink" href="#on-the-fly-processing" title="Permalink to this headline">¶</a></h3>
+<section id="on-the-fly-processing">
+<h3>On-the-fly processing<a class="headerlink" href="#on-the-fly-processing" title="Link to this heading">¶</a></h3>
 <p>The programming sequence for on-the-fly PDP mode is (most of the
 registers are intuitional, will highlights on-the-fly mode specific
 registers only):</p>
@@ -1257,9 +1180,9 @@ registers only):</p>
 <p>SPLIT_NUM=0</p>
 </li>
 </ul>
-</div>
-<div class="section" id="offline-processing-without-split-width">
-<h3>Offline processing without split width<a class="headerlink" href="#offline-processing-without-split-width" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="offline-processing-without-split-width">
+<h3>Offline processing without split width<a class="headerlink" href="#offline-processing-without-split-width" title="Link to this heading">¶</a></h3>
 <p>The programming sequence for this mode is:</p>
 <ul>
 <li><p>Appropriate address/memory type should be set to PDP-RDMA;</p></li>
@@ -1275,9 +1198,9 @@ registers only):</p>
 <p>PARTIAL_WIDTH_OUT_FIRST=info-&gt;first_out_width</p>
 </li>
 </ul>
-</div>
-<div class="section" id="offline-processing-with-split-width">
-<h3>Offline processing with split width<a class="headerlink" href="#offline-processing-with-split-width" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="offline-processing-with-split-width">
+<h3>Offline processing with split width<a class="headerlink" href="#offline-processing-with-split-width" title="Link to this heading">¶</a></h3>
 <p>The programming sequence for this mode is:</p>
 <ul>
 <li><p>Appropriate address/memory type should be set to PDP-RDMA;</p></li>
@@ -1300,9 +1223,9 @@ registers only):</p>
 <p>When hardware processing done, there’ll be interrupt fired from PDP
 submodule to inform CPU that PDP hardware layer is done for any of above
 mode.</p>
-</div>
-<div class="section" id="id4">
-<h3>Register definition<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="id4">
+<h3>Register definition<a class="headerlink" href="#id4" title="Link to this heading">¶</a></h3>
 <p>Beside working modes, it’s also necessary to mention some of the
 interested registers:</p>
 <ol class="loweralpha simple">
@@ -1313,43 +1236,38 @@ mode;</p></li>
 <li><p>D_POOLING_PADDING_VALUE_*_CFG: The padded value. This register will
 be took into account for AVE mode only;</p></li>
 </ol>
-</div>
-</div>
-<div class="section" id="cdp-programming">
-<h2>CDP programming<a class="headerlink" href="#cdp-programming" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+<section id="cdp-programming">
+<h2>CDP programming<a class="headerlink" href="#cdp-programming" title="Link to this heading">¶</a></h2>
 <p>CDP always working on offline, there’s no special mode for CDP and the
 precision related configuration already discussed.
 So, skip the CDP programming here.</p>
 <p>After hardware layer processing done, there’ll be interrupt fired to
 CPU.</p>
-</div>
-<div class="section" id="debug-features">
-<h2>Debug features<a class="headerlink" href="#debug-features" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="debug-features">
+<h2>Debug features<a class="headerlink" href="#debug-features" title="Link to this heading">¶</a></h2>
 <p>NVDLA implemented debug registers to facilitate silicon debug. Those
 registers are dedicated per register group and won’t be cleared until
 the corresponding group starts. It will be incremented by 1 when certain
 condition meets.</p>
 <p>Those registers can be classified as 2 groups below:</p>
-<div class="section" id="precision-debug">
-<h3>Precision debug<a class="headerlink" href="#precision-debug" title="Permalink to this headline">¶</a></h3>
+<section id="precision-debug">
+<h3>Precision debug<a class="headerlink" href="#precision-debug" title="Link to this heading">¶</a></h3>
 <p>If saturation counter (see <a class="reference internal" href="precision.html#convertor-statistics"><span class="std std-ref">Convertor statistics</span></a>) exceed threshold (defined by
 software), this means convertor parameters (scaling, offset) are
 in-properly set;</p>
 <p>If LUT overflow/underflow counter (<a class="reference internal" href="lut-programming.html#lut-statistics"><span class="std std-ref">LUT Statistics</span></a>) exceed threshold (defined
 by software), this means LUT is in-properly set;</p>
-</div>
-<div class="section" id="performance-debug">
-<h3>Performance debug<a class="headerlink" href="#performance-debug" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="performance-debug">
+<h3>Performance debug<a class="headerlink" href="#performance-debug" title="Link to this heading">¶</a></h3>
 <p>NVDLA is a fix function engine, the latency is predictable inside each
 sub-unit, but the read/write response from out-side is not deterministic
 thus we implemented performance registers below to help SW analysis the
 bottleneck of un-expected performance drop.</p>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 33%" />
-<col style="width: 33%" />
-<col style="width: 33%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Sub unit</p></th>
 <th class="head"><p>Register name</p></th>
@@ -1524,15 +1442,15 @@ group1</p></td>
 </table>
 <p>For each sub-unit, we have “EN” register to allow software
 enable/disable those counting register to save power.</p>
-</div>
-</div>
-<div class="section" id="limitation">
-<h2>Limitation<a class="headerlink" href="#limitation" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+<section id="limitation">
+<h2>Limitation<a class="headerlink" href="#limitation" title="Link to this heading">¶</a></h2>
 <p>Though we’ve already highlight hardware restrictions in the chapters
 above, but we’d like to centralize the limitations here to facilitate
 users quick check illegal settings.</p>
-<div class="section" id="data-format">
-<h3>Data Format<a class="headerlink" href="#data-format" title="Permalink to this headline">¶</a></h3>
+<section id="data-format">
+<h3>Data Format<a class="headerlink" href="#data-format" title="Link to this heading">¶</a></h3>
 <ul class="simple">
 <li><p>The “Invalid case” in <a class="reference internal" href="../../format.html#tab-precision-conversion-conv"><span class="std std-numref">Table 29</span></a> to <a class="reference internal" href="../../format.html#tab-precision-conversion-poolong"><span class="std std-numref">Table 32</span></a> are not allowed;</p></li>
 <li><p>The alignment for address/line_stride/surf_stride in :<a class="reference internal" href="../../format.html#tab-requirements-of-alignment"><span class="std std-numref">Table 35</span></a> should
@@ -1541,29 +1459,29 @@ be satisfied when allocating buffer;</p></li>
 please refer to: 10.1.1 for minimal line_stride calculation;</p></li>
 <li><p>For 1x1xC cube, it should always be line_packed and surf_packed.</p></li>
 </ul>
-</div>
-<div class="section" id="csb-master">
-<h3>CSB_MASTER<a class="headerlink" href="#csb-master" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="csb-master">
+<h3>CSB_MASTER<a class="headerlink" href="#csb-master" title="Link to this heading">¶</a></h3>
 <ul class="simple">
 <li><p>Any read access or write access to reserved register address
 (0x14000~0x3FFFF) is forbidden. CSB master do not
 support for these addresses. Any access to these addresses may cause
 unknow result.</p></li>
 </ul>
-</div>
-<div class="section" id="bdma">
-<h3>BDMA<a class="headerlink" href="#bdma" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="bdma">
+<h3>BDMA<a class="headerlink" href="#bdma" title="Link to this heading">¶</a></h3>
 <ul class="simple">
 <li><p>When both group0 and group1 are both busy, no more command is allowed
 even if there are free slot</p></li>
 <li><p>All operations in one BDMA HWL should has the same destination memory
 type (DST_RAM_TYPE)</p></li>
 </ul>
-</div>
-<div class="section" id="convolution">
-<h3>Convolution<a class="headerlink" href="#convolution" title="Permalink to this headline">¶</a></h3>
-<div class="section" id="general">
-<h4>General<a class="headerlink" href="#general" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="convolution">
+<h3>Convolution<a class="headerlink" href="#convolution" title="Link to this heading">¶</a></h3>
+<section id="general">
+<h4>General<a class="headerlink" href="#general" title="Link to this heading">¶</a></h4>
 <ul>
 <li><p>There’re multiple pipeline stages in convolution pipeline, the
 op_enable programming sequence has to be in reverse order, e.g.:
@@ -1610,46 +1528,37 @@ layer;</p></li>
 <li><p>Left/Right padding should be less than S, Top/Bottom padding should
 be less than R</p></li>
 </ul>
-</div>
-<div class="section" id="image">
-<h4>Image<a class="headerlink" href="#image" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="image">
+<h4>Image<a class="headerlink" href="#image" title="Link to this heading">¶</a></h4>
 <ul class="simple">
 <li><p>For image input, pixel_y_offset should be set as 0 for pitch linear;</p></li>
 <li><p>If channel post extension enabled, the limitations in <a class="reference internal" href="unit_description.html#tab-limits-of-channel-post-extension"><span class="std std-numref">Table 46</span></a>  has
 to be meet;</p></li>
 <li><p>Dilation is not supported</p></li>
 </ul>
-</div>
-<div class="section" id="dc">
-<h4>DC<a class="headerlink" href="#dc" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="dc">
+<h4>DC<a class="headerlink" href="#dc" title="Link to this heading">¶</a></h4>
 <ul class="simple">
 <li><p>No special limitation;</p></li>
 </ul>
-</div>
-<div class="section" id="winograd">
-<h4>Winograd<a class="headerlink" href="#winograd" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="winograd">
+<h4>Winograd<a class="headerlink" href="#winograd" title="Link to this heading">¶</a></h4>
 <ul class="simple">
 <li><p>Output width and height must be 4 divisible and &gt;= 8;</p></li>
 <li><p>The equivalent kernel size should be 3x3;</p></li>
 </ul>
-</div>
-<div class="section" id="multi-batch">
-<h4>Multi-batch<a class="headerlink" href="#multi-batch" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="multi-batch">
+<h4>Multi-batch<a class="headerlink" href="#multi-batch" title="Link to this heading">¶</a></h4>
 <ul class="simple">
 <li><p>The start address of each input feature cube has to be carefully
 arranged to make sure their offset is a fixed number as BATCH_STRIDE.</p></li>
 </ul>
 <p>Supported feature crossing:</p>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 14%" />
-<col style="width: 14%" />
-<col style="width: 14%" />
-<col style="width: 14%" />
-<col style="width: 14%" />
-<col style="width: 14%" />
-<col style="width: 14%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"></th>
 <th class="head"><p>Channel
@@ -1725,10 +1634,10 @@ d</p></td>
 </tr>
 </tbody>
 </table>
-</div>
-</div>
-<div class="section" id="lut">
-<h3>LUT<a class="headerlink" href="#lut" title="Permalink to this headline">¶</a></h3>
+</section>
+</section>
+<section id="lut">
+<h3>LUT<a class="headerlink" href="#lut" title="Link to this heading">¶</a></h3>
 <ul>
 <li><p>For linear mode, the table start/end should meet the requirements
 below:</p>
@@ -1739,11 +1648,6 @@ below:</p>
 hardware thus we have limitations below:</p></li>
 </ul>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 17%" />
-<col style="width: 41%" />
-<col style="width: 41%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"></th>
 <th class="head"><p>SDP</p></th>
@@ -1797,11 +1701,6 @@ representable, use INT32_MAX or FP32_MAX instead.</p>
 <li><p>For exponential mode, we also have constrain on LE_INDEX_OFFSET:</p></li>
 </ul>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 21%" />
-<col style="width: 39%" />
-<col style="width: 39%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"></th>
 <th class="head"><p>SDP</p></th>
@@ -1823,11 +1722,11 @@ representable, use INT32_MAX or FP32_MAX instead.</p>
 </tr>
 </tbody>
 </table>
-</div>
-<div class="section" id="sdp">
-<h3>SDP<a class="headerlink" href="#sdp" title="Permalink to this headline">¶</a></h3>
-<div class="section" id="id5">
-<h4>General<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="sdp">
+<h3>SDP<a class="headerlink" href="#sdp" title="Link to this heading">¶</a></h3>
+<section id="id5">
+<h4>General<a class="headerlink" href="#id5" title="Link to this heading">¶</a></h4>
 <ul>
 <li><p>When SRC is configured as REG, corresponding RDMA shouldn’t be
 enabled.</p></li>
@@ -1842,9 +1741,9 @@ EW_ALU_CVT_BYPASS must be NO;</p>
 EW_MUL_CVT_BYPASS must be NO;</p>
 </li>
 </ul>
-</div>
-<div class="section" id="id6">
-<h4>DC<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="id6">
+<h4>DC<a class="headerlink" href="#id6" title="Link to this heading">¶</a></h4>
 <ul class="simple">
 <li><p>Precision conversion is not allowed if SDP output to PDP or EQL mode;</p></li>
 <li><p>For INT16INT8, HW has no requirement on channel size configuration,
@@ -1852,9 +1751,9 @@ but if C is not 32 elements aligned, HW will read/write the
 additional memory thus SW has to guarantee the allocated src/dst data
 cube is big enough;</p></li>
 </ul>
-</div>
-<div class="section" id="winograd-batch">
-<h4>Winograd/Batch<a class="headerlink" href="#winograd-batch" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="winograd-batch">
+<h4>Winograd/Batch<a class="headerlink" href="#winograd-batch" title="Link to this heading">¶</a></h4>
 <ul>
 <li><p>SDP has to work on the fly with CC</p></li>
 <li><p>SDP_Y can’t work at EQL mode (EW_ALU_ALGO != EQL)</p></li>
@@ -1868,16 +1767,16 @@ aligned:</p>
 <p>BS/BN/EW_BS_BASE_ADDR_LOW/HIGH</p>
 </li>
 </ul>
-</div>
-</div>
-<div class="section" id="cdp">
-<h3>CDP<a class="headerlink" href="#cdp" title="Permalink to this headline">¶</a></h3>
+</section>
+</section>
+<section id="cdp">
+<h3>CDP<a class="headerlink" href="#cdp" title="Link to this heading">¶</a></h3>
 <ul class="simple">
 <li><p>Maximum supported local_size is 9.</p></li>
 </ul>
-</div>
-<div class="section" id="pdp">
-<h3>PDP<a class="headerlink" href="#pdp" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="pdp">
+<h3>PDP<a class="headerlink" href="#pdp" title="Link to this heading">¶</a></h3>
 <ul>
 <li><p>PL/PR should be carefully programmed to make sure each input sample
 are used:</p>
@@ -1915,9 +1814,9 @@ be equals to CUBE_OUT_WIDTH;</p></li>
 &lt;last|mid&gt;_in_width;</p></li>
 <li><p>Maximum supported pooling kernel size is 8</p></li>
 </ul>
-</div>
-<div class="section" id="rubik">
-<h3>Rubik<a class="headerlink" href="#rubik" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="rubik">
+<h3>Rubik<a class="headerlink" href="#rubik" title="Link to this heading">¶</a></h3>
 <ul class="simple">
 <li><p>For contract mode, the address/line_stride for both input/output
 should be 32bytes aligned;</p></li>
@@ -1925,9 +1824,9 @@ should be 32bytes aligned;</p></li>
 aligned for planar data(output of split mode, input of merge mode)</p></li>
 <li><p>deconv_x_stride * datain_width should be &lt;=8192</p></li>
 </ul>
-</div>
-</div>
-</div>
+</section>
+</section>
+</section>
 
 
         </div>
@@ -1935,8 +1834,9 @@ aligned for planar data(output of split mode, input of merge mode)</p></li>
           
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="../../../contents.html">Table of Contents</a></h3>
-  <ul>
+  <div>
+    <h3><a href="../../../contents.html">Table of Contents</a></h3>
+    <ul>
 <li><a class="reference internal" href="#">Programming Guide</a><ul>
 <li><a class="reference internal" href="#bdma-programming">BDMA programming</a><ul>
 <li><a class="reference internal" href="#background">Background</a></li>
@@ -2015,12 +1915,17 @@ aligned for planar data(output of split mode, input of merge mode)</p></li>
 </li>
 </ul>
 
-  <h4>Previous topic</h4>
-  <p class="topless"><a href="unit_description.html"
-                        title="previous chapter">Unit Description</a></p>
-  <h4>Next topic</h4>
-  <p class="topless"><a href="../../v2/environment_setup_guide.html"
-                        title="next chapter">NVDLA Environment Setup Guide</a></p>
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="unit_description.html"
+                          title="previous chapter">Unit Description</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="../../v2/environment_setup_guide.html"
+                          title="next chapter">NVDLA Environment Setup Guide</a></p>
+  </div>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
@@ -2032,12 +1937,12 @@ aligned for planar data(output of split mode, input of merge mode)</p></li>
   <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="../../../search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
       <input type="submit" value="Go" />
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script>document.getElementById('searchbox').style.display = "block"</script>
         </div>
       </div>
         </div>
@@ -2066,10 +1971,10 @@ aligned for planar data(output of split mode, input of merge mode)</p></li>
 <div class="container">
 <div class="row">
 &#169; <a
-href="../../../copyright.html">Copyright</a> 2018 - 2024, NVIDIA Corporation.
+href="../../../copyright.html">Copyright</a> 2018 - 2026, NVIDIA Corporation.
 <a href="https://www.nvidia.com/object/legal_info.html">Legal Information.</a>
 <a href="https://www.nvidia.com/object/privacy_policy.html">Privacy Policy.</a>
-Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.5.4.
+Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
 </div>
 </div>
 </div>

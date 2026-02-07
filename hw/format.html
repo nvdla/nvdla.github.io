@@ -1,19 +1,18 @@
-
 <!DOCTYPE html>
 
-<html>
+<html lang="en" data-content_root="../">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
     <title>In-memory data formats &#8212; NVDLA Documentation</title>
-    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/nvdla.css" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles.css" />
-    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-    <script src="../_static/jquery.js"></script>
-    <script src="../_static/underscore.js"></script>
-    <script src="../_static/doctools.js"></script>
-    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../_static/nvdla.css?v=907781f7" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles.css?v=af91e327" />
+    <script src="../_static/documentation_options.js?v=7026087e"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Integrator’s Manual" href="v1/integration_guide.html" />
     <link rel="prev" title="Hardware Architectural Specification" href="v1/hwarch.html" />
@@ -26,7 +25,7 @@
     max-width: 100% !important;
   }
 </style>
-<script src="//assets.adobedtm.com/b92787824f2e0e9b68dc2e993f9bd995339fe417/satelliteLib-30c8ffcc8ece089156fd5590fbcf390ffc296f51.js"></script>
+<script src="https://assets.adobedtm.com/5d4962a43b79/814eb6e9b4e1/launch-4bc07f1e0b0b.min.js"></script>
 <!-- OneTrust Cookies Consent Notice start for nvidia.com -->
 <script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" data-document-language="true" type="text/javascript" charset="UTF-8" data-domain-script="3e2b62ff-7ae7-4ac5-87c8-d5949ecafff5-test" ></script>
 <script type="text/javascript">
@@ -69,10 +68,10 @@ function OptanonWrapper() {
       <div class="row">
         <div class="col-xs-12 col-md-9">
           
-  <div class="section" id="in-memory-data-formats">
-<h1>In-memory data formats<a class="headerlink" href="#in-memory-data-formats" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="overview">
-<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+  <section id="in-memory-data-formats">
+<h1>In-memory data formats<a class="headerlink" href="#in-memory-data-formats" title="Link to this heading">¶</a></h1>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Link to this heading">¶</a></h2>
 <p>DLA engine supports various types of CNN layers like convolution layer,
 pooling, ReLU, LRN, etc. To improve the performance DLA engine also
 applies some options like Winograd, weight compression and multi-batch
@@ -119,8 +118,8 @@ performance. Other two are mandatory for their working mode. HW handles
 all channel extension on feature/pixel data, while SW shall do channel
 extension to weight data accordingly.</p>
 <p>All data formats should be mapping in memory with rules.</p>
-<div class="section" id="precision-type">
-<h3>Precision Type<a class="headerlink" href="#precision-type" title="Permalink to this headline">¶</a></h3>
+<section id="precision-type">
+<h3>Precision Type<a class="headerlink" href="#precision-type" title="Link to this heading">¶</a></h3>
 <p>NVDLA engine pipeline support three types of data precision. They are
 int8, int16 and fp16. For int8, one element of data refers to an 8-bit
 signed integer. For int16, one element refers to a 16-bit signed
@@ -131,8 +130,8 @@ And all image input data will be converted to one precision type before
 calculation. For example, DLA engine can take a T_R10G10B10A2 image as
 input (for first layer) and convert the component to int8, int16 or
 fp16.</p>
-<div class="section" id="precision-conversion">
-<h4>Precision Conversion<a class="headerlink" href="#precision-conversion" title="Permalink to this headline">¶</a></h4>
+<section id="precision-conversion">
+<h4>Precision Conversion<a class="headerlink" href="#precision-conversion" title="Link to this heading">¶</a></h4>
 <p>NVDLA engine supports dynamical precision conversion. There are some
 rules:</p>
 <ul class="simple">
@@ -153,13 +152,7 @@ conversion.</p></li>
 </ul>
 <p>Here is the summary:</p>
 <table class="docutils align-default" id="tab-precision-conversion-conv">
-<caption><span class="caption-number">Table 29 </span><span class="caption-text">Precision conversion for convolutional layer</span><a class="headerlink" href="#tab-precision-conversion-conv" title="Permalink to this table">¶</a></caption>
-<colgroup>
-<col style="width: 25%" />
-<col style="width: 25%" />
-<col style="width: 25%" />
-<col style="width: 25%" />
-</colgroup>
+<caption><span class="caption-number">Table 29 </span><span class="caption-text">Precision conversion for convolutional layer</span><a class="headerlink" href="#tab-precision-conversion-conv" title="Link to this table">¶</a></caption>
 <thead>
 <tr class="row-odd"><th class="head"><p>Configured
 input format</p></th>
@@ -276,12 +269,7 @@ case</strong></p></td>
 </tbody>
 </table>
 <table class="docutils align-default" id="tab-precision-conversion-sdp">
-<caption><span class="caption-number">Table 30 </span><span class="caption-text">Precision conversion for SDP layer (offline mode)</span><a class="headerlink" href="#tab-precision-conversion-sdp" title="Permalink to this table">¶</a></caption>
-<colgroup>
-<col style="width: 26%" />
-<col style="width: 38%" />
-<col style="width: 36%" />
-</colgroup>
+<caption><span class="caption-number">Table 30 </span><span class="caption-text">Precision conversion for SDP layer (offline mode)</span><a class="headerlink" href="#tab-precision-conversion-sdp" title="Link to this table">¶</a></caption>
 <thead>
 <tr class="row-odd"><th class="head"><p>Configured
 input format</p></th>
@@ -330,12 +318,7 @@ input format</p></th>
 </table>
 <p>Table 6‑3 precision conversion for LRN layer</p>
 <table class="docutils align-default" id="tab-precision-conversion-lrn">
-<caption><span class="caption-number">Table 31 </span><span class="caption-text">Precision conversion for LRN layer</span><a class="headerlink" href="#tab-precision-conversion-lrn" title="Permalink to this table">¶</a></caption>
-<colgroup>
-<col style="width: 26%" />
-<col style="width: 38%" />
-<col style="width: 36%" />
-</colgroup>
+<caption><span class="caption-number">Table 31 </span><span class="caption-text">Precision conversion for LRN layer</span><a class="headerlink" href="#tab-precision-conversion-lrn" title="Link to this table">¶</a></caption>
 <thead>
 <tr class="row-odd"><th class="head"><p>Configured
 input format</p></th>
@@ -383,12 +366,7 @@ input format</p></th>
 </tbody>
 </table>
 <table class="docutils align-default" id="tab-precision-conversion-poolong">
-<caption><span class="caption-number">Table 32 </span><span class="caption-text">Precision conversion for pooling layer</span><a class="headerlink" href="#tab-precision-conversion-poolong" title="Permalink to this table">¶</a></caption>
-<colgroup>
-<col style="width: 26%" />
-<col style="width: 38%" />
-<col style="width: 36%" />
-</colgroup>
+<caption><span class="caption-number">Table 32 </span><span class="caption-text">Precision conversion for pooling layer</span><a class="headerlink" href="#tab-precision-conversion-poolong" title="Link to this table">¶</a></caption>
 <thead>
 <tr class="row-odd"><th class="head"><p>Configured
 input format</p></th>
@@ -456,9 +434,9 @@ They are both given by programmable register fields.</p>
 on-flying mode, SDP takes precision of convolution pipeline output as
 input precision then do another precision conversion, but the input
 precision and output precision should have the same bit-depth.</p>
-</div>
-<div class="section" id="fp16-supporting">
-<h4>FP16 Supporting<a class="headerlink" href="#fp16-supporting" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="fp16-supporting">
+<h4>FP16 Supporting<a class="headerlink" href="#fp16-supporting" title="Link to this heading">¶</a></h4>
 <p>This section describes NVDLA how to support fp16 in data-path.</p>
 <ul class="simple">
 <li><p>Infinity</p></li>
@@ -466,10 +444,6 @@ precision and output precision should have the same bit-depth.</p>
 <p>NVDLA treats infinity value as different normalized value module by
 module:</p>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 47%" />
-<col style="width: 53%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Sub-module</p></th>
 <th class="head"><p>INF converted values</p></th>
@@ -530,11 +504,11 @@ to memory, fp17/fp32 will convert to fp16 with denormalized value.</p>
 <p>NVDLA supports Rounding to Nearest (or RN) in calculation except
 overflow case. If the result is exceeding maximal normal value, it will
 be clipped to max normalized value.</p>
-</div>
-</div>
-</div>
-<div class="section" id="feature-data-format">
-<span id="id1"></span><h2>Feature Data Format<a class="headerlink" href="#feature-data-format" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+</section>
+<section id="feature-data-format">
+<span id="id1"></span><h2>Feature Data Format<a class="headerlink" href="#feature-data-format" title="Link to this heading">¶</a></h2>
 <p>DLA engine maintains a private data format for all supported HW-layers.
 The data format is called feature data format. This format is only
 generated by DLA engine itself.</p>
@@ -566,19 +540,23 @@ small cubes is not mapped compactly, it is called unpacked. See <a class="refere
 32bytes. Start address has same alignment as well. This is mandatory
 requirement.</p>
 </div>
-<div class="figure align-center" id="id3">
-<span id="fig-packed-feature-diagram"></span><img alt="../_images/format_packed_feature_diagram.svg" src="../_images/format_packed_feature_diagram.svg" /><p class="caption"><span class="caption-number">Fig. 10 </span><span class="caption-text">Packed feature data</span><a class="headerlink" href="#id3" title="Permalink to this image">¶</a></p>
-</div>
-<div class="figure align-center" id="id4">
-<span id="fig-unpacked-feature-diagram"></span><img alt="../_images/format_unpacked_feature_diagram.svg" src="../_images/format_unpacked_feature_diagram.svg" /><p class="caption"><span class="caption-number">Fig. 11 </span><span class="caption-text">Unpacked feature data</span><a class="headerlink" href="#id4" title="Permalink to this image">¶</a></p>
-</div>
+<figure class="align-center" id="id3">
+<span id="fig-packed-feature-diagram"></span><img alt="../_images/format_packed_feature_diagram.svg" src="../_images/format_packed_feature_diagram.svg" /><figcaption>
+<p><span class="caption-number">Fig. 10 </span><span class="caption-text">Packed feature data</span><a class="headerlink" href="#id3" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
+<figure class="align-center" id="id4">
+<span id="fig-unpacked-feature-diagram"></span><img alt="../_images/format_unpacked_feature_diagram.svg" src="../_images/format_unpacked_feature_diagram.svg" /><figcaption>
+<p><span class="caption-number">Fig. 11 </span><span class="caption-text">Unpacked feature data</span><a class="headerlink" href="#id4" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
 <p>If a 1x1xC feature data cube maps as surface-packed, NVDLA can treat it
 like (C/32) x1x 32 cube to save bandwidth.</p>
 <p>Mapping of feature data cube is done by NVDLA core logic. Falcon does
 not involve in mapping procedures.</p>
-</div>
-<div class="section" id="pixel-format">
-<h2>Pixel Format<a class="headerlink" href="#pixel-format" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="pixel-format">
+<h2>Pixel Format<a class="headerlink" href="#pixel-format" title="Link to this heading">¶</a></h2>
 <p>DLA engine supports pixel data for ROI. The pixel data comes from a part
 or a whole image. The pixel formats are listed in table <a class="reference internal" href="#tab-pixel-formats"><span class="std std-numref">Table 33</span></a>.</p>
 <p>When NVDLA takes image as input data, there are some limits of
@@ -596,14 +574,7 @@ element. NVDLA use x offset to indicate how many redundant data are.
 The unit of offset is pixel.</p></li>
 </ul>
 <table class="docutils align-default" id="tab-pixel-formats">
-<caption><span class="caption-number">Table 33 </span><span class="caption-text">Pixel formats and valid setting</span><a class="headerlink" href="#tab-pixel-formats" title="Permalink to this table">¶</a></caption>
-<colgroup>
-<col style="width: 20%" />
-<col style="width: 20%" />
-<col style="width: 20%" />
-<col style="width: 20%" />
-<col style="width: 20%" />
-</colgroup>
+<caption><span class="caption-number">Table 33 </span><span class="caption-text">Pixel formats and valid setting</span><a class="headerlink" href="#tab-pixel-formats" title="Link to this table">¶</a></caption>
 <thead>
 <tr class="row-odd"><th class="head"><p>Format Name</p></th>
 <th class="head"><p># of planar</p></th>
@@ -858,9 +829,9 @@ U16_N444</p></td>
 </tr>
 </tbody>
 </table>
-</div>
-<div class="section" id="weight-format">
-<span id="id2"></span><h2>Weight Format<a class="headerlink" href="#weight-format" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="weight-format">
+<span id="id2"></span><h2>Weight Format<a class="headerlink" href="#weight-format" title="Link to this heading">¶</a></h2>
 <p>Unlike pixel data or feature data, weight data are generated long before
 convolution operation. And DLA engine never changes them during
 operation. Software should map weight data with property rules to fit
@@ -892,12 +863,7 @@ operation mode:</p>
 <li><p>sparse compressing</p></li>
 </ul>
 <table class="docutils align-default" id="tab-weight-formats">
-<caption><span class="caption-number">Table 34 </span><span class="caption-text">Weight formats and options</span><a class="headerlink" href="#tab-weight-formats" title="Permalink to this table">¶</a></caption>
-<colgroup>
-<col style="width: 34%" />
-<col style="width: 36%" />
-<col style="width: 30%" />
-</colgroup>
+<caption><span class="caption-number">Table 34 </span><span class="caption-text">Weight formats and options</span><a class="headerlink" href="#tab-weight-formats" title="Link to this table">¶</a></caption>
 <thead>
 <tr class="row-odd"><th class="head"><p>Weight types</p></th>
 <th class="head"><p>Sparse compression option</p></th>
@@ -923,12 +889,14 @@ operation mode:</p>
 </tr>
 </tbody>
 </table>
-<div class="figure align-center" id="id5">
+<figure class="align-center" id="id5">
 <span id="fig-original-weight-data"></span><a class="reference internal image-reference" href="../_images/format_original_weight_data.svg"><img alt="../_images/format_original_weight_data.svg" height="155" src="../_images/format_original_weight_data.svg" width="445" /></a>
-<p class="caption"><span class="caption-number">Fig. 12 </span><span class="caption-text">Original weight data</span><a class="headerlink" href="#id5" title="Permalink to this image">¶</a></p>
-</div>
-<div class="section" id="basic-weight-for-direct-convolution">
-<h3>Basic Weight for Direct Convolution<a class="headerlink" href="#basic-weight-for-direct-convolution" title="Permalink to this headline">¶</a></h3>
+<figcaption>
+<p><span class="caption-number">Fig. 12 </span><span class="caption-text">Original weight data</span><a class="headerlink" href="#id5" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
+<section id="basic-weight-for-direct-convolution">
+<h3>Basic Weight for Direct Convolution<a class="headerlink" href="#basic-weight-for-direct-convolution" title="Link to this heading">¶</a></h3>
 <p>Basic weight for direct convolution is the most basic and common weight
 format. Other weight formats are all extended from this format.</p>
 <p>The mapping rules of uncompressed weight for direct convolution are:</p>
@@ -950,13 +918,15 @@ boundaries.</p></li>
 </ul>
 <p>Diagram below shows how a group of 3x3x192Byte kernel maps for direct
 convolution.</p>
-<div class="figure align-center" id="id6">
+<figure class="align-center" id="id6">
 <span id="fig-dc-weight-mapping"></span><a class="reference internal image-reference" href="../_images/format_dc_weight_mapping.svg"><img alt="../_images/format_dc_weight_mapping.svg" height="191" src="../_images/format_dc_weight_mapping.svg" width="442" /></a>
-<p class="caption"><span class="caption-number">Fig. 13 </span><span class="caption-text">Weight mapping for direct convolution inside one group</span><a class="headerlink" href="#id6" title="Permalink to this image">¶</a></p>
-</div>
-</div>
-<div class="section" id="basic-weight-for-image-input">
-<h3>Basic Weight for image input<a class="headerlink" href="#basic-weight-for-image-input" title="Permalink to this headline">¶</a></h3>
+<figcaption>
+<p><span class="caption-number">Fig. 13 </span><span class="caption-text">Weight mapping for direct convolution inside one group</span><a class="headerlink" href="#id6" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
+</section>
+<section id="basic-weight-for-image-input">
+<h3>Basic Weight for image input<a class="headerlink" href="#basic-weight-for-image-input" title="Link to this heading">¶</a></h3>
 <p>Weight mapping for image input is like weight for direct convolution.
 The main difference is that image weight needs an additional channel
 extension step ahead of mapping steps for direct convolution weight.</p>
@@ -970,17 +940,19 @@ channel extension for Winograd convolution.</p>
 <p>The key idea of per-extension is to turn all weights in same line to a
 single channel. <a class="reference internal" href="#fig-dc-channel-extension-for-image-for-weight"><span class="std std-numref">Fig. 14</span></a>
 is a case for an int16 image input whose channel size is 3.</p>
-<div class="figure align-center" id="id7">
+<figure class="align-center" id="id7">
 <span id="fig-dc-channel-extension-for-image-for-weight"></span><a class="reference internal image-reference" href="../_images/format_dc_channel_extension_for_image_for_weight.svg"><img alt="../_images/format_dc_channel_extension_for_image_for_weight.svg" height="218" src="../_images/format_dc_channel_extension_for_image_for_weight.svg" width="349" /></a>
-<p class="caption"><span class="caption-number">Fig. 14 </span><span class="caption-text">Channel extension for image weight</span><a class="headerlink" href="#id7" title="Permalink to this image">¶</a></p>
-</div>
+<figcaption>
+<p><span class="caption-number">Fig. 14 </span><span class="caption-text">Channel extension for image weight</span><a class="headerlink" href="#id7" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
 <p>Channel pre-extension is the first step for image weight. Then all
 extended kernels follow the same steps of weight for direct convolution.
 That is, SW still need to do group and channel distribution after
 channel extension.</p>
-</div>
-<div class="section" id="basic-weight-for-winograd-convolution">
-<h3>Basic Weight for Winograd Convolution<a class="headerlink" href="#basic-weight-for-winograd-convolution" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="basic-weight-for-winograd-convolution">
+<h3>Basic Weight for Winograd Convolution<a class="headerlink" href="#basic-weight-for-winograd-convolution" title="Link to this heading">¶</a></h3>
 <p>The memory mapping of Winograd weight is very different from direct
 convolution. There are two phases to process the weights. Phase 1 is to
 do channel extension and conversion for each kernel. Phase 2 is to group
@@ -1025,12 +997,14 @@ of K15.</p></li>
 cube size is 4x4x4 elements.</p>
 <p>Figure below shows how to do channel extension to one kernel and map the
 data.</p>
-<div class="figure align-center" id="id8">
-<span id="fig-channel-extension-and-conversion-for-wingorad"></span><img alt="../_images/format_channel_extension_and_conversion_for_wingorad.svg" src="../_images/format_channel_extension_and_conversion_for_wingorad.svg" /><p class="caption"><span class="caption-number">Fig. 15 </span><span class="caption-text">Channel extension and conversion for Winograd</span><a class="headerlink" href="#id8" title="Permalink to this image">¶</a></p>
-</div>
-</div>
-<div class="section" id="weight-channel-post-extension-for-image-input">
-<h3>Weight Channel Post-extension for image input<a class="headerlink" href="#weight-channel-post-extension-for-image-input" title="Permalink to this headline">¶</a></h3>
+<figure class="align-center" id="id8">
+<span id="fig-channel-extension-and-conversion-for-wingorad"></span><img alt="../_images/format_channel_extension_and_conversion_for_wingorad.svg" src="../_images/format_channel_extension_and_conversion_for_wingorad.svg" /><figcaption>
+<p><span class="caption-number">Fig. 15 </span><span class="caption-text">Channel extension and conversion for Winograd</span><a class="headerlink" href="#id8" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
+</section>
+<section id="weight-channel-post-extension-for-image-input">
+<h3>Weight Channel Post-extension for image input<a class="headerlink" href="#weight-channel-post-extension-for-image-input" title="Link to this heading">¶</a></h3>
 <p>Weight channel post-extension is an option to enhance MAC efficiency
 when channel size is less than 32. It is available for image input mode
 only.</p>
@@ -1042,9 +1016,11 @@ image) data in CSC sub units. And SW needs to adjust weight mapping
 order.</p>
 <p>The channel post-extension is done after pre-extension. Figure below
 shows one case which parameter is 2.</p>
-<div class="figure align-center" id="id9">
-<span id="fig-weight-channel-post-extension-2"></span><img alt="../_images/format_weight_channel_post_extension_2.svg" src="../_images/format_weight_channel_post_extension_2.svg" /><p class="caption"><span class="caption-number">Fig. 16 </span><span class="caption-text">Weight channel post-extension, parameter = 2</span><a class="headerlink" href="#id9" title="Permalink to this image">¶</a></p>
-</div>
+<figure class="align-center" id="id9">
+<span id="fig-weight-channel-post-extension-2"></span><img alt="../_images/format_weight_channel_post_extension_2.svg" src="../_images/format_weight_channel_post_extension_2.svg" /><figcaption>
+<p><span class="caption-number">Fig. 16 </span><span class="caption-text">Weight channel post-extension, parameter = 2</span><a class="headerlink" href="#id9" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
 <p>Flow of pre-extension, post-extension, mapping and compression option
 for image weight:</p>
 <ul class="simple">
@@ -1060,9 +1036,9 @@ for image weight:</p>
 <li><p>If weight height is not divisible by 2 (2-lines) or 4 (4-lines), do
 NOT append 0s. This is unlike channel extension for Winograd.</p></li>
 </ul>
-</div>
-<div class="section" id="sparse-compression-option">
-<h3>Sparse Compression option<a class="headerlink" href="#sparse-compression-option" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="sparse-compression-option">
+<h3>Sparse Compression option<a class="headerlink" href="#sparse-compression-option" title="Link to this heading">¶</a></h3>
 <p>To reduce the bandwidth and power consumption on memory interface, NVDLA
 engine support weight sparse compression option. All four weight formats
 can support sparse compression. This option requires additional steps
@@ -1090,13 +1066,15 @@ is of 32-bit wise.</p></li>
 surfaces.</p></li>
 </ul>
 <p>The diagram below shows the memory mapping of compressed weight format.</p>
-<div class="figure align-center" id="id10">
-<span id="fig-memory-mapping-of-compressed-weight"></span><img alt="../_images/format_memory_mapping_of_compressed_weight.svg" src="../_images/format_memory_mapping_of_compressed_weight.svg" /><p class="caption"><span class="caption-number">Fig. 17 </span><span class="caption-text">Memory mapping of compressed weight</span><a class="headerlink" href="#id10" title="Permalink to this image">¶</a></p>
-</div>
-</div>
-</div>
-<div class="section" id="bias-data-format">
-<h2>Bias Data Format<a class="headerlink" href="#bias-data-format" title="Permalink to this headline">¶</a></h2>
+<figure class="align-center" id="id10">
+<span id="fig-memory-mapping-of-compressed-weight"></span><img alt="../_images/format_memory_mapping_of_compressed_weight.svg" src="../_images/format_memory_mapping_of_compressed_weight.svg" /><figcaption>
+<p><span class="caption-number">Fig. 17 </span><span class="caption-text">Memory mapping of compressed weight</span><a class="headerlink" href="#id10" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
+</section>
+</section>
+<section id="bias-data-format">
+<h2>Bias Data Format<a class="headerlink" href="#bias-data-format" title="Link to this heading">¶</a></h2>
 <p>Bias data is another optional input data for convolution layers. When
 this option is enabled, DLA engine will add the bias data to result of
 convolution before writing back to memory.</p>
@@ -1110,10 +1088,6 @@ convolution before writing back to memory.</p>
 <p>If the output feature data cube is WxHxC, check below table for the
 corresponding bias cube size:</p>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 42%" />
-<col style="width: 58%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Per Layer</p></th>
 <th class="head"><p>1x1x1 (Register)</p></th>
@@ -1136,15 +1110,19 @@ network.</p>
 <ul class="simple">
 <li><p>Two bytes per element with INT16/FP16 or 1 byte per element with INT8</p></li>
 </ul>
-<div class="figure align-center" id="id11">
-<span id="fig-memory-mapping-of-per-channel-bias-data-case1"></span><img alt="../_images/format_memory_mapping_of_per_channel_bias_data_case1.svg" src="../_images/format_memory_mapping_of_per_channel_bias_data_case1.svg" /><p class="caption"><span class="caption-number">Fig. 18 </span><span class="caption-text">Memory Mapping of Per Channel Bias Data (Case 1)</span><a class="headerlink" href="#id11" title="Permalink to this image">¶</a></p>
-</div>
+<figure class="align-center" id="id11">
+<span id="fig-memory-mapping-of-per-channel-bias-data-case1"></span><img alt="../_images/format_memory_mapping_of_per_channel_bias_data_case1.svg" src="../_images/format_memory_mapping_of_per_channel_bias_data_case1.svg" /><figcaption>
+<p><span class="caption-number">Fig. 18 </span><span class="caption-text">Memory Mapping of Per Channel Bias Data (Case 1)</span><a class="headerlink" href="#id11" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
 <ul class="simple">
 <li><p>2 bytes per element with INT8:</p></li>
 </ul>
-<div class="figure align-center" id="id12">
-<span id="fig-memory-mapping-of-per-channel-bias-data-case2"></span><img alt="../_images/format_memory_mapping_of_per_channel_bias_data_case2.svg" src="../_images/format_memory_mapping_of_per_channel_bias_data_case2.svg" /><p class="caption"><span class="caption-number">Fig. 19 </span><span class="caption-text">Memory Mapping of Per Channel Bias Data (Case 2)</span><a class="headerlink" href="#id12" title="Permalink to this image">¶</a></p>
-</div>
+<figure class="align-center" id="id12">
+<span id="fig-memory-mapping-of-per-channel-bias-data-case2"></span><img alt="../_images/format_memory_mapping_of_per_channel_bias_data_case2.svg" src="../_images/format_memory_mapping_of_per_channel_bias_data_case2.svg" /><figcaption>
+<p><span class="caption-number">Fig. 19 </span><span class="caption-text">Memory Mapping of Per Channel Bias Data (Case 2)</span><a class="headerlink" href="#id12" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
 <ul class="simple">
 <li><p>2 bytes per element with INT8:</p></li>
 </ul>
@@ -1152,18 +1130,22 @@ network.</p>
 <ul class="simple">
 <li><p>Two bytes per element with INT16/FP16 or 1 byte per element with INT8</p></li>
 </ul>
-<div class="figure align-center" id="id13">
-<span id="fig-memory-mapping-of-per-element-bias-data-case1"></span><img alt="../_images/format_memory_mapping_of_per_element_bias_data_case1.svg" src="../_images/format_memory_mapping_of_per_element_bias_data_case1.svg" /><p class="caption"><span class="caption-number">Fig. 20 </span><span class="caption-text">Memory Mapping of Per Element Bias Data (Case 1)</span><a class="headerlink" href="#id13" title="Permalink to this image">¶</a></p>
-</div>
+<figure class="align-center" id="id13">
+<span id="fig-memory-mapping-of-per-element-bias-data-case1"></span><img alt="../_images/format_memory_mapping_of_per_element_bias_data_case1.svg" src="../_images/format_memory_mapping_of_per_element_bias_data_case1.svg" /><figcaption>
+<p><span class="caption-number">Fig. 20 </span><span class="caption-text">Memory Mapping of Per Element Bias Data (Case 1)</span><a class="headerlink" href="#id13" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
 <ul class="simple">
 <li><p>2 bytes per element with INT8:</p></li>
 </ul>
-<div class="figure align-center" id="id14">
-<span id="fig-memory-mapping-of-per-element-bias-data-case2"></span><img alt="../_images/format_memory_mapping_of_per_element_bias_data_case2.svg" src="../_images/format_memory_mapping_of_per_element_bias_data_case2.svg" /><p class="caption"><span class="caption-number">Fig. 21 </span><span class="caption-text">Memory Mapping of Per Element Bias Data (Case 2)</span><a class="headerlink" href="#id14" title="Permalink to this image">¶</a></p>
-</div>
-</div>
-<div class="section" id="prelu-data-format">
-<h2>PReLU Data Format<a class="headerlink" href="#prelu-data-format" title="Permalink to this headline">¶</a></h2>
+<figure class="align-center" id="id14">
+<span id="fig-memory-mapping-of-per-element-bias-data-case2"></span><img alt="../_images/format_memory_mapping_of_per_element_bias_data_case2.svg" src="../_images/format_memory_mapping_of_per_element_bias_data_case2.svg" /><figcaption>
+<p><span class="caption-number">Fig. 21 </span><span class="caption-text">Memory Mapping of Per Element Bias Data (Case 2)</span><a class="headerlink" href="#id14" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
+</section>
+<section id="prelu-data-format">
+<h2>PReLU Data Format<a class="headerlink" href="#prelu-data-format" title="Link to this heading">¶</a></h2>
 <p>Each PReLU data just have one component and it will be fed into
 multiplier of SDP.</p>
 <p>PReLU always operated per-channel thus there is only one type of PReLU
@@ -1182,18 +1164,22 @@ RDMA_DATA_SIZE</p></li>
 <ul class="simple">
 <li><p>Two bytes per element with INT16/FP16 or 1 byte per element with INT8</p></li>
 </ul>
-<div class="figure align-center" id="id15">
-<span id="fig-memory-mapping-of-per-channel-prelu-data-case1"></span><img alt="../_images/format_memory_mapping_of_per_channel_prelu_data_case1.svg" src="../_images/format_memory_mapping_of_per_channel_prelu_data_case1.svg" /><p class="caption"><span class="caption-number">Fig. 22 </span><span class="caption-text">Memory Mapping of Per Channel PReLU Data (Case 1)</span><a class="headerlink" href="#id15" title="Permalink to this image">¶</a></p>
-</div>
+<figure class="align-center" id="id15">
+<span id="fig-memory-mapping-of-per-channel-prelu-data-case1"></span><img alt="../_images/format_memory_mapping_of_per_channel_prelu_data_case1.svg" src="../_images/format_memory_mapping_of_per_channel_prelu_data_case1.svg" /><figcaption>
+<p><span class="caption-number">Fig. 22 </span><span class="caption-text">Memory Mapping of Per Channel PReLU Data (Case 1)</span><a class="headerlink" href="#id15" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
 <ul class="simple">
 <li><p>2 bytes per element with INT8:</p></li>
 </ul>
-<div class="figure align-center" id="id16">
-<span id="fig-memory-mapping-of-per-channel-prelu-data-case2"></span><img alt="../_images/format_memory_mapping_of_per_channel_prelu_data_case2.svg" src="../_images/format_memory_mapping_of_per_channel_prelu_data_case2.svg" /><p class="caption"><span class="caption-number">Fig. 23 </span><span class="caption-text">Memory Mapping of Per Channel PReLU Data (Case 2)</span><a class="headerlink" href="#id16" title="Permalink to this image">¶</a></p>
-</div>
-</div>
-<div class="section" id="batch-normalization-data-format">
-<h2>Batch Normalization Data Format<a class="headerlink" href="#batch-normalization-data-format" title="Permalink to this headline">¶</a></h2>
+<figure class="align-center" id="id16">
+<span id="fig-memory-mapping-of-per-channel-prelu-data-case2"></span><img alt="../_images/format_memory_mapping_of_per_channel_prelu_data_case2.svg" src="../_images/format_memory_mapping_of_per_channel_prelu_data_case2.svg" /><figcaption>
+<p><span class="caption-number">Fig. 23 </span><span class="caption-text">Memory Mapping of Per Channel PReLU Data (Case 2)</span><a class="headerlink" href="#id16" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
+</section>
+<section id="batch-normalization-data-format">
+<h2>Batch Normalization Data Format<a class="headerlink" href="#batch-normalization-data-format" title="Link to this heading">¶</a></h2>
 <p>Batch Normalization data is another optional input data for batch
 normalization layers.</p>
 <p>Each normalization data consists of two parts, one is to add onto the
@@ -1217,23 +1203,27 @@ memory mapping of data is described as below:</p>
 <ul class="simple">
 <li><p>Two bytes per element with INT16/FP16 or 1 byte per element with INT8</p></li>
 </ul>
-<div class="figure align-center" id="id17">
-<span id="fig-memory-mapping-of-batch-normalization-data-case1"></span><img alt="../_images/format_memory_mapping_of_batch_normalization_data_case1.svg" src="../_images/format_memory_mapping_of_batch_normalization_data_case1.svg" /><p class="caption"><span class="caption-number">Fig. 24 </span><span class="caption-text">Memory Mapping of Batch Normalization Data (Case 1)</span><a class="headerlink" href="#id17" title="Permalink to this image">¶</a></p>
-</div>
+<figure class="align-center" id="id17">
+<span id="fig-memory-mapping-of-batch-normalization-data-case1"></span><img alt="../_images/format_memory_mapping_of_batch_normalization_data_case1.svg" src="../_images/format_memory_mapping_of_batch_normalization_data_case1.svg" /><figcaption>
+<p><span class="caption-number">Fig. 24 </span><span class="caption-text">Memory Mapping of Batch Normalization Data (Case 1)</span><a class="headerlink" href="#id17" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
 <ul class="simple">
 <li><p>2 bytes per element with INT8:</p></li>
 </ul>
-<div class="figure align-center" id="id18">
-<span id="fig-memory-mapping-of-batch-normalization-data-case2"></span><img alt="../_images/format_memory_mapping_of_batch_normalization_data_case2.svg" src="../_images/format_memory_mapping_of_batch_normalization_data_case2.svg" /><p class="caption"><span class="caption-number">Fig. 25 </span><span class="caption-text">Memory Mapping of Batch Normalization Data (Case 2)</span><a class="headerlink" href="#id18" title="Permalink to this image">¶</a></p>
-</div>
+<figure class="align-center" id="id18">
+<span id="fig-memory-mapping-of-batch-normalization-data-case2"></span><img alt="../_images/format_memory_mapping_of_batch_normalization_data_case2.svg" src="../_images/format_memory_mapping_of_batch_normalization_data_case2.svg" /><figcaption>
+<p><span class="caption-number">Fig. 25 </span><span class="caption-text">Memory Mapping of Batch Normalization Data (Case 2)</span><a class="headerlink" href="#id18" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
 <p>Per layer batch normalization data is stored in register.</p>
 <p>Be noted that INT8 and INT16 here means the processing precision, so
 when the layer is running from INT16 to INT8 or INT8 to INT16 precision
 conversion, batch normalization data need set to processing precision
 which is always INT8.</p>
-</div>
-<div class="section" id="element-wise-data-format">
-<h2>Element-Wise Data Format<a class="headerlink" href="#element-wise-data-format" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="element-wise-data-format">
+<h2>Element-Wise Data Format<a class="headerlink" href="#element-wise-data-format" title="Link to this heading">¶</a></h2>
 <p>Element-Wise data is another optional input data for Element-Wise
 layers.</p>
 <p>Each Element-Wise data consists of just one part and either for ALU or
@@ -1258,15 +1248,19 @@ description above;</p>
 <ul class="simple">
 <li><p>Two bytes per element with INT16/FP16 or 1 byte per element with INT8</p></li>
 </ul>
-<div class="figure align-center" id="id19">
-<span id="fig-memory-mapping-of-element-wise-data-case1"></span><img alt="../_images/format_memory_mapping_of_element_wise_data_case1.svg" src="../_images/format_memory_mapping_of_element_wise_data_case1.svg" /><p class="caption"><span class="caption-number">Fig. 26 </span><span class="caption-text">Memory Mapping of Element Wise Data (Case 1)</span><a class="headerlink" href="#id19" title="Permalink to this image">¶</a></p>
-</div>
+<figure class="align-center" id="id19">
+<span id="fig-memory-mapping-of-element-wise-data-case1"></span><img alt="../_images/format_memory_mapping_of_element_wise_data_case1.svg" src="../_images/format_memory_mapping_of_element_wise_data_case1.svg" /><figcaption>
+<p><span class="caption-number">Fig. 26 </span><span class="caption-text">Memory Mapping of Element Wise Data (Case 1)</span><a class="headerlink" href="#id19" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
 <ul class="simple">
 <li><p>2 bytes per element with INT8:</p></li>
 </ul>
-<div class="figure align-center" id="id20">
-<span id="fig-memory-mapping-of-element-wise-data-case2"></span><img alt="../_images/format_memory_mapping_of_element_wise_data_case2.svg" src="../_images/format_memory_mapping_of_element_wise_data_case2.svg" /><p class="caption"><span class="caption-number">Fig. 27 </span><span class="caption-text">Memory Mapping of Element Wise Data (Case 2)</span><a class="headerlink" href="#id20" title="Permalink to this image">¶</a></p>
-</div>
+<figure class="align-center" id="id20">
+<span id="fig-memory-mapping-of-element-wise-data-case2"></span><img alt="../_images/format_memory_mapping_of_element_wise_data_case2.svg" src="../_images/format_memory_mapping_of_element_wise_data_case2.svg" /><figcaption>
+<p><span class="caption-number">Fig. 27 </span><span class="caption-text">Memory Mapping of Element Wise Data (Case 2)</span><a class="headerlink" href="#id20" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
 <p>Be noted that INT8 and INT16 here means the processing precision, so
 when the layer is running from INT16 to INT8 or INT8 to INT16 precision
 conversion, Element-Wise data need set to processing precision which is
@@ -1283,10 +1277,6 @@ for:</p>
 <p>BytesPerAtom=ElementPerAtom * ComponentsPerElement * BytesPerComponent</p>
 <p>Where ElementPerAtom is decided by PROC_PRECISION of SDP data pipeline:</p>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 50%" />
-<col style="width: 50%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>PROC_PRECISION</p></th>
 <th class="head"><p>ElementPerAtom</p></th>
@@ -1303,10 +1293,6 @@ for:</p>
 </table>
 <p>ComponentsPerElement is decided by use case (or DATA_USE register):</p>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 65%" />
-<col style="width: 35%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Use case</p></th>
 <th class="head"><p>ComponentsPerElement</p></th>
@@ -1332,10 +1318,6 @@ for:</p>
 </table>
 <p>BytesPerComponent is decided by precision (or DATA_SIZE register)</p>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 37%" />
-<col style="width: 63%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>DATA_SIZE</p></th>
 <th class="head"><p>BytesPerComponent</p></th>
@@ -1350,20 +1332,12 @@ for:</p>
 </tr>
 </tbody>
 </table>
-</div>
-<div class="section" id="alignment-of-start-address-and-stride">
-<h2>Alignment of Start Address and Stride<a class="headerlink" href="#alignment-of-start-address-and-stride" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="alignment-of-start-address-and-stride">
+<h2>Alignment of Start Address and Stride<a class="headerlink" href="#alignment-of-start-address-and-stride" title="Link to this heading">¶</a></h2>
 <p>Here is the conclusion of requirements of alignment:</p>
 <table class="docutils align-default" id="tab-requirements-of-alignment">
-<caption><span class="caption-number">Table 35 </span><span class="caption-text">Requirements of alignment</span><a class="headerlink" href="#tab-requirements-of-alignment" title="Permalink to this table">¶</a></caption>
-<colgroup>
-<col style="width: 17%" />
-<col style="width: 17%" />
-<col style="width: 17%" />
-<col style="width: 17%" />
-<col style="width: 17%" />
-<col style="width: 17%" />
-</colgroup>
+<caption><span class="caption-number">Table 35 </span><span class="caption-text">Requirements of alignment</span><a class="headerlink" href="#tab-requirements-of-alignment" title="Link to this table">¶</a></caption>
 <thead>
 <tr class="row-odd"><th class="head"><p>Data
 format</p></th>
@@ -1475,8 +1449,8 @@ wise</p></td>
 </tr>
 </tbody>
 </table>
-</div>
-</div>
+</section>
+</section>
 
 
         </div>
@@ -1484,8 +1458,9 @@ wise</p></td>
           
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="../contents.html">Table of Contents</a></h3>
-  <ul>
+  <div>
+    <h3><a href="../contents.html">Table of Contents</a></h3>
+    <ul>
 <li><a class="reference internal" href="#">In-memory data formats</a><ul>
 <li><a class="reference internal" href="#overview">Overview</a><ul>
 <li><a class="reference internal" href="#precision-type">Precision Type</a><ul>
@@ -1514,12 +1489,17 @@ wise</p></td>
 </li>
 </ul>
 
-  <h4>Previous topic</h4>
-  <p class="topless"><a href="v1/hwarch.html"
-                        title="previous chapter">Hardware Architectural Specification</a></p>
-  <h4>Next topic</h4>
-  <p class="topless"><a href="v1/integration_guide.html"
-                        title="next chapter">Integrator’s Manual</a></p>
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="v1/hwarch.html"
+                          title="previous chapter">Hardware Architectural Specification</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="v1/integration_guide.html"
+                          title="next chapter">Integrator’s Manual</a></p>
+  </div>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
@@ -1531,12 +1511,12 @@ wise</p></td>
   <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
       <input type="submit" value="Go" />
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script>document.getElementById('searchbox').style.display = "block"</script>
         </div>
       </div>
         </div>
@@ -1565,10 +1545,10 @@ wise</p></td>
 <div class="container">
 <div class="row">
 &#169; <a
-href="../copyright.html">Copyright</a> 2018 - 2024, NVIDIA Corporation.
+href="../copyright.html">Copyright</a> 2018 - 2026, NVIDIA Corporation.
 <a href="https://www.nvidia.com/object/legal_info.html">Legal Information.</a>
 <a href="https://www.nvidia.com/object/privacy_policy.html">Privacy Policy.</a>
-Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.5.4.
+Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
 </div>
 </div>
 </div>

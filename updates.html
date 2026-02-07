@@ -1,18 +1,17 @@
-
 <!DOCTYPE html>
 
-<html>
+<html lang="en" data-content_root="./">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
     <title>Open NVDLA Repository Updates &#8212; NVDLA Documentation</title>
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="_static/nvdla.css" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="_static/styles.css" />
-    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-    <script src="_static/jquery.js"></script>
-    <script src="_static/underscore.js"></script>
-    <script src="_static/doctools.js"></script>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="_static/nvdla.css?v=907781f7" />
+    <link rel="stylesheet" type="text/css" href="_static/styles.css?v=af91e327" />
+    <script src="_static/documentation_options.js?v=7026087e"></script>
+    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="NVIDIA Open NVDLA License and Agreement v1.0" href="license.html" />
     <link rel="prev" title="Virtual Platform On AWS FPGA" href="vp_fpga.html" />
@@ -25,7 +24,7 @@
     max-width: 100% !important;
   }
 </style>
-<script src="//assets.adobedtm.com/b92787824f2e0e9b68dc2e993f9bd995339fe417/satelliteLib-30c8ffcc8ece089156fd5590fbcf390ffc296f51.js"></script>
+<script src="https://assets.adobedtm.com/5d4962a43b79/814eb6e9b4e1/launch-4bc07f1e0b0b.min.js"></script>
 <!-- OneTrust Cookies Consent Notice start for nvidia.com -->
 <script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" data-document-language="true" type="text/javascript" charset="UTF-8" data-domain-script="3e2b62ff-7ae7-4ac5-87c8-d5949ecafff5-test" ></script>
 <script type="text/javascript">
@@ -67,33 +66,33 @@ function OptanonWrapper() {
       <div class="row">
         <div class="col-xs-12 col-md-9">
           
-  <div class="section" id="open-nvdla-repository-updates">
-<span id="updates"></span><h1>Open NVDLA Repository Updates<a class="headerlink" href="#open-nvdla-repository-updates" title="Permalink to this headline">¶</a></h1>
+  <section id="open-nvdla-repository-updates">
+<span id="updates"></span><h1>Open NVDLA Repository Updates<a class="headerlink" href="#open-nvdla-repository-updates" title="Link to this heading">¶</a></h1>
 <p>This document is a quick reference guide to changes in the NVDLA repository. Most recent updates are at the top of the document.  Detailed information can be obtained from the <code class="docutils literal notranslate"><span class="pre">git</span></code> list of commits.</p>
-<div class="section" id="id1">
-<h2>5/15/2018<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<section id="id1">
+<h2>5/15/2018<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h2>
 <p>Release NVDLA Virtual platform on Amazon Web Services (AWS) FPGA which supports HW regression and SW tests. See <a class="reference internal" href="vp_fpga.html"><span class="doc">Virtual Platform On AWS FPGA</span></a> section. Support “nv_small” configuration.</p>
-</div>
-<div class="section" id="id2">
-<h2>4/19/2018<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="id2">
+<h2>4/19/2018<a class="headerlink" href="#id2" title="Link to this heading">¶</a></h2>
 <p>First release of NVDLA V2 – the configurable NVDLA.  This release also includes
 a new testbench which can be used to validate the design.  However,
 the only tested configuration is the “nv_small” configuration. See
 the <a class="reference internal" href="hw/v2/scalability.html"><span class="doc">Scalability parameters and ConfigROM</span></a> document for details on the nv_small
 design configuration parameters.  While the nv_small config passes many
 tests, coverage isn’t yet to tapeout quality levels.</p>
-</div>
-<div class="section" id="id3">
-<h2>12/1/2017<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="id3">
+<h2>12/1/2017<a class="headerlink" href="#id3" title="Link to this heading">¶</a></h2>
 <p>Released a SystemC model of the NVDLA hardware, suitable for simulation and
 verification.  This SystemC model lives in <code class="docutils literal notranslate"><span class="pre">cmod/</span></code>, and information on
 building it is in the <a class="reference internal" href="hw/v1/integration_guide.html#tree-build"><span class="std std-ref">Tree Build</span></a> section.</p>
 <p>Additionally, this release contains experiemental support for building the
 NVDLA RTL using Verilator; for more information on this, see the
 <a class="reference internal" href="hw/v1/integration_guide.html#verilator-testbench"><span class="std std-ref">Verilator Testbench</span></a> section.</p>
-</div>
-<div class="section" id="id4">
-<h2>11/21/2017<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="id4">
+<h2>11/21/2017<a class="headerlink" href="#id4" title="Link to this heading">¶</a></h2>
 <p>A few updates in the nvdla hardware tree, most notably moving further
 development on the non-configurable NVDLA implementation to its own stable
 branch, <code class="docutils literal notranslate"><span class="pre">nvdlav1</span></code>, and renaming the full-precision non-configurable
@@ -102,32 +101,32 @@ contain potentially-destabilizing ongoing effort for a configurable NVDLA.
 Note that the default branch has changed, and users may wish to modify which
 upstream branch they are tracking.</p>
 <p>This release includes bugfixes for Xilinx Vivado and Mentor Questa simulators.</p>
-</div>
-<div class="section" id="id5">
-<h2>11/1/2017<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="id5">
+<h2>11/1/2017<a class="headerlink" href="#id5" title="Link to this heading">¶</a></h2>
 <p>First drop of RTL build system to be used for creating multiple NVDLA configurations.  The
 configurations themselves will be checked in as features become available.  All configuration
 parameters to create a small config NVDLA with 64 MACs is expected before the end 2017.</p>
-</div>
-<div class="section" id="id6">
-<h2>10/24/2017<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="id6">
+<h2>10/24/2017<a class="headerlink" href="#id6" title="Link to this heading">¶</a></h2>
 <p>Initial release of the NVDLA Kernel Mode Driver (KMD) for Linux.</p>
-</div>
-<div class="section" id="id7">
-<h2>10/18/2017<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="id7">
+<h2>10/18/2017<a class="headerlink" href="#id7" title="Link to this heading">¶</a></h2>
 <p>The traceplayer testbench has been updated to split the memory model into two logically separate region. Support was added to the axi_slave and memory model for non-zero burst lengths which is used by the cvsram interface. Added cvsram form of sanity tests. Added sdp and pdp sanity tests. Added googlenet_conv2_3x3_int16 and cc_alexnet_conv5_relu5_int16_dtest_cvsram layer tests.</p>
 <p>Changes to address issues #16, #23, #24 on the NVDLA GitHub site.</p>
-</div>
-<div class="section" id="id8">
-<h2>10/6/2017<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="id8">
+<h2>10/6/2017<a class="headerlink" href="#id8" title="Link to this heading">¶</a></h2>
 <p>The large configuration RTL is updated to a 64-bit address bus on the DBBIF and RAMIF busses.  The previous design was 32-bit externally and 40-bit internally.  This reflects the final size for the large configuration.</p>
 <p>Changes to address issues #6, #7, #9 on the NVDLA GitHub site.</p>
-</div>
-<div class="section" id="id9">
-<h2>9/25/2017<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="id9">
+<h2>9/25/2017<a class="headerlink" href="#id9" title="Link to this heading">¶</a></h2>
 <p>Initial release of large configuration RTL, trace player testbench, synthesis scripts, performance model spreadsheet, and documentation.</p>
-</div>
-</div>
+</section>
+</section>
 
 
         </div>
@@ -135,8 +134,9 @@ parameters to create a small config NVDLA with 64 MACs is expected before the en
           
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="contents.html">Table of Contents</a></h3>
-  <ul>
+  <div>
+    <h3><a href="contents.html">Table of Contents</a></h3>
+    <ul>
 <li><a class="reference internal" href="#">Open NVDLA Repository Updates</a><ul>
 <li><a class="reference internal" href="#id1">5/15/2018</a></li>
 <li><a class="reference internal" href="#id2">4/19/2018</a></li>
@@ -151,12 +151,17 @@ parameters to create a small config NVDLA with 64 MACs is expected before the en
 </li>
 </ul>
 
-  <h4>Previous topic</h4>
-  <p class="topless"><a href="vp_fpga.html"
-                        title="previous chapter">Virtual Platform On AWS FPGA</a></p>
-  <h4>Next topic</h4>
-  <p class="topless"><a href="license.html"
-                        title="next chapter">NVIDIA Open NVDLA License and Agreement v1.0</a></p>
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="vp_fpga.html"
+                          title="previous chapter">Virtual Platform On AWS FPGA</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="license.html"
+                          title="next chapter">NVIDIA Open NVDLA License and Agreement v1.0</a></p>
+  </div>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
@@ -168,12 +173,12 @@ parameters to create a small config NVDLA with 64 MACs is expected before the en
   <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
       <input type="submit" value="Go" />
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script>document.getElementById('searchbox').style.display = "block"</script>
         </div>
       </div>
         </div>
@@ -201,10 +206,10 @@ parameters to create a small config NVDLA with 64 MACs is expected before the en
 <div class="container">
 <div class="row">
 &#169; <a
-href="copyright.html">Copyright</a> 2018 - 2024, NVIDIA Corporation.
+href="copyright.html">Copyright</a> 2018 - 2026, NVIDIA Corporation.
 <a href="https://www.nvidia.com/object/legal_info.html">Legal Information.</a>
 <a href="https://www.nvidia.com/object/privacy_policy.html">Privacy Policy.</a>
-Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.5.4.
+Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
 </div>
 </div>
 </div>

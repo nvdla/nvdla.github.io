@@ -1,18 +1,17 @@
-
 <!DOCTYPE html>
 
-<html>
+<html lang="en" data-content_root="../../">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
     <title>NVDLA Environment Setup Guide &#8212; NVDLA Documentation</title>
-    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../../_static/nvdla.css" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/styles.css" />
-    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
-    <script src="../../_static/jquery.js"></script>
-    <script src="../../_static/underscore.js"></script>
-    <script src="../../_static/doctools.js"></script>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../_static/nvdla.css?v=907781f7" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles.css?v=af91e327" />
+    <script src="../../_static/documentation_options.js?v=7026087e"></script>
+    <script src="../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="Integrator’s Manual" href="integration_guide.html" />
     <link rel="prev" title="Programming Guide" href="../v1/ias/programming_guide.html" />
@@ -25,7 +24,7 @@
     max-width: 100% !important;
   }
 </style>
-<script src="//assets.adobedtm.com/b92787824f2e0e9b68dc2e993f9bd995339fe417/satelliteLib-30c8ffcc8ece089156fd5590fbcf390ffc296f51.js"></script>
+<script src="https://assets.adobedtm.com/5d4962a43b79/814eb6e9b4e1/launch-4bc07f1e0b0b.min.js"></script>
 <!-- OneTrust Cookies Consent Notice start for nvidia.com -->
 <script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" data-document-language="true" type="text/javascript" charset="UTF-8" data-domain-script="3e2b62ff-7ae7-4ac5-87c8-d5949ecafff5-test" ></script>
 <script type="text/javascript">
@@ -68,9 +67,9 @@ function OptanonWrapper() {
       <div class="row">
         <div class="col-xs-12 col-md-9">
           
-  <div class="section" id="nvdla-environment-setup-guide">
-<h1><a class="toc-backref" href="#id1">NVDLA Environment Setup Guide</a><a class="headerlink" href="#nvdla-environment-setup-guide" title="Permalink to this headline">¶</a></h1>
-<div class="contents topic" id="contents">
+  <section id="nvdla-environment-setup-guide">
+<h1><a class="toc-backref" href="#id1" role="doc-backlink">NVDLA Environment Setup Guide</a><a class="headerlink" href="#nvdla-environment-setup-guide" title="Link to this heading">¶</a></h1>
+<nav class="contents" id="contents">
 <p class="topic-title">Contents</p>
 <ul class="simple">
 <li><p><a class="reference internal" href="#nvdla-environment-setup-guide" id="id1">NVDLA Environment Setup Guide</a></p>
@@ -93,12 +92,12 @@ function OptanonWrapper() {
 </ul>
 </li>
 </ul>
-</div>
-<div class="section" id="tools-and-dependency-libraries-setup">
-<h2><a class="toc-backref" href="#id2">Tools and Dependency Libraries Setup</a><a class="headerlink" href="#tools-and-dependency-libraries-setup" title="Permalink to this headline">¶</a></h2>
+</nav>
+<section id="tools-and-dependency-libraries-setup">
+<h2><a class="toc-backref" href="#id2" role="doc-backlink">Tools and Dependency Libraries Setup</a><a class="headerlink" href="#tools-and-dependency-libraries-setup" title="Link to this heading">¶</a></h2>
 <p>Required tools and libraries and version could be found in TOT/makefile.</p>
-<div class="section" id="tree-make-setup">
-<h3><a class="toc-backref" href="#id3">tree.make setup</a><a class="headerlink" href="#tree-make-setup" title="Permalink to this headline">¶</a></h3>
+<section id="tree-make-setup">
+<h3><a class="toc-backref" href="#id3" role="doc-backlink">tree.make setup</a><a class="headerlink" href="#tree-make-setup" title="Link to this heading">¶</a></h3>
 <p><code class="docutils literal notranslate"><span class="pre">TOT&gt;</span> <span class="pre">make</span></code></p>
 <p>Please install corresponding tools and point to the actual path in your
 environment.</p>
@@ -152,9 +151,9 @@ additionall coverage is necessary to get it to tapeout quality.</p>
 </div>
 <p>After this setup, a file named <code class="docutils literal notranslate"><span class="pre">tree.make</span></code> will be generated under TOT
 directory.</p>
-</div>
-<div class="section" id="project-name-setup">
-<h3><a class="toc-backref" href="#id4">Project name setup</a><a class="headerlink" href="#project-name-setup" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="project-name-setup">
+<h3><a class="toc-backref" href="#id4" role="doc-backlink">Project name setup</a><a class="headerlink" href="#project-name-setup" title="Link to this heading">¶</a></h3>
 <p>During tree.make file setup process, project name has been specified. The
 project name could be changed after tree.make generation. It’s allowed to build
 multiple projects. To change target project names, open generated TOT/tree.make
@@ -166,9 +165,9 @@ project name, only build nv_small:</p>
 <span class="n">PROJECTS</span> <span class="o">:=</span> <span class="n">nv_small</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="designware-components">
-<h3><a class="toc-backref" href="#id5">Designware Components</a><a class="headerlink" href="#designware-components" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="designware-components">
+<h3><a class="toc-backref" href="#id5" role="doc-backlink">Designware Components</a><a class="headerlink" href="#designware-components" title="Link to this heading">¶</a></h3>
 <p>The NVDLA design utilize the following Designware components.</p>
 <ul class="simple">
 <li><p>DW02_multp</p></li>
@@ -194,12 +193,12 @@ Synthesis will pick up an internal optimized version.</p>
 <span class="n">DESIGNWARE_DIR</span> <span class="o">:=</span> \<span class="o">&lt;</span><span class="n">PATH_TO_DESIGNWARE_DIRECTOTRY</span>\<span class="o">&gt;</span>
 </pre></div>
 </div>
-</div>
-</div>
-<div class="section" id="build-tree">
-<h2><a class="toc-backref" href="#id6">Build Tree</a><a class="headerlink" href="#build-tree" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="build-rtl">
-<h3><a class="toc-backref" href="#id7">Build RTL</a><a class="headerlink" href="#build-rtl" title="Permalink to this headline">¶</a></h3>
+</section>
+</section>
+<section id="build-tree">
+<h2><a class="toc-backref" href="#id6" role="doc-backlink">Build Tree</a><a class="headerlink" href="#build-tree" title="Link to this heading">¶</a></h2>
+<section id="build-rtl">
+<h3><a class="toc-backref" href="#id7" role="doc-backlink">Build RTL</a><a class="headerlink" href="#build-rtl" title="Link to this heading">¶</a></h3>
 <p>Once tree.make has been setup, RTL can be build with following command</p>
 <p><code class="docutils literal notranslate"><span class="pre">TOT</span> <span class="pre">&gt;</span> <span class="pre">./tools/bin/tmake</span> <span class="pre">-build</span> <span class="pre">vmod</span></code></p>
 <p>In the end of build process, following line will
@@ -209,9 +208,9 @@ be show in the last line:</p>
 </div>
 <p>There will be a new directory named outdir under TOT. RTL file can be
 found under TOT/outdir/&lt;project_name&gt;/vmod.</p>
-</div>
-<div class="section" id="build-test-bench">
-<h3><a class="toc-backref" href="#id8">Build Test Bench</a><a class="headerlink" href="#build-test-bench" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="build-test-bench">
+<h3><a class="toc-backref" href="#id8" role="doc-backlink">Build Test Bench</a><a class="headerlink" href="#build-test-bench" title="Link to this heading">¶</a></h3>
 <p><code class="docutils literal notranslate"><span class="pre">TOT</span> <span class="pre">&gt;</span> <span class="pre">./tools/bin/tmake</span> <span class="pre">-build</span> <span class="pre">ready_for_test</span></code></p>
 <p>Several messages begin with [TMAKE] will be show on terminal output
 during build process, and in the end of the process, following line will
@@ -221,9 +220,9 @@ be show in the last line:</p>
 </div>
 <p>There will be a new directory named outdir under TOT, it’s generated by
 build flow and contains generated RTL and verification environment.</p>
-</div>
-<div class="section" id="build-test-bench-and-run-protect-tests">
-<h3><a class="toc-backref" href="#id9">Build test bench and run protect tests</a><a class="headerlink" href="#build-test-bench-and-run-protect-tests" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="build-test-bench-and-run-protect-tests">
+<h3><a class="toc-backref" href="#id9" role="doc-backlink">Build test bench and run protect tests</a><a class="headerlink" href="#build-test-bench-and-run-protect-tests" title="Link to this heading">¶</a></h3>
 <p>To validate tree healthness after download from git server, or to make sure
 changes are not break base line functions, use following command to build
 tree and then run protection tests</p>
@@ -233,9 +232,9 @@ be show in the last line:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">TMAKE</span><span class="p">]:</span> <span class="n">DONE</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="build-cmod">
-<h3><a class="toc-backref" href="#id10">Build CMOD</a><a class="headerlink" href="#build-cmod" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="build-cmod">
+<h3><a class="toc-backref" href="#id10" role="doc-backlink">Build CMOD</a><a class="headerlink" href="#build-cmod" title="Link to this heading">¶</a></h3>
 <p>There is a tmake target for the Cmodel of NVDLA, which lives
 in the <code class="docutils literal notranslate"><span class="pre">cmod/</span></code> directory.  If building the Virtual Platform, or another
 application that uses the NVDLA Cmodel, please use following command</p>
@@ -248,9 +247,9 @@ be show in the last line:</p>
 <p>CMOD headers and dynamically linked shared object library could be found under
 <code class="docutils literal notranslate"><span class="pre">outdir/&lt;project_name&gt;/cmod/release</span></code></p>
 <p>Here is the end of <strong>NVDLA Environment Setup Guide</strong>.</p>
-</div>
-</div>
-</div>
+</section>
+</section>
+</section>
 
 
         </div>
@@ -258,8 +257,9 @@ be show in the last line:</p>
           
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="../../contents.html">Table of Contents</a></h3>
-  <ul>
+  <div>
+    <h3><a href="../../contents.html">Table of Contents</a></h3>
+    <ul>
 <li><a class="reference internal" href="#">NVDLA Environment Setup Guide</a><ul>
 <li><a class="reference internal" href="#tools-and-dependency-libraries-setup">Tools and Dependency Libraries Setup</a><ul>
 <li><a class="reference internal" href="#tree-make-setup">tree.make setup</a></li>
@@ -278,12 +278,17 @@ be show in the last line:</p>
 </li>
 </ul>
 
-  <h4>Previous topic</h4>
-  <p class="topless"><a href="../v1/ias/programming_guide.html"
-                        title="previous chapter">Programming Guide</a></p>
-  <h4>Next topic</h4>
-  <p class="topless"><a href="integration_guide.html"
-                        title="next chapter">Integrator’s Manual</a></p>
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="../v1/ias/programming_guide.html"
+                          title="previous chapter">Programming Guide</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="integration_guide.html"
+                          title="next chapter">Integrator’s Manual</a></p>
+  </div>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
@@ -295,12 +300,12 @@ be show in the last line:</p>
   <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="../../search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
       <input type="submit" value="Go" />
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script>document.getElementById('searchbox').style.display = "block"</script>
         </div>
       </div>
         </div>
@@ -329,10 +334,10 @@ be show in the last line:</p>
 <div class="container">
 <div class="row">
 &#169; <a
-href="../../copyright.html">Copyright</a> 2018 - 2024, NVIDIA Corporation.
+href="../../copyright.html">Copyright</a> 2018 - 2026, NVIDIA Corporation.
 <a href="https://www.nvidia.com/object/legal_info.html">Legal Information.</a>
 <a href="https://www.nvidia.com/object/privacy_policy.html">Privacy Policy.</a>
-Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.5.4.
+Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
 </div>
 </div>
 </div>

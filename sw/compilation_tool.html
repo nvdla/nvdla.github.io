@@ -1,18 +1,17 @@
-
 <!DOCTYPE html>
 
-<html>
+<html lang="en" data-content_root="../">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
     <title>Compiler library &#8212; NVDLA Documentation</title>
-    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/nvdla.css" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles.css" />
-    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-    <script src="../_static/jquery.js"></script>
-    <script src="../_static/underscore.js"></script>
-    <script src="../_static/doctools.js"></script>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../_static/nvdla.css?v=907781f7" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles.css?v=af91e327" />
+    <script src="../_static/documentation_options.js?v=7026087e"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Runtime environment" href="runtime_environment.html" />
     <link rel="prev" title="Software Manual" href="contents.html" />
@@ -25,7 +24,7 @@
     max-width: 100% !important;
   }
 </style>
-<script src="//assets.adobedtm.com/b92787824f2e0e9b68dc2e993f9bd995339fe417/satelliteLib-30c8ffcc8ece089156fd5590fbcf390ffc296f51.js"></script>
+<script src="https://assets.adobedtm.com/5d4962a43b79/814eb6e9b4e1/launch-4bc07f1e0b0b.min.js"></script>
 <!-- OneTrust Cookies Consent Notice start for nvidia.com -->
 <script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" data-document-language="true" type="text/javascript" charset="UTF-8" data-domain-script="3e2b62ff-7ae7-4ac5-87c8-d5949ecafff5-test" ></script>
 <script type="text/javascript">
@@ -68,23 +67,23 @@ function OptanonWrapper() {
       <div class="row">
         <div class="col-xs-12 col-md-9">
           
-  <div class="section" id="compiler-library">
-<span id="id1"></span><h1>Compiler library<a class="headerlink" href="#compiler-library" title="Permalink to this headline">¶</a></h1>
+  <section id="compiler-library">
+<span id="id1"></span><h1>Compiler library<a class="headerlink" href="#compiler-library" title="Link to this heading">¶</a></h1>
 <p>The Compilation phase is responsible for converting (aka compiling) a deep neural network into a sequence of hardware layers that are optimized for a given NVDLA configuration. Having a compiled network optimized for specific hardware configuration improves performance by reducing model size, load and run times. Compilation is a 2-step process that consists of: Parsing and Compiling.</p>
-<div class="figure align-center">
+<figure class="align-center">
 <a class="reference internal image-reference" href="../_images/compilation_tool.png"><img alt="../_images/compilation_tool.png" src="../_images/compilation_tool.png" style="width: 484.4px; height: 355.59999999999997px;" /></a>
-</div>
-<div class="section" id="parser">
-<h2>Parser<a class="headerlink" href="#parser" title="Permalink to this headline">¶</a></h2>
+</figure>
+<section id="parser">
+<h2>Parser<a class="headerlink" href="#parser" title="Link to this heading">¶</a></h2>
 <p>Parser is a relatively simple tool to parse pre-trained models. In its most basic incarnation, it reads a pre-trained Caffe model and creates a suitable representation of the network as a set of layers and pass it down to the next step of Compilation. An advanced parser would allow translating pre-trained models on other frameworks like TensorFlow, Theano, etc into the same standard representation suitable for the compiler. Although the Compiler is the one who fully understands the underlying hardware configuration, the Parser is smart enough to pro-actively recognize those neural network operations that are not suitable for the NVDLA implmentation and report back to the application. Parser can also detect malformed networks with breaks/loops in the topology or corrupt trained data whose layout doesn’t fit well for the associated network operation.</p>
-</div>
-<div class="section" id="compiler">
-<h2>Compiler<a class="headerlink" href="#compiler" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="compiler">
+<h2>Compiler<a class="headerlink" href="#compiler" title="Link to this heading">¶</a></h2>
 <p>Compiler takes the Parser’s output as its input, and converts (i.e. compiles) it into a set of hardware layers using the understanding of underlying hardware specification for NVDLA implementation. The Compiler can interpret the parsed network as a directed graph with nodes representing the network operations and the edges representing the intermediate tensors between the operations. The main job of the Compiler is to effectively map each network operation onto the targetted functional block of the NVDLA implementation, keeping in mind the specifications of the hardware. Knowing the hardware configuration allows the Compiler to generate appropriate operations for the features that are available. For example, this might include selecting between different convolution operation modes (such as Winograd convolution, or Basic convolution), or splitting certain operations into multiple smaller units depending on the available hardware buffer sizes, etc. Optimizations or features in compiler can be controlled through input parameters to compiler.</p>
 <p>In order to effectively execute the hardware layer, the Compiler is responsible to determine memory requirements for that layer. The choice of memory management can be flexible to the software implementation choice. This phase is also responsible for quantizing higher precision trained models (like 32-bit floating point) into lower precisions, such as 8-bit or 16-bit integer, or 16-bit floating point, and for determining memory allocations for the quantized weights during inferencing jobs. The output of the compiler is stored in a standardized file format called the <a class="reference internal" href="../glossary.html#term-NVDLA-Loadable"><span class="xref std std-term">NVDLA Loadable</span></a>.</p>
 <p>The same Compiler tool can be used to generate a list of hardware layers for multiple different NVDLA configurations. These steps are performed offline and might also be performed on the device that contains the NVDLA implementation.</p>
-</div>
-</div>
+</section>
+</section>
 
 
         </div>
@@ -92,8 +91,9 @@ function OptanonWrapper() {
           
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="../contents.html">Table of Contents</a></h3>
-  <ul>
+  <div>
+    <h3><a href="../contents.html">Table of Contents</a></h3>
+    <ul>
 <li><a class="reference internal" href="#">Compiler library</a><ul>
 <li><a class="reference internal" href="#parser">Parser</a></li>
 <li><a class="reference internal" href="#compiler">Compiler</a></li>
@@ -101,12 +101,17 @@ function OptanonWrapper() {
 </li>
 </ul>
 
-  <h4>Previous topic</h4>
-  <p class="topless"><a href="contents.html"
-                        title="previous chapter">Software Manual</a></p>
-  <h4>Next topic</h4>
-  <p class="topless"><a href="runtime_environment.html"
-                        title="next chapter">Runtime environment</a></p>
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="contents.html"
+                          title="previous chapter">Software Manual</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="runtime_environment.html"
+                          title="next chapter">Runtime environment</a></p>
+  </div>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
@@ -118,12 +123,12 @@ function OptanonWrapper() {
   <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
       <input type="submit" value="Go" />
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script>document.getElementById('searchbox').style.display = "block"</script>
         </div>
       </div>
         </div>
@@ -152,10 +157,10 @@ function OptanonWrapper() {
 <div class="container">
 <div class="row">
 &#169; <a
-href="../copyright.html">Copyright</a> 2018 - 2024, NVIDIA Corporation.
+href="../copyright.html">Copyright</a> 2018 - 2026, NVIDIA Corporation.
 <a href="https://www.nvidia.com/object/legal_info.html">Legal Information.</a>
 <a href="https://www.nvidia.com/object/privacy_policy.html">Privacy Policy.</a>
-Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.5.4.
+Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
 </div>
 </div>
 </div>

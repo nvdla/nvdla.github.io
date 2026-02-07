@@ -1,19 +1,18 @@
-
 <!DOCTYPE html>
 
-<html>
+<html lang="en" data-content_root="../../../">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
     <title>Unit Description &#8212; NVDLA Documentation</title>
-    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../../../_static/nvdla.css" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/styles.css" />
-    <script id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
-    <script src="../../../_static/jquery.js"></script>
-    <script src="../../../_static/underscore.js"></script>
-    <script src="../../../_static/doctools.js"></script>
-    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/nvdla.css?v=907781f7" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles.css?v=af91e327" />
+    <script src="../../../_static/documentation_options.js?v=7026087e"></script>
+    <script src="../../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="search" title="Search" href="../../../search.html" />
     <link rel="next" title="Programming Guide" href="programming_guide.html" />
     <link rel="prev" title="LUT programming" href="lut-programming.html" />
@@ -26,7 +25,7 @@
     max-width: 100% !important;
   }
 </style>
-<script src="//assets.adobedtm.com/b92787824f2e0e9b68dc2e993f9bd995339fe417/satelliteLib-30c8ffcc8ece089156fd5590fbcf390ffc296f51.js"></script>
+<script src="https://assets.adobedtm.com/5d4962a43b79/814eb6e9b4e1/launch-4bc07f1e0b0b.min.js"></script>
 <!-- OneTrust Cookies Consent Notice start for nvidia.com -->
 <script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" data-document-language="true" type="text/javascript" charset="UTF-8" data-domain-script="3e2b62ff-7ae7-4ac5-87c8-d5949ecafff5-test" ></script>
 <script type="text/javascript">
@@ -69,18 +68,18 @@ function OptanonWrapper() {
       <div class="row">
         <div class="col-xs-12 col-md-9">
           
-  <div class="section" id="unit-description">
-<h1>Unit Description<a class="headerlink" href="#unit-description" title="Permalink to this headline">¶</a></h1>
+  <section id="unit-description">
+<h1>Unit Description<a class="headerlink" href="#unit-description" title="Link to this heading">¶</a></h1>
 <p>(Notice: This version of <em>Unit Description</em> describes the NVDLA
 design as it exists in the nvdlav1 release.  The other releases and
 configurations are similar but won’t contain all features and sizes
 of hardware elements may differ.)</p>
 <p>Please refer to <em>Scalability parameters and ConfigROM</em> for other
 configurations.)</p>
-<div class="section" id="bridge-dma">
-<h2>Bridge DMA<a class="headerlink" href="#bridge-dma" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="overview">
-<h3>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h3>
+<section id="bridge-dma">
+<h2>Bridge DMA<a class="headerlink" href="#bridge-dma" title="Link to this heading">¶</a></h2>
+<section id="overview">
+<h3>Overview<a class="headerlink" href="#overview" title="Link to this heading">¶</a></h3>
 <p>Input images and processed results are stored in external DRAM, but
 external DRAM bandwidth and latency are generally insufficient to
 allow NVDLA to fully utilize it’s MAC arrays.  Therefore NVDLA
@@ -101,16 +100,18 @@ fetch multiple lines with address jumps between lines, reflect a
 surface. And also, BDMA will support one more layer of repeat, that
 fetch of multiple lines can be repeated, which reflect multiple
 surfaces, reflect a cube.</p>
-<div class="figure align-center" id="id24">
+<figure class="align-center" id="id24">
 <span id="fig-image3-bdma-block"></span><img alt="../../../_images/ias_image3_bdma_block.png" src="../../../_images/ias_image3_bdma_block.png" />
-<p class="caption"><span class="caption-number">Fig. 37 </span><span class="caption-text">Bridge DMA</span><a class="headerlink" href="#id24" title="Permalink to this image">¶</a></p>
-</div>
-</div>
-</div>
-<div class="section" id="convolution-pipeline">
-<h2>Convolution Pipeline<a class="headerlink" href="#convolution-pipeline" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="id1">
-<h3>Overview<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<figcaption>
+<p><span class="caption-number">Fig. 37 </span><span class="caption-text">Bridge DMA</span><a class="headerlink" href="#id24" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
+</section>
+</section>
+<section id="convolution-pipeline">
+<h2>Convolution Pipeline<a class="headerlink" href="#convolution-pipeline" title="Link to this heading">¶</a></h2>
+<section id="id1">
+<h3>Overview<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h3>
 <p>The Convolution Pipeline is one of pipelines within the NVDLA core logic.
 It is used to accelerate the convolution algorithm. It supports comprehensive
 programmable parameters for variable convolution sizes. Some features
@@ -135,13 +136,15 @@ Additionally, there is 512KB of SRAM in convolution buffer, providing
 input weight and activation storage. These units are described in detail later
 in this document.</p>
 <p>Below is the diagram of convolution pipeline.</p>
-<div class="figure align-center" id="id25">
+<figure class="align-center" id="id25">
 <span id="fig-image4-convolution-pipeline"></span><img alt="../../../_images/ias_image4_convolution_pipeline.png" src="../../../_images/ias_image4_convolution_pipeline.png" />
-<p class="caption"><span class="caption-number">Fig. 38 </span><span class="caption-text">Convolution Pipeline</span><a class="headerlink" href="#id25" title="Permalink to this image">¶</a></p>
-</div>
-</div>
-<div class="section" id="direct-convolution">
-<h3>Direct Convolution<a class="headerlink" href="#direct-convolution" title="Permalink to this headline">¶</a></h3>
+<figcaption>
+<p><span class="caption-number">Fig. 38 </span><span class="caption-text">Convolution Pipeline</span><a class="headerlink" href="#id25" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
+</section>
+<section id="direct-convolution">
+<h3>Direct Convolution<a class="headerlink" href="#direct-convolution" title="Link to this heading">¶</a></h3>
 <p>The convolution pipeline always has two parts of input data. One is input
 activation data, the other is weight data. Suppose NVDLA engine has such
 input parameters:</p>
@@ -155,13 +158,17 @@ input parameters:</p>
 <li><p>Dilation: <em>DX</em> in X dimension, <em>DY</em> in Y dimension</p></li>
 <li><p>Size of output data cube: <em>W’</em>x<em>H’</em>x<em>C’</em></p></li>
 </ul>
-<div class="figure align-center" id="id26">
-<span id="fig-image5-convolution-operation"></span><img alt="../../../_images/ias_image5_convolution_operation.svg" src="../../../_images/ias_image5_convolution_operation.svg" /><p class="caption"><span class="caption-number">Fig. 39 </span><span class="caption-text">Convolution operation</span><a class="headerlink" href="#id26" title="Permalink to this image">¶</a></p>
-</div>
+<figure class="align-center" id="id26">
+<span id="fig-image5-convolution-operation"></span><img alt="../../../_images/ias_image5_convolution_operation.svg" src="../../../_images/ias_image5_convolution_operation.svg" /><figcaption>
+<p><span class="caption-number">Fig. 39 </span><span class="caption-text">Convolution operation</span><a class="headerlink" href="#id26" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
 <p>Figure below shows the convolution stride and zero padding.</p>
-<div class="figure align-center" id="id27">
-<span id="fig-image6-convolution-stride-and-pad"></span><img alt="../../../_images/ias_image6_convolution_stride_and_pad.svg" src="../../../_images/ias_image6_convolution_stride_and_pad.svg" /><p class="caption"><span class="caption-number">Fig. 40 </span><span class="caption-text">Convolution stride and zero padding</span><a class="headerlink" href="#id27" title="Permalink to this image">¶</a></p>
-</div>
+<figure class="align-center" id="id27">
+<span id="fig-image6-convolution-stride-and-pad"></span><img alt="../../../_images/ias_image6_convolution_stride_and_pad.svg" src="../../../_images/ias_image6_convolution_stride_and_pad.svg" /><figcaption>
+<p><span class="caption-number">Fig. 40 </span><span class="caption-text">Convolution stride and zero padding</span><a class="headerlink" href="#id27" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
 <p>Then the equations of these parameters are:</p>
 <div class="math notranslate nohighlight">
 \[S^{'} = \left( S - 1 \right) \times DX + 1\]</div>
@@ -199,8 +206,8 @@ performed within one MAC cell.</p></li>
 operation, stripe operation, block operation and channel operation.</p></li>
 </ol>
 <p>The four operations are described below using int6 percision mode as an example.</p>
-<div class="section" id="atomic-operation">
-<h4>Atomic Operation<a class="headerlink" href="#atomic-operation" title="Permalink to this headline">¶</a></h4>
+<section id="atomic-operation">
+<h4>Atomic Operation<a class="headerlink" href="#atomic-operation" title="Link to this heading">¶</a></h4>
 <p>Atomic Operation is the base step for direct convolution. In one atomic
 operation, each MAC cell caches one 1x1x64 weight cubes from an
 individual weight kernel. The 16 MAC cells therefor cache weights from 16
@@ -217,12 +224,14 @@ further calculation.</p>
 <p>In the equation, <em>PS</em> refers to partial sum. Variable <em>c</em> is always
 divisible by 64.</p>
 <p>A diagram showing the Atomic Operation is as below.</p>
-<div class="figure align-center" id="id28">
-<span id="fig-image7-atomic-operation"></span><img alt="../../../_images/ias_image7_atomic_operation.svg" src="../../../_images/ias_image7_atomic_operation.svg" /><p class="caption"><span class="caption-number">Fig. 41 </span><span class="caption-text">Atomic operation</span><a class="headerlink" href="#id28" title="Permalink to this image">¶</a></p>
-</div>
-</div>
-<div class="section" id="stripe-operation">
-<h4>Stripe Operation<a class="headerlink" href="#stripe-operation" title="Permalink to this headline">¶</a></h4>
+<figure class="align-center" id="id28">
+<span id="fig-image7-atomic-operation"></span><img alt="../../../_images/ias_image7_atomic_operation.svg" src="../../../_images/ias_image7_atomic_operation.svg" /><figcaption>
+<p><span class="caption-number">Fig. 41 </span><span class="caption-text">Atomic operation</span><a class="headerlink" href="#id28" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
+</section>
+<section id="stripe-operation">
+<h4>Stripe Operation<a class="headerlink" href="#stripe-operation" title="Link to this heading">¶</a></h4>
 <p>A stripe operation combines a group of atomic operations from several
 convolutions. During one stripe operation the weight data in MAC cell
 array is kept unchanged. Input data slides along input data cube.</p>
@@ -239,12 +248,14 @@ does scan along the w dimension first.  The figure below shows an example
 with no padding so the last two columns aren’t part of the first stripe
 (with a 3x3 kernel, no padding, and an input with w=6, the output will
 have a w of 4).</p>
-<div class="figure align-center" id="id29">
-<span id="fig-image8-stripe-operation"></span><img alt="../../../_images/ias_image8_stripe_operation.svg" src="../../../_images/ias_image8_stripe_operation.svg" /><p class="caption"><span class="caption-number">Fig. 42 </span><span class="caption-text">Stripe operation</span><a class="headerlink" href="#id29" title="Permalink to this image">¶</a></p>
-</div>
-</div>
-<div class="section" id="block-operation">
-<h4>Block operation<a class="headerlink" href="#block-operation" title="Permalink to this headline">¶</a></h4>
+<figure class="align-center" id="id29">
+<span id="fig-image8-stripe-operation"></span><img alt="../../../_images/ias_image8_stripe_operation.svg" src="../../../_images/ias_image8_stripe_operation.svg" /><figcaption>
+<p><span class="caption-number">Fig. 42 </span><span class="caption-text">Stripe operation</span><a class="headerlink" href="#id29" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
+</section>
+<section id="block-operation">
+<h4>Block operation<a class="headerlink" href="#block-operation" title="Link to this heading">¶</a></h4>
 <p>A Block Operation is a higher level operation consisting of multiple
 stripe operations. During Block
 Operation, each kernel in a kernel group uses RxSx64
@@ -252,9 +263,11 @@ weight elements, along with
 a small cube of input feature data sized properly to ensure that the
 results can add together across stripe operations and accumulated into
 the 16-32 element accumulator.</p>
-<div class="figure align-center" id="id30">
-<span id="fig-image9-block-operation"></span><img alt="../../../_images/ias_image9_block_operation.svg" src="../../../_images/ias_image9_block_operation.svg" /><p class="caption"><span class="caption-number">Fig. 43 </span><span class="caption-text">Block operation</span><a class="headerlink" href="#id30" title="Permalink to this image">¶</a></p>
-</div>
+<figure class="align-center" id="id30">
+<span id="fig-image9-block-operation"></span><img alt="../../../_images/ias_image9_block_operation.svg" src="../../../_images/ias_image9_block_operation.svg" /><figcaption>
+<p><span class="caption-number">Fig. 43 </span><span class="caption-text">Block operation</span><a class="headerlink" href="#id30" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
 <p>All stripe operations in one block operation have the same atomic
 operation number. The partial sums from the same block operation are
 added together per stripe operation in the convolution accumulator.
@@ -264,16 +277,18 @@ These results are called accumulative sum.</p>
 \[\text{AS}_{w,\ h,k,c} = \ \sum_{r = 0}^{R - 1}{\sum_{s = 0}^{S - 1}{\sum_{i = c}^{min(c + 63,\ C - 1)}{x_{(w*SX - LP + r),(h*SY - TP + s),\ i}*\text{wt}_{r,\ s,\ i,k}}}}\]</div>
 <p>In the equation, <em>AS</em> refers to accumulative sum. Variable <em>c</em> is always
 divisible by 64.</p>
-</div>
-<div class="section" id="channel-operation">
-<h4>Channel Operation<a class="headerlink" href="#channel-operation" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="channel-operation">
+<h4>Channel Operation<a class="headerlink" href="#channel-operation" title="Link to this heading">¶</a></h4>
 <p>Channel operation is an even higher-level operation. It includes
 (C+63)/64 block operations. The block operations in one channel
 operation are similar, except the coordinate of channel direction is
 different, showing as below</p>
-<div class="figure align-center" id="id31">
-<span id="fig-image10-channel-operation"></span><img alt="../../../_images/ias_image10_channel_operation.svg" src="../../../_images/ias_image10_channel_operation.svg" /><p class="caption"><span class="caption-number">Fig. 44 </span><span class="caption-text">Channel operation</span><a class="headerlink" href="#id31" title="Permalink to this image">¶</a></p>
-</div>
+<figure class="align-center" id="id31">
+<span id="fig-image10-channel-operation"></span><img alt="../../../_images/ias_image10_channel_operation.svg" src="../../../_images/ias_image10_channel_operation.svg" /><figcaption>
+<p><span class="caption-number">Fig. 44 </span><span class="caption-text">Channel operation</span><a class="headerlink" href="#id31" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
 <p>All partial sums of one channel operation can be added together by
 stripe operation. After a channel operation, the result in convolution
 accumulator is exactly the convolution result.</p>
@@ -284,18 +299,18 @@ accumulator is exactly the convolution result.</p>
 for a stripe of 16-32 output points.  After one channel operation, the
 accumulator is unloaded and sent to the post-processor, making room for
 the next channel operation.</p>
-</div>
-<div class="section" id="group-operation">
-<h4>Group Operation<a class="headerlink" href="#group-operation" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="group-operation">
+<h4>Group Operation<a class="headerlink" href="#group-operation" title="Link to this heading">¶</a></h4>
 <p>Group operation is a higher-level operation than channel operation. It
 includes about int((dataout_height * dataout_width) / stripe_size)
 channel operations. After a group operation, the output data composes a W
 x H x K’ output surface. Here K’ refers to kernel size in a kernel
 group, with one kernel group being the number of kernels processed at a time,
 one per MAC Cell.</p>
-</div>
-<div class="section" id="output-sequence">
-<h4>Output Sequence<a class="headerlink" href="#output-sequence" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="output-sequence">
+<h4>Output Sequence<a class="headerlink" href="#output-sequence" title="Link to this heading">¶</a></h4>
 <p>The sequence mentioned in each operation is mainly for input feature
 data and weight data, but not the output sequence. The output data
 sequence is quite simple. It follows the order of C’(K’)-&gt;W-&gt;H-&gt;C(K).
@@ -303,12 +318,14 @@ Here C’ or K’ refers to kernel group size, which is 16 for int16/fp16
 and 32 for int8.</p>
 <p>The output order of direct convolution is consistent with feature memory
 mapping order.</p>
-<div class="figure align-center" id="id32">
-<span id="fig-image11-output-sequence"></span><img alt="../../../_images/ias_image11_output_sequence.svg" src="../../../_images/ias_image11_output_sequence.svg" /><p class="caption"><span class="caption-number">Fig. 45 </span><span class="caption-text">Output sequence of a partition</span><a class="headerlink" href="#id32" title="Permalink to this image">¶</a></p>
-</div>
-</div>
-<div class="section" id="operation-for-int8-and-fp16">
-<h4>Operation for Int8 and fp16<a class="headerlink" href="#operation-for-int8-and-fp16" title="Permalink to this headline">¶</a></h4>
+<figure class="align-center" id="id32">
+<span id="fig-image11-output-sequence"></span><img alt="../../../_images/ias_image11_output_sequence.svg" src="../../../_images/ias_image11_output_sequence.svg" /><figcaption>
+<p><span class="caption-number">Fig. 45 </span><span class="caption-text">Output sequence of a partition</span><a class="headerlink" href="#id32" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
+</section>
+<section id="operation-for-int8-and-fp16">
+<h4>Operation for Int8 and fp16<a class="headerlink" href="#operation-for-int8-and-fp16" title="Link to this heading">¶</a></h4>
 <p>The operations mentioned above reflect int16 precision.  Fp16 is
 handled identically.  However, int8 is handled a bit differently.</p>
 <p>In convolution pipeline, each multiply-accumulate primitive for
@@ -317,14 +334,7 @@ The element throughput of int8 is
 therefore double the int16 element throughput.</p>
 <p>The table below records parameters of one atomic operation.</p>
 <table class="docutils align-default" id="tab-precision-atomic-operation">
-<caption><span class="caption-number">Table 44 </span><span class="caption-text">Precision parameters of atomic operation</span><a class="headerlink" href="#tab-precision-atomic-operation" title="Permalink to this table">¶</a></caption>
-<colgroup>
-<col style="width: 20%" />
-<col style="width: 20%" />
-<col style="width: 20%" />
-<col style="width: 20%" />
-<col style="width: 20%" />
-</colgroup>
+<caption><span class="caption-number">Table 44 </span><span class="caption-text">Precision parameters of atomic operation</span><a class="headerlink" href="#tab-precision-atomic-operation" title="Link to this table">¶</a></caption>
 <thead>
 <tr class="row-odd"><th class="head"><p>Convolution
 Precision</p></th>
@@ -358,10 +368,10 @@ Elements</p></th>
 </tr>
 </tbody>
 </table>
-</div>
-</div>
-<div class="section" id="winograd-convolution">
-<h3>Winograd Convolution<a class="headerlink" href="#winograd-convolution" title="Permalink to this headline">¶</a></h3>
+</section>
+</section>
+<section id="winograd-convolution">
+<h3>Winograd Convolution<a class="headerlink" href="#winograd-convolution" title="Link to this heading">¶</a></h3>
 <p>Winograd convolution refers to an optional algorithm to optimize the
 performance of direct convolution. The Convolution Pipeline supports
 Winograd only for 3x3xC size kernels.</p>
@@ -446,14 +456,7 @@ Both phase 2 and phase 3 are called POA.</p>
 <p>Winograd mode also has five operations. The comparing of parameters is
 listed in table below.</p>
 <table class="docutils align-default" id="tab-cc-operation-modes">
-<caption><span class="caption-number">Table 45 </span><span class="caption-text">Parameters of operation modes</span><a class="headerlink" href="#tab-cc-operation-modes" title="Permalink to this table">¶</a></caption>
-<colgroup>
-<col style="width: 20%" />
-<col style="width: 20%" />
-<col style="width: 20%" />
-<col style="width: 20%" />
-<col style="width: 20%" />
-</colgroup>
+<caption><span class="caption-number">Table 45 </span><span class="caption-text">Parameters of operation modes</span><a class="headerlink" href="#tab-cc-operation-modes" title="Link to this table">¶</a></caption>
 <thead>
 <tr class="row-odd"><th class="head"><p>mode</p></th>
 <th class="head"><p>direct
@@ -528,12 +531,14 @@ different from direct convolution. Please see figure below.</p></li>
 <li><p>Winograd layer always outputs 4 lines in parallel. SDP will guarantee
 the correction of memory mapping of output data cube.</p></li>
 </ul>
-<div class="figure align-center" id="id33">
-<span id="fig-image12-scan-order-wino"></span><img alt="../../../_images/ias_image12_scan_order_wino.svg" src="../../../_images/ias_image12_scan_order_wino.svg" /><p class="caption"><span class="caption-number">Fig. 46 </span><span class="caption-text">Scan order of stripe operation in Winograd (W-H projection)</span><a class="headerlink" href="#id33" title="Permalink to this image">¶</a></p>
-</div>
-</div>
-<div class="section" id="deconvolution">
-<h3>Deconvolution<a class="headerlink" href="#deconvolution" title="Permalink to this headline">¶</a></h3>
+<figure class="align-center" id="id33">
+<span id="fig-image12-scan-order-wino"></span><img alt="../../../_images/ias_image12_scan_order_wino.svg" src="../../../_images/ias_image12_scan_order_wino.svg" /><figcaption>
+<p><span class="caption-number">Fig. 46 </span><span class="caption-text">Scan order of stripe operation in Winograd (W-H projection)</span><a class="headerlink" href="#id33" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
+</section>
+<section id="deconvolution">
+<h3>Deconvolution<a class="headerlink" href="#deconvolution" title="Link to this heading">¶</a></h3>
 <p>Deconvolution is a type of special convolution. It is some kind of
 inverse operation of normal convolution. Unlike normal convolution case,
 deconvolution layer always enlarges the data cube after calculation.</p>
@@ -553,9 +558,11 @@ cube with K SxRxC kernels is:</p>
 \[DAOUT_{(w,\ h,\ k)} = \sum_{x = 0}^{S - 1}{\sum_{y = 0}^{R - 1}{\sum_{z = 0}^{C - 1}{DAIN_{(w + x + 1 - S,h + y + 1 - R,\ z)}*W_{(S - 1 - x,R - 1 - y,z,k)}}}}\]</div>
 <p>According to equation, the 3D deconvolution is equal to a convolution
 with (S-1) and (R-1) zero padding and reversed R/S weight order</p>
-<div class="figure align-center" id="id34">
-<span id="fig-image13-1d-deconvolution"></span><img alt="../../../_images/ias_image13_1d_deconvolution.svg" src="../../../_images/ias_image13_1d_deconvolution.svg" /><p class="caption"><span class="caption-number">Fig. 47 </span><span class="caption-text">One-dimensional deconvolution, x stride = 1</span><a class="headerlink" href="#id34" title="Permalink to this image">¶</a></p>
-</div>
+<figure class="align-center" id="id34">
+<span id="fig-image13-1d-deconvolution"></span><img alt="../../../_images/ias_image13_1d_deconvolution.svg" src="../../../_images/ias_image13_1d_deconvolution.svg" /><figcaption>
+<p><span class="caption-number">Fig. 47 </span><span class="caption-text">One-dimensional deconvolution, x stride = 1</span><a class="headerlink" href="#id34" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
 <p>If the deconvolution X stride or Y stride is not 1, the calculation flow is
 a bit different. The weight kernels are split into smaller kernel sets. Each
 set of kernels operates as a convolution layer where X and Y strides are
@@ -582,9 +589,9 @@ deconvolution y stride.</p></li>
 data cube.</p></li>
 <li><p>After the second HW-layer, the output data cube is formated as per the expected result.</p></li>
 </ul>
-</div>
-<div class="section" id="convolution-with-image-input">
-<h3>Convolution with Image Input<a class="headerlink" href="#convolution-with-image-input" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="convolution-with-image-input">
+<h3>Convolution with Image Input<a class="headerlink" href="#convolution-with-image-input" title="Link to this heading">¶</a></h3>
 <p>NVDLA supports convolution with image data with a special mode to
 improve MAC utilization. Here image data could be a
 part or whole image surface. However, NVDLA can only support it for
@@ -610,12 +617,14 @@ pre-extension, usually kernel channel size is less than 32.
 Therefore, channel post-extension is very useful for image input
 convolution layer.</p></li>
 </ul>
-<div class="figure align-center" id="id35">
-<span id="fig-image14-pixel-mapping-in-cbuf"></span><img alt="../../../_images/ias_image14_pixel_mapping_in_cbuf.svg" src="../../../_images/ias_image14_pixel_mapping_in_cbuf.svg" /><p class="caption"><span class="caption-number">Fig. 48 </span><span class="caption-text">Pixel mapping in convolution buffer</span><a class="headerlink" href="#id35" title="Permalink to this image">¶</a></p>
-</div>
-</div>
-<div class="section" id="channel-post-extension">
-<h3>Channel Post-Extension<a class="headerlink" href="#channel-post-extension" title="Permalink to this headline">¶</a></h3>
+<figure class="align-center" id="id35">
+<span id="fig-image14-pixel-mapping-in-cbuf"></span><img alt="../../../_images/ias_image14_pixel_mapping_in_cbuf.svg" src="../../../_images/ias_image14_pixel_mapping_in_cbuf.svg" /><figcaption>
+<p><span class="caption-number">Fig. 48 </span><span class="caption-text">Pixel mapping in convolution buffer</span><a class="headerlink" href="#id35" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
+</section>
+<section id="channel-post-extension">
+<h3>Channel Post-Extension<a class="headerlink" href="#channel-post-extension" title="Link to this heading">¶</a></h3>
 <p>Channel post-extension is an option for improving MAC utilization for
 convolution with image input.</p>
 <p>In the Convolution Pipeline, one atomic operation requires 64 elements in
@@ -639,12 +648,7 @@ lines and combine them as a C=64 line. Then MAC efficiency rise back to
 convolution x stride</p></li>
 </ul>
 <table class="docutils align-default" id="tab-limits-of-channel-post-extension">
-<caption><span class="caption-number">Table 46 </span><span class="caption-text">Limits of channel post-extension</span><a class="headerlink" href="#tab-limits-of-channel-post-extension" title="Permalink to this table">¶</a></caption>
-<colgroup>
-<col style="width: 33%" />
-<col style="width: 33%" />
-<col style="width: 33%" />
-</colgroup>
+<caption><span class="caption-number">Table 46 </span><span class="caption-text">Limits of channel post-extension</span><a class="headerlink" href="#tab-limits-of-channel-post-extension" title="Link to this table">¶</a></caption>
 <thead>
 <tr class="row-odd"><th class="head"><p>Channel
 post-extension</p></th>
@@ -677,9 +681,9 @@ doesn’t need to be less than kernel height (R).  Hardware can
 automatically tailor the redundant lines to avoid them be involved in
 computation. However, this also means the user shouldn’t expect N times
 of MAC efficiency improvements for this case.</p>
-</div>
-<div class="section" id="multi-batch-mode">
-<h3>Multi-Batch Mode<a class="headerlink" href="#multi-batch-mode" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="multi-batch-mode">
+<h3>Multi-Batch Mode<a class="headerlink" href="#multi-batch-mode" title="Link to this heading">¶</a></h3>
 <p>NVDLA engine also supports multi-batch to enhance the performance and
 reduce the bandwidth, especially for Fully-Connected (FC) layers. The
 output of one FC layer is a 1x1xC data cube. That means all weights in
@@ -698,16 +702,7 @@ then contains atomic operations for multiple batches. Since weights are reused
 accross a stripe weight loading cycles are hidden and the efficiency increases.</p>
 <p>The length of stripe operation with different batch size are:</p>
 <table class="docutils align-default" id="tab-stripe-length-multi-batch-mode">
-<caption><span class="caption-number">Table 47 </span><span class="caption-text">Stripe length of different batch size</span><a class="headerlink" href="#tab-stripe-length-multi-batch-mode" title="Permalink to this table">¶</a></caption>
-<colgroup>
-<col style="width: 29%" />
-<col style="width: 12%" />
-<col style="width: 12%" />
-<col style="width: 12%" />
-<col style="width: 13%" />
-<col style="width: 12%" />
-<col style="width: 12%" />
-</colgroup>
+<caption><span class="caption-number">Table 47 </span><span class="caption-text">Stripe length of different batch size</span><a class="headerlink" href="#tab-stripe-length-multi-batch-mode" title="Link to this table">¶</a></caption>
 <thead>
 <tr class="row-odd"><th class="head"><p>Batch Size</p></th>
 <th class="head"><p>1</p></th>
@@ -785,36 +780,40 @@ accross a stripe weight loading cycles are hidden and the efficiency increases.<
 </tr>
 </tbody>
 </table>
-<div class="figure align-center" id="id36">
-<span id="fig-image15-multi-batch"></span><img alt="../../../_images/ias_image15_multi_batch.svg" src="../../../_images/ias_image15_multi_batch.svg" /><p class="caption"><span class="caption-number">Fig. 49 </span><span class="caption-text">Multi-batch mode</span><a class="headerlink" href="#id36" title="Permalink to this image">¶</a></p>
-</div>
-</div>
-<div class="section" id="dilation">
-<h3>Dilation<a class="headerlink" href="#dilation" title="Permalink to this headline">¶</a></h3>
+<figure class="align-center" id="id36">
+<span id="fig-image15-multi-batch"></span><img alt="../../../_images/ias_image15_multi_batch.svg" src="../../../_images/ias_image15_multi_batch.svg" /><figcaption>
+<p><span class="caption-number">Fig. 49 </span><span class="caption-text">Multi-batch mode</span><a class="headerlink" href="#id36" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
+</section>
+<section id="dilation">
+<h3>Dilation<a class="headerlink" href="#dilation" title="Link to this heading">¶</a></h3>
 <p>Dilation is an option that enlarges the kernel in R and S dimensions
 with zero values. This function can be enabled by SW according as needed.</p>
 <p>The diagram below shows a case with the dilation parameter = 3.</p>
-<div class="figure align-center" id="id37">
-<span id="fig-image16-weight-dilation"></span><img alt="../../../_images/ias_image16_weight_dilation.svg" src="../../../_images/ias_image16_weight_dilation.svg" /><p class="caption"><span class="caption-number">Fig. 50 </span><span class="caption-text">Weight dilation</span><a class="headerlink" href="#id37" title="Permalink to this image">¶</a></p>
-</div>
+<figure class="align-center" id="id37">
+<span id="fig-image16-weight-dilation"></span><img alt="../../../_images/ias_image16_weight_dilation.svg" src="../../../_images/ias_image16_weight_dilation.svg" /><figcaption>
+<p><span class="caption-number">Fig. 50 </span><span class="caption-text">Weight dilation</span><a class="headerlink" href="#id37" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
 <p>NVDLA supports dilation in both R and S dimensions.</p>
 <p>Limits of dilation:</p>
 <ul class="simple">
 <li><p>Dilation is available for DC mode only.</p></li>
 <li><p>Dilation is not available for Winograd or image input mode.</p></li>
 </ul>
-</div>
-<div class="section" id="power-consideration">
-<h3>Power Consideration<a class="headerlink" href="#power-consideration" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="power-consideration">
+<h3>Power Consideration<a class="headerlink" href="#power-consideration" title="Link to this heading">¶</a></h3>
 <p>Convolution pipeline supports clock gating for each major pipeline stage. If the
 pipeline stage is idle and no valid HW-layer is available, the data path
 of pipeline stage will be clock gated.</p>
-</div>
-</div>
-<div class="section" id="convolution-dma">
-<h2>Convolution DMA<a class="headerlink" href="#convolution-dma" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="id2">
-<h3>Overview<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+</section>
+</section>
+<section id="convolution-dma">
+<h2>Convolution DMA<a class="headerlink" href="#convolution-dma" title="Link to this heading">¶</a></h2>
+<section id="id2">
+<h3>Overview<a class="headerlink" href="#id2" title="Link to this heading">¶</a></h3>
 <p>Convolution DMA (CDMA) is a pipeline stage in the convolution pipeline. It
 fetches data from SRAM/DRAM for the convolution operation and stores it
 into a buffer (Convolution Buffer or CBUF) in the order needed for the
@@ -831,14 +830,7 @@ weight read channel, and data read channel. To fetch the input formats
 listed above, the channels are configured for that format formats. The table
 below records the input data format to read channel mapping.</p>
 <table class="docutils align-default" id="tab-channel-sharing-in-cdma">
-<caption><span class="caption-number">Table 48 </span><span class="caption-text">Channel sharing in CDMA</span><a class="headerlink" href="#tab-channel-sharing-in-cdma" title="Permalink to this table">¶</a></caption>
-<colgroup>
-<col style="width: 21%" />
-<col style="width: 20%" />
-<col style="width: 20%" />
-<col style="width: 20%" />
-<col style="width: 20%" />
-</colgroup>
+<caption><span class="caption-number">Table 48 </span><span class="caption-text">Channel sharing in CDMA</span><a class="headerlink" href="#tab-channel-sharing-in-cdma" title="Link to this table">¶</a></caption>
 <thead>
 <tr class="row-odd"><th class="head"><p>Input
 Format</p></th>
@@ -904,10 +896,12 @@ channel</p></td>
 </table>
 <p>Convolution DMA sends memory read requests only. All memory read requests sent by
 Convolution DMA are 64-byte aligned.</p>
-<div class="figure align-center" id="id38">
+<figure class="align-center" id="id38">
 <span id="fig-image17-cdma"></span><img alt="../../../_images/ias_image17_cdma.png" src="../../../_images/ias_image17_cdma.png" />
-<p class="caption"><span class="caption-number">Fig. 51 </span><span class="caption-text">Convolution DMA</span><a class="headerlink" href="#id38" title="Permalink to this image">¶</a></p>
-</div>
+<figcaption>
+<p><span class="caption-number">Fig. 51 </span><span class="caption-text">Convolution DMA</span><a class="headerlink" href="#id38" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
 <p>CDMA consists of three sub-modules to
 fetch pixel data or feature data for convolution: CDMA_DC, CDMA_WG
 and CDMA_IMG. The procedures of
@@ -955,19 +949,19 @@ until the free entries runs out or weight fetching is complete.</p>
 data buffer in CBUF. There are two copies of status in CDMA and CSC. Two
 modules exchange the update/release information to decide when to fetch
 new feature/pixel/weight data and when to release these data elements.</p>
-</div>
-<div class="section" id="id3">
-<h3>Power Consideration<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="id3">
+<h3>Power Consideration<a class="headerlink" href="#id3" title="Link to this heading">¶</a></h3>
 <p>Convolution DMA applies clock gating in the data path. The clock of data path of
 convolution DMA is gated when it is idle and no hardware layer is
 configured in the programmable registers. The regfile sub module inside
 convolution DMA is not clock gated so that new commands can be programmed.</p>
-</div>
-</div>
-<div class="section" id="convolution-buffer">
-<h2>Convolution Buffer<a class="headerlink" href="#convolution-buffer" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="id4">
-<h3>Overview<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+</section>
+</section>
+<section id="convolution-buffer">
+<h2>Convolution Buffer<a class="headerlink" href="#convolution-buffer" title="Link to this heading">¶</a></h2>
+<section id="id4">
+<h3>Overview<a class="headerlink" href="#id4" title="Link to this heading">¶</a></h3>
 <p>The Convolution Buffer (CBUF) is a stage in convolution pipeline. It
 contains a total of 512KB of SRAM. The SRAMs cache input pixel data,
 input feature
@@ -990,25 +984,27 @@ required banks are less than 16, the remaining banks are unused.</p>
 <p>Each buffer acts as circular buffers. New input data/weight/WMB has
 incremental entry address. If the address reaches the max, it wraps to
 zero and then starts increasing again.</p>
-<div class="figure align-center" id="id39">
+<figure class="align-center" id="id39">
 <span id="fig-image18-cbuf"></span><img alt="../../../_images/ias_image18_cbuf.png" src="../../../_images/ias_image18_cbuf.png" />
-<p class="caption"><span class="caption-number">Fig. 52 </span><span class="caption-text">Convolution buffer</span><a class="headerlink" href="#id39" title="Permalink to this image">¶</a></p>
-</div>
-</div>
-<div class="section" id="id5">
-<h3>Power Consideration<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<figcaption>
+<p><span class="caption-number">Fig. 52 </span><span class="caption-text">Convolution buffer</span><a class="headerlink" href="#id39" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
+</section>
+<section id="id5">
+<h3>Power Consideration<a class="headerlink" href="#id5" title="Link to this heading">¶</a></h3>
 <p>The Convolution Buffer applies clock gating for registers in the data path
 beyond the SRAMs.
 The clock of Convolution Buffer data path is gated by SLCG when it is
 idle and no HW-layer is available from the programmable registers.
 The configuration register block inside the convolution buffer is not
 clock gated so that a new configuration can be programmed.</p>
-</div>
-</div>
-<div class="section" id="convolution-sequence-controller">
-<h2>Convolution Sequence Controller<a class="headerlink" href="#convolution-sequence-controller" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="id6">
-<h3>Overview<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+</section>
+</section>
+<section id="convolution-sequence-controller">
+<h2>Convolution Sequence Controller<a class="headerlink" href="#convolution-sequence-controller" title="Link to this heading">¶</a></h2>
+<section id="id6">
+<h3>Overview<a class="headerlink" href="#id6" title="Link to this heading">¶</a></h3>
 <p>The Convolution Sequence Controller (CSC) is responsible for loading input
 feature data, pixel data, and weight data from CBUF and sending it to the
 Convolution MAC unit. It’s the key module
@@ -1031,10 +1027,12 @@ for any back pressure</p></li>
 <li><p>If all conditions are ready, send weight and data packages in proper
 time to CSC_WL and CSC_DL.</p></li>
 </ol>
-<div class="figure align-center" id="id40">
+<figure class="align-center" id="id40">
 <span id="fig-image19-csc"></span><img alt="../../../_images/ias_image19_csc.png" src="../../../_images/ias_image19_csc.png" />
-<p class="caption"><span class="caption-number">Fig. 53 </span><span class="caption-text">Convolution sequence controller</span><a class="headerlink" href="#id40" title="Permalink to this image">¶</a></p>
-</div>
+<figcaption>
+<p><span class="caption-number">Fig. 53 </span><span class="caption-text">Convolution sequence controller</span><a class="headerlink" href="#id40" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
 <p>CSC_DL is the convolution data loader. This module contains the logic to
 execute the feature/pixel loading sequence. It receives packages from
 sequence generator, loads feature/pixel data from CBUF and sends them to
@@ -1046,21 +1044,21 @@ to execute the weight loading sequence. It receives packages from the sequence
 generator, loads weights from CBUF, and does necessary decompression and
 sends them to convolution MAC. It maintains the weight buffer status
 and communicates with CDMA_WT to keep the status up to date.</p>
-</div>
-<div class="section" id="id7">
-<h3>Power Consideration<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="id7">
+<h3>Power Consideration<a class="headerlink" href="#id7" title="Link to this heading">¶</a></h3>
 <p>The Convolution Sequence Controller applies clock gating for registers
 in the data path.
 The clock of data path for the convolution sequence controller is gated when
 idle and no HW-layer is available from the programmable
 registers. The register file sub module inside
 convolution sequence controller is not clock gated so that new</p>
-</div>
-</div>
-<div class="section" id="convolution-mac">
-<h2>Convolution MAC<a class="headerlink" href="#convolution-mac" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="id8">
-<h3>Overview<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
+</section>
+</section>
+<section id="convolution-mac">
+<h2>Convolution MAC<a class="headerlink" href="#convolution-mac" title="Link to this heading">¶</a></h2>
+<section id="id8">
+<h3>Overview<a class="headerlink" href="#id8" title="Link to this heading">¶</a></h3>
 <p>The Convolution MAC (CMAC) module is one stage of the convolution pipeline for
 convolution operation. It receives input data and weight from the
 convolution sequence controller (CSC), performs multiplication and addition,
@@ -1077,16 +1075,18 @@ pipeline depth is 7 cycles.</p>
 status includes start and end operation flags. It takes status 4
 cycles to go through pipeline, which is 3 cycles ahead of partial sum to
 prefetch assembly buffer in CACC.</p>
-<div class="figure align-center" id="id41">
+<figure class="align-center" id="id41">
 <span id="fig-image20-cmac"></span><img alt="../../../_images/ias_image20_cmac.png" src="../../../_images/ias_image20_cmac.png" />
-<p class="caption"><span class="caption-number">Fig. 54 </span><span class="caption-text">Convolution MAC</span><a class="headerlink" href="#id41" title="Permalink to this image">¶</a></p>
-</div>
+<figcaption>
+<p><span class="caption-number">Fig. 54 </span><span class="caption-text">Convolution MAC</span><a class="headerlink" href="#id41" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
 <p>For physical design optimization the CMAC is divided into two parts, CMAC_A and
 CMAC_B. Each part has an individual CSB interface and register file. But they are
 considered as one pipeline stage in usage.</p>
-</div>
-<div class="section" id="id9">
-<h3>Power Consideration<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="id9">
+<h3>Power Consideration<a class="headerlink" href="#id9" title="Link to this heading">¶</a></h3>
 <p>The clock of data path
 of the Convolution MAC is gated when it is idle and no hardware layer is
 available from the programmable registers. The
@@ -1095,12 +1095,12 @@ that software can program</p>
 <p>Besides, convolution MAC can clock gate the MAC cells individually. When
 the number of kernels is not enough to fill all the MAC cells, the empty
 ones will be automatically clock gated.</p>
-</div>
-</div>
-<div class="section" id="convolution-accumulator">
-<h2>Convolution Accumulator<a class="headerlink" href="#convolution-accumulator" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="id10">
-<h3>Overview<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h3>
+</section>
+</section>
+<section id="convolution-accumulator">
+<h2>Convolution Accumulator<a class="headerlink" href="#convolution-accumulator" title="Link to this heading">¶</a></h2>
+<section id="id10">
+<h3>Overview<a class="headerlink" href="#id10" title="Link to this heading">¶</a></h3>
 <p>The Convolution Accumulator (CACC) is the stage of the convolution pipeline
 after CMAC.  It is used to accumulate partial sums from Convolution MAC, and
 round/saturate the result before sending to SDP.  Additionally, the large
@@ -1127,10 +1127,12 @@ operation is done.</p></li>
 <li><p>Load results from delivery buffer group and send them to
 SDP</p></li>
 </ol>
-<div class="figure align-center" id="id42">
+<figure class="align-center" id="id42">
 <span id="fig-image21-cacc"></span><img alt="../../../_images/ias_image21_cacc.png" src="../../../_images/ias_image21_cacc.png" />
-<p class="caption"><span class="caption-number">Fig. 55 </span><span class="caption-text">Convolution accumulator</span><a class="headerlink" href="#id42" title="Permalink to this image">¶</a></p>
-</div>
+<figcaption>
+<p><span class="caption-number">Fig. 55 </span><span class="caption-text">Convolution accumulator</span><a class="headerlink" href="#id42" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
 <p>The assembly SRAM group contains 4 96Bx32 SRAMs and 4 64Bx32 SRAMs. The
 buffer group is used to cache accumulative sums with high precision. For
 direct convolution, assembly SRAM group acts as one 96Bx128 buffers for
@@ -1144,12 +1146,7 @@ from 16 elements to 128 elements per cycle, while the output is always
 16 elements per cycle.</p>
 <p>The precision of accumulative sum is as below.</p>
 <table class="docutils align-default" id="tab-cacc-precision">
-<caption><span class="caption-number">Table 49 </span><span class="caption-text">CACC precision</span><a class="headerlink" href="#tab-cacc-precision" title="Permalink to this table">¶</a></caption>
-<colgroup>
-<col style="width: 33%" />
-<col style="width: 33%" />
-<col style="width: 33%" />
-</colgroup>
+<caption><span class="caption-number">Table 49 </span><span class="caption-text">CACC precision</span><a class="headerlink" href="#tab-cacc-precision" title="Link to this table">¶</a></caption>
 <thead>
 <tr class="row-odd"><th class="head"><p>Input Format</p></th>
 <th class="head"><p>Accumulative Sum</p></th>
@@ -1176,13 +1173,7 @@ standard)</p></td>
 <p>In adder array, there are 64 INT48 adders, 64 INT34 adders and 64 FP48
 adders. Part of them are activated in different mode</p>
 <table class="docutils align-default" id="tab-adder-cacc">
-<caption><span class="caption-number">Table 50 </span><span class="caption-text">Activated adders for different precision and mode</span><a class="headerlink" href="#tab-adder-cacc" title="Permalink to this table">¶</a></caption>
-<colgroup>
-<col style="width: 25%" />
-<col style="width: 25%" />
-<col style="width: 25%" />
-<col style="width: 25%" />
-</colgroup>
+<caption><span class="caption-number">Table 50 </span><span class="caption-text">Activated adders for different precision and mode</span><a class="headerlink" href="#tab-adder-cacc" title="Link to this table">¶</a></caption>
 <thead>
 <tr class="row-odd"><th class="head"><p>Input Format
 and Mode</p></th>
@@ -1235,32 +1226,34 @@ atomic cubes if they will be in same 64 bytes package after further
 calculation in SDP. This function allows SDP to send 64B aligned write
 requests as many as possible when multi-batch is enabled. Below diagram
 shows a case with batch size of 2.</p>
-<div class="figure align-center" id="id43">
-<span id="fig-image22-data-remapping-in-cacc"></span><img alt="../../../_images/ias_image22_data_remapping_in_cacc.svg" src="../../../_images/ias_image22_data_remapping_in_cacc.svg" /><p class="caption"><span class="caption-number">Fig. 56 </span><span class="caption-text">Data remapping in CACC</span><a class="headerlink" href="#id43" title="Permalink to this image">¶</a></p>
-</div>
+<figure class="align-center" id="id43">
+<span id="fig-image22-data-remapping-in-cacc"></span><img alt="../../../_images/ias_image22_data_remapping_in_cacc.svg" src="../../../_images/ias_image22_data_remapping_in_cacc.svg" /><figcaption>
+<p><span class="caption-number">Fig. 56 </span><span class="caption-text">Data remapping in CACC</span><a class="headerlink" href="#id43" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
 <p>The protocol between CMAC and CACC is valid-only protocol. In case of
 overflow, CACC uses valid-credit protocol to back pressure CSC.</p>
-</div>
-<div class="section" id="id11">
-<h3>Power Consideration<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="id11">
+<h3>Power Consideration<a class="headerlink" href="#id11" title="Link to this heading">¶</a></h3>
 <p>The Convolution Accumulator applies clock gating in the data path.
 The clock of data
 path of Convolution Accumulator is gated when it is idle and no
 HW-layer is available from programmable registers.
 The programmable registers within CACC aren’t clock gated to allow
 for new instructions to be programmed.</p>
-</div>
-</div>
-<div class="section" id="single-point-data-processor">
-<h2>Single Point Data Processor<a class="headerlink" href="#single-point-data-processor" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="id12">
-<h3>Overview<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h3>
+</section>
+</section>
+<section id="single-point-data-processor">
+<h2>Single Point Data Processor<a class="headerlink" href="#single-point-data-processor" title="Link to this heading">¶</a></h2>
+<section id="id12">
+<h3>Overview<a class="headerlink" href="#id12" title="Link to this heading">¶</a></h3>
 <p>The Single Point Data Processor (SDP) is performs post processing
 operations at the single data element level. In NVDLA version
 1.0, point processing is designed to accomplish following operations.</p>
-</div>
-<div class="section" id="bias-addition">
-<h3>Bias Addition<a class="headerlink" href="#bias-addition" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="bias-addition">
+<h3>Bias Addition<a class="headerlink" href="#bias-addition" title="Link to this heading">¶</a></h3>
 <p>For a convolutional layer, there’re always a bias addition after convolution.
 In NVDLA, we implement bias addition in SDP.</p>
 <p>The mathematic formula for bias addition is:</p>
@@ -1276,9 +1269,9 @@ in the same channel;</p></li>
 <li><p>SDP B/N/E-RDMA per-element mode: If bias is different
 element-by-element;</p></li>
 </ol>
-</div>
-<div class="section" id="non-linear-function">
-<h3>Non-Linear Function<a class="headerlink" href="#non-linear-function" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="non-linear-function">
+<h3>Non-Linear Function<a class="headerlink" href="#non-linear-function" title="Link to this heading">¶</a></h3>
 <p>The Non-Linear function hardware in SDP is used to accomplish activation
 layer operations.</p>
 <p>Based on current network analysis, there are three activation functions
@@ -1288,26 +1281,30 @@ are commonly used:</p>
 <li><p>Sigmoid, for an input <span class="math notranslate nohighlight">\(x\)</span>, the output is
 <span class="math notranslate nohighlight">\(\frac{1}{1 + e^{- x}}\)</span>.</p></li>
 </ul>
-<div class="figure align-center" id="id44">
+<figure class="align-center" id="id44">
 <span id="fig-image26-sigmoid"></span><img alt="../../../_images/ias_image26_sigmoid.png" src="../../../_images/ias_image26_sigmoid.png" />
-<p class="caption"><span class="caption-number">Fig. 57 </span><span class="caption-text">Sigmoid Function</span><a class="headerlink" href="#id44" title="Permalink to this image">¶</a></p>
-</div>
+<figcaption>
+<p><span class="caption-number">Fig. 57 </span><span class="caption-text">Sigmoid Function</span><a class="headerlink" href="#id44" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
 <ul class="simple">
 <li><p>Hyperbolic tangent, for an input <span class="math notranslate nohighlight">\(x\)</span>, the output is
 <span class="math notranslate nohighlight">\(\frac{1 - e^{- 2x}}{1 + e^{- 2x}}\)</span>.</p></li>
 </ul>
-<div class="figure align-center" id="id45">
+<figure class="align-center" id="id45">
 <span id="fig-image27-hyperbolic"></span><img alt="../../../_images/ias_image27_hyperbolic.png" src="../../../_images/ias_image27_hyperbolic.png" />
-<p class="caption"><span class="caption-number">Fig. 58 </span><span class="caption-text">Hyperbolic Tangent Function</span><a class="headerlink" href="#id45" title="Permalink to this image">¶</a></p>
-</div>
+<figcaption>
+<p><span class="caption-number">Fig. 58 </span><span class="caption-text">Hyperbolic Tangent Function</span><a class="headerlink" href="#id45" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
 <p>In the case of the ReLU activation function, it could be implemented directly by hardware
 logic. Sigmoid and hyperbolic tangent functions are
 non-linear functions, so they are expected to be implemented through a look-up
 table which can be loaded with a function as needed. (see the Section “LUT programming”
 of Programming Guide document for details).</p>
-</div>
-<div class="section" id="batch-normalization">
-<h3>Batch Normalization<a class="headerlink" href="#batch-normalization" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="batch-normalization">
+<h3>Batch Normalization<a class="headerlink" href="#batch-normalization" title="Link to this heading">¶</a></h3>
 <p>Batch normalization a is widely used layer. It can be descripted by
 formula below:</p>
 <div class="math notranslate nohighlight">
@@ -1321,16 +1318,18 @@ normalization operation. When the parameter is per channel, they are
 interleaved in memory (see <a class="reference external" href="https://nvdla.org/hw/format.html">Data Formats</a>).
 And a DMA in SDP will fetch the
 parameter and calculate the feature data cube from the convolution pipeline.</p>
-</div>
-<div class="section" id="element-wise-layer">
-<h3>Element-Wise Layer<a class="headerlink" href="#element-wise-layer" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="element-wise-layer">
+<h3>Element-Wise Layer<a class="headerlink" href="#element-wise-layer" title="Link to this heading">¶</a></h3>
 <p>An Element-Wise layer refers to a type of operation between two feature
 data cubes which have the same W, H and C size. These two W x H x C
 feature data cubes do element-wise addition, multiplication or max/min
 comparison operation and output one W x H x C feature data cube.</p>
-<div class="figure align-center" id="id46">
-<span id="fig-image31-element-wise"></span><img alt="../../../_images/ias_image31_element_wise.svg" src="../../../_images/ias_image31_element_wise.svg" /><p class="caption"><span class="caption-number">Fig. 59 </span><span class="caption-text">Element-wise operation</span><a class="headerlink" href="#id46" title="Permalink to this image">¶</a></p>
-</div>
+<figure class="align-center" id="id46">
+<span id="fig-image31-element-wise"></span><img alt="../../../_images/ias_image31_element_wise.svg" src="../../../_images/ias_image31_element_wise.svg" /><figcaption>
+<p><span class="caption-number">Fig. 59 </span><span class="caption-text">Element-wise operation</span><a class="headerlink" href="#id46" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
 <p>The SDP unit can support element-wise layers for all 3 types of data
 precisions. Every element-wise layer on SDP is configured to do addition
 or multiplication.</p>
@@ -1338,14 +1337,16 @@ or multiplication.</p>
 When online mode, one data cube comes from convolution pipeline, and the
 other input data cube is fetched from memory. When offline mode, SDP
 fetches both input data cubes from memory.</p>
-</div>
-<div class="section" id="prelu">
-<h3>PReLU<a class="headerlink" href="#prelu" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="prelu">
+<h3>PReLU<a class="headerlink" href="#prelu" title="Link to this heading">¶</a></h3>
 <p>Different from ReLU which clip negative values to 0, PReLU acts as:</p>
-<div class="figure align-center" id="id47">
+<figure class="align-center" id="id47">
 <span id="fig-image32-prelu"></span><a class="reference internal image-reference" href="../../../_images/ias_image32_prelu.svg"><img alt="../../../_images/ias_image32_prelu.svg" src="../../../_images/ias_image32_prelu.svg" width="20%" /></a>
-<p class="caption"><span class="caption-number">Fig. 60 </span><span class="caption-text">PReLU</span><a class="headerlink" href="#id47" title="Permalink to this image">¶</a></p>
-</div>
+<figcaption>
+<p><span class="caption-number">Fig. 60 </span><span class="caption-text">PReLU</span><a class="headerlink" href="#id47" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
 <p>The scaling factor k can be either per cube constant or per-channel
 variant.</p>
 <p>SDP supports it by update the multiplier behavior: If PReLU mode is
@@ -1358,9 +1359,9 @@ this is due to only one multiplier is available for a subunit;</p>
 <p>2. If PReLU is enabled for one sub-unit, the ALU in that unit MUST be
 bypassed. This is due to there’s only one truncate for a sub-unit and
 negative/positive requires different truncate here.</p>
-</div>
-<div class="section" id="format-conversion">
-<h3>Format conversion<a class="headerlink" href="#format-conversion" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="format-conversion">
+<h3>Format conversion<a class="headerlink" href="#format-conversion" title="Link to this heading">¶</a></h3>
 <p>NVDLA supports INT8, INT16, and FP16 precisions.  Lower precision delivers higher
 performance, while higher precision provides better inference results.</p>
 <p>It’s possible that software requires different precision for different
@@ -1372,23 +1373,25 @@ the supported format conversion is listed in <a class="reference internal" href=
 <p>Precision conversion and normal SDP function are independent, which
 means SDP is able to do conversion and operation (e.g.: Bias addition,
 BatchNorm, EW, etc) at the same time.</p>
-</div>
-<div class="section" id="comparison">
-<h3>Comparison<a class="headerlink" href="#comparison" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="comparison">
+<h3>Comparison<a class="headerlink" href="#comparison" title="Link to this heading">¶</a></h3>
 <p>Comparison mode in SDP_Y takes 2 inputs then compares them. If any element pair from
 the input data cubes mismatches, a status register is updated after the hardware layer
 is complete.</p>
 <p>To save bandwidth, there won’t be any output write to external
 memory in comparison mode.</p>
-</div>
-<div class="section" id="function-description">
-<h3>Function Description<a class="headerlink" href="#function-description" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="function-description">
+<h3>Function Description<a class="headerlink" href="#function-description" title="Link to this heading">¶</a></h3>
 <p>Following diagram shows the internal blocks of the point processing sub-unit and
 connections to other sub-units.</p>
-<div class="figure align-center" id="id48">
+<figure class="align-center" id="id48">
 <span id="fig-image33-sdp"></span><img alt="../../../_images/ias_image33_sdp.png" src="../../../_images/ias_image33_sdp.png" />
-<p class="caption"><span class="caption-number">Fig. 61 </span><span class="caption-text">Single point Data Processing block diagram</span><a class="headerlink" href="#id48" title="Permalink to this image">¶</a></p>
-</div>
+<figcaption>
+<p><span class="caption-number">Fig. 61 </span><span class="caption-text">Single point Data Processing block diagram</span><a class="headerlink" href="#id48" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
 <p>Function Blocks:</p>
 <p>There are several function blocks, each of which targets a different
 purpose:</p>
@@ -1410,10 +1413,6 @@ choose full function or partial to match all the operations needed in
 one hardware layer.</p>
 <p>The throughput for each sub-unit is:</p>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 34%" />
-<col style="width: 66%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Sub-unit</p></th>
 <th class="head"><p>Throughput</p></th>
@@ -1511,13 +1510,7 @@ thus it’s doable;</p>
 <p>As a summary, the features supported by each sub-unit are listed in
 table below:</p>
 <table class="docutils align-default" id="tab-sdp-supported-use-scenarios">
-<caption><span class="caption-number">Table 51 </span><span class="caption-text">SDP supported use scenarios</span><a class="headerlink" href="#tab-sdp-supported-use-scenarios" title="Permalink to this table">¶</a></caption>
-<colgroup>
-<col style="width: 68%" />
-<col style="width: 12%" />
-<col style="width: 12%" />
-<col style="width: 9%" />
-</colgroup>
+<caption><span class="caption-number">Table 51 </span><span class="caption-text">SDP supported use scenarios</span><a class="headerlink" href="#tab-sdp-supported-use-scenarios" title="Link to this table">¶</a></caption>
 <thead>
 <tr class="row-odd"><th class="head"><p>FeatureModule</p></th>
 <th class="head"><p>X1</p></th>
@@ -1564,10 +1557,12 @@ table below:</p>
 output sequence. In most of cases, input and output sequence orders in
 all input/output interfaces are the same, and it is exactly the
 convolution output sequence which is shown in the following diagram.</p>
-<div class="figure align-center" id="id49">
+<figure class="align-center" id="id49">
 <span id="fig-image37-sdp-sequence"></span><img alt="../../../_images/ias_image37_sdp_sequence.png" src="../../../_images/ias_image37_sdp_sequence.png" />
-<p class="caption"><span class="caption-number">Fig. 62 </span><span class="caption-text">Point processing input/output sequences</span><a class="headerlink" href="#id49" title="Permalink to this image">¶</a></p>
-</div>
+<figcaption>
+<p><span class="caption-number">Fig. 62 </span><span class="caption-text">Point processing input/output sequences</span><a class="headerlink" href="#id49" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
 <p>Bias/Operand Data is Per Channel:</p>
 <p>Data will be fetched from memory, and maintain one value for multiple
 cycles when feature data is processing on the same surface.  It will then
@@ -1576,9 +1571,9 @@ surface.</p>
 <p>Bias/Operand Data is Per Cube:</p>
 <p>Data will be set in a software configuration register, and will not change
 throughout the execution time for a hardware layer.</p>
-</div>
-<div class="section" id="buffer-size-estimation">
-<h3>Buffer Size Estimation<a class="headerlink" href="#buffer-size-estimation" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="buffer-size-estimation">
+<h3>Buffer Size Estimation<a class="headerlink" href="#buffer-size-estimation" title="Link to this heading">¶</a></h3>
 <p>There are three major buffers in the single data processing subunit: LUT in
 the activation block, read DMA buffer, and write DMA buffer. LUT size is
 (65+ 257) *2(BPE) = 644Bytes.</p>
@@ -1591,18 +1586,18 @@ DMA buffer size is therefore<span class="math notranslate nohighlight">\(128 \ti
 <p>Unlinke feature data, if BS/BN/EW has to support BatchNorm mode
 which has 32bits per element.  Thus the read DMA buffer size for those 2
 modules are: 32(bits)*128(cycles)*16(elements)/8=8Kbytes.</p>
-</div>
-<div class="section" id="id15">
-<h3>Power Consideration<a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="id15">
+<h3>Power Consideration<a class="headerlink" href="#id15" title="Link to this heading">¶</a></h3>
 <p>Element-Wise/BatchNorm operation are not always included in a given network.
 So for uch of the operations, BS/BN/EW are not fully running thus clock
 gating is utilized.</p>
-</div>
-</div>
-<div class="section" id="planar-data-processor">
-<h2>Planar Data Processor<a class="headerlink" href="#planar-data-processor" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="id16">
-<h3>Overview<a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h3>
+</section>
+</section>
+<section id="planar-data-processor">
+<h2>Planar Data Processor<a class="headerlink" href="#planar-data-processor" title="Link to this heading">¶</a></h2>
+<section id="id16">
+<h3>Overview<a class="headerlink" href="#id16" title="Link to this heading">¶</a></h3>
 <p>The Planar Data Processor (PDP) executes operations along the width x
 height plane. In NVDLA version 1.0, the PDPD is designed to
 accomplish pooling layers. Max, min, and mean pooling
@@ -1610,24 +1605,30 @@ methods are supported. Several neighboring input elements within a plane
 will be sent to a non-linear function to compute one output element.
 The following diagram shows an example for max-pooling.  The maximum value
 among 3x2 neighboring elements is the pooling result value.</p>
-<div class="figure align-center" id="id50">
+<figure class="align-center" id="id50">
 <span id="fig-image38-max-pooling"></span><img alt="../../../_images/ias_image38_max_pooling.png" src="../../../_images/ias_image38_max_pooling.png" />
-<p class="caption"><span class="caption-number">Fig. 63 </span><span class="caption-text">Max-pooling example</span><a class="headerlink" href="#id50" title="Permalink to this image">¶</a></p>
-</div>
+<figcaption>
+<p><span class="caption-number">Fig. 63 </span><span class="caption-text">Max-pooling example</span><a class="headerlink" href="#id50" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
 <p>The following diagram shows the internal blocks of the PDP sub-unit,
 along with connections to other units and sub-units. The diagram is
 captures the functionality conceptually and
 is does not show the actual RTL modules and hierarchies. The planar data
 processing sub-unit receives data from SDP or MCIF/SRAMIF, and sends
 data to MCIF/SRAMIF.</p>
-<div class="figure align-center" id="id51">
+<figure class="align-center" id="id51">
 <span id="fig-image39-pdp"></span><img alt="../../../_images/ias_image39_pdp.png" src="../../../_images/ias_image39_pdp.png" />
-<p class="caption"><span class="caption-number">Fig. 64 </span><span class="caption-text">Planar processing block diagram</span><a class="headerlink" href="#id51" title="Permalink to this image">¶</a></p>
-</div>
-<div class="figure align-center" id="id52">
+<figcaption>
+<p><span class="caption-number">Fig. 64 </span><span class="caption-text">Planar processing block diagram</span><a class="headerlink" href="#id51" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
+<figure class="align-center" id="id52">
 <span id="fig-image40-pdp"></span><img alt="../../../_images/ias_image40_pdp_processing.png" src="../../../_images/ias_image40_pdp_processing.png" />
-<p class="caption"><span class="caption-number">Fig. 65 </span><span class="caption-text">Processing flow in one plane</span><a class="headerlink" href="#id52" title="Permalink to this image">¶</a></p>
-</div>
+<figcaption>
+<p><span class="caption-number">Fig. 65 </span><span class="caption-text">Processing flow in one plane</span><a class="headerlink" href="#id52" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
 <p>Pooling operations are done within a plane. There is no interference
 between different planes. <a class="reference internal" href="#fig-image41-pdp-in-mode0"><span class="std std-numref">Fig. 66</span></a> shows a complete scheme of
 pooling in one plane. The offset of two neighboring kernels is called
@@ -1697,16 +1698,7 @@ There are two other less used cases: one is pooling
 size 3x3, with stride 3x3. And the other
 is pooling size 7x7, with stride 1x1.</p>
 <table class="docutils align-default" id="tab-pooling-kerne-type">
-<caption><span class="caption-number">Table 52 </span><span class="caption-text">Pooling Kernel Type Summary</span><a class="headerlink" href="#tab-pooling-kerne-type" title="Permalink to this table">¶</a></caption>
-<colgroup>
-<col style="width: 14%" />
-<col style="width: 14%" />
-<col style="width: 14%" />
-<col style="width: 14%" />
-<col style="width: 14%" />
-<col style="width: 14%" />
-<col style="width: 14%" />
-</colgroup>
+<caption><span class="caption-number">Table 52 </span><span class="caption-text">Pooling Kernel Type Summary</span><a class="headerlink" href="#tab-pooling-kerne-type" title="Link to this table">¶</a></caption>
 <thead>
 <tr class="row-odd"><th class="head"><p>Network</p></th>
 <th class="head"><p>Total
@@ -1826,34 +1818,37 @@ planar processing on-fly operation condition.</p>
 <p>When input data is sourced from the point processing sub-unit, the input data sequence is the
 same as convolution output sequences which is shown in following
 diagram.</p>
-<div class="figure align-center" id="id53">
+<figure class="align-center" id="id53">
 <span id="fig-image41-pdp-in-mode0"></span><img alt="../../../_images/ias_image41_pdp_in_mode0.png" src="../../../_images/ias_image41_pdp_in_mode0.png" />
-<p class="caption"><span class="caption-number">Fig. 66 </span><span class="caption-text">Planar processing input sequence, mode 0</span><a class="headerlink" href="#id53" title="Permalink to this image">¶</a></p>
-</div>
+<figcaption>
+<p><span class="caption-number">Fig. 66 </span><span class="caption-text">Planar processing input sequence, mode 0</span><a class="headerlink" href="#id53" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
 <p>And output sequence is shown in following diagram.</p>
-<div class="figure align-center" id="id54">
+<figure class="align-center" id="id54">
 <span id="fig-image42-pdp-out-mode0"></span><img alt="../../../_images/ias_image42_pdp_out_mode0.png" src="../../../_images/ias_image42_pdp_out_mode0.png" />
-<p class="caption"><span class="caption-number">Fig. 67 </span><span class="caption-text">Planar processing output sequence, mode 0</span><a class="headerlink" href="#id54" title="Permalink to this image">¶</a></p>
-</div>
+<figcaption>
+<p><span class="caption-number">Fig. 67 </span><span class="caption-text">Planar processing output sequence, mode 0</span><a class="headerlink" href="#id54" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
 <p>If planar processing on-the-fly operation condition is not meet, planar processing shall work in off-fly
 mode, it receives data from PDMA, and the ongoing channel number is
 always 16. There are two sub-cases, one is non-split-width, and the
 other is split-width. The input data sequence is shown in following diagram.</p>
-<div class="figure align-center" id="id55">
+<figure class="align-center" id="id55">
 <span id="fig-image43-pdp-in-mode1-2"></span><img alt="../../../_images/ias_image43_pdp_in_mode1_2.png" src="../../../_images/ias_image43_pdp_in_mode1_2.png" />
-<p class="caption"><span class="caption-number">Fig. 68 </span><span class="caption-text">Planar processing input sequence, mode 1 and 2</span><a class="headerlink" href="#id55" title="Permalink to this image">¶</a></p>
-</div>
+<figcaption>
+<p><span class="caption-number">Fig. 68 </span><span class="caption-text">Planar processing input sequence, mode 1 and 2</span><a class="headerlink" href="#id55" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
 <p>The output data sequence is shown in following diagram.</p>
-<div class="figure align-center" id="id56">
+<figure class="align-center" id="id56">
 <span id="fig-image44-pdp-out-mode1-2"></span><img alt="../../../_images/ias_image44_pdp_out_mode1_2.png" src="../../../_images/ias_image44_pdp_out_mode1_2.png" />
-<p class="caption"><span class="caption-number">Fig. 69 </span><span class="caption-text">Planar processing output sequence, mode 1 and 2</span><a class="headerlink" href="#id56" title="Permalink to this image">¶</a></p>
-</div>
+<figcaption>
+<p><span class="caption-number">Fig. 69 </span><span class="caption-text">Planar processing output sequence, mode 1 and 2</span><a class="headerlink" href="#id56" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 27%" />
-<col style="width: 51%" />
-<col style="width: 22%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Operation mode</p></th>
 <th class="head"><p>Data Source</p></th>
@@ -1875,9 +1870,9 @@ other is split-width. The input data sequence is shown in following diagram.</p>
 </tr>
 </tbody>
 </table>
-</div>
-<div class="section" id="id17">
-<h3>Buffer Size Estimation<a class="headerlink" href="#id17" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="id17">
+<h3>Buffer Size Estimation<a class="headerlink" href="#id17" title="Link to this heading">¶</a></h3>
 <p>There are three major buffers in planar data processing subunit: share
 line buffer, read DMA buffer, and write DMA buffer. For share line
 buffer, its size determines whether PDP could work directly on data from
@@ -1898,16 +1893,7 @@ have to work in off-fly mode, so there will be a performance drop since
 extra-time is needed to store data to MC/SRAM, and then fetch back to
 PDP for pooling processing.</p>
 <table class="docutils align-default" id="tab-pooling-buffer-size">
-<caption><span class="caption-number">Table 53 </span><span class="caption-text">Pooling Share Line Buffer Consumption Summary</span><a class="headerlink" href="#tab-pooling-buffer-size" title="Permalink to this table">¶</a></caption>
-<colgroup>
-<col style="width: 14%" />
-<col style="width: 14%" />
-<col style="width: 14%" />
-<col style="width: 14%" />
-<col style="width: 14%" />
-<col style="width: 14%" />
-<col style="width: 14%" />
-</colgroup>
+<caption><span class="caption-number">Table 53 </span><span class="caption-text">Pooling Share Line Buffer Consumption Summary</span><a class="headerlink" href="#tab-pooling-buffer-size" title="Link to this table">¶</a></caption>
 <thead>
 <tr class="row-odd"><th class="head"><p>Layer</p></th>
 <th class="head"><p>Channel
@@ -2220,20 +2206,14 @@ One is covering MC accessing latency, assumed to be 128
 cycles. The other is access bandwidth.  The peak performance case is 8
 Bytes per cycle (8 elements in int8, 4 elements in int16/fp16). So the read
 DMA buffer size is<span class="math notranslate nohighlight">\(128 \times 8 = 1KBytes\)</span>.</p>
-</div>
-<div class="section" id="id18">
-<h3>Power Consideration<a class="headerlink" href="#id18" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="id18">
+<h3>Power Consideration<a class="headerlink" href="#id18" title="Link to this heading">¶</a></h3>
 <p>Planar processing sub-unit targets for pooling layer in NVDLA 1.0, based
 on analysis on current networks, planar processing usage is not
 expected to be high.</p>
 <table class="docutils align-default" id="tab-pooling-layer-percentage">
-<caption><span class="caption-number">Table 54 </span><span class="caption-text">Pooling Layer Percentage Summary</span><a class="headerlink" href="#tab-pooling-layer-percentage" title="Permalink to this table">¶</a></caption>
-<colgroup>
-<col style="width: 27%" />
-<col style="width: 24%" />
-<col style="width: 24%" />
-<col style="width: 24%" />
-</colgroup>
+<caption><span class="caption-number">Table 54 </span><span class="caption-text">Pooling Layer Percentage Summary</span><a class="headerlink" href="#tab-pooling-layer-percentage" title="Link to this table">¶</a></caption>
 <thead>
 <tr class="row-odd"><th class="head"><p>Network</p></th>
 <th class="head"><p>Total Pooling
@@ -2270,12 +2250,12 @@ Number*</p></th>
 <p>Based on the pooling layer number percentage it’s highly likely that the
 planar processing sub-unit is idle most of the time. Sub-unit level clock gating
 is therefore important.</p>
-</div>
-</div>
-<div class="section" id="cross-channel-data-processor">
-<h2>Cross Channel Data Processor<a class="headerlink" href="#cross-channel-data-processor" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="id19">
-<h3>Overview<a class="headerlink" href="#id19" title="Permalink to this headline">¶</a></h3>
+</section>
+</section>
+<section id="cross-channel-data-processor">
+<h2>Cross Channel Data Processor<a class="headerlink" href="#cross-channel-data-processor" title="Link to this heading">¶</a></h2>
+<section id="id19">
+<h3>Overview<a class="headerlink" href="#id19" title="Link to this heading">¶</a></h3>
 <p>Cross Channel Data Processor (CDP) executes operations along channel
 direction. In NVDLA version 1.0, channel processing is designed to
 address local response normalization (LRN) layers. Local response
@@ -2300,36 +2280,35 @@ programming corresponding registers so that CDP can be treated as a
 standalone lookup table (LUT) function.</p>
 <p>The Look-up table approach is adopted for the RESMO
 (reciprocation-exponent-sum-multi operation)<span class="math notranslate nohighlight">\(f\left( x \right)\)</span>.</p>
-<div class="figure align-center" id="id57">
+<figure class="align-center" id="id57">
 <span id="fig-image45-cdp-curve"></span><img alt="../../../_images/ias_image45_cdp_curve.png" src="../../../_images/ias_image45_cdp_curve.png" />
-<p class="caption"><span class="caption-number">Fig. 70 </span><span class="caption-text">Curve for reciprocation-exponent-sum-multi operation</span><a class="headerlink" href="#id57" title="Permalink to this image">¶</a></p>
-</div>
+<figcaption>
+<p><span class="caption-number">Fig. 70 </span><span class="caption-text">Curve for reciprocation-exponent-sum-multi operation</span><a class="headerlink" href="#id57" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
 <p>The following diagram shows internal blocks of the channel data processing
 sub-unit and connections to other sub-units. The diagram is just for
 capturing ideas and does not represent the actual RTL modules boundaries and hierarchies.</p>
-<div class="figure align-center" id="id58">
+<figure class="align-center" id="id58">
 <span id="fig-image46-cdp"></span><img alt="../../../_images/ias_image46_cdp.png" src="../../../_images/ias_image46_cdp.png" />
-<p class="caption"><span class="caption-number">Fig. 71 </span><span class="caption-text">Cross Channel Data Processing Block diagram</span><a class="headerlink" href="#id58" title="Permalink to this image">¶</a></p>
-</div>
+<figcaption>
+<p><span class="caption-number">Fig. 71 </span><span class="caption-text">Cross Channel Data Processing Block diagram</span><a class="headerlink" href="#id58" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
 <p>Channel processing sub-unit always works independently with other
 processing sub-units. It receives input data from and send output data
 to PDMA. Due to memory accessing constraint, the input data sequence is
 in a particular orders. The input sequence is shown in following
 diagram, and output sequence is the same as input sequence.</p>
-<div class="figure align-center" id="id59">
+<figure class="align-center" id="id59">
 <span id="fig-image47-cdp-seq"></span><img alt="../../../_images/ias_image47_cdp_seq.png" src="../../../_images/ias_image47_cdp_seq.png" />
-<p class="caption"><span class="caption-number">Fig. 72 </span><span class="caption-text">Channel Processing input/output sequence</span><a class="headerlink" href="#id59" title="Permalink to this image">¶</a></p>
-</div>
+<figcaption>
+<p><span class="caption-number">Fig. 72 </span><span class="caption-text">Channel Processing input/output sequence</span><a class="headerlink" href="#id59" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
 <p>The following table shows LRN layers parameters in current well know networks.</p>
 <table class="docutils align-default" id="tab-lrn-layer">
-<caption><span class="caption-number">Table 55 </span><span class="caption-text">LRN Layer Parameter Summary</span><a class="headerlink" href="#tab-lrn-layer" title="Permalink to this table">¶</a></caption>
-<colgroup>
-<col style="width: 25%" />
-<col style="width: 32%" />
-<col style="width: 25%" />
-<col style="width: 11%" />
-<col style="width: 8%" />
-</colgroup>
+<caption><span class="caption-number">Table 55 </span><span class="caption-text">LRN Layer Parameter Summary</span><a class="headerlink" href="#tab-lrn-layer" title="Link to this table">¶</a></caption>
 <thead>
 <tr class="row-odd"><th class="head"><p>Network</p></th>
 <th class="head"><p>Total LRN Layer Number</p></th>
@@ -2368,9 +2347,9 @@ diagram, and output sequence is the same as input sequence.</p>
 <p>Data elements on stripe edge may be used by to neighboring stripes.
 Those data needs to be buffered, buffer entry number shall
 be <span class="math notranslate nohighlight">\(\left\lbrack \text{Max}\left( \text{loca}l_{\text{regio}n_{\text{size}}} \right) - 1 \right\rbrack \times 8 = 7 \times 8 = 56\ byte\)</span>.</p>
-</div>
-<div class="section" id="id20">
-<h3>Buffer Size Estimation<a class="headerlink" href="#id20" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="id20">
+<h3>Buffer Size Estimation<a class="headerlink" href="#id20" title="Link to this heading">¶</a></h3>
 <p>There are three major buffers in the cross-channel data processing subunit:
 LUT in the activation block, read DMA buffer, and write DMA buffer. The LUT size
 is the same as SDP (644Bytes).</p>
@@ -2379,19 +2358,13 @@ The first is to cover memory system access latency.  The assumption is
 128 cycles. The other is access bandwidth.  The peak performance case is 8
 Bytes per cycle (8 elements in int8, 4 elements in int16/fp16), so the read
 DMA buffer size is <span class="math notranslate nohighlight">\(128 \times 8 = 1KBytes\)</span>.</p>
-</div>
-<div class="section" id="id21">
-<h3>Power Consideration<a class="headerlink" href="#id21" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="id21">
+<h3>Power Consideration<a class="headerlink" href="#id21" title="Link to this heading">¶</a></h3>
 <p>The channel data processing sub-unit targets for LRN layer in NVDLA 1.0. Based on
 analysis of current networks, the channel processing usage is low.</p>
 <table class="docutils align-default" id="tab-lrn-percentage">
-<caption><span class="caption-number">Table 56 </span><span class="caption-text">Local Response Layer Percentage</span><a class="headerlink" href="#tab-lrn-percentage" title="Permalink to this table">¶</a></caption>
-<colgroup>
-<col style="width: 25%" />
-<col style="width: 31%" />
-<col style="width: 29%" />
-<col style="width: 16%" />
-</colgroup>
+<caption><span class="caption-number">Table 56 </span><span class="caption-text">Local Response Layer Percentage</span><a class="headerlink" href="#tab-lrn-percentage" title="Link to this table">¶</a></caption>
 <thead>
 <tr class="row-odd"><th class="head"><p>Network</p></th>
 <th class="head"><p>Total LRN Layer Number</p></th>
@@ -2426,12 +2399,12 @@ analysis of current networks, the channel processing usage is low.</p>
 <p>Based on local response normalization layer number percentage
 the channel data processing sub-unit will be idle most of the time.  Therefore,
 the design supports clock gating of the unit.</p>
-</div>
-</div>
-<div class="section" id="rubik">
-<h2>RUBIK<a class="headerlink" href="#rubik" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="id22">
-<h3>Overview<a class="headerlink" href="#id22" title="Permalink to this headline">¶</a></h3>
+</section>
+</section>
+<section id="rubik">
+<h2>RUBIK<a class="headerlink" href="#rubik" title="Link to this heading">¶</a></h2>
+<section id="id22">
+<h3>Overview<a class="headerlink" href="#id22" title="Link to this heading">¶</a></h3>
 <p>RUBIK module is similar to BDMA. It transforms data mapping format
 without any data calculation. RUBIK has 3 working modes, they are:</p>
 <ul class="simple">
@@ -2441,13 +2414,15 @@ without any data calculation. RUBIK has 3 working modes, they are:</p>
 </ul>
 <p>Since the module’s function is to transform feature data cubes, we call it RUBIK
 unit.</p>
-<div class="figure align-center" id="id60">
+<figure class="align-center" id="id60">
 <span id="fig-image48-cdp"></span><img alt="../../../_images/ias_image48_cdp.png" src="../../../_images/ias_image48_cdp.png" />
-<p class="caption"><span class="caption-number">Fig. 73 </span><span class="caption-text">RUBIK</span><a class="headerlink" href="#id60" title="Permalink to this image">¶</a></p>
-</div>
-</div>
-<div class="section" id="contract">
-<h3>Contract<a class="headerlink" href="#contract" title="Permalink to this headline">¶</a></h3>
+<figcaption>
+<p><span class="caption-number">Fig. 73 </span><span class="caption-text">RUBIK</span><a class="headerlink" href="#id60" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
+</section>
+<section id="contract">
+<h3>Contract<a class="headerlink" href="#contract" title="Link to this heading">¶</a></h3>
 <p>A software deconvolution layer always uses several HW-layers or two phases.
 Phase I is generate result by convolution pipeline. And phase II is
 contract mode by RUBIK.</p>
@@ -2456,9 +2431,11 @@ stride that are greater than 1. And with these strides the output of
 phase I HW-layer is a channel-extended data cube. Contract mode in RUBIK
 transforms mapping format to de-extend the cube. The figure below shows a
 remapping example where the x stride is 2 and the y stride is 3.</p>
-<div class="figure align-center" id="id61">
-<span id="fig-image49-rubik-contract"></span><img alt="../../../_images/ias_image49_rubik_contract.svg" src="../../../_images/ias_image49_rubik_contract.svg" /><p class="caption"><span class="caption-number">Fig. 74 </span><span class="caption-text">Contract mode in RUBIK</span><a class="headerlink" href="#id61" title="Permalink to this image">¶</a></p>
-</div>
+<figure class="align-center" id="id61">
+<span id="fig-image49-rubik-contract"></span><img alt="../../../_images/ias_image49_rubik_contract.svg" src="../../../_images/ias_image49_rubik_contract.svg" /><figcaption>
+<p><span class="caption-number">Fig. 74 </span><span class="caption-text">Contract mode in RUBIK</span><a class="headerlink" href="#id61" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
 <p>The formula of input cube size and output size are:</p>
 <div class="math notranslate nohighlight">
 \[W^{'} = W*deconv\_ x\_ stride\]</div>
@@ -2486,60 +2463,66 @@ stride and 32 bytes. As formula below:</p></li>
 output data width, input channel size, should not exceed 8192 in one
 contract layer.</p></li>
 </ul>
-</div>
-<div class="section" id="split-and-merge">
-<h3>Split and Merge<a class="headerlink" href="#split-and-merge" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="split-and-merge">
+<h3>Split and Merge<a class="headerlink" href="#split-and-merge" title="Link to this heading">¶</a></h3>
 <p>Split and merge are two opposite operation modes in RUBIK. Split
 transforms a data cube into M-planar formats (NCHW). The number of planes
 is equal to channel size. The merge mode transforms a serial of planes to a
 feature data cube. The transform is showed in figure below.</p>
-<div class="figure align-center" id="id62">
-<span id="fig-image50-rubik-split-and-merge"></span><img alt="../../../_images/ias_image50_rubik_split_and_merge.svg" src="../../../_images/ias_image50_rubik_split_and_merge.svg" /><p class="caption"><span class="caption-number">Fig. 75 </span><span class="caption-text">Split and merge modes in RUBIK</span><a class="headerlink" href="#id62" title="Permalink to this image">¶</a></p>
-</div>
+<figure class="align-center" id="id62">
+<span id="fig-image50-rubik-split-and-merge"></span><img alt="../../../_images/ias_image50_rubik_split_and_merge.svg" src="../../../_images/ias_image50_rubik_split_and_merge.svg" /><figcaption>
+<p><span class="caption-number">Fig. 75 </span><span class="caption-text">Split and merge modes in RUBIK</span><a class="headerlink" href="#id62" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
 <p>The M-planar format is similar to image formats. It’s a pitch linear
 format which contains T_R16_I, T_R8_I or T_R16_F data. Each plane
 contains only 1 channel data or single element. The line stride and
 planar stride of all planes(M-planar) shall align to 64 bytes. It’s
 unlike other data formats for NVDLA.</p>
-</div>
-<div class="section" id="id23">
-<h3>Power Consideration<a class="headerlink" href="#id23" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="id23">
+<h3>Power Consideration<a class="headerlink" href="#id23" title="Link to this heading">¶</a></h3>
 <p>The RUBIK unit applies clock gating in the data path. The clock of data
 path of RUBIK is
 gated when the unit is idle and no HW-layer is available from the
 programmable registers.</p>
-</div>
-</div>
-<div class="section" id="mcif">
-<h2>MCIF<a class="headerlink" href="#mcif" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+<section id="mcif">
+<h2>MCIF<a class="headerlink" href="#mcif" title="Link to this heading">¶</a></h2>
 <p>MCIF is used to arbitrate requests from several internal sub modules and
 convert to AXI protocol to connect to external DRAM.</p>
-<div class="figure align-center" id="id63">
+<figure class="align-center" id="id63">
 <span id="fig-image51-mcif"></span><img alt="../../../_images/ias_image51_mcif.png" src="../../../_images/ias_image51_mcif.png" />
-<p class="caption"><span class="caption-number">Fig. 76 </span><span class="caption-text">MCIF</span><a class="headerlink" href="#id63" title="Permalink to this image">¶</a></p>
-</div>
+<figcaption>
+<p><span class="caption-number">Fig. 76 </span><span class="caption-text">MCIF</span><a class="headerlink" href="#id63" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
 <p>MCIF will support both a read and write channels, but some NVDLA
 sub-module will only have read requirement, so the interface between
 sub-module and MCIF will support read, write or both. CDMA0 and CDMA1 in
 the above diagram will need read only, and other 5 will need both read and
 write.</p>
-</div>
-<div class="section" id="sramif">
-<h2>SRAMIF<a class="headerlink" href="#sramif" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="sramif">
+<h2>SRAMIF<a class="headerlink" href="#sramif" title="Link to this heading">¶</a></h2>
 <p>The SRAMIF moduile is used to connect several internal
 sub-modules to on-chip SRAM.  It’s similar to the MCIF but the bus
 latency is expected to be lower.</p>
-<div class="figure align-center" id="id64">
+<figure class="align-center" id="id64">
 <span id="fig-image52-sramif"></span><img alt="../../../_images/ias_image52_sramif.png" src="../../../_images/ias_image52_sramif.png" />
-<p class="caption"><span class="caption-number">Fig. 77 </span><span class="caption-text">SRAMIF</span><a class="headerlink" href="#id64" title="Permalink to this image">¶</a></p>
-</div>
+<figcaption>
+<p><span class="caption-number">Fig. 77 </span><span class="caption-text">SRAMIF</span><a class="headerlink" href="#id64" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
 <p>SRAMIF will support both read and write channels, but some NVDLA
 sub-modules will only have a read requirement, so the interface between
 DMA engines and SRAMIF will support read, write or both. CMDA0~1 will
 need read channel only, while the other 5 will need both read and write.</p>
-</div>
-<div class="section" id="result-statistics">
-<h2>Result Statistics<a class="headerlink" href="#result-statistics" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="result-statistics">
+<h2>Result Statistics<a class="headerlink" href="#result-statistics" title="Link to this heading">¶</a></h2>
 <p>To perform better calculation accuracy with limited precision data type
 like int8, NVDLA engine involved a large number of converters in many
 pipeline stages. Please see Section “Precision programming” of Programming Guide
@@ -2567,10 +2550,6 @@ feature data cube and figure out proper parameters for next layer.</p>
 </ul>
 <p>Here’s a list of statistic counting registers and its valid condition:</p>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 48%" />
-<col style="width: 52%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Register</p></th>
 <th class="head"><p>Valid condition</p></th>
@@ -2617,21 +2596,15 @@ SDP_RDMA. D_STATUS_INF_INPUT_NUM</p></td>
 </tr>
 </tbody>
 </table>
-</div>
-<div class="section" id="pipelines-of-nvdla-core">
-<h2>Pipelines of NVDLA core<a class="headerlink" href="#pipelines-of-nvdla-core" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="pipelines-of-nvdla-core">
+<h2>Pipelines of NVDLA core<a class="headerlink" href="#pipelines-of-nvdla-core" title="Link to this heading">¶</a></h2>
 <p>All sub units in NVDLA core logic is introduced in sections above. Some
 sub units are combined as one pipeline; some are working as individual
 pipelines. All of possible pipeline working modes are summarized in
 table below.</p>
 <table class="docutils align-default" id="tab-pipelines-nvdla-core">
-<caption><span class="caption-number">Table 57 </span><span class="caption-text">pipeline working mode of NVDLA core</span><a class="headerlink" href="#tab-pipelines-nvdla-core" title="Permalink to this table">¶</a></caption>
-<colgroup>
-<col style="width: 25%" />
-<col style="width: 25%" />
-<col style="width: 25%" />
-<col style="width: 25%" />
-</colgroup>
+<caption><span class="caption-number">Table 57 </span><span class="caption-text">pipeline working mode of NVDLA core</span><a class="headerlink" href="#tab-pipelines-nvdla-core" title="Link to this table">¶</a></caption>
 <thead>
 <tr class="row-odd"><th class="head"><p>Pipeline
 Working Mode</p></th>
@@ -2717,8 +2690,8 @@ layers</p></td>
 </tr>
 </tbody>
 </table>
-</div>
-</div>
+</section>
+</section>
 
 
         </div>
@@ -2726,8 +2699,9 @@ layers</p></td>
           
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="../../../contents.html">Table of Contents</a></h3>
-  <ul>
+  <div>
+    <h3><a href="../../../contents.html">Table of Contents</a></h3>
+    <ul>
 <li><a class="reference internal" href="#">Unit Description</a><ul>
 <li><a class="reference internal" href="#bridge-dma">Bridge DMA</a><ul>
 <li><a class="reference internal" href="#overview">Overview</a></li>
@@ -2820,12 +2794,17 @@ layers</p></td>
 </li>
 </ul>
 
-  <h4>Previous topic</h4>
-  <p class="topless"><a href="lut-programming.html"
-                        title="previous chapter">LUT programming</a></p>
-  <h4>Next topic</h4>
-  <p class="topless"><a href="programming_guide.html"
-                        title="next chapter">Programming Guide</a></p>
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="lut-programming.html"
+                          title="previous chapter">LUT programming</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="programming_guide.html"
+                          title="next chapter">Programming Guide</a></p>
+  </div>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
@@ -2837,12 +2816,12 @@ layers</p></td>
   <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="../../../search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
       <input type="submit" value="Go" />
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script>document.getElementById('searchbox').style.display = "block"</script>
         </div>
       </div>
         </div>
@@ -2871,10 +2850,10 @@ layers</p></td>
 <div class="container">
 <div class="row">
 &#169; <a
-href="../../../copyright.html">Copyright</a> 2018 - 2024, NVIDIA Corporation.
+href="../../../copyright.html">Copyright</a> 2018 - 2026, NVIDIA Corporation.
 <a href="https://www.nvidia.com/object/legal_info.html">Legal Information.</a>
 <a href="https://www.nvidia.com/object/privacy_policy.html">Privacy Policy.</a>
-Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.5.4.
+Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
 </div>
 </div>
 </div>

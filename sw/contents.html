@@ -1,18 +1,17 @@
-
 <!DOCTYPE html>
 
-<html>
+<html lang="en" data-content_root="../">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
     <title>Software Manual &#8212; NVDLA Documentation</title>
-    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/nvdla.css" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles.css" />
-    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-    <script src="../_static/jquery.js"></script>
-    <script src="../_static/underscore.js"></script>
-    <script src="../_static/doctools.js"></script>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../_static/nvdla.css?v=907781f7" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles.css?v=af91e327" />
+    <script src="../_static/documentation_options.js?v=7026087e"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Compiler library" href="compilation_tool.html" />
     <link rel="prev" title="NVDLA Verification Suite User Guide" href="../hw/v2/verif_guide.html" />
@@ -25,7 +24,7 @@
     max-width: 100% !important;
   }
 </style>
-<script src="//assets.adobedtm.com/b92787824f2e0e9b68dc2e993f9bd995339fe417/satelliteLib-30c8ffcc8ece089156fd5590fbcf390ffc296f51.js"></script>
+<script src="https://assets.adobedtm.com/5d4962a43b79/814eb6e9b4e1/launch-4bc07f1e0b0b.min.js"></script>
 <!-- OneTrust Cookies Consent Notice start for nvidia.com -->
 <script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" data-document-language="true" type="text/javascript" charset="UTF-8" data-domain-script="3e2b62ff-7ae7-4ac5-87c8-d5949ecafff5-test" ></script>
 <script type="text/javascript">
@@ -67,12 +66,12 @@ function OptanonWrapper() {
       <div class="row">
         <div class="col-xs-12 col-md-9">
           
-  <div class="section" id="software-manual">
-<h1>Software Manual<a class="headerlink" href="#software-manual" title="Permalink to this headline">¶</a></h1>
+  <section id="software-manual">
+<h1>Software Manual<a class="headerlink" href="#software-manual" title="Link to this heading">¶</a></h1>
 <p>NVDLA has a full software ecosystem including support from compiling network to inference. Part of this ecosystem includes the on-device software stack, a part of the <a class="reference internal" href="../glossary.html#term-NVDLA"><span class="xref std std-term">NVDLA</span></a> open source release; additionally, NVIDIA will provide a full training infrastructure to build new models that incorporate Deep Learning, and to convert existing models to a form that is usable by <a class="reference internal" href="../glossary.html#term-NVDLA"><span class="xref std std-term">NVDLA</span></a> software.  In general, the software associated with <a class="reference internal" href="../glossary.html#term-NVDLA"><span class="xref std std-term">NVDLA</span></a> is grouped into two parts: the <a class="reference internal" href="compilation_tool.html#compiler-library"><span class="std std-ref">Compiler library</span></a> (model conversion), and the <a class="reference internal" href="runtime_environment.html#runtime-environment"><span class="std std-ref">Runtime environment</span></a> (run-time software to load and execute compiled neural network on <a class="reference internal" href="../glossary.html#term-NVDLA"><span class="xref std std-term">NVDLA</span></a>). The general flow of this is as shown in the figure below;</p>
-<div class="figure align-center" id="fig-software-package">
+<figure class="align-center" id="fig-software-package">
 <a class="reference internal image-reference" href="../_images/software_package.png"><img alt="Software Package" src="../_images/software_package.png" style="width: 484.4px; height: 355.59999999999997px;" /></a>
-</div>
+</figure>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="compilation_tool.html">Compiler library</a><ul>
@@ -92,9 +91,9 @@ function OptanonWrapper() {
 </li>
 </ul>
 </div>
-</div>
-<div class="section" id="browsing-source-code">
-<h1>Browsing Source Code<a class="headerlink" href="#browsing-source-code" title="Permalink to this headline">¶</a></h1>
+</section>
+<section id="browsing-source-code">
+<h1>Browsing Source Code<a class="headerlink" href="#browsing-source-code" title="Link to this heading">¶</a></h1>
 <ul class="simple">
 <li><dl class="simple">
 <dt>top (<a class="reference external" href="https://github.com/nvdla/sw">https://github.com/nvdla/sw</a>)</dt><dd><ul>
@@ -165,7 +164,7 @@ function OptanonWrapper() {
 </dl>
 </li>
 </ul>
-</div>
+</section>
 
 
         </div>
@@ -173,18 +172,24 @@ function OptanonWrapper() {
           
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="../contents.html">Table of Contents</a></h3>
-  <ul>
+  <div>
+    <h3><a href="../contents.html">Table of Contents</a></h3>
+    <ul>
 <li><a class="reference internal" href="#">Software Manual</a></li>
 <li><a class="reference internal" href="#browsing-source-code">Browsing Source Code</a></li>
 </ul>
 
-  <h4>Previous topic</h4>
-  <p class="topless"><a href="../hw/v2/verif_guide.html"
-                        title="previous chapter">NVDLA Verification Suite User Guide</a></p>
-  <h4>Next topic</h4>
-  <p class="topless"><a href="compilation_tool.html"
-                        title="next chapter">Compiler library</a></p>
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="../hw/v2/verif_guide.html"
+                          title="previous chapter">NVDLA Verification Suite User Guide</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="compilation_tool.html"
+                          title="next chapter">Compiler library</a></p>
+  </div>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
@@ -196,12 +201,12 @@ function OptanonWrapper() {
   <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
       <input type="submit" value="Go" />
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script>document.getElementById('searchbox').style.display = "block"</script>
         </div>
       </div>
         </div>
@@ -229,10 +234,10 @@ function OptanonWrapper() {
 <div class="container">
 <div class="row">
 &#169; <a
-href="../copyright.html">Copyright</a> 2018 - 2024, NVIDIA Corporation.
+href="../copyright.html">Copyright</a> 2018 - 2026, NVIDIA Corporation.
 <a href="https://www.nvidia.com/object/legal_info.html">Legal Information.</a>
 <a href="https://www.nvidia.com/object/privacy_policy.html">Privacy Policy.</a>
-Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.5.4.
+Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
 </div>
 </div>
 </div>

@@ -1,18 +1,17 @@
-
 <!DOCTYPE html>
 
-<html>
+<html lang="en" data-content_root="./">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
     <title>Open Source Roadmap &#8212; NVDLA Documentation</title>
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="_static/nvdla.css" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="_static/styles.css" />
-    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-    <script src="_static/jquery.js"></script>
-    <script src="_static/underscore.js"></script>
-    <script src="_static/doctools.js"></script>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="_static/nvdla.css?v=907781f7" />
+    <link rel="stylesheet" type="text/css" href="_static/styles.css?v=af91e327" />
+    <script src="_static/documentation_options.js?v=7026087e"></script>
+    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Hardware Manual" href="hw/contents.html" />
     <link rel="prev" title="NVDLA Primer" href="primer.html" />
@@ -25,7 +24,7 @@
     max-width: 100% !important;
   }
 </style>
-<script src="//assets.adobedtm.com/b92787824f2e0e9b68dc2e993f9bd995339fe417/satelliteLib-30c8ffcc8ece089156fd5590fbcf390ffc296f51.js"></script>
+<script src="https://assets.adobedtm.com/5d4962a43b79/814eb6e9b4e1/launch-4bc07f1e0b0b.min.js"></script>
 <!-- OneTrust Cookies Consent Notice start for nvidia.com -->
 <script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" data-document-language="true" type="text/javascript" charset="UTF-8" data-domain-script="3e2b62ff-7ae7-4ac5-87c8-d5949ecafff5-test" ></script>
 <script type="text/javascript">
@@ -67,8 +66,8 @@ function OptanonWrapper() {
       <div class="row">
         <div class="col-xs-12 col-md-9">
           
-  <div class="section" id="open-source-roadmap">
-<h1>Open Source Roadmap<a class="headerlink" href="#open-source-roadmap" title="Permalink to this headline">¶</a></h1>
+  <section id="open-source-roadmap">
+<h1>Open Source Roadmap<a class="headerlink" href="#open-source-roadmap" title="Link to this heading">¶</a></h1>
 <p>The open sourcing of the NVDLA core will occur over the course of the next two calendar quarters.  The intent is to deliver a useable core early, with additional configurations and features following.</p>
 <p>The hardware design source consists of Verilog RTL.  Two specific configurations are called out in this roadmap: one verified large area/performance configuration for high performace IoT applications, and one verified small area/performance configuration for cost sensitive IoT applications. The design itself will additionally be released as a configurable IP so many configurations will be possible.</p>
 <p>The software packages will be released as source code.  However, the compiler will initially be only released in binary form, with a source release coming later.</p>
@@ -77,19 +76,19 @@ function OptanonWrapper() {
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
-<div class="section" id="q3">
-<h2>2017-Q3<a class="headerlink" href="#q3" title="Permalink to this headline">¶</a></h2>
+<section id="q3">
+<h2>2017-Q3<a class="headerlink" href="#q3" title="Link to this heading">¶</a></h2>
 <p>The first deliverables allow users to test with their tool flows and libraries. Both front-end simulation and back-end design will be enabled. The initial RTL will be for a large NVDLA configuration with 2048 8-bit MACs, also configurable as 1024 16-bit fixed or floating point MACs.</p>
 <p>Detailed hardware and software documentation and an xls-based performance estimator help to determine whether NVDLA meets a user’s needs and what configuration is required.</p>
 <p>All items listed below have been uploaded to the NVDLA GitHub repository.</p>
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
-<table class="colwidths-given docutils align-default">
+<table class="docutils align-default">
 <colgroup>
-<col style="width: 33%" />
-<col style="width: 33%" />
-<col style="width: 33%" />
+<col style="width: 33.3%" />
+<col style="width: 33.3%" />
+<col style="width: 33.3%" />
 </colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Documentation</p></th>
@@ -123,19 +122,19 @@ function OptanonWrapper() {
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
-</div>
-<div class="section" id="q4">
-<h2>2017-Q4<a class="headerlink" href="#q4" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="q4">
+<h2>2017-Q4<a class="headerlink" href="#q4" title="Link to this heading">¶</a></h2>
 <p>The second set of deliverables will add many of the tools that are needed for full system simulation. A C-model has the performance to run full networks and during this period we will also add drivers, a test application, and compilers to map any network to NVDLA.</p>
 <p>Whereas the full-precision configuration of NVDLA was mostly focussed on performance and features, the second and small configuration will demonstrate low power and small area.</p>
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
-<table class="colwidths-given docutils align-default">
+<table class="docutils align-default">
 <colgroup>
-<col style="width: 27%" />
-<col style="width: 36%" />
-<col style="width: 36%" />
+<col style="width: 27.3%" />
+<col style="width: 36.4%" />
+<col style="width: 36.4%" />
 </colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Documentation</p></th>
@@ -173,18 +172,18 @@ function OptanonWrapper() {
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
-</div>
-<div class="section" id="h1">
-<h2>2018-H1<a class="headerlink" href="#h1" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="h1">
+<h2>2018-H1<a class="headerlink" href="#h1" title="Link to this heading">¶</a></h2>
 <p>The third set of deliverables will see scalable solutions: the user can set parameters to create the exact configuration that best match his or her needs. A test bench, test suite, and FPGA support are added to allow for rigorous testing needed for high-confidence tape outs.</p>
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
-<table class="colwidths-given docutils align-default">
+<table class="docutils align-default">
 <colgroup>
-<col style="width: 27%" />
-<col style="width: 36%" />
-<col style="width: 36%" />
+<col style="width: 27.3%" />
+<col style="width: 36.4%" />
+<col style="width: 36.4%" />
 </colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Documentation</p></th>
@@ -210,8 +209,8 @@ function OptanonWrapper() {
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
-</div>
-</div>
+</section>
+</section>
 
 
         </div>
@@ -219,8 +218,9 @@ function OptanonWrapper() {
           
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="contents.html">Table of Contents</a></h3>
-  <ul>
+  <div>
+    <h3><a href="contents.html">Table of Contents</a></h3>
+    <ul>
 <li><a class="reference internal" href="#">Open Source Roadmap</a><ul>
 <li><a class="reference internal" href="#q3">2017-Q3</a></li>
 <li><a class="reference internal" href="#q4">2017-Q4</a></li>
@@ -229,12 +229,17 @@ function OptanonWrapper() {
 </li>
 </ul>
 
-  <h4>Previous topic</h4>
-  <p class="topless"><a href="primer.html"
-                        title="previous chapter">NVDLA Primer</a></p>
-  <h4>Next topic</h4>
-  <p class="topless"><a href="hw/contents.html"
-                        title="next chapter">Hardware Manual</a></p>
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="primer.html"
+                          title="previous chapter">NVDLA Primer</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="hw/contents.html"
+                          title="next chapter">Hardware Manual</a></p>
+  </div>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
@@ -246,12 +251,12 @@ function OptanonWrapper() {
   <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
       <input type="submit" value="Go" />
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script>document.getElementById('searchbox').style.display = "block"</script>
         </div>
       </div>
         </div>
@@ -279,10 +284,10 @@ function OptanonWrapper() {
 <div class="container">
 <div class="row">
 &#169; <a
-href="copyright.html">Copyright</a> 2018 - 2024, NVIDIA Corporation.
+href="copyright.html">Copyright</a> 2018 - 2026, NVIDIA Corporation.
 <a href="https://www.nvidia.com/object/legal_info.html">Legal Information.</a>
 <a href="https://www.nvidia.com/object/privacy_policy.html">Privacy Policy.</a>
-Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.5.4.
+Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
 </div>
 </div>
 </div>

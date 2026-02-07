@@ -1,19 +1,18 @@
-
 <!DOCTYPE html>
 
-<html>
+<html lang="en" data-content_root="../../../">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
     <title>LUT programming &#8212; NVDLA Documentation</title>
-    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../../../_static/nvdla.css" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/styles.css" />
-    <script id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
-    <script src="../../../_static/jquery.js"></script>
-    <script src="../../../_static/underscore.js"></script>
-    <script src="../../../_static/doctools.js"></script>
-    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/nvdla.css?v=907781f7" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles.css?v=af91e327" />
+    <script src="../../../_static/documentation_options.js?v=7026087e"></script>
+    <script src="../../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="search" title="Search" href="../../../search.html" />
     <link rel="next" title="Unit Description" href="unit_description.html" />
     <link rel="prev" title="Precision Preservation" href="precision.html" />
@@ -26,7 +25,7 @@
     max-width: 100% !important;
   }
 </style>
-<script src="//assets.adobedtm.com/b92787824f2e0e9b68dc2e993f9bd995339fe417/satelliteLib-30c8ffcc8ece089156fd5590fbcf390ffc296f51.js"></script>
+<script src="https://assets.adobedtm.com/5d4962a43b79/814eb6e9b4e1/launch-4bc07f1e0b0b.min.js"></script>
 <!-- OneTrust Cookies Consent Notice start for nvidia.com -->
 <script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" data-document-language="true" type="text/javascript" charset="UTF-8" data-domain-script="3e2b62ff-7ae7-4ac5-87c8-d5949ecafff5-test" ></script>
 <script type="text/javascript">
@@ -69,8 +68,8 @@ function OptanonWrapper() {
       <div class="row">
         <div class="col-xs-12 col-md-9">
           
-  <div class="section" id="lut-programming">
-<h1>LUT programming<a class="headerlink" href="#lut-programming" title="Permalink to this headline">¶</a></h1>
+  <section id="lut-programming">
+<h1>LUT programming<a class="headerlink" href="#lut-programming" title="Link to this heading">¶</a></h1>
 <p>LUT are instanced in SDP/CDP in NVDLA, it’s used to mimic the non-linear
 functions (Sigmoid/TanH/LRN, etc.) of a network. As we know, the LUT
 precision is highly depends on LUT entries and slope variation of the
@@ -85,22 +84,28 @@ high precision by limited LUT entries:</p>
 <ul class="simple">
 <li><p>2 level:</p></li>
 </ul>
-<div class="figure align-center" id="id2">
-<span id="fig-image85-lut-architecture"></span><img alt="../../../_images/ias_image85_lut_architecture.svg" src="../../../_images/ias_image85_lut_architecture.svg" /><p class="caption"><span class="caption-number">Fig. 32 </span><span class="caption-text">LUT architecture</span><a class="headerlink" href="#id2" title="Permalink to this image">¶</a></p>
-</div>
+<figure class="align-center" id="id2">
+<span id="fig-image85-lut-architecture"></span><img alt="../../../_images/ias_image85_lut_architecture.svg" src="../../../_images/ias_image85_lut_architecture.svg" /><figcaption>
+<p><span class="caption-number">Fig. 32 </span><span class="caption-text">LUT architecture</span><a class="headerlink" href="#id2" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
 <p>There’re 2 tables (X/Y table), the typical configuration is use one of
 them as raw table to cover entire dynamic range and the other work as
 density table to cover a small portion of the dynamic range. Due to the
 coverage difference, raw table has low sample rate but density table has
 relative high sample rate, this is inspired by the attribute of
 LRN/Sigmoid/TanH curve:</p>
-<div class="figure align-center" id="id3">
+<figure class="align-center" id="id3">
 <span id="fig-image86-non-linear-lrn"></span><img alt="../../../_images/ias_image86_non_linear_lrn.png" src="../../../_images/ias_image86_non_linear_lrn.png" />
-<p class="caption"><span class="caption-number">Fig. 33 </span><span class="caption-text">Non-linear function: LRN</span><a class="headerlink" href="#id3" title="Permalink to this image">¶</a></p>
-</div>
-<div class="figure align-center" id="id4">
-<span id="fig-image87-non-linear"></span><img alt="../../../_images/ias_image87_non_linear_sigmoid.svg" src="../../../_images/ias_image87_non_linear_sigmoid.svg" /><p class="caption"><span class="caption-number">Fig. 34 </span><span class="caption-text">Non-linear function: Sigmoid</span><a class="headerlink" href="#id4" title="Permalink to this image">¶</a></p>
-</div>
+<figcaption>
+<p><span class="caption-number">Fig. 33 </span><span class="caption-text">Non-linear function: LRN</span><a class="headerlink" href="#id3" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
+<figure class="align-center" id="id4">
+<span id="fig-image87-non-linear"></span><img alt="../../../_images/ias_image87_non_linear_sigmoid.svg" src="../../../_images/ias_image87_non_linear_sigmoid.svg" /><figcaption>
+<p><span class="caption-number">Fig. 34 </span><span class="caption-text">Non-linear function: Sigmoid</span><a class="headerlink" href="#id4" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
 <p>We can see from figures above, for those functions, only a small portion
 has significant slope variation and the others portion almost without
 too much change thus 2 level LUT is an economy option to mimic those
@@ -115,10 +120,12 @@ time.</p>
 </ul>
 <p>We noticed for LRN, the input dynamic range is very high (0~10^8), but
 most of the samples are within a small data range:</p>
-<div class="figure align-center" id="id5">
+<figure class="align-center" id="id5">
 <span id="fig-image88-histogram-of-lrn-lut-input"></span><img alt="../../../_images/ias_image88_histogram_of_lrn_lut_input.png" src="../../../_images/ias_image88_histogram_of_lrn_lut_input.png" />
-<p class="caption"><span class="caption-number">Fig. 35 </span><span class="caption-text">Histogram of LRN LUT input</span><a class="headerlink" href="#id5" title="Permalink to this image">¶</a></p>
-</div>
+<figcaption>
+<p><span class="caption-number">Fig. 35 </span><span class="caption-text">Histogram of LRN LUT input</span><a class="headerlink" href="#id5" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
 <p>Histogram above are collected from “pool1/norm1” layer of GoogleNet, we
 viewed the same data by different x-axis coordinate system (linear and
 exponential).</p>
@@ -135,10 +142,6 @@ is fixed as <span class="math notranslate nohighlight">\(2^{exp\_start} ~ 2^{exp
 denote different table, when mapping to hardware, X corresponding to
 LE(Linear/Exponent) while Y corresponding to LO(Linear only)):</p>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 55%" />
-<col style="width: 45%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Attributes</p></th>
 <th class="head"><p>Description</p></th>
@@ -170,10 +173,6 @@ LE(Linear/Exponent) while Y corresponding to LO(Linear only)):</p>
 </table>
 <p>Recommended LUT configuration for typical use scenarios:</p>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 50%" />
-<col style="width: 50%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Use scenario</p></th>
 <th class="head"><p>Configuration</p></th>
@@ -198,19 +197,18 @@ table)</p>
 </table>
 <p>However, this is not mandatory, software can program LUT work as any of
 cases below (X/Y can be reversed, which means totally 6 cases):</p>
-<div class="figure align-center" id="id6">
-<span id="fig-image90-lut-coverage"></span><img alt="../../../_images/ias_image90_lut_coverage.svg" src="../../../_images/ias_image90_lut_coverage.svg" /><p class="caption"><span class="caption-number">Fig. 36 </span><span class="caption-text">LUT coverage</span><a class="headerlink" href="#id6" title="Permalink to this image">¶</a></p>
-</div>
+<figure class="align-center" id="id6">
+<span id="fig-image90-lut-coverage"></span><img alt="../../../_images/ias_image90_lut_coverage.svg" src="../../../_images/ias_image90_lut_coverage.svg" /><figcaption>
+<p><span class="caption-number">Fig. 36 </span><span class="caption-text">LUT coverage</span><a class="headerlink" href="#id6" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
 <p>As shown in <a class="reference internal" href="#fig-image85-lut-architecture"><span class="std std-numref">Fig. 32</span></a>, there’re couple parameters for LUT, let’s
 discuss how to configure them based on different modes.</p>
-<div class="section" id="exponential-mode">
-<h2>Exponential mode<a class="headerlink" href="#exponential-mode" title="Permalink to this headline">¶</a></h2>
+<section id="exponential-mode">
+<h2>Exponential mode<a class="headerlink" href="#exponential-mode" title="Link to this heading">¶</a></h2>
 <p>If LUT is working on exponential mode and LUT storage has example below
 (actually, exp_start is programmable):</p>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 100%" />
-</colgroup>
 <tbody>
 <tr class="row-odd"><td><p>exp_start=-32</p>
 <p>LUT[0]=f(2<sup>exp_start</sup>)=f(2<sup>-32</sup>)</p>
@@ -231,10 +229,6 @@ discuss how to configure them based on different modes.</p>
 <p>The mapping between register and symbols above are lists below (only X
 table supports exponential mode):</p>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 33%" />
-<col style="width: 67%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Register</p></th>
 <th class="head"><p>Symbol</p></th>
@@ -252,15 +246,12 @@ table supports exponential mode):</p>
 </tr>
 </tbody>
 </table>
-</div>
-<div class="section" id="linear-mode">
-<h2>Linear mode<a class="headerlink" href="#linear-mode" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="linear-mode">
+<h2>Linear mode<a class="headerlink" href="#linear-mode" title="Link to this heading">¶</a></h2>
 <p>If LUT is working on linear mode and LUT is supposed to cover min~max,
 then, LUT entry storage should be (suppose entry_num=257):</p>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 100%" />
-</colgroup>
 <tbody>
 <tr class="row-odd"><td><p>step=(max-min)/(entry_num-1)</p>
 <p>LUT[0]=f(0*step + min)</p>
@@ -289,10 +280,6 @@ X/X/Y multiplier in SDP).</p>
 <p>The mapping between symbols above and the actual registers are (X could
 be LE/LO):</p>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 49%" />
-<col style="width: 51%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Register</p></th>
 <th class="head"><p>Symbol</p></th>
@@ -310,9 +297,9 @@ be LE/LO):</p>
 </tr>
 </tbody>
 </table>
-</div>
-<div class="section" id="out-of-range-control">
-<h2>Out-of-range control<a class="headerlink" href="#out-of-range-control" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="out-of-range-control">
+<h2>Out-of-range control<a class="headerlink" href="#out-of-range-control" title="Link to this heading">¶</a></h2>
 <p>Suppose one LUT has coverage between [min, max]. If one input sample
 bigger than max or smaller than min, we call it out-of-range sample.</p>
 <p>NVDLA supports linear interpolation of those out-of-range samples. The
@@ -348,11 +335,6 @@ LUT[0] + (X-START)*UFLOW\_SCALE/UFLOW\_SHIFT &amp; = y_0 * SF + (x-min) * 2^M * 
 \[\frac{2^M * UFLOW\_SCALE/UFLOW\_SHIFT}{SF} = k_{underflow}\]</div>
 <p>The mapping between the symbols in above formula and registers are:</p>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 29%" />
-<col style="width: 42%" />
-<col style="width: 29%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Register</p></th>
 <th class="head"><p>Symbol</p></th>
@@ -417,9 +399,9 @@ k=SCALE&lt;&lt;SHIFT)</p>
 </tr>
 </tbody>
 </table>
-</div>
-<div class="section" id="lut-storage-programming">
-<h2>LUT storage programming<a class="headerlink" href="#lut-storage-programming" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="lut-storage-programming">
+<h2>LUT storage programming<a class="headerlink" href="#lut-storage-programming" title="Link to this heading">¶</a></h2>
 <p>Traditionally, in order to program an LUT entry, you have to specify
 both LUT entry address and its value, this requires 2 register write
 operation. NVDLA simplifies this process by introducing hardware
@@ -448,15 +430,15 @@ S_LUT_ACCESS_CFG has to be non-post write for LUT read case;</strong></p>
 <li><p>There’s only one LUT storage shared for both register groups, make
 sure update LUT are happened when corresponding sub-unit is IDLE;</p></li>
 </ul>
-</div>
-<div class="section" id="hit-miss-behavior">
-<h2>Hit/Miss behavior<a class="headerlink" href="#hit-miss-behavior" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="hit-miss-behavior">
+<h2>Hit/Miss behavior<a class="headerlink" href="#hit-miss-behavior" title="Link to this heading">¶</a></h2>
 <p>For a given input sample, if only one table is hit, the final output
 will be the output of hit table; However, the X/Y table programming is
 so flexible then leads to different hit/miss cases:</p>
-<div class="figure align-center" id="fig-image109-lut-hit-miss">
+<figure class="align-center" id="fig-image109-lut-hit-miss">
 <img alt="../../../_images/ias_image109_lut_hit_miss.png" src="../../../_images/ias_image109_lut_hit_miss.png" />
-</div>
+</figure>
 <ol class="loweralpha simple">
 <li><p>One input sample might be hit in both table; (Case 1)</p></li>
 <li><p>One input sample might miss in both table due to overflow; (Case1, 2,
@@ -470,10 +452,6 @@ while the other underflow (Case 3)</p></li>
 the final output thus we expose programmable registers below to
 allow software program the priority:</p>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 50%" />
-<col style="width: 50%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Register Name</p></th>
 <th class="head"><p>Description</p></th>
@@ -512,17 +490,13 @@ underflow for both table happens
 </tr>
 </tbody>
 </table>
-</div>
-<div class="section" id="lut-statistics">
-<span id="id1"></span><h2>LUT Statistics<a class="headerlink" href="#lut-statistics" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="lut-statistics">
+<span id="id1"></span><h2>LUT Statistics<a class="headerlink" href="#lut-statistics" title="Link to this heading">¶</a></h2>
 <p>When one hardware layer completes, hardware will report statistics below
 to help software understand whether the LUT table is reasonably
 programmed.</p>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 50%" />
-<col style="width: 50%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Statistic register</p></th>
 <th class="head"><p>Description</p></th>
@@ -563,8 +537,8 @@ those counters will be available for read when one hardware completes
 (by set the producer pointer to this register group). Those statistics
 won’t be erased until the corresponding register group is enabled (op_en
 be set)</p>
-</div>
-</div>
+</section>
+</section>
 
 
         </div>
@@ -572,8 +546,9 @@ be set)</p>
           
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="../../../contents.html">Table of Contents</a></h3>
-  <ul>
+  <div>
+    <h3><a href="../../../contents.html">Table of Contents</a></h3>
+    <ul>
 <li><a class="reference internal" href="#">LUT programming</a><ul>
 <li><a class="reference internal" href="#exponential-mode">Exponential mode</a></li>
 <li><a class="reference internal" href="#linear-mode">Linear mode</a></li>
@@ -585,12 +560,17 @@ be set)</p>
 </li>
 </ul>
 
-  <h4>Previous topic</h4>
-  <p class="topless"><a href="precision.html"
-                        title="previous chapter">Precision Preservation</a></p>
-  <h4>Next topic</h4>
-  <p class="topless"><a href="unit_description.html"
-                        title="next chapter">Unit Description</a></p>
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="precision.html"
+                          title="previous chapter">Precision Preservation</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="unit_description.html"
+                          title="next chapter">Unit Description</a></p>
+  </div>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
@@ -602,12 +582,12 @@ be set)</p>
   <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="../../../search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
       <input type="submit" value="Go" />
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script>document.getElementById('searchbox').style.display = "block"</script>
         </div>
       </div>
         </div>
@@ -636,10 +616,10 @@ be set)</p>
 <div class="container">
 <div class="row">
 &#169; <a
-href="../../../copyright.html">Copyright</a> 2018 - 2024, NVIDIA Corporation.
+href="../../../copyright.html">Copyright</a> 2018 - 2026, NVIDIA Corporation.
 <a href="https://www.nvidia.com/object/legal_info.html">Legal Information.</a>
 <a href="https://www.nvidia.com/object/privacy_policy.html">Privacy Policy.</a>
-Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.5.4.
+Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
 </div>
 </div>
 </div>
