@@ -62,8 +62,7 @@ const _displayItem = (item, searchTerms, highlightTerms) => {
   const docFileSuffix = DOCUMENTATION_OPTIONS.FILE_SUFFIX;
   const docLinkSuffix = DOCUMENTATION_OPTIONS.LINK_SUFFIX;
   const showSearchSummary = DOCUMENTATION_OPTIONS.SHOW_SEARCH_SUMMARY;
-  const contentRoot = document.documentElement.dataset.content_root
-    ?? DOCUMENTATION_OPTIONS.URL_ROOT;
+  const contentRoot = document.documentElement.dataset.content_root;
 
   const [docName, title, anchor, descr, score, _filename] = item;
 
@@ -435,14 +434,11 @@ const Search = {
         filenames[match[0]],
       ]);
     };
-    Object.keys(objects).forEach((prefix) => {
-      if (!(objects[prefix] instanceof Array)) {
-        objects[prefix] = Object.entries(objects[prefix]).map(([name, match]) => [...match, name]);
-      }
+    Object.keys(objects).forEach((prefix) =>
       objects[prefix].forEach((array) =>
         objectSearchCallback(prefix, array)
-      );
-    });
+      )
+    );
     return results;
   },
 
